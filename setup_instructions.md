@@ -42,7 +42,7 @@ Press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></kbd> to open it.
 ## Windows 10
 
 - Terminal: 
-  - Windows 10 has its own command line program, which has all the functionality we need for this course. Press <kbd><kbd>![Windows Key][http://i.stack.imgur.com/T0oPO.png]</kbd> + <kbd>X</kbd></kbd> and then choose “Command Prompt”.
+  - Windows 10 has its own command line program, which has all the functionality we need for this course. Press <kbd><kbd>Windows</kbd> + <kbd>X</kbd></kbd> and then choose “Command Prompt”.
   - (Optional) if you want the functionality of a Unix-like terminal on Windows you can download and install the "_Installer edition_" of [MobaXterm - Home Edition](https://mobaxterm.mobatek.net/download-home-edition.html) (do not choose the "_Portable edition_"). Unzip the file and run the `.msi` file to install using default options.
 
 - File transfer software:
