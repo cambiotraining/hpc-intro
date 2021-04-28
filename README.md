@@ -33,7 +33,7 @@ Namely, we expect you to know the following:
 
 ## Setup
 
-Before attending the workshop, please install the necessary software following our **[setup instructions](../setup_instructions.md)**.
+Before attending the workshop, please install the necessary software following our **[setup instructions](setup_instructions.md)**.
 If you have any issues installing the software, please [get in touch](mailto:bioinfo@hermes.cam.ac.uk) with us beforehand.
 
 
