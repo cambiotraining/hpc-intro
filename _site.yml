@@ -1,0 +1,26 @@
+name: "course-template"
+output_dir: "docs"
+output:
+  html_document:
+    highlight: pygments
+    css: "assets/styles.css"
+    toc: true
+    toc_float: true
+navbar:
+  title: "<img id=\"logo\" style=\"height: 25px;\" src=\"assets/img/logo.svg\" />"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Setup"
+      href: 99-setup.html
+    - text: "Materials"
+      menu:
+        - text: "Getting Started"
+          href: 01-intro.html
+    - text: "Extras"
+      menu:
+        - text: "Cambridge HPC"
+          href: 99-cambridge_hpc.html
+  right:
+    - href: https://github.com/rstudio4edu
+      icon: fa-github
