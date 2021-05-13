@@ -11,7 +11,7 @@
 
 
 
-<title>99-setup.utf8</title>
+<title>99-unix_cheatsheet.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -355,86 +355,295 @@ div.tocify {
 </div>
 
 
+<div id="unix-cheat-sheet" class="section level1">
+<h1>Unix Cheat Sheet</h1>
+<p>This document gives a brief summary of useful Unix commands. Anything within <code>{}</code> indicates a user-provided input.</p>
 <div class="note">
-<p>This page will be updated soon. Please check back at least two weeks before the workshop is due to run.</p>
+<p>If you are on Windows, you can install MobaXterm to get a Unix-like terminal.</p>
+<details>
+<p><summary>Install instructions</summary></p>
+<ul>
+<li>download and install the “<em>Installer edition</em>” of <a href="https://mobaxterm.mobatek.net/download-home-edition.html">MobaXterm - Home Edition</a> (do not choose the “<em>Portable edition</em>”).</li>
+<li>Unzip the file and run the <code>.msi</code> file to install using default options.</li>
+</ul>
+</details>
 </div>
-<!--
-:::warning
-Please make sure to follow these instructions before attending our workshops
-:::
-
-There are three recommended pieces of software needed to work with the HPC:
-
-- a terminal
-- a file transfer software
-- a text editor with the ability to edit files on a remote server
-
-## Mac
-
-- Unix terminal: Mac OS already has a terminal available.
-Press <kbd><kbd>&#8984;</kbd> + <kbd>space</kbd></kbd> to open _spotlight search_ and type "terminal".
-
-- File transfer software:
-  - download and install [filezilla](https://filezilla-project.org/download.php?type=client).
-  - `rsync` and `scp` are also available from the terminal (no need to install anything)
-
-- text editor:
-  - Download and install [VSCode](https://code.visualstudio.com/).
-  - Follow the instructions in "[Configuring Visual Studio Code](#configuring-visual-studio-code)" at the bottom of this page.
-
-- (Optional) filesystem client:
-  - download and install both FUSE and SSHFS from [this website](https://osxfuse.github.io/).
-  (first install FUSE, then SSHFS)
-
-
-## Linux (Ubuntu)
-
-- Unix terminal: Ubuntu already has a terminal available.
-Press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></kbd> to open it.
-
-- File transfer software:
-  - download and install [filezilla](https://filezilla-project.org/download.php?type=client).
-  - `rsync` and `scp` are also available from the terminal (no need to install anything)
-
-- text editor:
-  - Download and install [VSCode](https://code.visualstudio.com/).
-  - Follow the instructions in "[Configuring Visual Studio Code](#configuring-visual-studio-code)" at the bottom of this page.
-
-- (Optional) filesystem client:
-  - install SSHFS from the command line using: `sudo apt-get install sshfs`.
-
-
-## Windows 10
-
-- Terminal: 
-  - Windows 10 has its own command line program, which has all the functionality we need for this course. Press <kbd><kbd>Windows</kbd> + <kbd>X</kbd></kbd> and then choose “Command Prompt”.
-  - (Optional) if you want the functionality of a Unix-like terminal on Windows you can download and install the "_Installer edition_" of [MobaXterm - Home Edition](https://mobaxterm.mobatek.net/download-home-edition.html) (do not choose the "_Portable edition_"). Unzip the file and run the `.msi` file to install using default options.
-
-- File transfer software:
-  - download and install [filezilla](https://filezilla-project.org/download.php?type=client).
-  - `rsync` and `scp` are available with _MobaXterm_.
-
-- text editor:
-  - Download and install [VSCode](https://code.visualstudio.com/).
-  - After installation, open it and go to "_File > Preferences > Settings_", then select "_Text Editor > Files_" on the drop-down menu on the left and under the section named "_EOL_" choose "_\n_" (this will ensure that the files you edit on Windows are compatible with the Linux operating system on the HPC).
-  - Follow the instructions in "[Configuring Visual Studio Code](#configuring-visual-studio-code)" at the bottom of this page.
-
-- (Optional) filesystem client:
-  - Download and install [SFTP Drive Personal Edition](https://www.nsoftware.com/sftp/drive/download.aspx)
-    - It will ask for your email for download and installation. If you want, use a [10 minute disposable email](https://10minutemail.com/10MinuteMail/index.html) to avoid potential spam.
-
-
-## Configuring Visual Studio Code
-
-We will use an extension called "Remote-SSH". 
-To install the extension (see Figure):
-
-1. Click the "Extensions" button on the side bar (or use <kbd>Ctrl + Shift + X</kbd>)
-1. In the search box type "ssh" and choose the "Remote-SSH" extension
-1. Click the "Install" button in the window that opens
-
-![Installing Remote-SSH extension in VS Code](images/vscode_extension_install.svg)
--->
+<div id="documentation-and-help" class="section level2">
+<h2>Documentation and Help</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>man {command}</code></td>
+<td align="left">manual page for the program</td>
+</tr>
+<tr class="even">
+<td align="left"><code>whatis {command}</code></td>
+<td align="left">short description of the program</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>{command} --help</code></td>
+<td align="left">many programs use the <code>--help</code> flag to print documentation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="listing-files" class="section level2">
+<h2>Listing files</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>ls</code></td>
+<td align="left">list files in the current directory</td>
+</tr>
+<tr class="even">
+<td align="left"><code>ls {path}</code></td>
+<td align="left">list files in the specified path</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ls -l {path}</code></td>
+<td align="left">list files in long format (more information)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>ls -a {path}</code></td>
+<td align="left">list all files (including hidden files)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="change-directories" class="section level2">
+<h2>Change Directories</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>cd {path}</code></td>
+<td align="left">change to the specified directory</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cd</code> or <code>cd ~</code></td>
+<td align="left">change to the home directory</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>cd ..</code></td>
+<td align="left">move back one directory</td>
+</tr>
+<tr class="even">
+<td align="left"><code>pwd</code></td>
+<td align="left">print working directory. Shows the full path of where you are at the moment (useful if you are lost)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="make-or-remove-directories" class="section level2">
+<h2>Make or Remove Directories</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>mkdir {dirname}</code></td>
+<td align="left">create a directory with specified name</td>
+</tr>
+<tr class="even">
+<td align="left"><code>rmdir {dirname}</code></td>
+<td align="left">remove a directory (only works if the directory is empty)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rmdir -r {dirname}</code></td>
+<td align="left">remove the directory and all it’s contents (use with care)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="copy-move-and-remove-files" class="section level2">
+<h2>Copy, Move and Remove Files</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>cp {source/path/file1} {target/path/}</code></td>
+<td align="left">copy “file1” to another directory keeping its name</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cp {source/path/file1} {target/path/file2}</code></td>
+<td align="left">copy “file1” to another directory naming it “file2”</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>cp {file1} {file2}</code></td>
+<td align="left">make a copy of “file1” in the same directory with a new name “file2”</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mv {source/path/file1} {target/path/}</code></td>
+<td align="left">move “file1” to another directory keeping its name</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>mv {source/path/file1} {target/path/file2}</code></td>
+<td align="left">move “file1” to another directory renaming it as “file2”</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mv {file1} {file2}</code></td>
+<td align="left">is equivalent to renaming a file</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rm {filename}</code></td>
+<td align="left">remove a file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="view-text-files" class="section level2">
+<h2>View Text Files</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>less {file}</code></td>
+<td align="left">view and scroll through a text file</td>
+</tr>
+<tr class="even">
+<td align="left"><code>head {file}</code></td>
+<td align="left">print the first 10 lines of a file</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>head -n {N} {file}</code></td>
+<td align="left">print the first N lines of a file</td>
+</tr>
+<tr class="even">
+<td align="left"><code>tail {file}</code></td>
+<td align="left">print the last 10 lines of a file</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>tail -n {N} {file}</code></td>
+<td align="left">print the last N lines of a file</td>
+</tr>
+<tr class="even">
+<td align="left"><code>head -n {N} {file} | tail -n 1</code></td>
+<td align="left">print the Nth line of a file</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>cat {file}</code></td>
+<td align="left">print the whole content of the file</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cat {file1} {file2} {...} {fileN}</code></td>
+<td align="left">concatenate files and print the result</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>zcat {file}</code></td>
+<td align="left">print <em>compressed</em> files (<em>.zip</em> or <em>.gz</em>) on the screen</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="find-patterns" class="section level2">
+<h2>Find Patterns</h2>
+<p>Finding (and replacing) patterns in text is a very powerful feature of several command line programs. The patterns are specified using <em>regular expressions</em> (shortened as <em>regex</em>), which are not covered in this document. See this <a href="https://cheatography.com/davechild/cheat-sheets/regular-expressions/pdf/">Regular Expressions Cheat Sheet</a> for a comprehensive overview.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>grep {regex} {file}</code></td>
+<td align="left">print the lines of the file that have a match with the regular expression pattern</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="wildcards" class="section level2">
+<h2>Wildcards</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>*</code></td>
+<td align="left">match any number of characters</td>
+</tr>
+<tr class="even">
+<td align="left"><code>?</code></td>
+<td align="left">match any character only once</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Examples</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"><code>ls sample*</code></td>
+<td align="left">list all files that start with the word “sample”</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ls *.txt</code></td>
+<td align="left">list all the files with <em>.txt</em> extension</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cp * {another/directory}</code></td>
+<td align="left">copy all the files in the current directory to a different directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="redirect-output" class="section level2">
+<h2>Redirect Output</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>{command} &gt; {file}</code></td>
+<td align="left">redirect output to a file (overwrites if the file exists)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>{command} &gt;&gt; {file}</code></td>
+<td align="left">append output to a file (creates a new file if it does not already exist)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="combining-commands-with-pipes" class="section level2">
+<h2>Combining Commands with <code>|</code> Pipes</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>&lt;command1&gt; | &lt;command2&gt;</code></td>
+<td align="left">the output of “command1” is passed as input to “command2”</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Examples</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ls | wc -l</code></td>
+<td align="left">count the number of files in a directory</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cat {file1} {file2} | less</code></td>
+<td align="left">concatenate files and view them with <em>less</em></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>cat {file} | grep "{pattern}" | wc -l</code></td>
+<td align="left">count how many lines in the file have a match with “pattern”</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
 

@@ -1,11 +1,14 @@
-# Transferring data to/from HPC
+## Overview
 
-**Lesson Objectives:**
+:::tip
+#### Questions
+
+#### Lesson Objectives
 
 - Understand and identify how the filesystem is organised on a HPC system
 - Move data between the local computer and the remote HPC server (using Filezilla and/or `scp`)
 - Mounting the remote filesystem for easier file editing
-
+:::
 
 ## Mounting HPC filesystem
 
@@ -50,6 +53,7 @@ From here on, when you want to connect/disconnect to the HPC filesystem you can 
 -->
 
 
+:::note
 #### Where are my files?
 
 Often it can be confusing how to access the files you see on your file browser from the terminal.
@@ -75,7 +79,7 @@ MobaXterm conveniently provides symbolic links (aka shortcuts) to _Documents_ an
 
 - Desktop: `cd ~/Desktop`
 - Documents: `cd ~/MyDocuments`
-
+:::
 
 ## How to move files
 
@@ -147,7 +151,7 @@ When you specify the *source* directory as `path/to/source_folder/` (with `/` at
 **tip:** to check what files `rsync` would transfer but not actually do the transfer, add the `--dry-run` option. This is useful to check that you've specified the right source and target directories and sync options.
 
 
-## Challenge
+:::exercise
 
 Using the terminal transfer your project directory to the HPC, using either `rsync`, `scp` or _Filezilla_.
 Make sure you transfer the files to your projects directory `rds/hpc-work/projects/`
@@ -174,3 +178,10 @@ cd ~/rds/hpc-work/projects/hpc_workshop/data
 tar -xzf bash-lesson.tar.gz
 ```
 
+:::
+
+## Summary
+
+:::tip
+#### Key Points
+:::

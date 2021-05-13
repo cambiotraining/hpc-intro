@@ -4,7 +4,6 @@ body {
   font-family: Lato;
   font-size: 15px;
   color: #373D3F;
-  counter-reset: question;
 }
 
 pre code {
@@ -12,7 +11,8 @@ pre code {
 }
 
 
-/*---- styling the "details" element ----*/
+/*---- "details" element ----*/
+/* usually used for exercise answers */
 
 details {
 /*  background: #373c3e;
@@ -30,10 +30,21 @@ details summary > * {
 }
 
 
+/*---- Initialise Counters -----*/
+
+:root {
+  counter-reset: question figure;
+}
+
+
 /*---- Boxes ---- */
 /* at the moment all have same colour, but this can be adjusted in the future */
 
-.box, .warning, .note, .keypoints, .objectives, .tip, .exercise {
+.box,
+.warning,
+.note,
+.highlight,
+.exercise {
   padding: 1em 1em 1em 3em;
   /* specify the image properties */
   background-repeat: no-repeat;
@@ -47,7 +58,10 @@ details summary > * {
   color: black;
 }
 
-.warning:before, .note:before, .keypoints:before, .objectives:before, .tip:before, .exercise:before {
+.warning:before,
+.note:before,
+.highlight:before,
+.exercise:before {
   font-weight: bold;
   font-size: 13px;
   color: black;
@@ -69,7 +83,7 @@ details summary > * {
   content: "NOTE";
 }
 
-.tip {
+.highlight {
   background-image: url("https://fonts.gstatic.com/s/i/materialiconsoutlined/tips_and_updates/v1/24px.svg");
 }
 
@@ -83,9 +97,30 @@ details summary > * {
   content: "EXERCISE " counter(question);
 }
 
-
 .box {
   padding-left: 1em;
+}
+
+
+/*---- Image captions ----*/
+
+.figure {
+  display: table;
+  float: none;
+  text-align: center;
+  font-size: 13px;
+  text-indent: 0;
+  border: 1px solid;
+  margin: 0.5em;
+  padding: 0.5em 0.5em 0 0.5em;
+}
+.caption {
+  padding-top: 0.5em;
+}
+.caption:before {
+  counter-increment: figure;
+  font-weight: bold;
+  content: "Figure " counter(figure) ": ";
 }
 
 

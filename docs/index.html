@@ -11,7 +11,7 @@
 
 
 
-<title>Introduction to HPC</title>
+<title>index.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -319,9 +319,7 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01-intro.html">Getting Started</a>
-    </li>
+    <li class="dropdown-header">Under Development</li>
   </ul>
 </li>
 <li class="dropdown">
@@ -332,14 +330,14 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="99-cambridge_hpc.html">Cambridge HPC</a>
+      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
     </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio4edu">
+  <a href="https://github.com/cambiotraining">
     <span class="fas fa-github"></span>
      
   </a>
@@ -353,12 +351,65 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Introduction to HPC</h1>
 
 </div>
 
 
-<p>Homepage</p>
+<div id="practical-introduction-to-high-performance-computing-hpc" class="section level1">
+<h1>Practical introduction to High Performance Computing (HPC)</h1>
+<blockquote>
+<p>By the end of this course you will have a working understanding of what a HPC is, how it can be used in your work, and to independently run analysis on it.</p>
+</blockquote>
+<p>We will cover:</p>
+<ul>
+<li>how to configure your computer to connect to and work on a remote HPC server</li>
+<li>understand how the filesystem is typically organised and move files to/from the HPC</li>
+<li>prepare and run scripts using the job scheduler software <em>SLURM</em></li>
+<li>install and manage software for your analysis</li>
+<li>how to run many similar jobs in parallel</li>
+</ul>
+<div id="target-audience" class="section level2">
+<h2>Target Audience</h2>
+<p>This course is aimed at scientists of any background, and we assume no prior knowledge of what a HPC is or how to use it.</p>
+<p>It may be particularly useful for those who have attended other of our <a href="https://www.training.cam.ac.uk/bioinformatics/search">Bioinformatics Training Courses</a> and now need to process their data on a Linux server. It will also benefit those who find themselves using their personal computers to run computationally demanding analysis/simulations and would like to learn how to adapt these to run on a HPC.</p>
+</div>
+<div id="prerequisites" class="section level2">
+<h2>Prerequisites</h2>
+<p>We assume a basic knowledge of the Unix command line. If you don’t feel comfortable with the command line, please attend our accompanying <a href="">Introduction to the Unix Command Line</a> course, which is scheduled to run just before this one. Alternatively, if all you need is a refresher, please consult our <a href="99-unix_cheatsheet.html">Command Line Cheatsheet</a>.</p>
+<p>Namely, we expect you to be familiar with the following:</p>
+<ul>
+<li>Navigate the filesystem, for example: <code>pwd</code> (where am I?), <code>ls</code> (what’s in here?), <code>cd</code> (how do I get there?)</li>
+<li>Investigate file content using utilities such as: <code>head</code>/<code>tail</code>, <code>less</code>, <code>cat</code>/<code>zcat</code>, <code>grep</code></li>
+<li>Using “flags” to modify a program’s behaviour, for example: <code>ls -l</code></li>
+<li>Redirect output with <code>&gt;</code>, for example: <code>echo "Hello world" &gt; some_file.txt</code></li>
+<li>Use the pipe <code>|</code> to chain several commands together, for example <code>ls | wc -l</code></li>
+<li>Execute shell scripts with <code>bash some_script.sh</code></li>
+</ul>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>Before attending the workshop, please install the necessary software following our <strong><a href="99-setup_instructions.html">setup instructions</a></strong>. If you have any issues installing the software, please <a href="mailto:bioinfo@hermes.cam.ac.uk">get in touch</a> with us beforehand.</p>
+</div>
+<div id="materials" class="section level2">
+<h2>Materials</h2>
+<div class="box">
+<p>Under Development</p>
+</div>
+<!--
+1. [Introduction to HPC systems](episodes/01-intro.html): what is it and how to access it
+2. [Running jobs using a job scheduler](episodes/02-slurm.html): what is a job scheduler and how to run jobs with it
+3. [Transferring data to/from the HPC](episodes/03-transfer_data.md) 
+4. [Managing software](episodes/04-software.md): how to use pre-installed software or install your own
+5. [Parallelising jobs](episodes/05-job_arrays.md): using "job arrays" to run jobs in parallel
+
+
+## Extras
+
+- [Quick Reference Guide](episodes/99_cheatsheet.md)
+- Guide for CSD3 HPC and others (CRUK, MRC, etc...)
+-->
+</div>
+</div>
 
 
 
