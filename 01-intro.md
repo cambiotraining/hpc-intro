@@ -1,59 +1,156 @@
+---
+pagetitle: "HPC Course: Intro"
+---
+
+:::warning
+These materials are still under development
+:::
+
 ## Overview
 
-::::tip
-**Questions**
+:::highlight
+#### Questions
 
 - What is a HPC and how does it differ from a regular computer?
 - What can a HPC be used for?
-- How do I access and work on a HPC?
 
-**Learning Objectives** 
+#### Learning Objectives
 
-- Describe how a typical HPC is organised.
-- Distinguish between a login and a compute node.
-- Understand the difference between "scratch" and "home" storage
-- Describe the role of a job scheduler.
-- Use different software tools to work on a remote server: terminal, _Filezilla_ and _Visual Studio Code_.
-- Login to the HPC and navigate its filesystem.
-<!-- 
-- Move files to/from the HPC. 
-- Mount the HPC filesystem on the local machine 
--->
-::::
+- Describe how a typical HPC is organised: _nodes_, _job scheduler_ and _filesystem_.
+- Distinguish the roles of a _login node_ and a _compute node_.
+- Describe the role of a _job scheduler_.
+- Understand the difference between "scratch" and "home" storage.
+:::
 
-## HPC Overview 
+## What is a HPC and what are its uses?
 
-A typical HPC is organised as follows:
+HPC stands for **high-performance computing** and usually refers to several computers connected together in a network (forming a **HPC cluster**). 
+Each of these computers is referred to as a **node** in the network. 
 
-- A *login* or *head* node: this is the computer that the user connects to and submits jobs to be run.
-- Several *compute* nodes: these are the computers that will actually do the hard work of running jobs.
-- Storage that is shared across all the nodes.
-- A *job scheduler*: this is a program that manages all the jobs submitted by the users, puts them in a queue until there are compute nodes available to run the job.
+The main usage of HPC clusters is to run resource-intensive and/or parallel tasks.
+For example: running thousands of simulations, each one taking several hours; assembling a genome from sequencing data, which requires computations on large volumes of data in memory. 
+These tasks would be extremely challenging to complete on a regular computer. 
+However, they are just the kind of task that a HPC would excel at. 
 
-Here is a schematic of a typical HPC, like the one we are using in this workshop:
+:::note
+**Terminology Alert!**
+
+The terms _HPC_ and _cluster_ are often used interchangeably to mean the same thing. 
+:::
+
+When working on a HPC it is important to understand what kinds of _resources_ are available to us. 
+These are the main resources we need to consider:
+
+- **CPU** (central processing units) is the "brain" of the computer, performing a wide range of operations and calculations. 
+CPUs can have several "cores", which means they can run tasks in parallel, increasing the throughput of calculations per second. 
+A typical personal computer may have a CPU with 4-8 cores. 
+A single compute node on the HPC may have 32-48 cores (and often these are faster than the CPU on our computers).
+- **RAM** (random access memory) is a quick access storage where data is temporarily held while being processed by the CPU. 
+A typical personal computer may have 8-32Gb of RAM. 
+A single compute nodes on a HPC may often have >100Gb RAM.
+- **GPUs** (graphical processing units) are similar to CPUs, but are more specialised in the type of operations they can do. While less flexible than CPUs, each GPU can do thousands of calculations in parallel. 
+This makes them extremely well suited for graphical tasks, but also more generally for matrix computations and so are often used in machine learning applications. 
+
+Usually, HPC servers are available to members of large institutions (such as a Universities or research institutes) or sometimes from cloud providers. 
+This means that:
+
+- There are many users, who may simultaneously be using the HPC. 
+- Each user may want to run several jobs concurrently. 
+- Often large volumes of data are being processed and there is a need for high-performance storage (allowing fast read-writting of files).
+
+So, at any one time, across all the users, there might be many thousands of processes running on the HPC!
+There has to be a way to manage all this workload, and this is why HPC clusters are typically organised somewhat differently from what we might be used to when we work on our own computers. 
+Figure 1 shows a schematic of a HPC, and we go into its details in the following sections. 
+
+![Organisation of a typical HPC.](images/hpc_overview.svg)
+
 
 ### Nodes
 
-Explain these
+There are two types of nodes on a cluster (Figure 1): 
 
-### Filesystem
+- _login_ nodes (also known as _head_ or _submit_ nodes).
+- _compute_ nodes (also known as _worker_ nodes).
 
-On typical HPC servers, there are two main storage locations:
+The **login nodes** are the computers that the user connects to and from where they interact with the cluster. 
+Depending on the size of the cluster, there is often only one login node, but larger clusters may have several of them. 
+Login nodes are used to interact with the filesystem (move around the directories), download and move files, edit and/or view text files and doing other small routine tasks. 
 
-- `/home/participant` is the user's home directory. This is often quite small and used for example for local software and configuration files.
-- `/scratch/participant` is the user's working directory. This is fast and high-performance storage, usually non-backed and with larger space. This is where you will mainly work from. 
+The **compute nodes** are the machines that will actually do the hard work of running jobs.
+These are often high-spec computers with many CPUs and high RAM (or powerful GPU cards), suitable for computationally demanding tasks.
+Often, there are several "flavours" of compute nodes on the same cluster. 
+For example some compute nodes may have fewer CPUs but higher memory (suitable for memory-intensive tasks), while others may have the opposite (suitable for highly-parallelisable tasks). 
 
-:::note
-The separation into two partitions may not always apply to the HPC available at your institution. 
-Also, the location of the "scratch" directory will most likely differ from the example used in this course. 
-Ask your local HPC admin to learn more about your specific setup.
+Users do not have direct access to the _compute nodes_ and instead submitting jobs via a _job scheduler_.
 
-We have a specific page demonstrating the setup of [HPC servers at Cambridge University](../extras/cambridge_hpc_servers.md))
-:::
 
 ### Job Scheduler
 
-Explain (only conceptually)
+A job scheduler is a software used to submit commands to be run on the compute nodes (orange box in Figure 1).
+This is needed because there may often be thousands of processes that all the users of the HPC want to run at any one time. 
+The job scheduler's role is to manage all these jobs, so you don't have to worry about it.
+
+We will cover the details of how to use a job scheduler in "[Using a Job Scheduler](03-slurm.html)". 
+For now, it is enough to know that, using the job scheduler, the user can request specific resources to run their job (e.g. number of cores, RAM, how much time we want to reserve the compute node to run our job, etc.). 
+The job scheduler software then takes care of considering all the jobs being submitted by all the users and putting them in a queue until there are compute nodes available to run the job with the requested resources.
+
+![An analogy of the role of a job scheduler. You can think of a job scheduler as a porter in a restaurant, who checks the groups of people in the queue and assigns them a seat depending on the size of the group and how long they might stay for dinner.](https://carpentries-incubator.github.io/hpc-intro/fig/restaurant_queue_manager.svg)
+
+In terms of parallelising calculations, there are two ways to think about it, and which one we use depends on the specific application. 
+Some software packages have been developed to internally parallelise their calculations (or you may write your own script that uses a parallel library). 
+These are very commonly used in bioinformatic applications, for example.
+In this case we may want to submit a single job, requesting several CPU cores for it. 
+
+In other cases, we may have a program that does not parallelise its calculations, but we want to run many iterations of it. 
+A typical example is when we want to run simulations: each simulation only uses a single core, but we want to run thousands of them. 
+In this case we would want to submit each simulation as a separate job, but only request a single CPU core for each job. 
+
+Finally, we may have a case where both of these are true. 
+For example, we want to process several data files, where each data file can be processed using tools that parallelise their calculations.
+In this case we would want to submit several jobs, requesting several CPU cores for each. 
+
+:::note
+**Job Schedulers**
+
+There are many job scheduler programs available, in this course we will cover one called **SLURM**, but other common ones include [_LSF_](https://en.wikipedia.org/wiki/Platform_LSF), [_PBS_](https://en.wikipedia.org/wiki/Portable_Batch_System), [_HT Condor_](https://en.wikipedia.org/wiki/HTCondor), among others. 
+:::
+
+
+### Filesystem
+
+The filesystem on a HPC cluster often consists of storage partitions that are shared across all the nodes, including both the _login_ and _compute_ nodes (green box in Figure 1).
+This means that data can be accessed from all the computers that compose the HPC cluster.
+
+Although the filesystem organisation may differ depending on the institution, typical HPC servers often have two types of storage:
+
+- The user's **home directory** (e.g. `/home/user`) is the default directory that one lands on when logging in to the HPC. This is often quite small and possibly backed up. The home directory can be used for storing things like configuration files or locally installed software.
+- A **scratch space** (e.g. `/scratch/user`), which is high-performance, large-scale storage. This type of storage may be private to the user or shared with a group. It is usually not backed up, so the user needs to ensure that important data are stored elsewhere. This is the main partition were data is processed from. 
+
+:::note
+**HPC Filesystem**
+
+The separation into "home" and "scratch" storage space may not always apply to the HPC available at your institution. 
+Also, the location of the "scratch space" will most likely differ from the example used in this course. 
+Ask your local HPC admin to learn more about your specific setup.
+
+We have a specific page demonstrating the setup of [HPC servers at Cambridge University](../extras/cambridge_hpc_servers.md).
+:::
+
+
+## Getting Help
+
+In most cases there will be a HPC administrator (or team), who you can reach out for help if you need to obtain more information about how your HPC is organised. 
+
+Some of the questions you may want to ask when you start using a HPC are: 
+
+- what kind of _compute nodes_ are available?
+- what storage do I have access to, and how much?
+- what job scheduler software is used, and can you give me an example submission script to get started?
+- will I be charged for the use of the HPC?
+
+Also, it is often the case that the HPC needs some maintenance service, and you should be informed that this is happening (e.g. by a mailing list). 
+Sometimes things stop working or break, and there may be some time when your HPC is not available while work is being done on it. 
+
 
 :::exercise
 A PhD student wants to process some microscopy data using a python script developed by a postodoc colleague. 
@@ -81,7 +178,7 @@ Option B:
 Option C:
 
 ```
-/scratch/user/project_name/software/ # python packages
+/home/user/project_name/software/ # python packages
 /home/user/project_name/data/        # image files
 /home/user/project_name/scripts/     # analysis script
 ```
@@ -95,134 +192,51 @@ Should they run this command from the login node or submit it as a job to one of
 The analysis script used by the student generates new versions of the images. 
 In total, after processing the data, the student ends up with ~1TB of data (raw + processed images).
 Their group still has 5TB of free space on the HPC, so the student decides to keep the data there until they finish the project. 
-Do you agree with this choice, and why?
-
-<details><summary>Answer</summary>
-
-A1.
-
-Option C is definitely discouraged: as `/home` is typically not high-performance and has limited storage, it should not be used for storing/processing data.
-Option A and B only differ in terms of where the software packages are installed. 
-Typically software can be installed in the user's `/home`, avoiding the need to re-install it multiple times, if the same software is used in different projects. 
-Therefore, option B is the best practice in this example. 
-
-A2. 
-
-Since compressing/uncompressing files is a fairly routine task and unlikely to require too many resources, it would be OK to run it on the login node. 
-If in doubt, the student could have gained "interactive" access to one of the compute nodes (we will cover this in another section). 
-
-A3.
-
-This is probably a bad choice. 
-Since typically "scratch" storage is not backed-up it should not be relied on to store important data. 
-If the student doesn't have access to enough backed-up space for all the data, they should at least back up the raw data and the scripts used to process it. 
-This way, if there is a problem with "scratch" and some processed files are lost, they can re-create them by re-running the scripts on the raw data. 
-
-</details>
-
-:::
-
-
-## Connecting to the HPC
-
-To connect to the HPC we use the program `ssh`. 
-The syntax is `ssh your-hpc-username@hpc-address`.
-After this you will be asked for your password and after typing it you will be logged-in to the HPC. 
-
-:::exercise
-
-After registering for a HPC account, you were sent the following information by the computing support:
-
-> An account has been created for you on our HPC. 
-> 
-> - Username: emailed separately
-> - Password: emailed separately
-> - Host: `login.hpc.cam.ac.uk`
-> - Port (for file transfer protocols): 22 
-> - SLURM account: `TRAINING`
-> 
-> You were automatically allocated 40GB in `/home/username/` and 1TB in `/scratch/username/`. 
-
-**Q1.** Connect to the training HPC using `ssh`
-
-**Q2.** 
-Take some time to explore your home directory to identify what files and folders are in there. 
-Can you identify and navigate your scratch directory?
-
-**Q3.**
-In your "scratch" directory create a project directory with the following structure (hint: use `mkdir`):
-
-```
-hpc_workshop/
-├── data
-└── scripts
-```
+Do you agree with this choice, and why? What factors would you take into consideration in deciding what data to keep and where?
 
 <details><summary>Answer</summary>
 
 **A1.**
 
-```bash
-# Replace user with your username
-ssh user@login.hpc.cam.ac.uk
-```
+Option C is definitely discouraged: as `/home` is typically not high-performance and has limited storage, it should not be used for storing/processing data.
+Option A and B only differ in terms of where the software packages are installed. 
+Typically software can be installed in the user's `/home`, avoiding the need to reinstall it multiple times, in case the same software is used in different projects. 
+Therefore, option B is the best practice in this example. 
 
 **A2.**
 
-```bash
-# list files in the home directory
-ls -l
-
-# navigate to scratch directory and create directories
-cd /scratch/user
-```
+Since compressing/uncompressing files is a fairly routine task and unlikely to require too many resources, it would be OK to run it on the login node. 
+If in doubt, the student could have gained "interactive" access to one of the compute nodes (we will cover this in another section). 
 
 **A3.**
 
-```bash
-mkdir hpc_workshop
-mkdir hpc_workshop/data
-mkdir hpc_workshop/scripts
-```
+This is probably a bad choice. 
+Since typically "scratch" storage is not backed-up it should not be relied on to store important data. 
+If the student doesn't have access to enough backed-up space for all the data, they should at least back up the raw data and the scripts used to process it. 
+This way, if there is a problem with "scratch" and some processed files are lost, they can recreate them by re-running the scripts on the raw data. 
+
 </details>
-:::
-
-**(optional/advanced)**
-
-- Setup passwordless login and setup your `.ssh/config`
-
-
-## Editing scripts remotely 
-
-Use VS Code with the Remote-SSH extension to edit a script directly on the HPC. 
-
-:::exercise
-
-Fix the following code and save it in your project folder. Execute the script with `bash`. 
 
 :::
+
 
 
 ## Summary
 
-:::tip
+:::highlight
+#### Key Points
 
-**Key Points**
-
-- Typically a HPC is composed of login and compute nodes. 
-  - The login nodes are the machines that we connect to and from where we launch jobs. These should not be used to run resource-intensive tasks.
-  - The compute nodes are the high-performance machines on which the actual computations run. Jobs are submitted to the compute nodes through a job scheduler.
-- The job scheduler is used to submit scripts to be run on the compute nodes. 
+- A HPC consists of several computers connected in a network. These are called **nodes**: 
+  - The **login nodes** are the machines that we connect to and from where we interact with the HPC. 
+  These should not be used to run resource-intensive tasks.
+  - The compute nodes are the high-performance machines on which the actual heavy computations run. 
+  Jobs are submitted to the compute nodes through a job scheduler.
+- The **job scheduler** is used to submit scripts to be run on the compute nodes. 
   - The role of this software is to manage large numbers of jobs being submitted and prioritise them according to their resource needs. 
-  - We can configure how our jobs are run by requesting the adequate resources (CPUs and memory). 
+  - We can configure how our jobs are run by requesting the adequate resources (CPUs and RAM memory). 
   - Choosing resources appropriately helps to get our jobs the right level of priority in the queue.
-- The filesystem on a HPC is often split between a small (backed) `/home/username`, and a large and high-performance (non-backed) "scratch" space. 
-  - The user's `/home` is used for things like configuration files and local software instalation.
-  - The "scratch" space is used for the actual data and analysis scripts. 
+- The filesystem on a HPC is often split between a small (backed) **home directory**, and a large and high-performance (non-backed) **scratch space**. 
+  - The user's home is used for things like configuration files and local software instalation.
+  - The scratch space is used for the data and analysis scripts. 
   - Not all HPC servers have this filesystem organisation - always check with your local HPC admin.
-- The terminal is used to connect and interact with the HPC. 
-  - To connect to the HPC we use the `ssh` program, available by default on the MacOS/Linux/Windows10 command line. 
-- To transfer files to/from the HPC we can use the user-friendly _Filezilla_ or command line tools such as `scp` and `rsync` (the latter is the most flexible but also more advanced). 
-- The _Visual Studio Code_ text editor can be used to edit files directly on the HPC, using the "Remote-SSH" extension. This allows to conveniently edit scripts with a featured-rich and user-friendly text editor. 
 :::
-

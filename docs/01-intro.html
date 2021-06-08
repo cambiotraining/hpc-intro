@@ -11,7 +11,7 @@
 
 
 
-<title>01-intro.utf8</title>
+<title>HPC Course: Intro</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,101 +44,6 @@
     </style>
 
 
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 
 
 
@@ -414,7 +319,22 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Under Development</li>
+    <li>
+      <a href="01-intro.html">Introduction to HPC</a>
+    </li>
+    <li>
+      <a href="02-working_on_hpc.html">Working on a HPC cluster</a>
+    </li>
+    <li>
+      <a href="03-slurm.html">Using the SLURM Job Scheduler</a>
+    </li>
+    <li>
+      <a href="04-software.html">Managing Software</a>
+    </li>
+    <li>
+      <a href="05-parallel.html">Parallelising Jobs</a>
+    </li>
+    <li class="dropdown-header">Cambridge HPC Resources</li>
   </ul>
 </li>
 <li class="dropdown">
@@ -425,6 +345,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+    </li>
+    <li>
       <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
     </li>
   </ul>
@@ -432,10 +355,7 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/cambiotraining">
-    <span class="fas fa-github"></span>
-     
-  </a>
+  <a href="https://github.com/cambiotraining">GitHub</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -450,6 +370,9 @@ div.tocify {
 </div>
 
 
+<div class="warning">
+<p>These materials are still under development</p>
+</div>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <div class="highlight">
@@ -457,20 +380,13 @@ div.tocify {
 <ul>
 <li>What is a HPC and how does it differ from a regular computer?</li>
 <li>What can a HPC be used for?</li>
-<li>How do I access and work on a HPC?</li>
-<li>How do I edit and move files in/out of the HPC?</li>
 </ul>
 <h4 id="learning-objectives">Learning Objectives</h4>
 <ul>
-<li>Describe how a typical HPC is organised.</li>
-<li>Distinguish between a login and a compute node.</li>
+<li>Describe how a typical HPC is organised: <em>nodes</em>, <em>job scheduler</em> and <em>filesystem</em>.</li>
+<li>Distinguish the roles of a <em>login node</em> and a <em>compute node</em>.</li>
+<li>Describe the role of a <em>job scheduler</em>.</li>
 <li>Understand the difference between “scratch” and “home” storage.</li>
-<li>Describe the role of a job scheduler.</li>
-<li>Use different software tools to work on a remote server: terminal, <em>Filezilla</em> and <em>Visual Studio Code</em>.</li>
-<li>Login to the HPC and navigate its filesystem. <!-- 
-- Move files to/from the HPC. 
-- Mount the HPC filesystem on the local machine 
---></li>
 </ul>
 </div>
 </div>
@@ -479,7 +395,8 @@ div.tocify {
 <p>HPC stands for <strong>high-performance computing</strong> and usually refers to several computers connected together in a network (forming a <strong>HPC cluster</strong>). Each of these computers is referred to as a <strong>node</strong> in the network.</p>
 <p>The main usage of HPC clusters is to run resource-intensive and/or parallel tasks. For example: running thousands of simulations, each one taking several hours; assembling a genome from sequencing data, which requires computations on large volumes of data in memory. These tasks would be extremely challenging to complete on a regular computer. However, they are just the kind of task that a HPC would excel at.</p>
 <div class="note">
-<p>The terms <em>HPC</em> and <em>cluster</em> are used interchangeably to mean the same thing.</p>
+<p><strong>Terminology Alert!</strong></p>
+<p>The terms <em>HPC</em> and <em>cluster</em> are often used interchangeably to mean the same thing.</p>
 </div>
 <p>When working on a HPC it is important to understand what kinds of <em>resources</em> are available to us. These are the main resources we need to consider:</p>
 <ul>
@@ -487,50 +404,70 @@ div.tocify {
 <li><strong>RAM</strong> (random access memory) is a quick access storage where data is temporarily held while being processed by the CPU. A typical personal computer may have 8-32Gb of RAM. A single compute nodes on a HPC may often have &gt;100Gb RAM.</li>
 <li><strong>GPUs</strong> (graphical processing units) are similar to CPUs, but are more specialised in the type of operations they can do. While less flexible than CPUs, each GPU can do thousands of calculations in parallel. This makes them extremely well suited for graphical tasks, but also more generally for matrix computations and so are often used in machine learning applications.</li>
 </ul>
-<p>Because a HPC is composed of several computers connected together, the way it is organised and how we interact with it is somewhat different from what we might be used to when we work on our own computers. Figure 1 shows a schematic of how a typical HPC is organised, and we go into its details in the following sections.</p>
+<p>Usually, HPC servers are available to members of large institutions (such as a Universities or research institutes) or sometimes from cloud providers. This means that:</p>
+<ul>
+<li>There are many users, who may simultaneously be using the HPC.</li>
+<li>Each user may want to run several jobs concurrently.</li>
+<li>Often large volumes of data are being processed and there is a need for high-performance storage (allowing fast read-writting of files).</li>
+</ul>
+<p>So, at any one time, across all the users, there might be many thousands of processes running on the HPC! There has to be a way to manage all this workload, and this is why HPC clusters are typically organised somewhat differently from what we might be used to when we work on our own computers. Figure 1 shows a schematic of a HPC, and we go into its details in the following sections.</p>
 <div class="figure">
 <img src="images/hpc_overview.svg" alt="" />
-<p class="caption">HPC overview</p>
+<p class="caption">Organisation of a typical HPC.</p>
 </div>
 <div id="nodes" class="section level3">
 <h3>Nodes</h3>
-<p>There are two types of nodes on a cluster (grey boxes in Figure 1):</p>
+<p>There are two types of nodes on a cluster (Figure 1):</p>
 <ul>
 <li><em>login</em> nodes (also known as <em>head</em> or <em>submit</em> nodes).</li>
 <li><em>compute</em> nodes (also known as <em>worker</em> nodes).</li>
 </ul>
 <p>The <strong>login nodes</strong> are the computers that the user connects to and from where they interact with the cluster. Depending on the size of the cluster, there is often only one login node, but larger clusters may have several of them. Login nodes are used to interact with the filesystem (move around the directories), download and move files, edit and/or view text files and doing other small routine tasks.</p>
 <p>The <strong>compute nodes</strong> are the machines that will actually do the hard work of running jobs. These are often high-spec computers with many CPUs and high RAM (or powerful GPU cards), suitable for computationally demanding tasks. Often, there are several “flavours” of compute nodes on the same cluster. For example some compute nodes may have fewer CPUs but higher memory (suitable for memory-intensive tasks), while others may have the opposite (suitable for highly-parallelisable tasks).</p>
-<div class="note">
-<p>Some software packages have an option to specify how many CPU cores to use in their computations (i.e. they can parallelise their calculations). However, in their documentation this you may be referred to as <strong>cores</strong>, <strong>processors</strong>, <strong>CPUs</strong> or <strong>threads</strong>, which are used more or less interchangeably to essentially mean “how many calculations should I run in parallel?”. Although these terms are technically different, when you see this mentioned in the software’s documentation, usually you want to set it as the number of CPU cores you request from the cluster.</p>
-</div>
+<p>Users do not have direct access to the <em>compute nodes</em> and instead submitting jobs via a <em>job scheduler</em>.</p>
 </div>
 <div id="job-scheduler" class="section level3">
 <h3>Job Scheduler</h3>
-<p>A job scheduler is a software used to submit jobs to be run on the compute nodes (orange box in Figure 1). We will cover the details of how to use a job scheduler in “<a href="02-slurm.html">Using a Job Scheduler</a>”. For now, it is enough to know that, using the job scheduler, the user can request specific resources to run their job (e.g. number of cores, RAM, how much time we want to reserve the compute node to run our job, etc.). The job scheduler software then takes care of considering all the jobs being submitted by the users and putting them in a queue until there are compute nodes available to run the job with the requested resources.</p>
+<p>A job scheduler is a software used to submit commands to be run on the compute nodes (orange box in Figure 1). This is needed because there may often be thousands of processes that all the users of the HPC want to run at any one time. The job scheduler’s role is to manage all these jobs, so you don’t have to worry about it.</p>
+<p>We will cover the details of how to use a job scheduler in “<a href="03-slurm.html">Using a Job Scheduler</a>”. For now, it is enough to know that, using the job scheduler, the user can request specific resources to run their job (e.g. number of cores, RAM, how much time we want to reserve the compute node to run our job, etc.). The job scheduler software then takes care of considering all the jobs being submitted by all the users and putting them in a queue until there are compute nodes available to run the job with the requested resources.</p>
 <div class="figure">
 <img src="https://carpentries-incubator.github.io/hpc-intro/fig/restaurant_queue_manager.svg" alt="" />
-<p class="caption">An analogy of the role of a Job Scheduler. You can think of a job scheduler as a porter in a restaurant, who checks the groups of people in the queue and assigns them a seat depending on the size of the group and how long they might stay for dinner.</p>
+<p class="caption">An analogy of the role of a job scheduler. You can think of a job scheduler as a porter in a restaurant, who checks the groups of people in the queue and assigns them a seat depending on the size of the group and how long they might stay for dinner.</p>
 </div>
 <p>In terms of parallelising calculations, there are two ways to think about it, and which one we use depends on the specific application. Some software packages have been developed to internally parallelise their calculations (or you may write your own script that uses a parallel library). These are very commonly used in bioinformatic applications, for example. In this case we may want to submit a single job, requesting several CPU cores for it.</p>
 <p>In other cases, we may have a program that does not parallelise its calculations, but we want to run many iterations of it. A typical example is when we want to run simulations: each simulation only uses a single core, but we want to run thousands of them. In this case we would want to submit each simulation as a separate job, but only request a single CPU core for each job.</p>
 <p>Finally, we may have a case where both of these are true. For example, we want to process several data files, where each data file can be processed using tools that parallelise their calculations. In this case we would want to submit several jobs, requesting several CPU cores for each.</p>
 <div class="note">
+<p><strong>Job Schedulers</strong></p>
 <p>There are many job scheduler programs available, in this course we will cover one called <strong>SLURM</strong>, but other common ones include <a href="https://en.wikipedia.org/wiki/Platform_LSF"><em>LSF</em></a>, <a href="https://en.wikipedia.org/wiki/Portable_Batch_System"><em>PBS</em></a>, <a href="https://en.wikipedia.org/wiki/HTCondor"><em>HT Condor</em></a>, among others.</p>
 </div>
 </div>
 <div id="filesystem" class="section level3">
 <h3>Filesystem</h3>
-<p>The filesystem on a HPC cluster often consists of storage partitions that are shared across all the nodes, including both the <em>login</em> and <em>compute</em> nodes (green box in Figure 1).</p>
+<p>The filesystem on a HPC cluster often consists of storage partitions that are shared across all the nodes, including both the <em>login</em> and <em>compute</em> nodes (green box in Figure 1). This means that data can be accessed from all the computers that compose the HPC cluster.</p>
 <p>Although the filesystem organisation may differ depending on the institution, typical HPC servers often have two types of storage:</p>
 <ul>
 <li>The user’s <strong>home directory</strong> (e.g. <code>/home/user</code>) is the default directory that one lands on when logging in to the HPC. This is often quite small and possibly backed up. The home directory can be used for storing things like configuration files or locally installed software.</li>
 <li>A <strong>scratch space</strong> (e.g. <code>/scratch/user</code>), which is high-performance, large-scale storage. This type of storage may be private to the user or shared with a group. It is usually not backed up, so the user needs to ensure that important data are stored elsewhere. This is the main partition were data is processed from.</li>
 </ul>
 <div class="note">
-<p>The separation into these two types of storage may not always apply to the HPC available at your institution. Also, the location of the “scratch space” will most likely differ from the example used in this course. Ask your local HPC admin to learn more about your specific setup.</p>
+<p><strong>HPC Filesystem</strong></p>
+<p>The separation into “home” and “scratch” storage space may not always apply to the HPC available at your institution. Also, the location of the “scratch space” will most likely differ from the example used in this course. Ask your local HPC admin to learn more about your specific setup.</p>
 <p>We have a specific page demonstrating the setup of <a href="../extras/cambridge_hpc_servers.md">HPC servers at Cambridge University</a>.</p>
 </div>
+</div>
+</div>
+<div id="getting-help" class="section level2">
+<h2>Getting Help</h2>
+<p>In most cases there will be a HPC administrator (or team), who you can reach out for help if you need to obtain more information about how your HPC is organised.</p>
+<p>Some of the questions you may want to ask when you start using a HPC are:</p>
+<ul>
+<li>what kind of <em>compute nodes</em> are available?</li>
+<li>what storage do I have access to, and how much?</li>
+<li>what job scheduler software is used, and can you give me an example submission script to get started?</li>
+<li>will I be charged for the use of the HPC?</li>
+</ul>
+<p>Also, it is often the case that the HPC needs some maintenance service, and you should be informed that this is happening (e.g. by a mailing list). Sometimes things stop working or break, and there may be some time when your HPC is not available while work is being done on it.</p>
 <div class="exercise">
 <p>A PhD student wants to process some microscopy data using a python script developed by a postodoc colleague. They have instructions for how to install the necessary python packages, and also the actual python script to process the images.</p>
 <p><strong>Q1.</strong> Which of the following describes the best practice for the student to organise their files/software?</p>
@@ -543,11 +480,11 @@ div.tocify {
 /scratch/user/project_name/data/    # image files 
 /scratch/user/project_name/scripts/ # analysis script</code></pre>
 <p>Option C:</p>
-<pre><code>/scratch/user/project_name/software/ # python packages
+<pre><code>/home/user/project_name/software/ # python packages
 /home/user/project_name/data/        # image files
 /home/user/project_name/scripts/     # analysis script</code></pre>
 <p><strong>Q2.</strong> It turns out that the microscopy data were very large and compressed as a zip file. The postdoc told the student they can run <code>unzip image_files.zip</code> to decompress the file. Should they run this command from the login node or submit it as a job to one of the compute nodes?</p>
-<p><strong>Q3.</strong> The analysis script used by the student generates new versions of the images. In total, after processing the data, the student ends up with ~1TB of data (raw + processed images). Their group still has 5TB of free space on the HPC, so the student decides to keep the data there until they finish the project. Do you agree with this choice, and why?</p>
+<p><strong>Q3.</strong> The analysis script used by the student generates new versions of the images. In total, after processing the data, the student ends up with ~1TB of data (raw + processed images). Their group still has 5TB of free space on the HPC, so the student decides to keep the data there until they finish the project. Do you agree with this choice, and why? What factors would you take into consideration in deciding what data to keep and where?</p>
 <details>
 <p><summary>Answer</summary></p>
 <p><strong>A1.</strong></p>
@@ -559,114 +496,12 @@ div.tocify {
 </details>
 </div>
 </div>
-</div>
-<div id="connecting-to-the-hpc" class="section level2">
-<h2>Connecting to the HPC</h2>
-<p>All interactions with the HPC happen via the terminal (or command line). To connect to the HPC we use the program <code>ssh</code>. The syntax is:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ssh</span> your-hpc-username@hpc-address</span></code></pre></div>
-<p>After running this command you will be asked for your password and after typing it you will be logged in to the HPC.</p>
-<div class="exercise">
-<p>After registering for a HPC account, you were sent the following information by the computing support:</p>
-<blockquote>
-<p>An account has been created for you on our HPC.</p>
-<ul>
-<li>Username: emailed separately</li>
-<li>Password: emailed separately</li>
-<li>Host: <code>login.hpc.cam.ac.uk</code></li>
-<li>Port (for file transfer protocols): 22</li>
-<li>SLURM account: <code>TRAINING</code></li>
-</ul>
-<p>You were automatically allocated 40GB in <code>/home/username/</code> and 1TB in <code>/scratch/username/</code>.</p>
-</blockquote>
-<p><strong>Q1.</strong> Connect to the training HPC using <code>ssh</code></p>
-<p><strong>Q2.</strong> Take some time to explore your home directory to identify what files and folders are in there. Can you identify and navigate to your scratch directory?</p>
-<p><strong>Q3.</strong> In your “scratch” directory create a project directory with the following structure (hint: use <code>mkdir</code>):</p>
-<pre><code>hpc_workshop/
-├── data
-└── scripts</code></pre>
-<p><strong>Q4.</strong> Using the commands <code>free -h</code> (available RAM memory) and <code>nproc --all</code> (number of CPU cores available) compare the capabilities of your own computer to the capabilities of the login node of our HPC. Check how many people are logged in to the HPC login node using the command <code>who</code>.</p>
-<details>
-<p><summary>Answer</summary></p>
-<p><strong>A1.</strong></p>
-<p>To login to the HPC we run the following from the terminal:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ssh</span> user@login.hpc.cam.ac.uk</span></code></pre></div>
-<p>(replace “user” by your HPC username)</p>
-<p><strong>A2.</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># list files and their details</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">ls</span> -l</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># navigate to scratch directory</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="bu">cd</span> /scratch/user</span></code></pre></div>
-<p><strong>A3.</strong></p>
-<p>We can use <code>mkdir</code> to create our directories:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">mkdir</span> hpc_workshop</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">mkdir</span> hpc_workshop/data</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">mkdir</span> hpc_workshop/scripts</span></code></pre></div>
-<p><strong>A4.</strong></p>
-<p>The main thing to consider in this question is where you run the commands from. To get the number of CPUs and memory on your computer make sure you open a new terminal and that you see something like <code>[your-local-username@laptop: ~]$</code> (where “user” is the username on your personal computer and “laptop” is the name of your personal laptop).</p>
-<p>Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. You should see something like <code>[your-hpc-username@login ~]$</code></p>
-<p>To see how many people are currently on the login node we can combine the <code>who</code> and <code>wc</code> commands:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># pipe the output of `who` to `wc`</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># the `-l` flag instructs `wc` to count &quot;lines&quot; of its input</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">who</span> <span class="kw">|</span> <span class="fu">wc</span> -l</span></code></pre></div>
-</details>
-</div>
-<div class="highlight">
-<h4 id="tips-tricks">Tips &amp; Tricks</h4>
-<p>To make your life easier you can set up <strong>passwordless login</strong>.</p>
-<details>
-<summary>More</summary> TODO: Show how to setup passwordless login and <code>.ssh/config</code>
-</details>
-</div>
-</div>
-<div id="editing-scripts-remotely" class="section level2">
-<h2>Editing Scripts Remotely</h2>
-<p>Most of the work you will be doing on a HPC is editing script files. These may be scripts that you are developing to do a particular analysis or simulation, for example (in Python, R, Julia, etc.). But also - and more relevant for this course - you will be writing <em>shell scripts</em> containing the commands that you want to be executed on the compute nodes.</p>
-<p>There are several possibilities to edit text files on a remote server. A simple one is to use the program <code>nano</code>, which is a very simple text editor available on most linux distributions. However, this gives you very little functionality and is not as user friendly as a full-featured text editor.</p>
-<p>In this course we will use <em>Visual Studio Code</em> (<em>VS Code</em> for short), which is an open-source software with a wide range of functionality and several extensions. Conveniently, one of those extensions allows us to connect to a remote computer (via <em>ssh</em>) and edit files as if they were on our own computer.</p>
-<p>To connect VS Code to the HPC (see Figure 3):</p>
-<ol style="list-style-type: decimal">
-<li>Click the “Open Remote Window” green button on the bottom left corner</li>
-<li>Click “Connect to Host…” in the popup menu that opens</li>
-<li>Type your username and HPC hostname in the same way you do with <code>ssh</code></li>
-<li>Once you are connected the green button on the bottom-left corner should change to indicate you are ssh’d into the HPC</li>
-<li>Use the left-hand “Explorer” and click “Open Folder”</li>
-<li>Type the <em>path</em> to the folder on the HPC from where you want to work from</li>
-</ol>
-<div class="figure">
-<img src="images/vscode_ssh.svg" alt="" />
-<p class="caption">How to connect to a remote server with <em>VS Code</em></p>
-</div>
-<p>Once you are connected to the HPC in this way, you can edit files and even create new files and folders on the HPC filesystem.</p>
-<div class="exercise">
-<p>If you haven’t already done so, connect your VS Code to the HPC following the instructions in Figure 3.</p>
-<ol style="list-style-type: decimal">
-<li>Open the <code>hpc_workshop</code> folder on VS Code (this is the folder you created in the previous exercise).</li>
-<li>Create a new shell script in the “scripts” folder called <code>test.sh</code>. Copy the code shown into the script, and fix it where the word “FIXME” appears.</li>
-<li>Run the script with <code>bash test.sh</code></li>
-</ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># code in here</span></span></code></pre></div>
-<details>
-<p><summary>Answer</summary> <strong>A1.</strong></p>
-<p>To open the folder we follow the instructions in Figure 3 and use the following path: <code>/scratch/user/hpc_workshop</code> (replacing “user” with your username)</p>
-<p><strong>A2.</strong></p>
-<p>To create a new script in VS Code we can go to “File &gt; New File” or use the <kbd>Ctrl + N</kbd> shortcut.</p>
-<p>The fixed code should be:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># answer here</span></span></code></pre></div>
-<p><strong>A3.</strong></p>
-<p>We can run the script from the terminal. First make sure you are on the correct folder:</p>
-<pre><code>cd /scratch/user/hpc_workshop</code></pre>
-<p>Then run the script</p>
-<pre><code>bash scripts/test.sh</code></pre>
-</details>
-</div>
-</div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
 <div class="highlight">
 <h4 id="key-points">Key Points</h4>
 <ul>
-<li>Typically a HPC is of several computers connected in a network. These are called <strong>nodes</strong>:
+<li>A HPC consists of several computers connected in a network. These are called <strong>nodes</strong>:
 <ul>
 <li>The <strong>login nodes</strong> are the machines that we connect to and from where we interact with the HPC. These should not be used to run resource-intensive tasks.</li>
 <li>The compute nodes are the high-performance machines on which the actual heavy computations run. Jobs are submitted to the compute nodes through a job scheduler.</li>
@@ -683,12 +518,6 @@ div.tocify {
 <li>The scratch space is used for the data and analysis scripts.</li>
 <li>Not all HPC servers have this filesystem organisation - always check with your local HPC admin.</li>
 </ul></li>
-<li>The terminal is used to connect and interact with the HPC.
-<ul>
-<li>To connect to the HPC we use <code>ssh user@hostname</code></li>
-</ul></li>
-<li><em>Visual Studio Code</em> is a text editor that can be used to edit files directly on the HPC (using the “Remote-SSH” extension).</li>
-<li>To transfer files to/from the HPC we can use <em>Filezilla</em> or command line tools such as <code>scp</code> and <code>rsync</code> (the latter is the most flexible but also more advanced).</li>
 </ul>
 </div>
 </div>

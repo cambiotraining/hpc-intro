@@ -30,22 +30,6 @@ details summary > * {
 }
 
 
-/*----------------ADDING WHITE SPACE-------------*/
-
-.title {
-  margin-top: 2em !important;
-  margin-bottom: 0.75em;
-}
-
-.section h1,
-.section h2,
-.section h3,
-.section h4 {
-  padding-top: 2.5em !important; /*adding so much padding because theme adds a margin-top: -65px by default */
-}
-
-
-
 /*---- Initialise Counters -----*/
 
 :root {
@@ -70,7 +54,7 @@ details summary > * {
   /*border: 3px black;
   border-style: solid;*/
   background-color: #f7f8fa;
-  box-shadow: 0 0 3px 2px #eceef2;
+  /*box-shadow: 0 0 3px 2px #eceef2;*/
   color: black;
 }
 
@@ -88,19 +72,17 @@ details summary > * {
   box-shadow: 0 0 3px 2px #fce4e1;
   background-image: url("https://fonts.gstatic.com/s/i/materialiconsoutlined/error_outline/v11/24px.svg");
 }
-.warning:before {
-  content: "WATCH OUT";
-}
 
 .note {
+  background-color: #ebebf2;
+  color: #1b1b1b;
+  box-shadow: 0 0 3px 2px #ebebf2;
   background-image: url("https://fonts.gstatic.com/s/i/materialiconsoutlined/info/v15/24px.svg");
-}
-.note:before {
-  content: "NOTE";
 }
 
 .highlight {
   background-image: url("https://fonts.gstatic.com/s/i/materialiconsoutlined/tips_and_updates/v1/24px.svg");
+  border-left: 10px solid #FFC107;
 }
 
 .exercise {
@@ -126,8 +108,10 @@ details summary > * {
   text-align: center;
   font-size: 13px;
   text-indent: 0;
-  border: 1px solid;
-  margin: 0.5em;
+  /*border: 1px solid;
+  border-radius: 10px;*/
+  box-shadow: grey 0 5px 15px;
+  margin: 1.5em 0.5em 2em 0.5em;
   padding: 0.5em 0.5em 0 0.5em;
 }
 .caption {

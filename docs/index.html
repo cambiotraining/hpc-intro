@@ -319,7 +319,22 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Under Development</li>
+    <li>
+      <a href="01-intro.html">Introduction to HPC</a>
+    </li>
+    <li>
+      <a href="02-working_on_hpc.html">Working on a HPC cluster</a>
+    </li>
+    <li>
+      <a href="03-slurm.html">Using the SLURM Job Scheduler</a>
+    </li>
+    <li>
+      <a href="04-software.html">Managing Software</a>
+    </li>
+    <li>
+      <a href="05-parallel.html">Parallelising Jobs</a>
+    </li>
+    <li class="dropdown-header">Cambridge HPC Resources</li>
   </ul>
 </li>
 <li class="dropdown">
@@ -330,6 +345,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+    </li>
+    <li>
       <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
     </li>
   </ul>
@@ -337,10 +355,7 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/cambiotraining">
-    <span class="fas fa-github"></span>
-     
-  </a>
+  <a href="https://github.com/cambiotraining">GitHub</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -356,8 +371,10 @@ div.tocify {
 
 
 <div class="highlight">
+<p>Knowing how to work on a <strong>High Performance Computing (HPC)</strong> system is an essential skill for applications such as bioinformatics, big-data analysis, image processing, machine learning, parallelising tasks, and other high-throughput applications.</p>
+<p>In this course we will cover the basics of High Performance Computing, what it is and how you can use it in practice. This is a hands-on workshop, which should be accessible to researchers from a range of backgrounds and offering several opportunities to practice the skills we learn along the way.</p>
 <blockquote>
-<p>By the end of this course you will have a practical understanding of what a HPC is, how it can be used in your work, and how to independently use it.</p>
+<p>By the end of this course you will be able to independently work on a typical HPC server.</p>
 </blockquote>
 <p>We will cover:</p>
 <ul>
@@ -371,12 +388,12 @@ div.tocify {
 </div>
 <div id="target-audience" class="section level2">
 <h2>Target Audience</h2>
-<p>This course is aimed at anyone who would like to use a HPC for their work, or learn whether it is suitable for their research needs. We assume no prior knowledge of what a HPC is or how to use it.</p>
+<p>This course is aimed at students and researchers of any background. We assume no prior knowledge of what a HPC is or how to use it.</p>
 <p>It may be particularly useful for those who have attended other of our <a href="https://www.training.cam.ac.uk/bioinformatics/search">Bioinformatics Training Courses</a> and now need to process their data on a Linux server. It will also benefit those who find themselves using their personal computers to run computationally demanding analysis/simulations and would like to learn how to adapt these to run on a HPC.</p>
 </div>
 <div id="prerequisites" class="section level2">
 <h2>Prerequisites</h2>
-<p>We assume a basic knowledge of the Unix command line. If you don’t feel comfortable with the command line, please attend our accompanying <a href="">Introduction to the Unix Command Line</a> course, which is scheduled to run just before this one. Alternatively, if all you need is a refresher, please consult our <a href="99-unix_cheatsheet.html">Command Line Cheatsheet</a>.</p>
+<p>We assume a basic knowledge of the Unix command line. If you don’t feel comfortable with the command line, please attend our accompanying <a href="https://training.csx.cam.ac.uk/bioinformatics/course/bioinfo-unix2">Introduction to the Unix Command Line</a> course, which is scheduled to run just before this one. Alternatively, if all you need is a refresher, please consult our <a href="99-unix_cheatsheet.html">Command Line Cheatsheet</a>.</p>
 <p>Namely, we expect you to be familiar with the following:</p>
 <ul>
 <li>Navigate the filesystem, for example: <code>pwd</code> (where am I?), <code>ls</code> (what’s in here?), <code>cd</code> (how do I get there?)</li>

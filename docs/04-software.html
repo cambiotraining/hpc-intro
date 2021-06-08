@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>HPC Course: Software</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="assets/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="height: 25px;" src="assets/img/logo.svg" /></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="99-setup.html">Setup</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Materials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-intro.html">Introduction to HPC</a>
+    </li>
+    <li>
+      <a href="02-working_on_hpc.html">Working on a HPC cluster</a>
+    </li>
+    <li>
+      <a href="03-slurm.html">Using the SLURM Job Scheduler</a>
+    </li>
+    <li>
+      <a href="04-software.html">Managing Software</a>
+    </li>
+    <li>
+      <a href="05-parallel.html">Parallelising Jobs</a>
+    </li>
+    <li class="dropdown-header">Cambridge HPC Resources</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Extras
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+    </li>
+    <li>
+      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/cambiotraining">GitHub</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div class="warning">
+<p>These materials are still under development</p>
+</div>
+<div id="managing-software" class="section level1">
+<h1>Managing Software</h1>
+<div class="highlight">
+<h4 id="questions">Questions</h4>
+<ul>
+<li>How do I use pre-installed software on the HPC?</li>
+<li>How do I install and manage software on the HPC?</li>
+</ul>
+<h4 id="lesson-objectives">Lesson Objectives</h4>
+<ul>
+<li>Use the <code>module</code> tool to search for and load pre-installed software.</li>
+<li>Understand what a package manager is, and how it can be used to manage software instalation on a HPC environment.</li>
+<li>Install the <em>Conda</em> package manager.</li>
+<li>Create a software environment and install software using <em>Conda</em>.</li>
+</ul>
+</div>
+<div id="using-pre-installed-software" class="section level2">
+<h2>Using Pre-installed Software</h2>
+<p>It is very often the case that HPC admins have pre-installed several software packages that are regularly used by their users. Because there can be a large number of packages (and often different versions of the same program), you need to load the programs you want to use in your script using the <code>module</code> tool.</p>
+<p>The following table summarises the most common commands for this tool:</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>module avail</code></td>
+<td align="left">List all available packages.</td>
+</tr>
+<tr class="even">
+<td align="right"><code>module avail 2&gt;&amp;1 | grep -i &lt;pattern&gt;</code></td>
+<td align="left">Search the available package list that matches “pattern”.</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>module load &lt;program&gt;</code></td>
+<td align="left">Load the program and make it available for use.</td>
+</tr>
+</tbody>
+</table>
+<p>If a package is not available through the <code>module</code> command, your only option is to contact the HPC admin and ask them to install it for you. Alternatively, you can use a package manager as we show in the next section.</p>
+<div class="exercise">
+<p>small exercise?</p>
+</div>
+</div>
+<div id="the-conda-package-manager" class="section level2">
+<h2>The <code>conda</code> Package Manager</h2>
+<p>Often you may want to use software packages that are not be installed by default on the HPC. There are several ways you could manage your own software installation, but in this course we will be using <em>Conda</em>, which gives you access to a large number of scientific packages.</p>
+<p>There are two main software distributions that you can download and install, called <em>Anaconda</em> and <em>Miniconda</em>.<br />
+<em>Miniconda</em> is a lighter version, which includes only base Python, while <em>Anaconda</em> is a much larger bundle of software that includes many other packages (see the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html#anaconda-or-miniconda">Documentation Page</a> for more information).</p>
+<p>One of the strengths of using <em>Conda</em> to manage your software is that you can have different versions of your software installed alongside each other, organised in <strong>environments</strong>. Organising software packages into environments is extremely useful, as it allows to have a <em>reproducible</em> set of software versions that you can use and resuse in your projects.</p>
+<div class="figure">
+<img src="https://nbisweden.github.io/excelerate-scRNAseq/logos/conda_illustration.png" alt="" />
+<p class="caption">Make a generic version of this image to illustrate environments</p>
+</div>
+<div class="note">
+<p><strong>Conda versus Module</strong></p>
+<p>Although <em>Conda</em> is a great tool to manage your own software installation, the disadvantage is that the software is not compiled specifically taking into account the hardware of the HPC. This is a slightly technical topic, but the main practical consequence is that software installed by HPC admins and made available through the <code>module</code> system may sometimes run faster than software installed via <code>conda</code>. This means you will use fewer resources and your jobs will complete faster.</p>
+</div>
+<div id="installing-conda" class="section level3">
+<h3>Installing <em>Conda</em></h3>
+<p>To start with, let’s install <em>Conda</em> on the HPC. In this course we will install the <em>Miniconda</em> bundle, as it’s lighter and faster to install:</p>
+<ol style="list-style-type: decimal">
+<li>Make sure you’re logged in to the HPC and in the home directory (<code>cd ~</code>).</li>
+<li>download the <em>Miniconda</em> installer by running: <code>wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh</code></li>
+<li>run the installation script just downloaded: <code>bash Miniconda3-latest-Linux-x86_64.sh</code></li>
+<li>follow the installation instructions accepting default options (answering ‘yes’ to any questions)</li>
+<li>run <code>conda config --add channels conda-forge; conda config --add channels bioconda</code>. This adds two <em>channels</em> (sources of software) useful for bioinformatics and data science applications.</li>
+</ol>
+<div class="note">
+<p><em>Anaconda</em> and <em>Miniconda</em> are also available for Windows and Mac OS. See the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation">Conda Installation Documents</a> for instructions.</p>
+</div>
+</div>
+<div id="installing-software-using-conda" class="section level3">
+<h3>Installing Software Using <code>conda</code></h3>
+<p>The command used to install and manage software is called <code>conda</code>. Although we will only cover the basics in this course, it has an <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/">excellent documentation</a> and a useful <a href="https://docs.conda.io/projects/conda/en/latest/_downloads/1f5ecf5a87b1c1a8aaf5a7ab8a7a0ff7/conda-cheatsheet.pdf">cheatsheet</a>.</p>
+<p>The first thing to do is to create a software environment for our project. Although this is optional (you could instead install everything in the “base” default environment), it is a good practice as it means the software versions remain stable within each project.</p>
+<p>To create an environment we use:</p>
+<pre class="console"><code>conda create --name &lt;ENV&gt;</code></pre>
+<p>Where “<ENV>” is the name we want to give to that environment. Once the environment is created, we can install packages using:</p>
+<pre class="console"><code>conda install --name &lt;ENV&gt; &lt;PROGRAM&gt;</code></pre>
+<p>Where “<PROGRAM>” is the name of the software we want to install.</p>
+<div class="note">
+<p>One way to organise your software environments is to create an environment for each kind of analysis that you might be doing regularly. For example, you could have an environment named <code>imaging</code> with software that you use for image processing (e.g. Python’s scikit-image or the ImageMagick package) and another called <code>deeplearn</code> with software you use for deep learning applications (e.g. Python’s Keras).</p>
+</div>
+<p>To search for the software packages that are available through <code>conda</code>:</p>
+<ul>
+<li>go to <a href="https://anaconda.org">anaconda.org</a>.</li>
+<li>in the search box search for a program of your choice. For example: “bowtie2”.</li>
+<li>the results should be listed as <code>CHANNEL/PROGRAM</code>, where <em>CHANNEL</em> will the the source channel from where the software is available. Usually scientific/bioinformatics software is available through the <code>conda-forge</code> and <code>bioconda</code> channels.</li>
+</ul>
+<p>If you need to install a program from a different channel than the defaults, you can specify it during the install command using the <code>-c</code> option. For example <code>conda install -c bioconda bowtie2</code> would install the <em>bowtie2</em> program from the <em>bioconda</em> channel.</p>
+</div>
+<div id="loading-conda-environments" class="section level3">
+<h3>Loading <em>Conda</em> Environments</h3>
+<p>Once your packages are installed in an environment, you can load that environment by using:</p>
+<pre class="console"><code>source activate &lt;ENV&gt;</code></pre>
+<p>Where " <ENV> " is the name of your environment.</p>
+<div class="note">
+<p><strong>Tip</strong></p>
+<p>If you forget which environments you have created, you can use <code>conda env list</code> to get a list of environments.</p>
+</div>
+<div class="exercise">
+<p>A “FIXME” script, omiting the <code>source activate</code> so that it throws an error when people first run it. This should teach debugging and reinforce that we need to include it at the top of the script. Keep this as a bioinformatics example, but write some background for the non-bioinformatics people.</p>
+<ul>
+<li>Install the <code>bowtie2</code> program using <code>conda</code>. This program is used for aligning sequence reads to a reference genome.</li>
+<li>Check that it installed correctly by running <code>which bowtie2</code> and <code>bowtie2 --help</code>.</li>
+<li>Adjust the <code>#SBATCH</code> options in the following script, which downloads and indexes the <em>Drosophila melanogaster</em> reference genome (save the script in <code>$HOME/rds/hpc-work/hpc_workshop/scripts/00_index_genome.sh</code>)</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#SBATCH -A &lt;</span><span class="al">FIXME</span><span class="co">&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#SBATCH -J index_genome</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#SBATCH -D /home/&lt;</span><span class="al">FIXME</span><span class="co">&gt;/rds/hpc-work/projects/hpc_workshop</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#SBATCH -o scripts/00_index_genome.log</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#SBATCH -p skylake         # or skylake-highmem</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#SBATCH -c 1               # max 32 CPUs</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#SBATCH --mem-per-cpu=1G   # max 6G or 12G for skilake-highmem</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#SBATCH -t 00:10:00        # HH:MM:SS</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># make a directory for the reference</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="fu">mkdir</span> reference</span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="bu">cd</span> reference   <span class="co"># change into this directory</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co"># download the genome file from ENSEMBL</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="fu">wget</span> ftp://ftp.ensembl.org/pub/release-97/fasta/drosophila_melanogaster/dna/Drosophila_melanogaster.BDGP6.22.dna.toplevel.fa.gz</span>
+<span id="cb4-18"><a href="#cb4-18"></a></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co"># unzip the file</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="fu">gunzip</span> Drosophila_melanogaster.BDGP6.22.dna.toplevel.fa.gz</span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co"># index the reference genome for bowtie2</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># the syntax is first the name of the file and then a file prefix</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="ex">bowtie2-build</span> Drosophila_melanogaster.BDGP6.22.dna.toplevel.fa Drosophila_melanogaster.BDGP6.22.dna.toplevel</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<div class="highlight">
+<h4 id="key-points">Key Points</h4>
+<ul>
+<li>The <code>module</code> tool can be used to search for and load pre-installed software packages on a HPC.
+<ul>
+<li>This tool may not always be available on your HPC.</li>
+</ul></li>
+<li>To install your own software, you can use the <em>Conda</em> package manager.
+<ul>
+<li><em>Conda</em> allows you to have separate “software environments”, where multiple package versions can co-exist on your system.</li>
+</ul></li>
+<li>Use <code>conda env create &lt;ENV&gt;</code> to create a new software environment and <code>conda install -n &lt;ENV&gt; &lt;PROGRAM&gt;</code> to install a program on that environment.</li>
+<li>Use <code>source activate &lt;ENV&gt;</code> to “activate” the software environment and make all the programs installed there available.
+<ul>
+<li>When submitting jobs to SLURM, always remember to include the <code>source activate</code> command at the start of the shell script you submit to <code>sbatch</code>.</li>
+</ul></li>
+</ul>
+<h4 id="further-resources">Further resources</h4>
+<ul>
+<li>Search for <em>Conda</em> packages at <a href="https://anaconda.org">anaconda.org</a></li>
+<li>Learn more about <em>Conda</em> from the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/">Conda User Guide</a></li>
+<li><a href="https://docs.conda.io/projects/conda/en/latest/_downloads/1f5ecf5a87b1c1a8aaf5a7ab8a7a0ff7/conda-cheatsheet.pdf">Conda Cheatsheet</a> (PDF)</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

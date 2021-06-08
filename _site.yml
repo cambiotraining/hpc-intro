@@ -1,5 +1,6 @@
-name: "course-template"
+name: "HPC Course"
 output_dir: "docs"
+exclude: ["course_files", "episodes", "extras", "notes", "slides"]
 output:
   html_document:
     highlight: pygments
@@ -15,12 +16,24 @@ navbar:
       href: 99-setup.html
     - text: "Materials"
       menu:
-        - text: "Getting Started"
+        - text: "Introduction to HPC"
           href: 01-intro.html
+        - text: "Working on a HPC cluster"
+          href: 02-working_on_hpc.html
+        - text: "Using the SLURM Job Scheduler"
+          href: 03-slurm.html
+        - text: "Managing Software"
+          href: 04-software.html
+        - text: "Parallelising Jobs"
+          href: 05-parallel.html
+        - text: "Cambridge HPC Resources"
     - text: "Extras"
       menu:
-        - text: "Cambridge HPC"
+        - text: "Cambridge HPC Resources"
           href: 99-cambridge_hpc.html
+        - text: "Unix Cheatsheet"
+          href: 99-unix_cheatsheet.html
   right:
-    - href: https://github.com/rstudio4edu
-      icon: fa-github
+    - text: "GitHub"
+      href: https://github.com/cambiotraining
+

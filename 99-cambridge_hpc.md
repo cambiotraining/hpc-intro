@@ -1,8 +1,12 @@
+---
+pagetitle: "HPC Course: Cambridge"
+---
+
 ## CSD3
 
 Here is a schematic summary of the university HPC:
 
-![University HPC](../images/uni_hpc_schematic.svg)
+![University HPC](./images/uni_hpc_schematic.svg)
 
 
 There are two main storage locations of interest available on the HPC:
