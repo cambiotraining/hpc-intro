@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>HPC Course: SLURM</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="assets/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="height: 25px;" src="assets/img/logo.svg" /></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="99-setup.html">Setup</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Materials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-intro.html">Introduction to HPC</a>
+    </li>
+    <li>
+      <a href="02-working_on_hpc.html">Working on a HPC cluster</a>
+    </li>
+    <li>
+      <a href="03-slurm.html">Using the SLURM Job Scheduler</a>
+    </li>
+    <li>
+      <a href="04-software.html">Managing Software</a>
+    </li>
+    <li>
+      <a href="05-parallel.html">Parallelising Jobs</a>
+    </li>
+    <li class="dropdown-header">Cambridge HPC Resources</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Extras
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+    </li>
+    <li>
+      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/cambiotraining">GitHub</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div class="warning">
+<p>These materials are still under development</p>
+</div>
+<div id="using-the-slurm-job-scheduler" class="section level1">
+<h1>Using the SLURM Job Scheduler</h1>
+<div class="highlight">
+<h4 id="questions">Questions</h4>
+<ul>
+<li>How do I submit jobs to the HPC?</li>
+<li>How can I customise my jobs?</li>
+<li>How can I estimate how many resources I need for a job?</li>
+</ul>
+<h4 id="lesson-objectives">Lesson Objectives</h4>
+<ul>
+<li>Submit a simple job using SLURM and analyse its output.</li>
+<li>Edit a job submission script to request non-default resources.</li>
+<li>Use SLURM environment variables to customise scripts.</li>
+<li>Use the commands <code>squeue</code> and <code>sacct</code> to obtain information about the jobs.</li>
+<li>Troubleshoot errors occurring during job execution.</li>
+</ul>
+</div>
+<div id="job-scheduler-overview" class="section level2">
+<h2>Job Scheduler Overview</h2>
+<p>As we briefly discussed in “<a href="01-intro.html">Introduction to HPC</a>”, HPC servers usually have a <em>job scheduling</em> software that manages all the jobs that the users submit to be run on the <em>compute nodes</em>. This allows efficient usage of the compute resources (CPUs and RAM), and the user does not have to worry about affecting other people’s jobs.</p>
+<p>The job scheduler uses an algorithm to prioritise the jobs, weighing aspects such as:</p>
+<ul>
+<li>how much time did you request to run your job?</li>
+<li>how many resources (CPUs and RAM) do you need?</li>
+<li>how many other jobs have you got running at the moment?</li>
+</ul>
+<p>Based on these, the algorithm will rank each of the jobs in the queue to decide on a “fair” way to prioritise them. Note that this priority dynamically changes all the time, as jobs are submitted or cancelled by the users, and depending on how long they have been in the queue. For example, a job requesting many resources may start with a low priority, but the longer it waits in the queue, the more its priority increases.</p>
+</div>
+<div id="submitting-a-job-with-slurm" class="section level2">
+<h2>Submitting a Job with SLURM</h2>
+<p>To submit a job to SLURM, you need to include your code in a <em>shell script</em>. Let’s start with a minimal example, found in our workshop data folder “01-slurm_basics” (<code>cd /scratch/username/hpc_workshop/01-slurm_basics</code>).</p>
+<p>Our script is called <code>simple_job.sh</code> and contains the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">hostname</span></span></code></pre></div>
+<p>We can run this script from the login node using the <code>bash</code> interpreter:</p>
+<pre class="console"><code>bash test_job.sh</code></pre>
+<p>Which prints the output:</p>
+<pre><code>This job is running on:
+login-node</code></pre>
+<p>To submit the job to the scheduler we instead use the <code>sbatch</code> command in a very similar way:</p>
+<pre class="console"><code>sbatch test_script.sh</code></pre>
+<p>In this case, we are informed that the job is submitted, but the output is not printed back on the console. Instead the output is sent to a file, by default named as <code>slurm-JOBID.out</code>, where “JOBID” is a number corresponding to the job ID assigned to the job by the scheduler. This file will be located in the same directory where you launched the job from.</p>
+<p>We can investigate the output by looking inside the file, for example <code>cat slurm-JOBID.out</code>.</p>
+<div class="note">
+<p>The first line of the shell scripts <code>#!/bin/bash</code> is called a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a> and indicates which program should interpret this script. In this case, <em>bash</em> is the interpreter of <em>shell</em> scripts (there’s other shell interpreters, but that’s beyond what we need to worry about here).</p>
+<p>Remember to <strong>always have this as the first line of your script</strong>. If you don’t, <code>sbatch</code> will throw an error.</p>
+</div>
+</div>
+<div id="configuring-job-options" class="section level2">
+<h2>Configuring Job Options</h2>
+<p>Although the above example works, our job just ran with the default options that SLURM was configured with. Instead, we usually want to customise our job, by specifying options at the top of the script using the <code>#SBATCH</code> keyword, followed by the SLURM option.</p>
+<p>For example, one option we may want to change in our previous script is the name of the file to where our standard output is written to. We can do this using the <code>-o</code> option.</p>
+<p>Here is how we could modify our script (you can do it using <em>VS Code</em>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#SBATCH -o simple_job.log</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">hostname</span></span></code></pre></div>
+<p>If we now re-run the script using <code>sbatch test_job.sh</code>, the output goes to a file named <code>simple_job.log</code>.</p>
+<p>There are several other options we can specify when using SLURM, and we will encounter several more of them as we progress through the materials. Here are some of the most common ones (anything in <code>&lt;&gt;</code> is user input):</p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>-D &lt;path&gt;</code></td>
+<td align="left">the <em>working directory</em> used for the job. This is the directory that SLURM will use as a reference when running the job.</td>
+</tr>
+<tr class="even">
+<td align="right"><code>-o &lt;path/filename&gt;</code></td>
+<td align="left">file where the output that would normally be printed on the console is saved in. This is defined in relation to the working directory set above.</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>-c &lt;number&gt;</code></td>
+<td align="left">the number of CPUs you want to use for your job.</td>
+</tr>
+<tr class="even">
+<td align="right"><code>-t &lt;HH:MM:SS&gt;</code></td>
+<td align="left">the time you need for your job to run. This is not always easy to estimate in advance, so if you’re unsure you may want to request a good chunk of time. However, the more time you request for your job, the lower its priority in the queue.</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>--mem=&lt;number&gt;GB</code></td>
+<td align="left">how much RAM memory you want for your job in gigabytes.</td>
+</tr>
+<tr class="even">
+<td align="right"><code>-p &lt;name&gt;</code></td>
+<td align="left">the <em>partition</em> name.</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>-A &lt;name&gt;</code></td>
+<td align="left">the billing account. This is sometimes needed if you’re using HPC servers that charge you for their use. This information should be provided by your HPC admins.</td>
+</tr>
+<tr class="even">
+<td align="right"><code>-J &lt;name&gt;</code></td>
+<td align="left">a name for the job.</td>
+</tr>
+</tbody>
+</table>
+<div class="note">
+<p><strong>Default Resources</strong></p>
+<p>If you don’t specify any options when submitting your jobs, you will get the default configured by the HPC admins. For example, in our training HPC, the defaults you will get are:</p>
+<ul>
+<li>10 minutes of running time (equivalent to <code>-t 00:10:00</code>)</li>
+<li><em>training</em> partition (equivalent to <code>-p training</code>)</li>
+<li>1 CPU (equivalent to <code>-c 1</code>)</li>
+<li>5980MB RAM (equivalent to <code>--mem=5980MB</code>)</li>
+</ul>
+</div>
+</div>
+<div id="checking-job-status" class="section level2">
+<h2>Checking Job Status</h2>
+<p>After submitting a job, we may want to know:</p>
+<ul>
+<li>What is going on with my job? Is it running, has it finished?</li>
+<li>If it finished, did it finish successfully, or did it fail?</li>
+<li>How many resources (e.g. RAM) did it use?</li>
+<li>What if I want to cancel a job because I realised there was a mistake in my script?</li>
+</ul>
+<p>You can check the status of any jobs in the queue by using:</p>
+<pre class="console"><code>squeue -u &lt;user&gt;</code></pre>
+<p>This gives you information about the job’s status: <code>PD</code> means it’s <em>pending</em> (waiting in the queue) and <code>R</code> means it’s <em>running</em>.</p>
+<p>To check several statistics about a job (and whether it completed or failed), you can use:</p>
+<pre class="console"><code>sacct -o jobname,account,state,reqmem,maxrss,averss,elapsed -j &lt;JOBID&gt;</code></pre>
+<ul>
+<li><code>jobname</code> is the job’s name</li>
+<li><code>account</code> is the account used for the job</li>
+<li><code>state</code> gives you the state of the job</li>
+<li><code>reqmem</code> is the memory that you asked for (Mc is MB per core)</li>
+<li><code>maxrss</code> is the maximum memory used during the job <em>per core</em></li>
+<li><code>averss</code> is the average memory used <em>per core</em></li>
+<li><code>elapsed</code> how much time it took to run your job</li>
+</ul>
+<p>This can help you determine suitable resources (e.g. RAM, time) next time you run a similar job.</p>
+<div class="note">
+<p>The <code>sacct</code> command may not be available on every HPC, as it depends on how it was configured by the admins.</p>
+</div>
+<p>You can see other details about the job, such as the working directory and output directories it ran with, you can do:</p>
+<pre class="console"><code>scontrol show job &lt;JOBID&gt;</code></pre>
+<div class="warning">
+<p>Common errors.</p>
+<p>Especially the silent error due to the directory for <code>-o</code> not existing.</p>
+</div>
+<p>Finally, if you want to cancel a job, you can use:</p>
+<pre class="console"><code>scancel &lt;JOBID&gt;</code></pre>
+<p>And to cancel all your jobs simultaneously: <code>scancel -u &lt;USERNAME&gt;</code> (note that you will not be able to cancel other people’s jobs, so don’t worry about it).</p>
+<div class="exercise">
+<p>In the “slurm_exercise1” directory, you will find a shell script called “something.sh”, which does …</p>
+<ol style="list-style-type: decimal">
+<li>Edit the script by correcting the code where the word “FIXME” appears. Submit the job to SLURM and check its status in the queue.</li>
+<li>How long did the job take to run and how many resources did it use? (hint: use <code>sacct</code>)</li>
+<li>Were there any errors or warnings issued while the job was running?</li>
+</ol>
+<details>
+<p><summary>Answer</summary></p>
+<p>This exercise should allow learners to edit #SBATCH options, check job in the queue, and assess its resource usage. We could introduce a typo in the code somewhere so that it throws an error.</p>
+</details>
+</div>
+<div class="exercise">
+<p>Make use of the <code>$SLURM_CPUS_PER_TASK</code> variable to automatically define CPUs used by some tool. Then use <code>sacct</code> to check the speedup depending on how many CPUs are requested.</p>
+<p>Maybe can use the estimating Pi script from the carpentries materials.</p>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<div class="highlight">
+<h4 id="key-points">Key Points</h4>
+<ul>
+<li>Include the commands you want to run on the HPC in a shell script.
+<ul>
+<li>Always remember to include <code>#!/bin/bash</code> as the first line of your script.</li>
+</ul></li>
+<li>Submit jobs to the scheduler using <code>sbatch submission_script.sh</code>.</li>
+<li>Customise the jobs by including <code>#SBATCH</code> options at the top of your script (see table in the materials above for a summary of options).
+<ul>
+<li>As a good practice, always define an output file with <code>#SBATCH -o</code>. All the information about the job will be saved in that file, including any errors.</li>
+</ul></li>
+<li>Check the status of a submitted job by using <code>squeue -u USERNAME</code> and <code>sacct -j JOBID</code>.</li>
+<li>To cancel a running job use <code>scancel JOBID</code>.</li>
+</ul>
+<h4 id="further-resources">Further resources</h4>
+<ul>
+<li><a href="https://slurm.schedmd.com/pdfs/summary.pdf">SLURM cheatsheet</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
