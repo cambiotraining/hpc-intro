@@ -499,12 +499,14 @@ div.tocify {
 </div>
 <div id="submitting-a-job-with-slurm" class="section level2">
 <h2>Submitting a Job with SLURM</h2>
-<p>To submit a job to SLURM, you need to include your code in a <em>shell script</em>. Let’s start with a minimal example, found in our workshop data folder “01-slurm_basics” (<code>cd /scratch/username/hpc_workshop/01-slurm_basics</code>).</p>
+<p>To submit a job to SLURM, you need to include your code in a <em>shell script</em>. Let’s start with a minimal example, found in our workshop data folder “01-slurm_basics”.</p>
 <p>Our script is called <code>simple_job.sh</code> and contains the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">hostname</span></span></code></pre></div>
-<p>We can run this script from the login node using the <code>bash</code> interpreter:</p>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">sleep</span> 60 <span class="co"># hold for 60 seconds</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">hostname</span></span></code></pre></div>
+<p>We can run this script from the login node using the <code>bash</code> interpreter (make sure you are in the correct directory first: <code>cd ~/scratch/hpc_workshop/01-slurm_basics</code>):</p>
 <pre class="console"><code>bash test_job.sh</code></pre>
 <p>Which prints the output:</p>
 <pre><code>This job is running on:
@@ -526,8 +528,9 @@ login-node</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co">#SBATCH -o simple_job.log</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">hostname</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">sleep</span> 60 <span class="co"># hold for 60 seconds</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="fu">hostname</span></span></code></pre></div>
 <p>If we now re-run the script using <code>sbatch test_job.sh</code>, the output goes to a file named <code>simple_job.log</code>.</p>
 <p>There are several other options we can specify when using SLURM, and we will encounter several more of them as we progress through the materials. Here are some of the most common ones (anything in <code>&lt;&gt;</code> is user input):</p>
 <table>
@@ -544,11 +547,19 @@ login-node</code></pre>
 <tbody>
 <tr class="odd">
 <td align="right"><code>-D &lt;path&gt;</code></td>
-<td align="left">the <em>working directory</em> used for the job. This is the directory that SLURM will use as a reference when running the job.</td>
+<td align="left"><em>working directory</em> used for the job. This is the directory that SLURM will use as a reference when running the job.</td>
 </tr>
 <tr class="even">
 <td align="right"><code>-o &lt;path/filename&gt;</code></td>
-<td align="left">file where the output that would normally be printed on the console is saved in. This is defined in relation to the working directory set above.</td>
+<td align="left">file where the output that would normally be printed on the console is saved in. This is defined <em>relative</em> to the working directory set above.</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>-A &lt;name&gt;</code></td>
+<td align="left">billing account. This is sometimes needed if you’re using HPC servers that charge you for their use. This information should be provided by your HPC admins.</td>
+</tr>
+<tr class="even">
+<td align="right"><code>-p &lt;name&gt;</code></td>
+<td align="left"><em>partition</em> name. Often HPC servers have different types of compute node setups (e.g. queues for fast jobs, or long jobs, or high-memory jobs, etc.). This option is used to choose which of these so-called “partitions” you want to run your job on. This information should be provided by your HPC admins.</td>
 </tr>
 <tr class="odd">
 <td align="right"><code>-c &lt;number&gt;</code></td>
@@ -563,14 +574,6 @@ login-node</code></pre>
 <td align="left">how much RAM memory you want for your job in gigabytes.</td>
 </tr>
 <tr class="even">
-<td align="right"><code>-p &lt;name&gt;</code></td>
-<td align="left">the <em>partition</em> name.</td>
-</tr>
-<tr class="odd">
-<td align="right"><code>-A &lt;name&gt;</code></td>
-<td align="left">the billing account. This is sometimes needed if you’re using HPC servers that charge you for their use. This information should be provided by your HPC admins.</td>
-</tr>
-<tr class="even">
 <td align="right"><code>-J &lt;name&gt;</code></td>
 <td align="left">a name for the job.</td>
 </tr>
@@ -580,15 +583,15 @@ login-node</code></pre>
 <p><strong>Default Resources</strong></p>
 <p>If you don’t specify any options when submitting your jobs, you will get the default configured by the HPC admins. For example, in our training HPC, the defaults you will get are:</p>
 <ul>
-<li>10 minutes of running time (equivalent to <code>-t 00:10:00</code>)</li>
+<li>10 seconds of running time (equivalent to <code>-t 00:00:10</code>)</li>
 <li><em>training</em> partition (equivalent to <code>-p training</code>)</li>
 <li>1 CPU (equivalent to <code>-c 1</code>)</li>
-<li>5980MB RAM (equivalent to <code>--mem=5980MB</code>)</li>
+<li>1GB RAM (equivalent to <code>--mem=1GB</code>)</li>
 </ul>
 </div>
 </div>
-<div id="checking-job-status" class="section level2">
-<h2>Checking Job Status</h2>
+<div id="getting-job-information" class="section level2">
+<h2>Getting Job Information</h2>
 <p>After submitting a job, we may want to know:</p>
 <ul>
 <li>What is going on with my job? Is it running, has it finished?</li>
@@ -600,12 +603,15 @@ login-node</code></pre>
 <pre class="console"><code>squeue -u &lt;user&gt;</code></pre>
 <p>This gives you information about the job’s status: <code>PD</code> means it’s <em>pending</em> (waiting in the queue) and <code>R</code> means it’s <em>running</em>.</p>
 <p>To check several statistics about a job (and whether it completed or failed), you can use:</p>
-<pre class="console"><code>sacct -o jobname,account,state,reqmem,maxrss,averss,elapsed -j &lt;JOBID&gt;</code></pre>
+<pre class="console"><code>sacct -j &lt;JOBID&gt;</code></pre>
+<p>If you forgot what the job id is, running <code>sacct</code> with no other options will show you information about your last few jobs. The information output by this command can be customised to show other useful pieces of informat, for example:</p>
+<pre class="console"><code>sacct -o jobname,account,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j &lt;JOBID&gt;</code></pre>
 <ul>
 <li><code>jobname</code> is the job’s name</li>
 <li><code>account</code> is the account used for the job</li>
 <li><code>state</code> gives you the state of the job</li>
-<li><code>reqmem</code> is the memory that you asked for (Mc is MB per core)</li>
+<li><code>AllocCPUs</code> is the number of CPUs you requested for the job</li>
+<li><code>reqmem</code> is the memory that you asked for (Mc or Gc indicates MB or GB per core; Mn or Gn indicates MB or GB per node)</li>
 <li><code>maxrss</code> is the maximum memory used during the job <em>per core</em></li>
 <li><code>averss</code> is the average memory used <em>per core</em></li>
 <li><code>elapsed</code> how much time it took to run your job</li>
@@ -616,28 +622,76 @@ login-node</code></pre>
 </div>
 <p>You can see other details about the job, such as the working directory and output directories it ran with, you can do:</p>
 <pre class="console"><code>scontrol show job &lt;JOBID&gt;</code></pre>
-<div class="warning">
-<p>Common errors.</p>
-<p>Especially the silent error due to the directory for <code>-o</code> not existing.</p>
-</div>
 <p>Finally, if you want to cancel a job, you can use:</p>
 <pre class="console"><code>scancel &lt;JOBID&gt;</code></pre>
 <p>And to cancel all your jobs simultaneously: <code>scancel -u &lt;USERNAME&gt;</code> (note that you will not be able to cancel other people’s jobs, so don’t worry about it).</p>
+<div class="warning">
+<p><strong>WATCH OUT</strong></p>
+<p>When specifying the <code>-o</code> option including a directory name, if the output directory does not exist, <code>sbatch</code> will fail <em>without any errors</em>.</p>
+<p>For example, let’s say that we would like to keep our job output files in a folder called “logs”. For the example above, we might set these #SBATCH options:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">#SBATCH -D /scratch/username/hpc_workshop/01-slurm_basics</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">#SBATCH -o logs/simple_job.log</span></span></code></pre></div>
+<p>But, unless we create the <code>logs/</code> directory <em>before running the job</em>, <code>sbatch</code> will fail without telling us why.</p>
+</div>
 <div class="exercise">
-<p>In the “slurm_exercise1” directory, you will find a shell script called “something.sh”, which does …</p>
+In the “01-slurm_basics/exercises” directory, you will find a python script called <code>pi_estimator.py</code>. This script tries to get an approximate estimate for the number Pi using a stochastic algorithm.
+<details>
+<p><summary>How does the algorithm work?</summary></p>
+<dl>
+<dt>If you are interested in the details, here is a short description of what the script does (Source: <a href="https://carpentries-incubator.github.io/hpc-intro/16-parallel/index.html">HPC Carpentry</a>)</dt>
+<dd>
+</dd>
+</dl>
+<blockquote>
+<p>The program generates a large number of random points on a 1×1 square centered on (½,½), and checks how many of these points fall inside the unit circle. On average, π/4 of the randomly-selected points should fall in the circle, so π can be estimated from 4f, where f is the observed fraction of points that fall in the circle. Because each sample is independent, this algorithm is easily implemented in parallel.</p>
+</blockquote>
+<div class="figure">
+<img src="https://carpentries-incubator.github.io/hpc-intro/fig/pi.png" style="width:50.0%" alt="" />
+<p class="caption">Estimating Pi by randomly placing points on a quarter circle</p>
+</div>
+</details>
+<p>If you were running this script interactively (i.e. directly from the console), you would use the python interpreter: <code>python pi_estimator.py</code>. Instead, we use a shell script to submit this to the job scheduler.</p>
 <ol style="list-style-type: decimal">
-<li>Edit the script by correcting the code where the word “FIXME” appears. Submit the job to SLURM and check its status in the queue.</li>
-<li>How long did the job take to run and how many resources did it use? (hint: use <code>sacct</code>)</li>
-<li>Were there any errors or warnings issued while the job was running?</li>
+<li>Edit the shell script named <code>run_pi_estimator.sh</code> by correcting the code where the word “FIXME” appears. Submit the job to SLURM and check its status in the queue.</li>
+<li>How long did the job take to run and how many resources did it use?
+<details>
+<summary>Hint</summary>Use <code>sacct</code>
+</details></li>
+<li>The number of samples used to estimate Pi can be modified using the <code>--nsamples</code> option (the more samples we use, the more precise our estimate should be). For example <code>python pi_estimator.py --nsamples 100</code> would use one hundred samples. Resubmit your job to sbatch but this time using 50 million samples, remembering to check the job status and information after it ran.</li>
 </ol>
 <details>
 <p><summary>Answer</summary></p>
-<p>This exercise should allow learners to edit #SBATCH options, check job in the queue, and assess its resource usage. We could introduce a typo in the code somewhere so that it throws an error.</p>
+<p>This exercise should allow learners to edit #SBATCH options, check job in the queue, and assess its resource usage. Possibly we can set it so that the job will fail in question 3, because of out-of-memory error, forcing them to increase the <code>--mem</code> option in SBATCH.</p>
 </details>
 </div>
+</div>
+<div id="slurm-environment-variables" class="section level2">
+<h2>SLURM Environment Variables</h2>
 <div class="exercise">
-<p>Make use of the <code>$SLURM_CPUS_PER_TASK</code> variable to automatically define CPUs used by some tool. Then use <code>sacct</code> to check the speedup depending on how many CPUs are requested.</p>
-<p>Maybe can use the estimating Pi script from the carpentries materials.</p>
+<p>The python script used in the previous exercise supports parallelisation of some of its internal computations. The number of CPUs used by the script can be modified using the <code>--ncpus</code> option. Other options include: <code>--nsamples</code> determining how many samples are used to estimate Pi (the greater the better); <code>--output</code> which optionally writes the output to a file (instead of printing it to standard output).</p>
+<ul>
+<li>Modify your submission script by using the <code>$SLURM_CPUS_PER_TASK</code> variable to set the number of CPUs used by <code>pi_estimator.py</code>.</li>
+<li>Submit the job several times modifying the number of requested CPUs (up to the maximum allowed of 8).</li>
+<li>Check how many resources each job used. Did increasing the number of CPUs shorten the time it took to run?</li>
+</ul>
+<details>
+<p><summary>Answer</summary></p>
+<p>We can modify our submission script in the following manner:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#SBATCH -A TRAINING  # account name</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#SBATCH -p short     # partiton name</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#SBATCH -D /scratch/</span><span class="al">FIXME</span><span class="co">/exercises/  # working directory</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#SBATCH -o logs/pi_estimator.log      # output file</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#SBATCH -c 2                          # number of CPUs</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co"># launch the Pi estimator script using the number of CPUs that we are requesting from SLURM</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="ex">python</span> exercises/pi_estimator.py --ncpus <span class="va">$SLURM_CPUS_PER_TASK</span></span></code></pre></div>
+<p>We can run the job multiple times by modifyin the <code>-c</code> option in SBATCH.</p>
+<p>After running each job we can use the <code>sacct</code> command to obtain information about how long it took to run:</p>
+<p><code>sacct -o jobname,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j JOBID</code></p>
+<p>In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, this depends on how many samples we use to estimate Pi. For example, if we decrease the number of samples to 100 (<code>python pi_estimator.py --ncpus $SLURM_CPUS_PER_TASK --nsamples 100</code>), then using 1 or 8 CPUs doesn’t make much difference.</p>
+<p>It’s also worth noting that increasing the number of CPUs doesn’t always result in a linear increase in speed. For example, going from 4 to 8 CPUs doesn’t necessarily make the job run twice as fast. This is because there are some other computational costs to do with this kind of parallelisation.</p>
+</details>
 </div>
 </div>
 <div id="summary" class="section level2">
