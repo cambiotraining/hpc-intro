@@ -6,7 +6,7 @@ pagetitle: "HPC Course: Intro"
 These materials are still under development
 :::
 
-## Overview
+# Introduction to High Performance Computing
 
 :::highlight
 #### Questions
@@ -210,10 +210,12 @@ If in doubt, the student could have gained "interactive" access to one of the co
 
 **A3.**
 
-This is probably a bad choice. 
+Leaving the data on the HPC is probably a bad choice. 
 Since typically "scratch" storage is not backed-up it should not be relied on to store important data. 
 If the student doesn't have access to enough backed-up space for all the data, they should at least back up the raw data and the scripts used to process it. 
 This way, if there is a problem with "scratch" and some processed files are lost, they can recreate them by re-running the scripts on the raw data. 
+
+Other criteria that could be used to decide which data to leave on the HPC, backup or even delete is how long each step of the analysis takes to run, as there may be a significant computational cost associated with re-running heavy data processing steps.
 
 </details>
 

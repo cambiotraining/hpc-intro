@@ -92,45 +92,49 @@ Here are some examples taken from SLURM's Job Array Documentation:
 </details>
 :::
 
+:::exercise
+
+Use the `pi_estimator.py` to obtain a sample of estimates using our method. 
+
+:::
+
+
 ### Using `$SLURM_ARRAY_TASK_ID` to Automate Jobs
 
 One way to automate our jobs using the job array number (automatically stored in the `$SLURM_ARRAY_TASK_ID` variable) is to use some command-line tricks. 
 
 We will apply these in the following exercises, but here are some "recipes" that can be adapted to different contexts.
 
+Get the N-th file in a directory:
+
+```bash
+ls *_1.fq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1
+```
+
+Get the N-th line of a file:
+
+```bash
+head -n $SLURM_ARRAY_TASK_ID config_file.csv | tail -n 1
+```
+
+Example: parse a CSV file
+
+```bash
+head -n $SLURM_ARRAY_TASK_ID config_file.csv | tail -n 1 | cut -d "," -f 1
+```
 
 :::exercise
 
-Could use an example of running a stochastic simulation.
+**TODO: an example using a simulation script**
 
-For this example we will use the _python_ script found in "xxx", which randomly samples 10 numbers from a normal distribution and calculates its mean. 
-Our intention is to run this script 100 times to get a sense of the error associated with having an experiment with a sample size of 10.
+https://youtu.be/alH3yc6tX98
 
-If we run the script directly on the command line:
+A PhD student is working on project to understand how coral colonies grow to form the beautiful patterns observed in nature. 
+They are using a mathematical model known as  [Reaction-Diffusion](https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system), which models the interaction between two components that can self-activate and mutually inhibit each other.
 
-```bash
-python normal_error_sim.py 133
-```
+They have an R script which runs this model and produces an output image as exemplified below. 
+They have been running this script on their laptop, but it takes a while to run and they would like to eventually try many parameter combinations. 
 
-The result would be printed on the console (*133 -0.019442541255346994* in this case).
-
-To run this as an array of 100 jobs, we write a script that uses the `$SLURM_ARRAY_TASK_ID` to define the random seed on our script:
-
-```bash
-#!/bin/bash
-#SBATCH -A <FIXME>
-#SBATCH -D /home/<FIXME>/rds/hpc-work/projects/hpc_workshop
-#SBATCH -J simulation
-#SBATCH -o scripts/run_simulations.log
-#SBATCH -c 1
-#SBATCH -t 00:01:00        # HH:MM:SS
-#SBATCH -p skylake         # or skylake-highmem
-#SBATCH --mem-per-cpu=10M   # max 6G or 12G for skilake-highmem
-#SBATCH -a 1-100
-
-# the random seed is defined by the SLURM array number
-python scripts/normal_error_sim.py "$SLURM_ARRAY_TASK_ID" >> normal_sim_output.txt
-```
 :::
 
 :::exercise
@@ -181,20 +185,6 @@ echo "Number of CPUs used: $SLURM_CPUS_PER_TASK"
 # Align the reads to the genome
 bowtie2 --very-fast -p "$SLURM_CPUS_PER_TASK" -x "$REF" -1 "$READ1" -2 "$READ2" > "$OUT"
 ```
-:::
-
-:::exercise
-
-**TODO: an example using a simulation script**
-
-https://youtu.be/alH3yc6tX98
-
-A PhD student is working on project to understand how coral colonies grow to form the beautiful patterns observed in nature. 
-They are using a mathematical model known as  [Reaction-Diffusion](https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system), which models the interaction between two components that can self-activate and mutually inhibit each other.
-
-They have an R script which runs this model and produces an output image as exemplified below. 
-They have been running this script on their laptop, but it takes a while to run and they would like to eventually try many parameter combinations. 
-
 :::
 
 

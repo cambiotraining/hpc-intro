@@ -87,7 +87,8 @@ We can get a detailed list of the files on our home directory:
 ls -l
 ```
 
-This will reveal that there is a folder with some shell scripts inside it (`.sh` extension) and also a shortcut to our scratch directory. 
+This will reveal that there is a shell script (`.sh` extension) named `slurm_submit_template.sh` and also a shortcut to our scratch directory. 
+We can see that this is a shortcut because of the way the output is printed as `scratch -> /scratch/username/`. 
 
 Therefore, to navigate to our scratch directory we can either use the shortcut from our home or use the full path:
 
@@ -95,6 +96,8 @@ Therefore, to navigate to our scratch directory we can either use the shortcut f
 cd ~/scratch       # using the shortcut from the home directory
 cd /scratch/user/  # using the full path
 ```
+
+Remember that `~` indicates your home directory.
 
 **A3.**
 
@@ -147,9 +150,9 @@ However, this gives you very little functionality and is not as user friendly as
 In this course we will use _Visual Studio Code_ (_VS Code_ for short), which is an open-source software with a wide range of functionality and several extensions.
 Conveniently, one of those extensions allows us to connect to a remote computer (via _ssh_) and edit files as if they were on our own computer (see the [Setup](99-setup.html) page for how to install it).
 
-To connect VS Code to the HPC (see Figure 2):
+To connect VS Code to the HPC (see Figure 3):
 
-  1. Click the "Open Remote Window" green button on the bottom left corner
+1. Click the "Open Remote Window" green button on the bottom left corner
 1. Click "Connect to Host..." in the popup menu that opens
 1. Type your username and HPC hostname in the same way you do with `ssh`
 1. Once you are connected the green button on the bottom-left corner should change to indicate you are ssh'd into the HPC
@@ -177,7 +180,7 @@ hostname
 <details><summary>Answer</summary>
 **A1.**
 
-To open the folder we follow the instructions in Figure 2 and use the following path:
+To open the folder we follow the instructions in Figure 3 and use the following path:
 `/scratch/user/hpc_workshop`
 (replacing "user" with your username)
 
@@ -234,31 +237,6 @@ To connect to the remote server (see Figure 3):
 
 ![TODO: Filezilla screenshots.]()
 
-:::exercise
-
-- [Download the data]() for this course to your computer.
-- Use _Filezilla_ to move this file to the directory we created earlier in `/scratch/hpc_workshop/`. 
-- The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
-- Run a script
-
-<details><summary>Answer</summary>
-
-![TODO: Filezilla screenshot answer]()
-
-Once we finish transfering the files we can go ahead and decompress the data folder. 
-Note, this is now done _logged in on the HPC_:
-
-```bash
-# go the the projects directory
-cd /scratch/hpc_workshop/
-
-# decompress the files
-unzip hpc_workshop.zip
-```
-
-</details>
-:::
-
 
 ### `scp` (command line)
 
@@ -313,8 +291,47 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 
 
 :::exercise
-Extra exercise for using `scp` or `rsync`?
+
+- [Download the data]() for this course to your computer.
+- Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
+- The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
+- Bonus: how many shell scripts (with `.sh` extension) are there in your project folder? 
+
+<details><summary>Answer</summary>
+
+Once we download the data to our computer, we can transfer it using either of the suggested programs. 
+We show the solution using command-line tools.
+
+Notice that these commands are **run from your local terminal**:
+
+```bash
+# with scp
+scp -r ~/Downloads/hpc_workshop_data.zip username@login.hpc.cam.ac.uk:scratch/hpc_workshop/
+
+# with rsync
+rsync -avhu ~/Downloads/hpc_workshop_data.zip username@login.hpc.cam.ac.uk:scratch/hpc_workshop/
+```
+
+Once we finish transfering the files we can go ahead and decompress the data folder. 
+Note, this is now run **from the HPC terminal**:
+
+```bash
+# make sure to be in the correct directory
+cd ~/scratch/hpc_workshop/
+
+# decompress the files
+unzip hpc_workshop.zip
+```
+
+Finally, we can check how many shell scripts there are using the `find` program and piping it to the `wc` (word/line count) program:
+
+`find -type f -name *.sh | wc -l`
+
+`find` is a very useful tool to find files, check this [Find cheatsheet](https://devhints.io/find) to learn more about it.
+
+</details>
 :::
+
 
 
 ## Summary
@@ -323,7 +340,7 @@ Extra exercise for using `scp` or `rsync`?
 #### Key Points
 
 - The terminal is used to connect and interact with the HPC. 
-  - To connect to the HPC use `ssh user@hostname`.
+  - To connect to the HPC use `ssh user@remote-hostname`.
 - _Visual Studio Code_ is a text editor that can be used to edit files directly on the HPC using the "Remote-SSH" extension. 
 - To transfer files to/from the HPC we can use _Filezilla_, which offers a user-friendly interface to synchronise files between your local computer and a remote server.
   - Transfering files can also be done from the command line, using tools such as `scp` and `rsync` (this is the most flexible tool but also more advanced). 

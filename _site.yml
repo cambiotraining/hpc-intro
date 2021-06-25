@@ -25,7 +25,7 @@ navbar:
         - text: "Managing Software"
           href: 04-software.html
         - text: "Parallelising Jobs"
-          href: 05-parallel.html
+          href: 05-job_arrays.html
         - text: "Cambridge HPC Resources"
     - text: "Extras"
       menu:

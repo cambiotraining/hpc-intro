@@ -25,7 +25,11 @@ Need to check whether this works and is useful for images/references/etc:
 - Lesson 2:
   - Update screenshots with the setup used for the training; Figure 2 missing snapshots after logged in
   - Exercise 2 needs completing
-- Include environment variables somewhere
+    - change python exercise to redirect to file instead (this allows us easily appending)
+
+- Lesson 3:
+  - Include environment variables somewhere
+  - include interactive access to compute nodes (`sintr`)
 
 - Extras for another iteration of the course:
   - GNU parallel

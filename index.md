@@ -2,6 +2,8 @@
 pagetitle: "HPC Course"
 ---
 
+# Practical Introduction to High-Performance Computing
+
 :::highlight
 
 Knowing how to work on a **High Performance Computing (HPC)** system is an essential skill for applications such as bioinformatics, big-data analysis, image processing, machine learning, parallelising tasks, and other high-throughput applications. 
@@ -19,6 +21,15 @@ We will cover:
 - How can I run many similar jobs in parallel?
 - How can I access, install and manage software on a HPC?
 :::
+
+## Materials
+
+1. [Introduction to High Performance Computing](01-intro.html): what is a HPC cluster and how is it organised?
+1. [Working on a HPC Cluster](02-working_on_hpc.html): how do I access and work from a HPC?
+1. [Using the SLURM Job Scheduler](03-slurm.html): how do I use a job scheduler to run jobs on the HPC?
+1. [Managing Software](04-software.html): how do I access pre-installed software or install it myself?
+1. [Parallelising Jobs](05-job_arrays.html): how can I run many similar jobs in parallel?
+
 
 ## Target Audience
 
@@ -50,22 +61,3 @@ Before attending the workshop, please install the necessary software following o
 If you have any issues installing the software, please [get in touch](mailto:bioinfo@hermes.cam.ac.uk) with us beforehand.
 
 
-## Materials
-
-:::box
-Under Development
-:::
-
-<!--
-1. [Introduction to HPC systems](episodes/01-intro.html): what is it and how to access it
-2. [Running jobs using a job scheduler](episodes/02-slurm.html): what is a job scheduler and how to run jobs with it
-3. [Transferring data to/from the HPC](episodes/03-transfer_data.md) 
-4. [Managing software](episodes/04-software.md): how to use pre-installed software or install your own
-5. [Parallelising jobs](episodes/05-job_arrays.md): using "job arrays" to run jobs in parallel
-
-
-## Extras
-
-- [Quick Reference Guide](episodes/99_cheatsheet.md)
-- Guide for CSD3 HPC and others (CRUK, MRC, etc...)
--->
