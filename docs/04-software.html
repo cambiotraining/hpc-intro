@@ -432,6 +432,9 @@ div.tocify {
     <li class="dropdown-header">Cambridge HPC Resources</li>
   </ul>
 </li>
+<li>
+  <a href="99-exercises.html">Exercises</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Extras
@@ -515,9 +518,6 @@ div.tocify {
 </tbody>
 </table>
 <p>If a package is not available through the <code>module</code> command, your only option is to contact the HPC admin and ask them to install it for you. Alternatively, you can use a package manager as we show in the next section.</p>
-<div class="exercise">
-<p>small exercise?</p>
-</div>
 </div>
 <div id="the-conda-package-manager" class="section level2">
 <h2>The <code>conda</code> Package Manager</h2>
@@ -526,8 +526,8 @@ div.tocify {
 <em>Miniconda</em> is a lighter version, which includes only base Python, while <em>Anaconda</em> is a much larger bundle of software that includes many other packages (see the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html#anaconda-or-miniconda">Documentation Page</a> for more information).</p>
 <p>One of the strengths of using <em>Conda</em> to manage your software is that you can have different versions of your software installed alongside each other, organised in <strong>environments</strong>. Organising software packages into environments is extremely useful, as it allows to have a <em>reproducible</em> set of software versions that you can use and resuse in your projects.</p>
 <div class="figure">
-<img src="https://nbisweden.github.io/excelerate-scRNAseq/logos/conda_illustration.png" alt="" />
-<p class="caption">Make a generic version of this image to illustrate environments</p>
+<img src="images/conda_environments.svg" alt="" />
+<p class="caption">Illustration of <em>Conda</em> environments.</p>
 </div>
 <div class="note">
 <p><strong>Conda versus Module</strong></p>
@@ -552,10 +552,10 @@ div.tocify {
 <p>The command used to install and manage software is called <code>conda</code>. Although we will only cover the basics in this course, it has an <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/">excellent documentation</a> and a useful <a href="https://docs.conda.io/projects/conda/en/latest/_downloads/1f5ecf5a87b1c1a8aaf5a7ab8a7a0ff7/conda-cheatsheet.pdf">cheatsheet</a>.</p>
 <p>The first thing to do is to create a software environment for our project. Although this is optional (you could instead install everything in the “base” default environment), it is a good practice as it means the software versions remain stable within each project.</p>
 <p>To create an environment we use:</p>
-<pre class="console"><code>conda create --name &lt;ENV&gt;</code></pre>
-<p>Where “<ENV>” is the name we want to give to that environment. Once the environment is created, we can install packages using:</p>
-<pre class="console"><code>conda install --name &lt;ENV&gt; &lt;PROGRAM&gt;</code></pre>
-<p>Where “<PROGRAM>” is the name of the software we want to install.</p>
+<pre class="console"><code>conda create --name ENV</code></pre>
+<p>Where “ENV” is the name we want to give to that environment. Once the environment is created, we can install packages using:</p>
+<pre class="console"><code>conda install --name ENV PROGRAM</code></pre>
+<p>Where “PROGRAM” is the name of the software we want to install.</p>
 <div class="note">
 <p>One way to organise your software environments is to create an environment for each kind of analysis that you might be doing regularly. For example, you could have an environment named <code>imaging</code> with software that you use for image processing (e.g. Python’s scikit-image or the ImageMagick package) and another called <code>deeplearn</code> with software you use for deep learning applications (e.g. Python’s Keras).</p>
 </div>
@@ -570,43 +570,91 @@ div.tocify {
 <div id="loading-conda-environments" class="section level3">
 <h3>Loading <em>Conda</em> Environments</h3>
 <p>Once your packages are installed in an environment, you can load that environment by using:</p>
-<pre class="console"><code>source activate &lt;ENV&gt;</code></pre>
-<p>Where " <ENV> " is the name of your environment.</p>
+<pre class="console"><code>source activate ENV</code></pre>
+<p>Where “ENV” is the name of your environment.</p>
 <div class="note">
 <p><strong>Tip</strong></p>
 <p>If you forget which environments you have created, you can use <code>conda env list</code> to get a list of environments.</p>
 </div>
 <div class="exercise">
-<p>A “FIXME” script, omiting the <code>source activate</code> so that it throws an error when people first run it. This should teach debugging and reinforce that we need to include it at the top of the script. Keep this as a bioinformatics example, but write some background for the non-bioinformatics people.</p>
-<ul>
-<li>Install the <code>bowtie2</code> program using <code>conda</code>. This program is used for aligning sequence reads to a reference genome.</li>
-<li>Check that it installed correctly by running <code>which bowtie2</code> and <code>bowtie2 --help</code>.</li>
-<li>Adjust the <code>#SBATCH</code> options in the following script, which downloads and indexes the <em>Drosophila melanogaster</em> reference genome (save the script in <code>$HOME/rds/hpc-work/hpc_workshop/scripts/00_index_genome.sh</code>)</li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#SBATCH -A &lt;</span><span class="al">FIXME</span><span class="co">&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#SBATCH -J index_genome</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#SBATCH -D /home/&lt;</span><span class="al">FIXME</span><span class="co">&gt;/rds/hpc-work/projects/hpc_workshop</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#SBATCH -o scripts/00_index_genome.log</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#SBATCH -p skylake         # or skylake-highmem</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#SBATCH -c 1               # max 32 CPUs</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#SBATCH --mem-per-cpu=1G   # max 6G or 12G for skilake-highmem</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#SBATCH -t 00:10:00        # HH:MM:SS</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># make a directory for the reference</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="fu">mkdir</span> reference</span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="bu">cd</span> reference   <span class="co"># change into this directory</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co"># download the genome file from ENSEMBL</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="fu">wget</span> ftp://ftp.ensembl.org/pub/release-97/fasta/drosophila_melanogaster/dna/Drosophila_melanogaster.BDGP6.22.dna.toplevel.fa.gz</span>
-<span id="cb4-18"><a href="#cb4-18"></a></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co"># unzip the file</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="fu">gunzip</span> Drosophila_melanogaster.BDGP6.22.dna.toplevel.fa.gz</span>
-<span id="cb4-21"><a href="#cb4-21"></a></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co"># index the reference genome for bowtie2</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># the syntax is first the name of the file and then a file prefix</span></span>
-<span id="cb4-24"><a href="#cb4-24"></a><span class="ex">bowtie2-build</span> Drosophila_melanogaster.BDGP6.22.dna.toplevel.fa Drosophila_melanogaster.BDGP6.22.dna.toplevel</span></code></pre></div>
+<p>In the <code>hpc_workshop/data</code> folder, you will find some files resulting from whole-genome sequencing individuals from the model organism <em>Drosophila melanogaster</em> (fruit fly). Our objective will be to align our sequences to the reference genome, using a software called <em>bowtie2</em>.</p>
+<p><img src="images/mapping.png" style="width:50.0%" /></p>
+<p>But first, we need to prepare our genome for this alignment procedure (this is referred to as indexing the genome). We have a file with the <em>Drosophila</em> genome in <code>data/genome/drosophila_genome.fa</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Create a new conda environment named “bioinformatics”.
+<details>
+<summary>Hint</summary>Remember the syntax to create a new environment is: <code>conda create --name ENV</code>
+</details></li>
+<li>Install the <code>bowtie2</code> program in your new environment.
+<details>
+<summary>Hint</summary>Go to <a href="https://anaconda.org/">anaconda.org</a> and search for “bowtie2” to confirm it is available through <em>Conda</em> and which software <em>channel</em> it is provided from. Remember that you can install packages using <code>conda install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME</code>.
+</details></li>
+<li>Check that the software installed correctly by running <code>which bowtie2</code> and <code>bowtie2 --help</code>.
+<details>
+<summary>Hint</summary>Remember to activate your environment first with <code>source activate bioinformatics</code>.
+</details></li>
+<li>Open the script in <code>hpc_workshop/slurm/drosophila_genome_indexing.sh</code> and edit the <code>#SBATCH</code> options with the word “FIXME”. Submit the script to SLURM using <code>sbatch</code>, check it’s progress, and whether it ran successfully. Troubleshoot any issues that may arise.</li>
+</ol>
+<details>
+<p><summary>Answer</summary></p>
+<p><strong>A1.</strong></p>
+<p>To create a new conda environment we run:</p>
+<pre class="console"><code>conda create --name bioinformatics</code></pre>
+<p><strong>A2.</strong></p>
+<p>If we search for this software on the <em>Anaconda</em> website, we will find that it is available via the “<em>bioconda</em>” channel: <a href="https://anaconda.org/bioconda/bowtie2" class="uri">https://anaconda.org/bioconda/bowtie2</a></p>
+<p>We can install it on our environment with:</p>
+<pre class="console"><code>conda install --name bioinformatics --channel bioconda bowtie2</code></pre>
+<p><strong>A3.</strong></p>
+<p>First we need to activate our environment:</p>
+<pre class="console"><code>source activate bioinformatics</code></pre>
+<p>Then, if we run <code>bowtie2 --help</code>, we should get the software help being printed, the first few lines should look similar to:</p>
+<pre class="console"><code></code></pre>
+<p><strong>A4.</strong></p>
+<p>We need to fix the script to specify the correct working directory with our username (only showing the top few lines of the script):</p>
+<pre><code>#!/bin/bash
+#!/bin/bash
+# #SBATCH -A training                      # the account for billing
+#SBATCH -J index_genome                  # job name
+#SBATCH -D /scratch/USERNAME/hpc_workshop</code></pre>
+<p>Replacing “USERNAME” with your username.</p>
+<p>We can then launch it with sbatch, making sure that we’re in the correct directory on the HPC:</p>
+<pre class="console"><code>$ cd /scratch/USERNAME/hpc_workshop
+
+$ sbatch slurm/drosophila_genome_indexing.sh</code></pre>
+<p>We can check the job status by using <code>squeue -u USERNAME</code>. And we can obtain more information by using <code>seff JOBID</code>.</p>
+<p>We will realise that the job has failed. Examining the output log file (<code>cat logs/drosophila_genome_indexing.log</code>), we will notice that we have the following error:</p>
+<pre><code></code></pre>
+<p>This is because we did not load the conda environment in our script. Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to <strong>always load the conda environment in our SLURM submission scripts</strong>.</p>
+<p>We could modify our script by adding the line of code <code>source activate bioinformatics</code> before the rest of the code. Here is the complete script:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co"># #SBATCH -A training                      # the account for billing</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#SBATCH -J index_genome                  # job name</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#SBATCH -D /rds/user/hm533/hpc-work/hpc_workshop</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># #SBATCH -D /scratch/</span><span class="al">FIXME</span><span class="co">/hpc_workshop/  # working directory</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#SBATCH -o logs/drosophila_genome_indexing.log</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#SBATCH -p cclake                        # queue name</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#SBATCH -c 1                             # CPUs to use</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#SBATCH --mem=1G                         # Memory to use</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#SBATCH -t 00:10:00                      # Time for the job in HH:MM:SS</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="co"># load conda environment</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="bu">source</span> activate bioinformatics</span>
+<span id="cb11-14"><a href="#cb11-14"></a></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co"># make a directory for the reference</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="fu">mkdir</span> -p results/drosophila/genome</span>
+<span id="cb11-17"><a href="#cb11-17"></a></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="co"># index the reference genome with bowtie2; the syntax is:</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="co"># bowtie2-build input.fa output_prefix</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="ex">bowtie2-build</span> data/drosophila_genome.fa results/drosophila/genome/drosophila</span></code></pre></div>
+<p>Re-running it should complete successfully and we should get several output files in the directory <code>results/drosophila/genome</code> with an extension “.bt2”:</p>
+<pre class="console"><code>$ ls results/drosophila/genome</code></pre>
+<pre><code>drosophila.1.bt2
+drosophila.2.bt2
+drosophila.3.bt2
+drosophila.4.bt2
+drosophila.rev.1.bt2
+drosophila.rev.2.bt2</code></pre>
+</details>
 </div>
 </div>
 </div>
