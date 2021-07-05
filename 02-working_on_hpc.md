@@ -287,7 +287,7 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 
 :::exercise
 
-- [Download the data]() for this course to your computer and place it on your Desktop.
+- [Download the data](https://drive.google.com/file/d/1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT/view?usp=sharing) for this course to your computer and place it on your Desktop.
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
 - Bonus: how many shell scripts (with `.sh` extension) are there in your project folder? 

@@ -30,6 +30,8 @@ We will cover:
 1. [Managing Software](04-software.html): how do I access pre-installed software or install it myself?
 1. [Parallelising Jobs](05-job_arrays.html): how can I run many similar jobs in parallel?
 
+You can also [download the data](https://drive.google.com/file/d/1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT/view?usp=sharing) for the workshop and save it on your desktop.
+
 
 ## Target Audience
 
