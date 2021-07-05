@@ -429,7 +429,9 @@ div.tocify {
     <li>
       <a href="05-job_arrays.html">Parallelising Jobs</a>
     </li>
-    <li class="dropdown-header">Cambridge HPC Resources</li>
+    <li>
+      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -443,10 +445,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
     </li>
     <li>
-      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
+      <a href="99-slurm_cheatsheet.html">SLURM Quick Reference</a>
     </li>
   </ul>
 </li>
@@ -468,9 +470,6 @@ div.tocify {
 </div>
 
 
-<div class="warning">
-<p>These materials are still under development</p>
-</div>
 <div id="working-on-a-hpc-cluster" class="section level1">
 <h1>Working on a HPC Cluster</h1>
 <div class="highlight">
@@ -508,11 +507,10 @@ div.tocify {
 <ul>
 <li>Username: emailed separately</li>
 <li>Password: emailed separately</li>
-<li>Host: <code>login.hpc.cam.ac.uk</code></li>
+<li>Host: <code>oakleaf.bio.cam.ac.uk</code></li>
 <li>Port (for file transfer protocols): 22</li>
-<li>SLURM account: <code>TRAINING</code></li>
 </ul>
-<p>You were automatically allocated 40GB in <code>/home/username/</code> and 1TB in <code>/scratch/username/</code>.</p>
+<p>You were automatically allocated 40GB in <code>/home/USERNAME/</code> and 1TB in <code>/scratch/USERNAME/</code>.</p>
 </blockquote>
 <p><strong>Q1.</strong> Connect to the training HPC using <code>ssh</code></p>
 <p><strong>Q2.</strong> Take some time to explore your home directory to identify what files and folders are in there. Can you identify and navigate to your scratch directory?</p>
@@ -522,8 +520,8 @@ div.tocify {
 <p><summary>Answer</summary></p>
 <p><strong>A1.</strong></p>
 <p>To login to the HPC we run the following from the terminal:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ssh</span> user@login.hpc.cam.ac.uk</span></code></pre></div>
-<p>(replace “user” by your HPC username)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ssh</span> USERNAME@oakleaf.bio.cam.ac.uk</span></code></pre></div>
+<p>(replace “USERNAME” by your HPC username)</p>
 <p><strong>A2.</strong></p>
 <p>We can get a detailed list of the files on our home directory:</p>
 <pre class="console"><code>ls -l</code></pre>
@@ -630,7 +628,7 @@ cd /scratch/user/  # using the full path</code></pre>
 <li>Fill in the following information on the top panel:</li>
 </ol>
 <ul>
-<li>Host: login.hpc.cam.ac.uk</li>
+<li>Host: oakleaf.bio.cam.ac.uk</li>
 <li>Username: your HPC username</li>
 <li>Password: your HPC password</li>
 <li>Port: 22</li>
@@ -650,10 +648,10 @@ cd /scratch/user/  # using the full path</code></pre>
 <p>This is a command line tool that can be used to copy files between two servers. One thing to note is that it always transfers all the files in a folder, regardless of whether they have changed or not.</p>
 <p>The syntax is as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># copy files from the local computer to the HPC</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">scp</span> -r path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@login.hpc.cam.ac.uk:path/to/target_folder</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">scp</span> -r path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/target_folder</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co"># copy files from the HPC to a local directory</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">scp</span> -r <span class="op">&lt;</span>user<span class="op">&gt;</span>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder</span></code></pre></div>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">scp</span> -r <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder</span></code></pre></div>
 <p>The option <code>-r</code> ensures that all sub-directories are copied (instead of just files, which is the default).</p>
 </div>
 <div id="rsync-command-line" class="section level3">
@@ -661,10 +659,10 @@ cd /scratch/user/  # using the full path</code></pre>
 <p>This program is more advanced than <code>scp</code> and has options to synchronise files between two directories in multiple ways. The cost of its flexibility is that it can be a little harder to use.</p>
 <p>The most common usage is:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># copy files from the local computer to the HPC</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">rsync</span> -auvh --progress path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@login.hpc.cam.ac.uk:path/to/target_folder</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">rsync</span> -auvh --progress path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/target_folder</span>
 <span id="cb11-3"><a href="#cb11-3"></a></span>
 <span id="cb11-4"><a href="#cb11-4"></a><span class="co"># copy files from the HPC to a local directory</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">rsync</span> -auvh --progress <span class="op">&lt;</span>user<span class="op">&gt;</span>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder</span></code></pre></div>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">rsync</span> -auvh --progress <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder</span></code></pre></div>
 <ul>
 <li>the options <code>-au</code> ensure that only files that have changed <em>and</em> are newer on the source folder are transferred</li>
 <li>the options <code>-vh</code> give detailed information about the transfer and human-readable file sizes</li>
@@ -683,7 +681,7 @@ cd /scratch/user/  # using the full path</code></pre>
 </div>
 <div class="exercise">
 <ul>
-<li><a href="">Download the data</a> for this course to your computer.</li>
+<li><a href="">Download the data</a> for this course to your computer and place it on your Desktop.</li>
 <li>Use <em>Filezilla</em>, <code>scp</code> or <code>rsync</code> (your choice) to move this file to the directory we created earlier: <code>/scratch/user/hpc_workshop/</code>.</li>
 <li>The file we just downloaded is a compressed file. From the HPC terminal, use <code>unzip</code> to decompress the file.</li>
 <li>Bonus: how many shell scripts (with <code>.sh</code> extension) are there in your project folder?</li>
@@ -693,16 +691,16 @@ cd /scratch/user/  # using the full path</code></pre>
 <p>Once we download the data to our computer, we can transfer it using either of the suggested programs. We show the solution using command-line tools.</p>
 <p>Notice that these commands are <strong>run from your local terminal</strong>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># with scp</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">scp</span> -r ~/Downloads/hpc_workshop_data.zip username@login.hpc.cam.ac.uk:scratch/hpc_workshop/</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">scp</span> -r ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/</span>
 <span id="cb12-3"><a href="#cb12-3"></a></span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co"># with rsync</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="fu">rsync</span> -avhu ~/Downloads/hpc_workshop_data.zip username@login.hpc.cam.ac.uk:scratch/hpc_workshop/</span></code></pre></div>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="fu">rsync</span> -avhu ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/</span></code></pre></div>
 <p>Once we finish transfering the files we can go ahead and decompress the data folder. Note, this is now run <strong>from the HPC terminal</strong>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># make sure to be in the correct directory</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="bu">cd</span> ~/scratch/hpc_workshop/</span>
 <span id="cb13-3"><a href="#cb13-3"></a></span>
 <span id="cb13-4"><a href="#cb13-4"></a><span class="co"># decompress the files</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="fu">unzip</span> hpc_workshop.zip</span></code></pre></div>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="fu">unzip</span> hpc_workshop_files.zip</span></code></pre></div>
 <p>Finally, we can check how many shell scripts there are using the <code>find</code> program and piping it to the <code>wc</code> (word/line count) program:</p>
 <p><code>find -type f -name *.sh | wc -l</code></p>
 <p><code>find</code> is a very useful tool to find files, check this <a href="https://devhints.io/find">Find cheatsheet</a> to learn more about it.</p>

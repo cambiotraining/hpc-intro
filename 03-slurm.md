@@ -2,10 +2,6 @@
 pagetitle: "HPC Course: SLURM"
 ---
 
-:::warning
-These materials are still under development
-:::
-
 # Using the SLURM Job Scheduler
 
 :::highlight
@@ -43,7 +39,7 @@ For example, a job requesting many resources may start with a low priority, but 
 ## Submitting a Job with SLURM
 
 To submit a job to SLURM, you need to include your code in a _shell script_.
-Let's start with a minimal example, found in our workshop data folder "01-slurm_basics".
+Let's start with a minimal example, found in our workshop data folder "slurm".
 
 Our script is called `simple_job.sh` and contains the following code:
 
@@ -55,10 +51,10 @@ echo "This job is running on:"
 hostname
 ```
 
-We can run this script from the login node using the `bash` interpreter (make sure you are in the correct directory first: `cd ~/scratch/hpc_workshop/01-slurm_basics`): 
+We can run this script from the login node using the `bash` interpreter (make sure you are in the correct directory first: `cd ~/scratch/hpc_workshop/`): 
 
 ```console
-bash test_job.sh
+bash slurm/test_job.sh
 ```
 
 Which prints the output:
@@ -156,14 +152,18 @@ This gives you information about the job's status: `PD` means it's *pending* (wa
 To check several statistics about a job (and whether it completed or failed), you can use:
 
 ```console
-sacct -j <JOBID>
+seff JOBID
 ```
 
-If you forgot what the job id is, running `sacct` with no other options will show you information about your last few jobs.
-The information output by this command can be customised to show other useful pieces of informat, for example:
+This shows you the status of the job, whether it completed or not, how many cores it used, how long it took to run and how much memory it used. 
+Therefore, this command is very useful to determine suitable resources (e.g. RAM, time) next time you run a similar job.
+
+Alternatively, you can use the `sacct` command, which allows displaying this and other information in a more condensed way (and for multiple jobs if you want to). 
+
+For example:
 
 ```console
-sacct -o jobname,account,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j <JOBID>
+sacct --format jobname,account,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j JOBID
 ```
 
 - `jobname` is the job's name
@@ -175,13 +175,14 @@ sacct -o jobname,account,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j <JOBID>
 - `averss` is the average memory used *per core*
 - `elapsed` how much time it took to run your job
 
-This can help you determine suitable resources (e.g. RAM, time) next time you run a similar job.
+All the options available with `sacct` can be listed using `sacct -e`.
+If you forgot what the job id is, running `sacct` with no other options will show you information about your last few jobs.
 
 :::note
 The `sacct` command may not be available on every HPC, as it depends on how it was configured by the admins.
 :::
 
-You can see other details about the job, such as the working directory and output directories it ran with, you can do:
+You can also see other details about the job, such as the working directory and output directories it ran with:
 
 ```console
 scontrol show job <JOBID>
@@ -214,30 +215,95 @@ But, unless we create the `logs/` directory _before running the job_, `sbatch` w
 
 :::exercise
 
-In the "01-slurm_basics/exercises" directory, you will find a python script called `pi_estimator.py`. 
+In the "scripts" directory, you will find an R script called `pi_estimator.R`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
 <details><summary>How does the algorithm work?</summary>
 
-If you are interested in the details, here is a short description of what the script does (Source: [HPC Carpentry](https://carpentries-incubator.github.io/hpc-intro/16-parallel/index.html))
-: 
+If you are interested in the details, here is a short description of what the script does: 
 
 > The program generates a large number of random points on a 1×1 square centered on (½,½), and checks how many of these points fall inside the unit circle. On average, π/4 of the randomly-selected points should fall in the circle, so π can be estimated from 4f, where f is the observed fraction of points that fall in the circle. Because each sample is independent, this algorithm is easily implemented in parallel.
 
-![Estimating Pi by randomly placing points on a quarter circle](https://carpentries-incubator.github.io/hpc-intro/fig/pi.png){ width=50% }
+![Estimating Pi by randomly placing points on a quarter circle. (Source: [HPC Carpentry](https://carpentries-incubator.github.io/hpc-intro/16-parallel/index.html))](https://carpentries-incubator.github.io/hpc-intro/fig/pi.png){ width=50% }
 
 </details>
 
-If you were running this script interactively (i.e. directly from the console), you would use the python interpreter: `python pi_estimator.py`.
+If you were running this script interactively (i.e. directly from the console), you would use the R script interpreter: `Rscript scripts/pi_estimator.R`.
 Instead, we use a shell script to submit this to the job scheduler. 
 
-1. Edit the shell script named `run_pi_estimator.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
-2. How long did the job take to run and how many resources did it use? <details><summary>Hint</summary>Use `sacct`</details>
-3. The number of samples used to estimate Pi can be modified using the `--nsamples` option (the more samples we use, the more precise our estimate should be). For example `python pi_estimator.py --nsamples 100` would use one hundred samples. Resubmit your job to sbatch but this time using 50 million samples, remembering to check the job status and information after it ran. 
+1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
+2. How long did the job take to run and how many resources did it use? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show JOBID`.</details>
+3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
+    - Adjust your SLURM submission script to use 500 million samples (`Rscript scripts/pi_estimator.R --nsamples 500`), and save the job output in `logs/estimate_pi_500M.log`.
+    - Monitor the job status with `squeue` and `scontrol show JOBID`. <!-- If you find any issues, how would you fix them? -->
 
 <details><summary>Answer</summary>
 
-This exercise should allow learners to edit #SBATCH options, check job in the queue, and assess its resource usage. 
-Possibly we can set it so that the job will fail in question 3, because of out-of-memory error, forcing them to increase the `--mem` option in SBATCH.
+**A1.**
+
+In the shell script we needed to correct the user-specific details in the `#SBATCH` options. 
+Also, we needed to specify the path to the script we wanted to run.
+This can be defined relative to the working directory that we've set with `-D`.
+For example:
+
+```bash
+#!/bin/bash
+#SBATCH -p training 
+#SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory
+#SBATCH -o logs/estimate_pi.log  # standard output file
+#SBATCH -c 1        # number of CPUs. Default: 1
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS.
+
+# run the script
+Rscript scripts/pi_estimator.R
+```
+
+**A2.**
+
+As suggested in the hint, we can use the `seff` or `scontrol` commands for this:
+
+```console
+seff JOBID
+scontrol show JOBID
+```
+
+Replacing JOBID with the ID of the job we just ran. 
+
+If you cannot remember what the job id was, you can run `sacct` with no other options and it will list the last few jobs that you ran. 
+
+Strangely enough, the "Memory Utilized" is reported as 0.00MB. 
+That's very odd, since for sure our script must have used _some_ memory to do the computation. 
+The reason is that SLURM doesn't always have time to pick memory usage spikes, and so it reports a zero. 
+This is usually not an issue with longer-running jobs.
+
+**A3.**
+
+The modified script should look similar to this:
+
+```bash
+#!/bin/bash
+#SBATCH -p training 
+#SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory
+#SBATCH -o logs/estimate_pi.log  # standard output file
+#SBATCH -c 1        # number of CPUs. Default: 1
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS.
+
+# run the script
+Rscript scripts/pi_estimator.R --nsamples 500
+```
+
+However, when we run this job, examining the output file (`cat logs/estimate_pi_500M.log`) will reveal:
+
+```
+slurmstepd: error: Detected 1 oom-kill event(s) in step JOBID.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+```
+
+Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. 
+
+This suggests that the job required more memory than we requested. 
+To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=10G` to request 10Gb of RAM memory for the job. 
+
+Again, `seff` is rather unhelpful in accurately reporting how much memory the job used. 
+Clearly, it ran out of memory, but because it ran so fast SLURM didn't register the memory usage peak. 
 
 </details>
 
@@ -246,45 +312,99 @@ Possibly we can set it so that the job will fail in question 3, because of out-o
 
 ## SLURM Environment Variables
 
+One useful feature of SLURM jobs is the automatic creation of environment variables. 
+Generally speaking, variables are a character that store a value within them, and can either be created by us, or sometimes they are automatically created by programs or available by default in our shell. 
+
+
+:::note
+
+<details><summary>More about shell variables</summary>
+
+An example of a common shell environment variable is `$HOME`, which stores the path to the user's `/home` directory. 
+We can print the value of a variable with `echo $HOME`. 
+
+The syntax to create a variable ourselves is:
+
+```shell
+VARIABLE="value"
+```
+
+Notice that there should be **no space between the variable name and its value**. 
+
+If you want to create a variable with the result of evaluating a command, then the syntax is:
+
+```shell
+VARIABLE=$(command)
+```
+
+Try these examples:
+
+```shell
+# Make a variable with a path starting from the user's /home
+DATADIR="$HOME/scratch/data/"
+
+# list files in that directory
+ls $DATADIR
+
+# create a variable with the output of that command
+DATAFILES=$(ls $DATADIR)
+```
+
+</details>
+:::
+
+When you submit a job with SLURM, it creates several variables, all starting with the prefix `$SLURM_`. 
+One useful variable is `$SLURM_CPUS_PER_TASK`, which stores how many CPUs we requested for our job.
+This means that we can use the variable to automatically set the number of CPUs for software that support multi-processing. 
+We will see an example in the following exercise. 
+
 :::exercise
 
-The python script used in the previous exercise supports parallelisation of some of its internal computations. 
+The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
-Other options include: `--nsamples` determining how many samples are used to estimate Pi (the greater the better); `--output` which optionally writes the output to a file (instead of printing it to standard output). 
+For example `pi_estimator.R --ncpus 2` would use two CPUs. 
 
-- Modify your submission script by using the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.py`. 
-- Submit the job several times modifying the number of requested CPUs (up to the maximum allowed of 8).
-- Check how many resources each job used. Did increasing the number of CPUs shorten the time it took to run?
+1. Modify your submission script to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`.
+1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make a note of each job's ID. 
+1. Check how much time each job took to run (using `scontrol show job JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 <details><summary>Answer</summary>
+
+**A1.**
 
 We can modify our submission script in the following manner:
 
 ```bash
 #!/bin/bash
-#SBATCH -A TRAINING  # account name
-#SBATCH -p short     # partiton name
-#SBATCH -D /scratch/FIXME/exercises/  # working directory
-#SBATCH -o logs/pi_estimator.log      # output file
+#SBATCH -p training     # partiton name
+#SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
+#SBATCH -o logs/estimate_pi.log      # output file
+#SBATCH --mem=10G
 #SBATCH -c 2                          # number of CPUs
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-python exercises/pi_estimator.py --ncpus $SLURM_CPUS_PER_TASK
+Rscript exercises/pi_estimator.R --nsamples 500 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
-We can run the job multiple times by modifyin the `-c` option in SBATCH. 
+We can run the job multiple times by modifying the `#SBATCH -c` option. 
 
-After running each job we can use the `sacct` command to obtain information about how long it took to run:
+After running each job we can use `scontrol show job JOBID` command to obtain information about how long it took to run.
 
-`sacct -o jobname,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j JOBID`
+`seff JOBID`
 
-In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. 
-However, this depends on how many samples we use to estimate Pi. 
-For example, if we decrease the number of samples to 100 (`python pi_estimator.py --ncpus $SLURM_CPUS_PER_TASK --nsamples 100`), then using 1 or 8 CPUs doesn't make much difference.
+<!--
+After running each job we can use the `seff` command to obtain information about how long it took to run:
 
-It's also worth noting that increasing the number of CPUs doesn't always result in a linear increase in speed.
-For example, going from 4 to 8 CPUs doesn't necessarily make the job run twice as fast.
-This is because there are some other computational costs to do with this kind of parallelisation.
+`seff JOBID`
+
+Alternatively, since we want to compare several jobs, we could also use `sacct`:
+
+`sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
+-->
+
+In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
+Going from 1 to 2 CPUs speeds things up a bit, but beyond that we don't get much better performance. 
+This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 
 </details>
 

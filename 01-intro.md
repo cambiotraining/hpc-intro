@@ -2,11 +2,12 @@
 pagetitle: "HPC Course: Intro"
 ---
 
-:::warning
-These materials are still under development
-:::
-
 # Introduction to High Performance Computing
+
+:::note
+These materials have accompanying slides:
+[Introduction to HPC slides](https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing)
+:::
 
 :::highlight
 #### Questions

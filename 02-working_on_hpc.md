@@ -2,10 +2,6 @@
 pagetitle: "HPC Course: Intro"
 ---
 
-:::warning
-These materials are still under development
-:::
-
 # Working on a HPC Cluster
 
 :::highlight
@@ -23,7 +19,7 @@ These materials are still under development
 - Use _Filezilla_ to connect to the HPC and move files in and out of its storage. 
 :::
 
-![Cartoon illustrating the three tools introduced in this section and what role they are fulfilling]()
+![Useful tools for working on a remote HPC server. The terminal is used to login to the HPc and interact with it (e.g. submit jobs, navigate the filesystem). _Visual Studio Code_ is a text editor that has the ability to connect to a remote server so that we can edit scripts stored on the HPC. _Filezilla_ is an FTP application, which can be used to transfer files between the HPC and your local computer.](images/tool_overview.svg)
 
 ## Connecting to the HPC
 
@@ -48,11 +44,10 @@ After registering for a HPC account, you were sent the following information by 
 > 
 > - Username: emailed separately
 > - Password: emailed separately
-> - Host: `login.hpc.cam.ac.uk`
+> - Host: `oakleaf.bio.cam.ac.uk`
 > - Port (for file transfer protocols): 22 
-> - SLURM account: `TRAINING`
 > 
-> You were automatically allocated 40GB in `/home/username/` and 1TB in `/scratch/username/`. 
+> You were automatically allocated 40GB in `/home/USERNAME/` and 1TB in `/scratch/USERNAME/`. 
 
 **Q1.** Connect to the training HPC using `ssh`
 
@@ -74,10 +69,10 @@ Check how many people are logged in to the HPC login node using the command `who
 To login to the HPC we run the following from the terminal:
 
 ```bash
-ssh user@login.hpc.cam.ac.uk
+ssh USERNAME@oakleaf.bio.cam.ac.uk
 ```
 
-(replace "user" by your HPC username)
+(replace "USERNAME" by your HPC username)
 
 **A2.**
 
@@ -159,7 +154,7 @@ To connect VS Code to the HPC (see Figure 3):
 1. Use the left-hand "Explorer" and click "Open Folder"
 1. Type the _path_ to the folder on the HPC from where you want to work from
 
-![How to connect to a remote server with _VS Code_](images/vscode_ssh.svg)
+![TODO: add further screenshots. How to connect to a remote server with _VS Code_](images/vscode_ssh.svg)
 
 Once you are connected to the HPC in this way, you can edit files and even create new files and folders on the HPC filesystem.
 
@@ -227,7 +222,7 @@ This program has a graphical interface, for those that prefer it and its use is 
 To connect to the remote server (see Figure 3): 
 
 1. Fill in the following information on the top panel:
-  - Host: login.hpc.cam.ac.uk
+  - Host: oakleaf.bio.cam.ac.uk
   - Username: your HPC username
   - Password: your HPC password
   - Port: 22
@@ -247,10 +242,10 @@ The syntax is as follows:
 
 ```bash
 # copy files from the local computer to the HPC
-scp -r path/to/source_folder <user>@login.hpc.cam.ac.uk:path/to/target_folder
+scp -r path/to/source_folder <user>@oakleaf.bio.cam.ac.uk:path/to/target_folder
 
 # copy files from the HPC to a local directory
-scp -r <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder
+scp -r <user>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder
 ```
 
 The option `-r` ensures that all sub-directories are copied (instead of just files, which is the default).
@@ -265,10 +260,10 @@ The most common usage is:
 
 ```bash
 # copy files from the local computer to the HPC
-rsync -auvh --progress path/to/source_folder <user>@login.hpc.cam.ac.uk:path/to/target_folder
+rsync -auvh --progress path/to/source_folder <user>@oakleaf.bio.cam.ac.uk:path/to/target_folder
 
 # copy files from the HPC to a local directory
-rsync -auvh --progress <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder
+rsync -auvh --progress <user>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder
 ```
 
 - the options `-au` ensure that only files that have changed _and_ are newer on the source folder are transferred
@@ -292,7 +287,7 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 
 :::exercise
 
-- [Download the data]() for this course to your computer.
+- [Download the data]() for this course to your computer and place it on your Desktop.
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
 - Bonus: how many shell scripts (with `.sh` extension) are there in your project folder? 
@@ -306,10 +301,10 @@ Notice that these commands are **run from your local terminal**:
 
 ```bash
 # with scp
-scp -r ~/Downloads/hpc_workshop_data.zip username@login.hpc.cam.ac.uk:scratch/hpc_workshop/
+scp -r ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/
 
 # with rsync
-rsync -avhu ~/Downloads/hpc_workshop_data.zip username@login.hpc.cam.ac.uk:scratch/hpc_workshop/
+rsync -avhu ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/
 ```
 
 Once we finish transfering the files we can go ahead and decompress the data folder. 
@@ -320,7 +315,7 @@ Note, this is now run **from the HPC terminal**:
 cd ~/scratch/hpc_workshop/
 
 # decompress the files
-unzip hpc_workshop.zip
+unzip hpc_workshop_files.zip
 ```
 
 Finally, we can check how many shell scripts there are using the `find` program and piping it to the `wc` (word/line count) program:

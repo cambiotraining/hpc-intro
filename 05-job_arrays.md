@@ -2,10 +2,6 @@
 pagetitle: "HPC Course: Parallelising"
 ---
 
-:::warning
-These materials are still under development
-:::
-
 # Parallelising Jobs
 
 :::highlight
@@ -59,21 +55,21 @@ Job arrays are created with the *SBATCH* option `-a START-FINISH` where *START* 
 SLURM then creates a special shell variable `$SLURM_ARRAY_TASK_ID`, which contains the array number for the job being processed.
 Later in this section we will see how we can use some tricks with this variable to automate our analysis.
 
-For now let's go through this simple example, which shows what a job array looks like (you can find this script in the course folder `slurm_arrays/array_demo.sh`):
+For now let's go through this simple example, which shows what a job array looks like (you can find this script in the course folder `slurm/parallel_arrays.sh`):
 
 ```bash
-#!/bin/bash
-#SBATCH -c 2
+# ... some lines omitted ...
+#SBATCH -o logs/parallel_arrays_%a.log
 #SBATCH -a 1-3
-#SBATCH -o logs/array_demo_%a.log
 
-echo "This is job number $SLURM_ARRAY_TASK_ID"
+echo "This is task number $SLURM_ARRAY_TASK_ID"
 echo "Using $SLURM_CPUS_PER_TASK CPUs"
-echo "Running on $(hostname)"
+echo "Running on:"
+hostname
 ```
 
-Submitting this script with `sbatch slurm_arrays/array_demo.sh` will launch 3 jobs. 
-The "_%a_" keyword is used in our output filename (`-o`) and will be replaced by the array number, so that we end up with three files: `array_demo_1.log`, `array_demo_2.log` and `array_demo_3.log`. 
+Submitting this script with `sbatch slurm/parallel_arrays.sh` will launch 3 jobs. 
+The "_%a_" keyword is used in our output filename (`-o`) and will be replaced by the array number, so that we end up with three files: `parallel_arrays_1.log`, `parallel_arrays_2.log` and `parallel_arrays_3.log`. 
 Looking at the output in those files should make it clearer that `$SLURM_ARRAY_TASK_ID` stores the array number of each job, and that each of them uses 2 CPUS (`-c 2` option). 
 The compute node that they run on may be variable (depending on which node was available to run each job).
 
@@ -94,97 +90,193 @@ Here are some examples taken from SLURM's Job Array Documentation:
 
 :::exercise
 
-Use the `pi_estimator.py` to obtain a sample of estimates using our method. 
+Previously, we used the `pi_estimator.R` script to obtain an estimate of the number Pi. 
+Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
+
+1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options, to run the job 10 times using a job array. 
+1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being _appended_ to a text file with `pi_estimator.R >> results/pi_estimates.txt`. So the output of all the 100 jobs of the array will be written to this same file, one after the other. </details>
+
+<details><summary>Answer</summary>
+
+**A1.**
+
+In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this scrit to `sbatch`, it will run 100 iterations of it in parallel. 
+
+**A2.**
+
+We can launch our adjusted script with `sbatch slurm/parallel_estimate_pi.sh`. 
+When we check our jobs with `squeue -u USERNAME`, we will notice several jobs with JOBID in the format "ID_1", "ID_2", etc. 
+These indicate the number of the array that is currently running as part of that job submission. 
+
+In this case, we only specified a single output log file in `#SBATCH -o` (we did not use the `%a` keyword). 
+So all the information about the jobs was sent to a single file in `logs/parallel_estimate_pi.log`. 
+
+However, for our actual estimate of Pi, we redirected (`>>`) the output to a text file in `results/pi_estimate.txt`. 
+If we examine this file (e.g. with `less results/pi_estimate.txt`) we can see it has the results of all the runs of our simulation. 
+
+</details>
 
 :::
 
 
 ### Using `$SLURM_ARRAY_TASK_ID` to Automate Jobs
 
-One way to automate our jobs using the job array number (automatically stored in the `$SLURM_ARRAY_TASK_ID` variable) is to use some command-line tricks. 
+One way to automate our jobs is to use the job array number (stored in the `$SLURM_ARRAY_TASK_ID` variable) with some command-line tricks. 
+The trick we will demonstrate here is to parse a CSV file to read input parameters for our scripts. 
 
-We will apply these in the following exercises, but here are some "recipes" that can be adapted to different contexts.
+For example, in our `data/` folder we have the following file, which includes information about parameter values we want to use with a tool in our next exercise. 
 
-Get the N-th file in a directory:
-
-```bash
-ls *_1.fq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1
+```console
+$ cat data/turing_model_parameters.csv
 ```
 
-Get the N-th line of a file:
-
-```bash
-head -n $SLURM_ARRAY_TASK_ID config_file.csv | tail -n 1
+```
+f,k
+0.055,0.062
+0.03,0.055
+0.046,0.065
+0.059,0.061
 ```
 
-Example: parse a CSV file
+This is a CSV (comma-separated values) format, with two "columns" named "f" and "k".
+Let's say we wanted to obtain information for the 2rd set of parameters, which in this case is in the 3rd line of the file (because of the column header). 
+We can get the top N lines of a file using the `head` command (we pipe the output of the previous `cat` command):
 
-```bash
-head -n $SLURM_ARRAY_TASK_ID config_file.csv | tail -n 1 | cut -d "," -f 1
+```console
+$ cat data/turing_model_parameters.csv | head -n 3
 ```
+
+This gets us lines 1-3 of the file. 
+To get just the information about that 2nd set of parameters, we can now _pipe_ the output of the `head` command to the command that gets us the bottom lines of a file `tail`:
+
+```console
+$ cat data/turing_model_parameters.csv | head -n 3 | tail -n 1
+```
+
+Finally, to separate the two values that are separated by a comma, we can use the `cut` command, which accepts a _delimiter_ (`-d` option) and a _field_ we want it to return (`-f` option):
+
+```console
+$ cat data/turing_model_parameters.csv | head -n 3 | tail -n 1 | cut -d "," -f 1
+```
+
+In this example, we use comma as a delimiter field and obtained the first of the values after "cutting" that line. 
+
+Schematically, this is what we've done:
+
+![](images/head_tail.png)
+
+So, if we wanted to use job arrays to automatically retrieve the relevant line of this file as its input, we could use `head -n $SLURM_ARRAY_TASK_ID` in our command pipe above. 
+Let's see this in practice in our next exercise. 
 
 :::exercise
 
-**TODO: an example using a simulation script**
+A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature. 
+They are using a type of model, first proposed by [Alan Turing](https://en.wikipedia.org/wiki/Turing_pattern), which models the interaction between two components that can difuse in space and promote/inhibit each other.
+<details><summary>More</summary>
 
-https://youtu.be/alH3yc6tX98
+Turing patterns can be generated with a type of mathematical model called a "Reaction-diffusion system". 
+It models two substances - A and B - that can difuse in space and interact with each other in the following way: substance A self-activates itself and also activates B; B inhibits A. 
 
-A PhD student is working on project to understand how coral colonies grow to form the beautiful patterns observed in nature. 
-They are using a mathematical model known as  [Reaction-Diffusion](https://en.wikipedia.org/wiki/Reaction%E2%80%93diffusion_system), which models the interaction between two components that can self-activate and mutually inhibit each other.
+![https://doi.org/10.1016/B978-0-12-382190-4.00006-1](https://ars.els-cdn.com/content/image/3-s2.0-B9780123821904000061-f06-05-9780123821904.jpg)
 
-They have an R script which runs this model and produces an output image as exemplified below. 
-They have been running this script on their laptop, but it takes a while to run and they would like to eventually try many parameter combinations. 
+This seemingly simple interaction can generate complex spatial patterns, some of which capture the diversity of patterns observed in nature.
+Here is a very friendly video illustrating this: https://youtu.be/alH3yc6tX98
+
+</details>
+
+They have a python script which runs this model and produces an output image as exemplified above. 
+The two main parameters in the model are called "feed" and "kill", and their python script accepts these as options, for example:
+
+```console 
+$ python scripts/turing_model.py --feed 0.04 --kill 0.06 --outdir results/turing/
+```
+
+This would produce an image saved as `results/turing/f0.04_k0.06.png`. 
+
+The student has been running this script on their laptop, but it takes a while to run and they would like to try several parameter combinations. 
+They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can open this file in _VS Code_ to quickly inspect its contents). 
+
+Our objective is to automate running these models in parallel on the HPC.
+
+1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
+3. Examine the output files in the `results/turing/` folder (Note: you can preview image files by opening them in _VS Code_.)
+
+<details><summary>Answer</summary>
+
+**A1.**
+
+Our array numbers should be: `#SBATCH -a 2-5`.
+We start at 2, because the parameter values start at the second line of the parameter file. 
+We finish at 5, because that's the number of lines in the CSV file. 
+
+**A2.**
+
+We can submit the script with `sbatch slurm/parallel_turing_pattern.sh`.
+While the job is running we can monitor its status with `squeue -u USERNAME`. 
+We should see several jobs listed with IDs as `JOBID_ARRAYID` format. 
+
+Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
+We can list these log files with `ls logs/parallel_turing_pattern_*.log` (using the "*" wildcard to match any character). 
+If we examine the content of one of these files (e.g. `cat logs/parallel_turing_pattern_1.log`), we should only see the messages we printed with the `echo` commands. 
+The actual output of the python script is an image, which is saved into the `results/turing` folder. 
+
+**A3.**
+
+Once all the array jobs finish, we should have 5 image files in `ls results/turing`.
+We can open these images from within _VS Code_, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync` commands), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
+
+</details>
 
 :::
 
 :::exercise
 
-**TODO: adjust this exercise to illustrate a bioinformatic-flavoured example.** 
-At this stage of the course could omit the `#SBATCH` options, or give them as a hidden hint.
-Also need to build up to this larger example, perhaps by having simpler exercises beforehand. 
+(This is a bioinformatics-flavoured version of the previous exercise.)
 
-- Study and adjust the code and save it in a new script `$HOME/rds/hpc-work/hpc_workshop/scripts/03_mapping_array.sh`
-- Launch the job with `sbatch`
+Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#Loading_Conda_Environments), we now want to map each of our samples' sequence data to the reference genome.
 
-```bash
-#!/bin/bash
-#SBATCH -A <FIXME>
-#SBATCH -D /home/<FIXME>/rds/hpc-work/projects/hpc_workshop
-#SBATCH -J mapping_array
-#SBATCH -o scripts/03_mapping_array_%a.log
-#SBATCH -c 2
-#SBATCH -t 00:10:00        # hours:minutes:seconds or days-hours:minutes:seconds
-#SBATCH -p skylake         # or skylake-highmem
-#SBATCH --mem-per-cpu=1G   # max 6G or 12G for skilake-highmem
-#SBATCH -a 1-8             # because we have 8 samples
+![](images/mapping.png){ width=50% }
 
-# get the file prefix corresponding to the current array job
-# see http://bigdatums.net/2016/02/22/3-ways-to-get-the-nth-line-of-a-file-in-linux/
-PREFIX=$(ls data/*_1.fastq | sed 's/_1.fastq//' | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+Looking at our data directory (`ls hpc_workshop/data/reads`), we can see several sequence files in standard _fastq_ format. 
+These files come in pairs (with suffix "_1" and "_2"), and we have 8 different samples. 
+Ideally we want to process these samples in parallel in an automated way.
 
-# get the sample name (without including the data/ path)
-SAMPLE=$(basename $PREFIX)
+We have created a CSV file with three columns.
+One column contains the sample's name (which we will use for our output files) and the other two columns contain the path to the first and second pairs of the input files.
+With the information on this table, we should be able to automate our data processing using a SLURM job array. 
 
-# define variables that will be input to our pipeline script
-READ1="data/${SAMPLE}_1.fastq"
-READ2="data/${SAMPLE}_2.fastq"
-OUT="alignment_example2/${SAMPLE}.sam"
-REF="reference/Drosophila_melanogaster.BDGP6.22.dna.toplevel"
+1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
+3. Examine the output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based, so you can examine them by using the command line program `less`, for example.)
 
-# create output directory
-mkdir -p "alignment_example2"
+<details><summary>Answer</summary>
 
-# output some informative messages
-echo "The input read files are: $READ1 and $READ2"
-echo "The reference genome is: $REF"
-echo "Output will go to: $OUT"
-echo "Number of CPUs used: $SLURM_CPUS_PER_TASK"
+**A1.**
 
-#### Run the commands ####
+Our array numbers should be: `#SBATCH -a 2-9`.
+We start at 2, because the parameter values start at the second line of the parameter file. 
+We finish at 9, because that's the number of lines in the CSV file. 
 
-# Align the reads to the genome
-bowtie2 --very-fast -p "$SLURM_CPUS_PER_TASK" -x "$REF" -1 "$READ1" -2 "$READ2" > "$OUT"
-```
+**A2.**
+
+We can submit the script with `sbatch slurm/parallel_drosophila_mapping.sh`.
+While the job is running we can monitor its status with `squeue -u USERNAME`. 
+We should see several jobs listed with IDs as `JOBID_ARRAYID` format. 
+
+Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
+We can list these log files with `ls logs/parallel_drosophila_mapping_*.log` (using the "*" wildcard to match any character). 
+If we examine the content of one of these files (e.g. `cat logs/parallel_drosophila_mapping_1.log`), we should only see the messages we printed with the `echo` commands. 
+The actual output of the `bowtie2` program is a file in [SAM](https://en.wikipedia.org/wiki/SAM_(file_format) format, which is saved into the `results/drosophila/mapping` folder. 
+
+**A3.**
+
+Once all the array jobs finish, we should have 8 SAM files in `ls results/drosophila/mapping`.
+We can examine the content of these files, although they are not terribly useful by themselves. 
+In a typical bioinformatics workflow these files would be used for further analysis, for example SNP-calling. 
+
+</details>
+
 :::
 
 

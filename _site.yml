@@ -27,12 +27,15 @@ navbar:
         - text: "Parallelising Jobs"
           href: 05-job_arrays.html
         - text: "Cambridge HPC Resources"
+          href: 99-cambridge_hpc.html
+    - text: "Exercises"
+      href: 99-exercises.html
     - text: "Extras"
       menu:
-        - text: "Cambridge HPC Resources"
-          href: 99-cambridge_hpc.html
         - text: "Unix Cheatsheet"
           href: 99-unix_cheatsheet.html
+        - text: "SLURM Quick Reference"
+          href: 99-slurm_cheatsheet.html
   right:
     - text: "GitHub"
       href: https://github.com/cambiotraining

@@ -429,7 +429,9 @@ div.tocify {
     <li>
       <a href="05-job_arrays.html">Parallelising Jobs</a>
     </li>
-    <li class="dropdown-header">Cambridge HPC Resources</li>
+    <li>
+      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -443,10 +445,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="99-cambridge_hpc.html">Cambridge HPC Resources</a>
+      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
     </li>
     <li>
-      <a href="99-unix_cheatsheet.html">Unix Cheatsheet</a>
+      <a href="99-slurm_cheatsheet.html">SLURM Quick Reference</a>
     </li>
   </ul>
 </li>
@@ -468,9 +470,6 @@ div.tocify {
 </div>
 
 
-<div class="warning">
-<p>These materials are still under development</p>
-</div>
 <div id="using-the-slurm-job-scheduler" class="section level1">
 <h1>Using the SLURM Job Scheduler</h1>
 <div class="highlight">
@@ -502,15 +501,15 @@ div.tocify {
 </div>
 <div id="submitting-a-job-with-slurm" class="section level2">
 <h2>Submitting a Job with SLURM</h2>
-<p>To submit a job to SLURM, you need to include your code in a <em>shell script</em>. Let’s start with a minimal example, found in our workshop data folder “01-slurm_basics”.</p>
+<p>To submit a job to SLURM, you need to include your code in a <em>shell script</em>. Let’s start with a minimal example, found in our workshop data folder “slurm”.</p>
 <p>Our script is called <code>simple_job.sh</code> and contains the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">sleep</span> 60 <span class="co"># hold for 60 seconds</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="fu">hostname</span></span></code></pre></div>
-<p>We can run this script from the login node using the <code>bash</code> interpreter (make sure you are in the correct directory first: <code>cd ~/scratch/hpc_workshop/01-slurm_basics</code>):</p>
-<pre class="console"><code>bash test_job.sh</code></pre>
+<p>We can run this script from the login node using the <code>bash</code> interpreter (make sure you are in the correct directory first: <code>cd ~/scratch/hpc_workshop/</code>):</p>
+<pre class="console"><code>bash slurm/test_job.sh</code></pre>
 <p>Which prints the output:</p>
 <pre><code>This job is running on:
 login-node</code></pre>
@@ -625,7 +624,7 @@ login-node</code></pre>
 <div class="note">
 <p>The <code>sacct</code> command may not be available on every HPC, as it depends on how it was configured by the admins.</p>
 </div>
-<p>You can see other details about the job, such as the working directory and output directories it ran with:</p>
+<p>You can also see other details about the job, such as the working directory and output directories it ran with:</p>
 <pre class="console"><code>scontrol show job &lt;JOBID&gt;</code></pre>
 <p>Finally, if you want to cancel a job, you can use:</p>
 <pre class="console"><code>scancel &lt;JOBID&gt;</code></pre>
@@ -651,49 +650,51 @@ In the “scripts” directory, you will find an R script called <code>pi_estima
 <p class="caption">Estimating Pi by randomly placing points on a quarter circle. (Source: <a href="https://carpentries-incubator.github.io/hpc-intro/16-parallel/index.html">HPC Carpentry</a>)</p>
 </div>
 </details>
-<p>If you were running this script interactively (i.e. directly from the console), you would use the R script interpreter: <code>Rscript pi_estimator.R</code>. Instead, we use a shell script to submit this to the job scheduler.</p>
+<p>If you were running this script interactively (i.e. directly from the console), you would use the R script interpreter: <code>Rscript scripts/pi_estimator.R</code>. Instead, we use a shell script to submit this to the job scheduler.</p>
 <ol style="list-style-type: decimal">
 <li>Edit the shell script in <code>slurm/estimate_pi.sh</code> by correcting the code where the word “FIXME” appears. Submit the job to SLURM and check its status in the queue.</li>
 <li>How long did the job take to run and how many resources did it use?
 <details>
-<summary>Hint</summary>Use <code>seff</code>.
+<summary>Hint</summary>Use <code>seff JOBID</code> or <code>scontrol show JOBID</code>.
 </details></li>
 <li>The number of samples used to estimate Pi can be modified using the <code>--nsamples</code> option of our script, defined in millions. The more samples we use, the more precise our estimate should be.
 <ul>
-<li>Adjust your SLURM submission script to use 100 million samples (<code>Rscript scripts/pi_estimator.R --nsamples 100</code>), saving the job output in <code>logs/estimate_pi_100M.log</code>.</li>
-<li>Monitor the job status with <code>squeue</code> and <code>seff</code>. If you find any issues, how would you fix them?</li>
+<li>Adjust your SLURM submission script to use 500 million samples (<code>Rscript scripts/pi_estimator.R --nsamples 500</code>), and save the job output in <code>logs/estimate_pi_500M.log</code>.</li>
+<li>Monitor the job status with <code>squeue</code> and <code>scontrol show JOBID</code>. <!-- If you find any issues, how would you fix them? --></li>
 </ul></li>
 </ol>
 <details>
 <p><summary>Answer</summary></p>
 <p><strong>A1.</strong></p>
-<p>In the shell script we needed to correct the user-specific details in the <code>#SBATCH</code> options. Also, we needed to specify the path to the script we wanted to run. This can be defined relative to the working directory set with <code>-D</code>. For example:</p>
+<p>In the shell script we needed to correct the user-specific details in the <code>#SBATCH</code> options. Also, we needed to specify the path to the script we wanted to run. This can be defined relative to the working directory that we’ve set with <code>-D</code>. For example:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#SBATCH -J estimating_pi                    # a name for your job</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#SBATCH -p training </span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="co">#SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#SBATCH -o logs/estimate_pi.log             # standard output file</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#SBATCH -p training</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co"># run the script</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="ex">Rscript</span> scripts/pi_estimator.R</span></code></pre></div>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#SBATCH -o logs/estimate_pi.log  # standard output file</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#SBATCH -c 1        # number of CPUs. Default: 1</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#SBATCH -t 00:10:00 # time for the job HH:MM:SS.</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co"># run the script</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="ex">Rscript</span> scripts/pi_estimator.R</span></code></pre></div>
 <p><strong>A2.</strong></p>
-<p>As suggested in the hint, we can use the <code>seff</code> command for this:</p>
-<pre class="console"><code>seff JOBID</code></pre>
-<p>Replacing JOBID with the ID of the job we just ran. The output looks something like this:</p>
-<pre><code>TODO: add output example</code></pre>
-<p>If you cannot remember what the job id was, you can run <code>sacct</code> with no other options and it will list the last few jobs that you ran. The one at the bottom of that list is the last job, and you can fetch the ID from there.</p>
+<p>As suggested in the hint, we can use the <code>seff</code> or <code>scontrol</code> commands for this:</p>
+<pre class="console"><code>seff JOBID
+scontrol show JOBID</code></pre>
+<p>Replacing JOBID with the ID of the job we just ran.</p>
+<p>If you cannot remember what the job id was, you can run <code>sacct</code> with no other options and it will list the last few jobs that you ran.</p>
 <p>Strangely enough, the “Memory Utilized” is reported as 0.00MB. That’s very odd, since for sure our script must have used <em>some</em> memory to do the computation. The reason is that SLURM doesn’t always have time to pick memory usage spikes, and so it reports a zero. This is usually not an issue with longer-running jobs.</p>
 <p><strong>A3.</strong></p>
 <p>The modified script should look similar to this:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="co">#SBATCH -J estimating_pi                    # a name for your job</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#SBATCH -o logs/estimate_pi_100M.log             # standard output file</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#SBATCH -p training</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co"># run the script</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="ex">Rscript</span> scripts/pi_estimator.R --nsamples 100</span></code></pre></div>
-<p>However, when we run this job, examining the output file (<code>cat logs/estimate_pi_100M.log</code>) will reveal:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#SBATCH -p training </span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#SBATCH -o logs/estimate_pi.log  # standard output file</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#SBATCH -c 1        # number of CPUs. Default: 1</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#SBATCH -t 00:10:00 # time for the job HH:MM:SS.</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co"># run the script</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="ex">Rscript</span> scripts/pi_estimator.R --nsamples 500</span></code></pre></div>
+<p>However, when we run this job, examining the output file (<code>cat logs/estimate_pi_500M.log</code>) will reveal:</p>
 <pre><code>slurmstepd: error: Detected 1 oom-kill event(s) in step JOBID.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.</code></pre>
 <p>Furthermore, if we use <code>seff</code> to get information about the job, it will show <code>State: OUT_OF_MEMORY (exit code 0)</code>.</p>
 <p>This suggests that the job required more memory than we requested. To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, <code>#SBATCH --mem=10G</code> to request 10Gb of RAM memory for the job.</p>
@@ -730,27 +731,33 @@ DATAFILES=$(ls $DATADIR)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Modify your submission script to use the <code>$SLURM_CPUS_PER_TASK</code> variable to set the number of CPUs used by <code>pi_estimator.R</code>.</li>
 <li>Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make a note of each job’s ID.</li>
-<li>Check how many resources each job used. Did increasing the number of CPUs shorten the time it took to run?</li>
+<li>Check how much time each job took to run (using <code>scontrol show job JOBID</code>). Did increasing the number of CPUs shorten the time it took to run?</li>
 </ol>
 <details>
 <p><summary>Answer</summary></p>
 <p><strong>A1.</strong></p>
 <p>We can modify our submission script in the following manner:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#SBATCH -A TRAINING  # account name</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="co">#SBATCH -p short     # partiton name</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="co">#SBATCH -D /scratch/</span><span class="al">FIXME</span><span class="co">/hpc_workshop/  # working directory</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="co">#SBATCH -o logs/estimate_pi.log      # output file</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#SBATCH --mem=10G</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#SBATCH -c 2                          # number of CPUs</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="co"># launch the Pi estimator script using the number of CPUs that we are requesting from SLURM</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a><span class="ex">Rscript</span> exercises/pi_estimator.R --nsamples 100 --ncpus <span class="va">$SLURM_CPUS_PER_TASK</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#SBATCH -p training     # partiton name</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="co">#SBATCH -D /scratch/</span><span class="al">FIXME</span><span class="co">/hpc_workshop/  # working directory</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="co">#SBATCH -o logs/estimate_pi.log      # output file</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="co">#SBATCH --mem=10G</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co">#SBATCH -c 2                          # number of CPUs</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a></span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="co"># launch the Pi estimator script using the number of CPUs that we are requesting from SLURM</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a><span class="ex">Rscript</span> exercises/pi_estimator.R --nsamples 500 --ncpus <span class="va">$SLURM_CPUS_PER_TASK</span></span></code></pre></div>
 <p>We can run the job multiple times by modifying the <code>#SBATCH -c</code> option.</p>
-<p>After running each job we can use the <code>seff</code> command to obtain information about how long it took to run:</p>
+<p>After running each job we can use <code>scontrol show job JOBID</code> command to obtain information about how long it took to run.</p>
 <p><code>seff JOBID</code></p>
-<p>Alternatively, since we want to compare several jobs, we could also use <code>sacct</code>:</p>
-<p><code>sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3</code></p>
+<!--
+After running each job we can use the `seff` command to obtain information about how long it took to run:
+
+`seff JOBID`
+
+Alternatively, since we want to compare several jobs, we could also use `sacct`:
+
+`sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
+-->
 <p>In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. Going from 1 to 2 CPUs speeds things up a bit, but beyond that we don’t get much better performance. This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing).</p>
 </details>
 </div>

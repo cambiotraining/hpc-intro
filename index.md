@@ -24,7 +24,7 @@ We will cover:
 
 ## Materials
 
-1. [Introduction to High Performance Computing](01-intro.html): what is a HPC cluster and how is it organised?
+1. [Introduction to High Performance Computing](01-intro.html): what is a HPC cluster and how is it organised? ([slides](https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing))
 1. [Working on a HPC Cluster](02-working_on_hpc.html): how do I access and work from a HPC?
 1. [Using the SLURM Job Scheduler](03-slurm.html): how do I use a job scheduler to run jobs on the HPC?
 1. [Managing Software](04-software.html): how do I access pre-installed software or install it myself?

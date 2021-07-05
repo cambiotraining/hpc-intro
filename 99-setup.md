@@ -49,6 +49,7 @@ Press <kbd><kbd>&#8984;</kbd> + <kbd>space</kbd></kbd> to open _spotlight search
 
 - File transfer software:
   - Go to the [Filezilla Download page](https://filezilla-project.org/download.php?show_all=1) and download the file _FileZilla_3.54.1_macosx-x86.app.tar.bz2_ (the version might be slightly different).
+    - Note: If you are on Mac OS X 10.11.6 [download version 3.51.0](https://download.filezilla-project.org/client/FileZilla_3.51.0-rc1_macosx-x86.app.tar.bz2) instead.
   - Go to the Downloads folder and double-click the file you just downloaded to extract the application. Drag-and-drop the "Filezilla" file into your "Applications" folder. 
   - You can now open the installed application to check that it was installed successfully (the first time you launch the application you will get a warning that this is an application downloaded from the internet - you can go ahead and click "Open").
 
