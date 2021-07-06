@@ -54,7 +54,7 @@ hostname
 We can run this script from the login node using the `bash` interpreter (make sure you are in the correct directory first: `cd ~/scratch/hpc_workshop/`): 
 
 ```console
-bash slurm/test_job.sh
+bash slurm/simple_job.sh
 ```
 
 Which prints the output:
@@ -67,7 +67,7 @@ login-node
 To submit the job to the scheduler we instead use the `sbatch` command in a very similar way:
 
 ```console
-sbatch test_script.sh
+sbatch slurm/simple_job.sh
 ```
 
 In this case, we are informed that the job is submitted, but the output is not printed back on the console. 
@@ -231,7 +231,7 @@ If you were running this script interactively (i.e. directly from the console), 
 Instead, we use a shell script to submit this to the job scheduler. 
 
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
-2. How long did the job take to run and how many resources did it use? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show JOBID`.</details>
+2. How long did the job take to run? <details><summary>Hint</summary>Use <!--`seff JOBID` or--> `scontrol show JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
     - Adjust your SLURM submission script to use 500 million samples (`Rscript scripts/pi_estimator.R --nsamples 500`), and save the job output in `logs/estimate_pi_500M.log`.
     - Monitor the job status with `squeue` and `scontrol show JOBID`. <!-- If you find any issues, how would you fix them? -->

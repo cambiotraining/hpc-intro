@@ -509,12 +509,12 @@ div.tocify {
 <span id="cb1-4"><a href="#cb1-4"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="fu">hostname</span></span></code></pre></div>
 <p>We can run this script from the login node using the <code>bash</code> interpreter (make sure you are in the correct directory first: <code>cd ~/scratch/hpc_workshop/</code>):</p>
-<pre class="console"><code>bash slurm/test_job.sh</code></pre>
+<pre class="console"><code>bash slurm/simple_job.sh</code></pre>
 <p>Which prints the output:</p>
 <pre><code>This job is running on:
 login-node</code></pre>
 <p>To submit the job to the scheduler we instead use the <code>sbatch</code> command in a very similar way:</p>
-<pre class="console"><code>sbatch test_script.sh</code></pre>
+<pre class="console"><code>sbatch slurm/simple_job.sh</code></pre>
 <p>In this case, we are informed that the job is submitted, but the output is not printed back on the console. Instead the output is sent to a file, by default named as <code>slurm-JOBID.out</code>, where “JOBID” is a number corresponding to the job ID assigned to the job by the scheduler. This file will be located in the same directory where you launched the job from.</p>
 <p>We can investigate the output by looking inside the file, for example <code>cat slurm-JOBID.out</code>.</p>
 <div class="note">
@@ -653,9 +653,9 @@ In the “scripts” directory, you will find an R script called <code>pi_estima
 <p>If you were running this script interactively (i.e. directly from the console), you would use the R script interpreter: <code>Rscript scripts/pi_estimator.R</code>. Instead, we use a shell script to submit this to the job scheduler.</p>
 <ol style="list-style-type: decimal">
 <li>Edit the shell script in <code>slurm/estimate_pi.sh</code> by correcting the code where the word “FIXME” appears. Submit the job to SLURM and check its status in the queue.</li>
-<li>How long did the job take to run and how many resources did it use?
+<li>How long did the job take to run?
 <details>
-<summary>Hint</summary>Use <code>seff JOBID</code> or <code>scontrol show JOBID</code>.
+<summary>Hint</summary>Use <!--`seff JOBID` or--> <code>scontrol show JOBID</code>.
 </details></li>
 <li>The number of samples used to estimate Pi can be modified using the <code>--nsamples</code> option of our script, defined in millions. The more samples we use, the more precise our estimate should be.
 <ul>
