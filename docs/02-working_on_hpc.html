@@ -702,7 +702,7 @@ cd /scratch/user/  # using the full path</code></pre>
 <span id="cb13-4"><a href="#cb13-4"></a><span class="co"># decompress the files</span></span>
 <span id="cb13-5"><a href="#cb13-5"></a><span class="fu">unzip</span> hpc_workshop_files.zip</span></code></pre></div>
 <p>Finally, we can check how many shell scripts there are using the <code>find</code> program and piping it to the <code>wc</code> (word/line count) program:</p>
-<p><code>find -type f -name *.sh | wc -l</code></p>
+<p><code>find -type f -name "*.sh" | wc -l</code></p>
 <p><code>find</code> is a very useful tool to find files, check this <a href="https://devhints.io/find">Find cheatsheet</a> to learn more about it.</p>
 </details>
 </div>

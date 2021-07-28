@@ -4,6 +4,8 @@ pagetitle: "HPC Course"
 
 # Practical Introduction to High-Performance Computing
 
+**Authors & Contributors:** Hugo Tavares, Lajos Kalmar, Qi Wang
+
 :::highlight
 
 Knowing how to work on a **High Performance Computing (HPC)** system is an essential skill for applications such as bioinformatics, big-data analysis, image processing, machine learning, parallelising tasks, and other high-throughput applications. 

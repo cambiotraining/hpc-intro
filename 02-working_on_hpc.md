@@ -320,7 +320,7 @@ unzip hpc_workshop_files.zip
 
 Finally, we can check how many shell scripts there are using the `find` program and piping it to the `wc` (word/line count) program:
 
-`find -type f -name *.sh | wc -l`
+`find -type f -name "*.sh" | wc -l`
 
 `find` is a very useful tool to find files, check this [Find cheatsheet](https://devhints.io/find) to learn more about it.
 
