@@ -95,9 +95,9 @@ Here is how we could modify our script (you can do it using _VS Code_):
 
 ```bash
 #!/bin/bash
-#SBATCH -o simple_job.log
+#SBATCH -o logs/simple_job.log
 
-sleep 60 # hold for 60 seconds
+sleep 8 # hold for 8 seconds
 echo "This job is running on:"
 hostname
 ```
@@ -231,10 +231,10 @@ If you were running this script interactively (i.e. directly from the console), 
 Instead, we use a shell script to submit this to the job scheduler. 
 
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
-2. How long did the job take to run? <details><summary>Hint</summary>Use <!--`seff JOBID` or--> `scontrol show JOBID`.</details>
+2. How long did the job take to run? <details><summary>Hint</summary>Use <!--`seff JOBID` or--> `scontrol show job JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
     - Adjust your SLURM submission script to use 500 million samples (`Rscript scripts/pi_estimator.R --nsamples 500`), and save the job output in `logs/estimate_pi_500M.log`.
-    - Monitor the job status with `squeue` and `scontrol show JOBID`. <!-- If you find any issues, how would you fix them? -->
+    - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues?
 
 <details><summary>Answer</summary>
 
@@ -263,14 +263,14 @@ As suggested in the hint, we can use the `seff` or `scontrol` commands for this:
 
 ```console
 seff JOBID
-scontrol show JOBID
+scontrol show job JOBID
 ```
 
 Replacing JOBID with the ID of the job we just ran. 
 
 If you cannot remember what the job id was, you can run `sacct` with no other options and it will list the last few jobs that you ran. 
 
-Strangely enough, the "Memory Utilized" is reported as 0.00MB. 
+Sometimes it may happen that the "Memory Utilized" is reported as 0.00MB or a lower value than you would expect. 
 That's very odd, since for sure our script must have used _some_ memory to do the computation. 
 The reason is that SLURM doesn't always have time to pick memory usage spikes, and so it reports a zero. 
 This is usually not an issue with longer-running jobs.
@@ -291,13 +291,9 @@ The modified script should look similar to this:
 Rscript scripts/pi_estimator.R --nsamples 500
 ```
 
-However, when we run this job, examining the output file (`cat logs/estimate_pi_500M.log`) will reveal:
+However, when we run this job, examining the output file (`cat logs/estimate_pi_500M.log`) will reveal and error indicating that our job was killed. 
 
-```
-slurmstepd: error: Detected 1 oom-kill event(s) in step JOBID.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
-```
-
-Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. 
+Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. (**Note:** on our training machines it may show `State: FAILED (exit code 137)`, which is the exit code for an out-of-memory error in our cloud setup)
 
 This suggests that the job required more memory than we requested. 
 To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=10G` to request 10Gb of RAM memory for the job. 
@@ -362,17 +358,17 @@ We will see an example in the following exercise.
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
-For example `pi_estimator.R --ncpus 2` would use two CPUs. 
+For example `pi_estimator.R --nsamples 80 --ncpus 2` would use two CPUs. 
 
-1. Modify your submission script to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`.
-1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make a note of each job's ID. 
-1. Check how much time each job took to run (using `scontrol show job JOBID`). Did increasing the number of CPUs shorten the time it took to run?
+1. Modify your submission script (`slurm/estimate_pi.sh`) to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`. 
+1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes called `traininglarge` (the `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
+1. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 <details><summary>Answer</summary>
 
 **A1.**
 
-We can modify our submission script in the following manner:
+We can modify our submission script in the following manner, for example for using 2 CPUs:
 
 ```bash
 #!/bin/bash
@@ -383,27 +379,19 @@ We can modify our submission script in the following manner:
 #SBATCH -c 2                          # number of CPUs
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-Rscript exercises/pi_estimator.R --nsamples 500 --ncpus $SLURM_CPUS_PER_TASK
+Rscript exercises/pi_estimator.R --nsamples 80 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
 We can run the job multiple times by modifying the `#SBATCH -c` option. 
 
-After running each job we can use `scontrol show job JOBID` command to obtain information about how long it took to run.
+After running each job we can use `seff JOBID` (or `scontrol show job JOBID`) command to obtain information about how long it took to run.
 
-`seff JOBID`
-
-<!--
-After running each job we can use the `seff` command to obtain information about how long it took to run:
-
-`seff JOBID`
-
-Alternatively, since we want to compare several jobs, we could also use `sacct`:
+Alternatively, since we want to compare several jobs, we could also have used `sacct` like so:
 
 `sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
--->
 
 In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
-Going from 1 to 2 CPUs speeds things up a bit, but beyond that we don't get much better performance. 
+For example going from 1 to 2 CPUs doesn't make the job run twice as fast. 
 This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 
 </details>

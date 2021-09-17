@@ -160,7 +160,7 @@ We have a file with the _Drosophila_ genome in `data/genome/drosophila_genome.fa
 1. Create a new conda environment named "bioinformatics". <details><summary>Hint</summary>Remember the syntax to create a new environment is: `conda create --name ENV`</details>
 1. Install the `bowtie2` program in your new environment. <details><summary>Hint</summary>Go to [anaconda.org](https://anaconda.org/) and search for "bowtie2" to confirm it is available through _Conda_ and which software _channel_ it is provided from. Remember that you can install packages using `conda install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME`.</details>
 1. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`. <details><summary>Hint</summary>Remember to activate your environment first with `source activate bioinformatics`.</details>
-1. Open the script in `hpc_workshop/slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
+1. Open the script in `slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
 
 <details><summary>Answer</summary>
 
@@ -202,17 +202,40 @@ We need to fix the script to specify the correct working directory with our user
 
 Replacing "USERNAME" with your username. 
 
-We can then launch it with sbatch, making sure that we're in the correct directory on the HPC:
+We also need to make sure we activate our conda environment, by adding: 
+
+```
+source activate bioinformatics
+```
+
+At the start of the script.
+This is because we did not load the conda environment in our script. 
+Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the conda environment in our SLURM submission scripts**. 
+
+We can then launch it with sbatch:
 
 ```console
-$ cd /scratch/USERNAME/hpc_workshop
-
 $ sbatch slurm/drosophila_genome_indexing.sh
 ```
 
 We can check the job status by using `squeue -u USERNAME`. 
 And we can obtain more information by using `seff JOBID` or `scontrol show job JOBID`. 
 
+We should get several output files in the directory `results/drosophila/genome` with an extension ".bt2":
+
+```console
+$ ls results/drosophila/genome
+```
+
+```
+index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2
+
+<!--
 From this, we should realise that the job has failed. 
 Examining the output log file (`cat logs/drosophila_genome_indexing.log`), we will notice that we have the following error:
 
@@ -256,13 +279,16 @@ $ ls results/drosophila/genome
 ```
 
 ```
-drosophila.1.bt2
-drosophila.2.bt2
-drosophila.3.bt2
-drosophila.4.bt2
-drosophila.rev.1.bt2
-drosophila.rev.2.bt2
+index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2
 ```
+
+--> 
+
 
 </details>
 

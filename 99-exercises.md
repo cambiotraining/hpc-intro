@@ -78,7 +78,7 @@ After registering for a HPC account, you were sent the following information by 
 > 
 > - Username: emailed separately
 > - Password: emailed separately
-> - Host: `oakleaf.bio.cam.ac.uk`
+> - Host: `train.bio`
 > - Port (for file transfer protocols): 22 
 > 
 > You were automatically allocated 40GB in `/home/USERNAME/` and 1TB in `/scratch/USERNAME/`. 
@@ -103,7 +103,7 @@ Check how many people are logged in to the HPC login node using the command `who
 To login to the HPC we run the following from the terminal:
 
 ```bash
-ssh USERNAME@oakleaf.bio.cam.ac.uk
+ssh USERNAME@train.bio
 ```
 
 (replace "USERNAME" by your HPC username)
@@ -201,10 +201,10 @@ bash scripts/test.sh
 ----
 :::exercise
 
-- [Download the data](https://drive.google.com/file/d/1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT/view?usp=sharing) for this course to your computer and place it on your Desktop.
+- <a href="https://drive.google.com/uc?export=download&id=1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
-- Bonus: how many shell scripts (with `.sh` extension) are there in your project folder? 
+- Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder? 
 
 <details><summary>Answer</summary>
 
@@ -215,10 +215,10 @@ Notice that these commands are **run from your local terminal**:
 
 ```bash
 # with scp
-scp -r ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/
+scp -r ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/
 
 # with rsync
-rsync -avhu ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/
+rsync -avhu ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/
 ```
 
 Once we finish transfering the files we can go ahead and decompress the data folder. 
@@ -234,7 +234,7 @@ unzip hpc_workshop_files.zip
 
 Finally, we can check how many shell scripts there are using the `find` program and piping it to the `wc` (word/line count) program:
 
-`find -type f -name *.sh | wc -l`
+`find -type f -name "*.sh" | wc -l`
 
 `find` is a very useful tool to find files, check this [Find cheatsheet](https://devhints.io/find) to learn more about it.
 
@@ -260,10 +260,10 @@ If you were running this script interactively (i.e. directly from the console), 
 Instead, we use a shell script to submit this to the job scheduler. 
 
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
-2. How long did the job take to run and how many resources did it use? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show JOBID`.</details>
+2. How long did the job take to run? <details><summary>Hint</summary>Use <!--`seff JOBID` or--> `scontrol show job JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
     - Adjust your SLURM submission script to use 500 million samples (`Rscript scripts/pi_estimator.R --nsamples 500`), and save the job output in `logs/estimate_pi_500M.log`.
-    - Monitor the job status with `squeue` and `scontrol show JOBID`. <!-- If you find any issues, how would you fix them? -->
+    - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues?
 
 <details><summary>Answer</summary>
 
@@ -292,14 +292,14 @@ As suggested in the hint, we can use the `seff` or `scontrol` commands for this:
 
 ```console
 seff JOBID
-scontrol show JOBID
+scontrol show job JOBID
 ```
 
 Replacing JOBID with the ID of the job we just ran. 
 
 If you cannot remember what the job id was, you can run `sacct` with no other options and it will list the last few jobs that you ran. 
 
-Strangely enough, the "Memory Utilized" is reported as 0.00MB. 
+Sometimes it may happen that the "Memory Utilized" is reported as 0.00MB or a lower value than you would expect. 
 That's very odd, since for sure our script must have used _some_ memory to do the computation. 
 The reason is that SLURM doesn't always have time to pick memory usage spikes, and so it reports a zero. 
 This is usually not an issue with longer-running jobs.
@@ -320,13 +320,9 @@ The modified script should look similar to this:
 Rscript scripts/pi_estimator.R --nsamples 500
 ```
 
-However, when we run this job, examining the output file (`cat logs/estimate_pi_500M.log`) will reveal:
+However, when we run this job, examining the output file (`cat logs/estimate_pi_500M.log`) will reveal and error indicating that our job was killed. 
 
-```
-slurmstepd: error: Detected 1 oom-kill event(s) in step JOBID.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
-```
-
-Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. 
+Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. (**Note:** on our training machines it may show `State: FAILED (exit code 137)`, which is the exit code for an out-of-memory error in our cloud setup)
 
 This suggests that the job required more memory than we requested. 
 To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=10G` to request 10Gb of RAM memory for the job. 
@@ -343,17 +339,17 @@ Clearly, it ran out of memory, but because it ran so fast SLURM didn't register 
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
-For example `pi_estimator.R --ncpus 2` would use two CPUs. 
+For example `pi_estimator.R --nsamples 80 --ncpus 2` would use two CPUs. 
 
-1. Modify your submission script to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`.
-1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make a note of each job's ID. 
-1. Check how much time each job took to run (using `scontrol show job JOBID`). Did increasing the number of CPUs shorten the time it took to run?
+1. Modify your submission script (`slurm/estimate_pi.sh`) to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`. 
+1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes called `traininglarge` (the `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
+1. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 <details><summary>Answer</summary>
 
 **A1.**
 
-We can modify our submission script in the following manner:
+We can modify our submission script in the following manner, for example for using 2 CPUs:
 
 ```bash
 #!/bin/bash
@@ -364,27 +360,19 @@ We can modify our submission script in the following manner:
 #SBATCH -c 2                          # number of CPUs
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-Rscript exercises/pi_estimator.R --nsamples 500 --ncpus $SLURM_CPUS_PER_TASK
+Rscript exercises/pi_estimator.R --nsamples 80 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
 We can run the job multiple times by modifying the `#SBATCH -c` option. 
 
-After running each job we can use `scontrol show job JOBID` command to obtain information about how long it took to run.
+After running each job we can use `seff JOBID` (or `scontrol show job JOBID`) command to obtain information about how long it took to run.
 
-`seff JOBID`
-
-<!--
-After running each job we can use the `seff` command to obtain information about how long it took to run:
-
-`seff JOBID`
-
-Alternatively, since we want to compare several jobs, we could also use `sacct`:
+Alternatively, since we want to compare several jobs, we could also have used `sacct` like so:
 
 `sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
--->
 
 In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
-Going from 1 to 2 CPUs speeds things up a bit, but beyond that we don't get much better performance. 
+For example going from 1 to 2 CPUs doesn't make the job run twice as fast. 
 This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 
 </details>
@@ -405,7 +393,7 @@ We have a file with the _Drosophila_ genome in `data/genome/drosophila_genome.fa
 1. Create a new conda environment named "bioinformatics". <details><summary>Hint</summary>Remember the syntax to create a new environment is: `conda create --name ENV`</details>
 1. Install the `bowtie2` program in your new environment. <details><summary>Hint</summary>Go to [anaconda.org](https://anaconda.org/) and search for "bowtie2" to confirm it is available through _Conda_ and which software _channel_ it is provided from. Remember that you can install packages using `conda install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME`.</details>
 1. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`. <details><summary>Hint</summary>Remember to activate your environment first with `source activate bioinformatics`.</details>
-1. Open the script in `hpc_workshop/slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
+1. Open the script in `slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
 
 <details><summary>Answer</summary>
 
@@ -447,17 +435,40 @@ We need to fix the script to specify the correct working directory with our user
 
 Replacing "USERNAME" with your username. 
 
-We can then launch it with sbatch, making sure that we're in the correct directory on the HPC:
+We also need to make sure we activate our conda environment, by adding: 
+
+```
+source activate bioinformatics
+```
+
+At the start of the script.
+This is because we did not load the conda environment in our script. 
+Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the conda environment in our SLURM submission scripts**. 
+
+We can then launch it with sbatch:
 
 ```console
-$ cd /scratch/USERNAME/hpc_workshop
-
 $ sbatch slurm/drosophila_genome_indexing.sh
 ```
 
 We can check the job status by using `squeue -u USERNAME`. 
 And we can obtain more information by using `seff JOBID` or `scontrol show job JOBID`. 
 
+We should get several output files in the directory `results/drosophila/genome` with an extension ".bt2":
+
+```console
+$ ls results/drosophila/genome
+```
+
+```
+index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2
+
+<!--
 From this, we should realise that the job has failed. 
 Examining the output log file (`cat logs/drosophila_genome_indexing.log`), we will notice that we have the following error:
 
@@ -501,13 +512,16 @@ $ ls results/drosophila/genome
 ```
 
 ```
-drosophila.1.bt2
-drosophila.2.bt2
-drosophila.3.bt2
-drosophila.4.bt2
-drosophila.rev.1.bt2
-drosophila.rev.2.bt2
+index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2
 ```
+
+--> 
+
 
 </details>
 
@@ -516,17 +530,20 @@ drosophila.rev.2.bt2
 ----
 :::exercise
 
-Previously, we used the `pi_estimator.R` script to obtain an estimate of the number Pi. 
+Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
-1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options, to run the job 10 times using a job array. 
-1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being _appended_ to a text file with `pi_estimator.R >> results/pi_estimates.txt`. So the output of all the 100 jobs of the array will be written to this same file, one after the other. </details>
+1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
+1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being sent to individual text files to the directory `results/pi/`. </details>
+1. Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?
 
 <details><summary>Answer</summary>
 
 **A1.**
 
-In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this scrit to `sbatch`, it will run 100 iterations of it in parallel. 
+In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this script to `sbatch`, it will run 100 iterations of it in parallel. 
+
+Also, remember to edit SLURM's working directory with your username, at the top of the script in the `#SBATCH -D` option. 
 
 **A2.**
 
@@ -534,11 +551,18 @@ We can launch our adjusted script with `sbatch slurm/parallel_estimate_pi.sh`.
 When we check our jobs with `squeue -u USERNAME`, we will notice several jobs with JOBID in the format "ID_1", "ID_2", etc. 
 These indicate the number of the array that is currently running as part of that job submission. 
 
-In this case, we only specified a single output log file in `#SBATCH -o` (we did not use the `%a` keyword). 
-So all the information about the jobs was sent to a single file in `logs/parallel_estimate_pi.log`. 
+In this case, we will get 10 output log files, each with the job array number at the end of the filename (we used the `%a` keyword in the `#SBATCH -o` option to achieve this). 
 
-However, for our actual estimate of Pi, we redirected (`>>`) the output to a text file in `results/pi_estimate.txt`. 
+The 10 separate estimates of Pi were written to separate text files named `results/pi_estimate_1.txt`, `results/pi_estimate_2.txt`, etc. 
 If we examine this file (e.g. with `less results/pi_estimate.txt`) we can see it has the results of all the runs of our simulation. 
+
+**A3.**
+
+To combine the results of these 10 replicate runs of our Pi estimate, we could use the Unix tool `cat`: 
+
+`cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt`
+
+
 
 </details>
 
@@ -574,6 +598,10 @@ The student has been running this script on their laptop, but it takes a while t
 They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can open this file in _VS Code_ to quickly inspect its contents). 
 
 Our objective is to automate running these models in parallel on the HPC.
+
+<!--
+1. If you haven't already done so, create a new conda environment to install the necessary python libraries to run this script. Call your environment `scipy` and in that new environment install the packages `numpy` and `matplotlib` from the `conda-forge` channel. Go back to the [Conda section](04-software.html) if you need to revise how to do this. 
+-->
 
 1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
@@ -655,4 +683,16 @@ In a typical bioinformatics workflow these files would be used for further analy
 
 </details>
 
+:::
+
+----
+:::exercise
+
+Ask the question here
+
+<details><summary>Answer</summary>
+
+Answer goes here. 
+
+</details>
 :::

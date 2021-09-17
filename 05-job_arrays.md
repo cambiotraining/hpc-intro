@@ -90,17 +90,20 @@ Here are some examples taken from SLURM's Job Array Documentation:
 
 :::exercise
 
-Previously, we used the `pi_estimator.R` script to obtain an estimate of the number Pi. 
+Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
-1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options, to run the job 10 times using a job array. 
-1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being _appended_ to a text file with `pi_estimator.R >> results/pi_estimates.txt`. So the output of all the 100 jobs of the array will be written to this same file, one after the other. </details>
+1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
+1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being sent to individual text files to the directory `results/pi/`. </details>
+1. Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?
 
 <details><summary>Answer</summary>
 
 **A1.**
 
-In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this scrit to `sbatch`, it will run 100 iterations of it in parallel. 
+In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this script to `sbatch`, it will run 100 iterations of it in parallel. 
+
+Also, remember to edit SLURM's working directory with your username, at the top of the script in the `#SBATCH -D` option. 
 
 **A2.**
 
@@ -108,11 +111,18 @@ We can launch our adjusted script with `sbatch slurm/parallel_estimate_pi.sh`.
 When we check our jobs with `squeue -u USERNAME`, we will notice several jobs with JOBID in the format "ID_1", "ID_2", etc. 
 These indicate the number of the array that is currently running as part of that job submission. 
 
-In this case, we only specified a single output log file in `#SBATCH -o` (we did not use the `%a` keyword). 
-So all the information about the jobs was sent to a single file in `logs/parallel_estimate_pi.log`. 
+In this case, we will get 10 output log files, each with the job array number at the end of the filename (we used the `%a` keyword in the `#SBATCH -o` option to achieve this). 
 
-However, for our actual estimate of Pi, we redirected (`>>`) the output to a text file in `results/pi_estimate.txt`. 
+The 10 separate estimates of Pi were written to separate text files named `results/pi_estimate_1.txt`, `results/pi_estimate_2.txt`, etc. 
 If we examine this file (e.g. with `less results/pi_estimate.txt`) we can see it has the results of all the runs of our simulation. 
+
+**A3.**
+
+To combine the results of these 10 replicate runs of our Pi estimate, we could use the Unix tool `cat`: 
+
+`cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt`
+
+
 
 </details>
 
@@ -197,6 +207,10 @@ The student has been running this script on their laptop, but it takes a while t
 They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can open this file in _VS Code_ to quickly inspect its contents). 
 
 Our objective is to automate running these models in parallel on the HPC.
+
+<!--
+1. If you haven't already done so, create a new conda environment to install the necessary python libraries to run this script. Call your environment `scipy` and in that new environment install the packages `numpy` and `matplotlib` from the `conda-forge` channel. Go back to the [Conda section](04-software.html) if you need to revise how to do this. 
+-->
 
 1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 

@@ -44,7 +44,7 @@ After registering for a HPC account, you were sent the following information by 
 > 
 > - Username: emailed separately
 > - Password: emailed separately
-> - Host: `oakleaf.bio.cam.ac.uk`
+> - Host: `train.bio`
 > - Port (for file transfer protocols): 22 
 > 
 > You were automatically allocated 40GB in `/home/USERNAME/` and 1TB in `/scratch/USERNAME/`. 
@@ -69,7 +69,7 @@ Check how many people are logged in to the HPC login node using the command `who
 To login to the HPC we run the following from the terminal:
 
 ```bash
-ssh USERNAME@oakleaf.bio.cam.ac.uk
+ssh USERNAME@train.bio
 ```
 
 (replace "USERNAME" by your HPC username)
@@ -222,7 +222,7 @@ This program has a graphical interface, for those that prefer it and its use is 
 To connect to the remote server (see Figure 3): 
 
 1. Fill in the following information on the top panel:
-  - Host: oakleaf.bio.cam.ac.uk
+  - Host: train.bio
   - Username: your HPC username
   - Password: your HPC password
   - Port: 22
@@ -242,10 +242,10 @@ The syntax is as follows:
 
 ```bash
 # copy files from the local computer to the HPC
-scp -r path/to/source_folder <user>@oakleaf.bio.cam.ac.uk:path/to/target_folder
+scp -r path/to/source_folder <user>@train.bio:path/to/target_folder
 
 # copy files from the HPC to a local directory
-scp -r <user>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder
+scp -r <user>@train.bio:path/to/source_folder path/to/target_folder
 ```
 
 The option `-r` ensures that all sub-directories are copied (instead of just files, which is the default).
@@ -260,10 +260,10 @@ The most common usage is:
 
 ```bash
 # copy files from the local computer to the HPC
-rsync -auvh --progress path/to/source_folder <user>@oakleaf.bio.cam.ac.uk:path/to/target_folder
+rsync -auvh --progress path/to/source_folder <user>@train.bio:path/to/target_folder
 
 # copy files from the HPC to a local directory
-rsync -auvh --progress <user>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder
+rsync -auvh --progress <user>@train.bio:path/to/source_folder path/to/target_folder
 ```
 
 - the options `-au` ensure that only files that have changed _and_ are newer on the source folder are transferred
@@ -287,10 +287,10 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 
 :::exercise
 
-- [Download the data](https://drive.google.com/file/d/1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT/view?usp=sharing) for this course to your computer and place it on your Desktop.
+- <a href="https://drive.google.com/uc?id=1aqZTJIV8KtGsXfOuDGIIOuoPotwWj_x7&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
-- Bonus: how many shell scripts (with `.sh` extension) are there in your project folder? 
+- Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder? 
 
 <details><summary>Answer</summary>
 
@@ -301,10 +301,10 @@ Notice that these commands are **run from your local terminal**:
 
 ```bash
 # with scp
-scp -r ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/
+scp -r ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/
 
 # with rsync
-rsync -avhu ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/
+rsync -avhu ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/
 ```
 
 Once we finish transfering the files we can go ahead and decompress the data folder. 

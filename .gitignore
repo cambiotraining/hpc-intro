@@ -3,3 +3,7 @@ notes
 .Rhistory
 .Rproj.user
 *.Rproj
+course_files/data
+course_files/hpc_workshop_files.zip
+course_files/logs
+course_files/results
