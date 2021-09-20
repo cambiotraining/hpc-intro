@@ -642,7 +642,7 @@ login-node</code></pre>
 <p>But, unless we create the <code>logs/</code> directory <em>before running the job</em>, <code>sbatch</code> will fail without telling us why.</p>
 </div>
 <div class="exercise">
-In the “scripts” directory, you will find an R script called <code>pi_estimator.R</code>. This script tries to get an approximate estimate for the number Pi using a stochastic algorithm.
+<p>In the “scripts” directory, you will find an R script called <code>pi_estimator.R</code>. This script tries to get an approximate estimate for the number Pi using a stochastic algorithm.</p>
 <details>
 <summary>
 How does the algorithm work?
@@ -664,7 +664,7 @@ How does the algorithm work?
 <summary>
 Hint
 </summary>
-Use <!--`seff JOBID` or--> <code>scontrol show job JOBID</code>.
+Use <code>seff JOBID</code> or <code>scontrol show job JOBID</code>.
 </details></li>
 <li>The number of samples used to estimate Pi can be modified using the <code>--nsamples</code> option of our script, defined in millions. The more samples we use, the more precise our estimate should be.
 <ul>
@@ -742,6 +742,7 @@ DATAFILES=$(ls $DATADIR)</code></pre>
 <p>The R script used in the previous exercise supports parallelisation of some of its internal computations. The number of CPUs used by the script can be modified using the <code>--ncpus</code> option. For example <code>pi_estimator.R --nsamples 80 --ncpus 2</code> would use two CPUs.</p>
 <ol style="list-style-type: decimal">
 <li>Modify your submission script (<code>slurm/estimate_pi.sh</code>) to use the <code>$SLURM_CPUS_PER_TASK</code> variable to set the number of CPUs used by <code>pi_estimator.R</code>.</li>
+<li>Bonus (optional): print a message indicating the job number (SLURM’s job ID is stored in the variable <code>$SLURM_JOB_ID</code>).</li>
 <li>Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes called <code>traininglarge</code> (the <code>training</code> partition has nodes with only 2 CPUs). Make a note of each job’s ID.</li>
 <li>Check how much time each job took to run (using <code>seff JOBID</code>). Did increasing the number of CPUs shorten the time it took to run?</li>
 </ol>
@@ -764,9 +765,44 @@ Answer
 <p>After running each job we can use <code>seff JOBID</code> (or <code>scontrol show job JOBID</code>) command to obtain information about how long it took to run.</p>
 <p>Alternatively, since we want to compare several jobs, we could also have used <code>sacct</code> like so:</p>
 <p><code>sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3</code></p>
-<p>In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. For example going from 1 to 2 CPUs doesn’t make the job run twice as fast. This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing).</p>
+<p>In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes no difference compared to 2 CPUs. This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing).</p>
 </details>
 </div>
+<p>Here is a table summarising some of the most useful environment variables that SLURM creates:</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Variable</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>$SLURM_CPUS_PER_TASK</code></td>
+<td align="left">Number of CPUs requested with <code>-c</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>$SLURM_JOB_ID</code></td>
+<td align="left">The job ID</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>$SLURM_JOB_NAME</code></td>
+<td align="left">The name of the job defined with <code>-J</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>$SLURM_SUBMIT_DIR</code></td>
+<td align="left">The working directory defied with <code>-D</code></td>
+</tr>
+<tr class="odd">
+<td align="right"><code>$SLURM_ARRAY_TASK_ID</code></td>
+<td align="left">The number of the sub-job when running parallel arrays (covered in the <a href="05-job_arrays.html">Job Arrays</a> section)</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>

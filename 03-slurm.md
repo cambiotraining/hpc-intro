@@ -217,6 +217,7 @@ But, unless we create the `logs/` directory _before running the job_, `sbatch` w
 
 In the "scripts" directory, you will find an R script called `pi_estimator.R`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
+
 <details><summary>How does the algorithm work?</summary>
 
 If you are interested in the details, here is a short description of what the script does: 
@@ -231,7 +232,7 @@ If you were running this script interactively (i.e. directly from the console), 
 Instead, we use a shell script to submit this to the job scheduler. 
 
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
-2. How long did the job take to run? <details><summary>Hint</summary>Use <!--`seff JOBID` or--> `scontrol show job JOBID`.</details>
+2. How long did the job take to run? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show job JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
     - Adjust your SLURM submission script to use 500 million samples (`Rscript scripts/pi_estimator.R --nsamples 500`), and save the job output in `logs/estimate_pi_500M.log`.
     - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues?
@@ -361,6 +362,7 @@ The number of CPUs used by the script can be modified using the `--ncpus` option
 For example `pi_estimator.R --nsamples 80 --ncpus 2` would use two CPUs. 
 
 1. Modify your submission script (`slurm/estimate_pi.sh`) to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`. 
+  1. Bonus (optional): print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
 1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes called `traininglarge` (the `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
 1. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
@@ -391,12 +393,22 @@ Alternatively, since we want to compare several jobs, we could also have used `s
 `sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
 
 In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
-For example going from 1 to 2 CPUs doesn't make the job run twice as fast. 
+For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes no difference compared to 2 CPUs. 
 This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 
 </details>
 
 :::
+
+Here is a table summarising some of the most useful environment variables that SLURM creates: 
+
+| Variable | Description |
+| -: | :- |
+| `$SLURM_CPUS_PER_TASK` | Number of CPUs requested with `-c` |
+| `$SLURM_JOB_ID` | The job ID | 
+| `$SLURM_JOB_NAME` | The name of the job defined with `-J` |
+| `$SLURM_SUBMIT_DIR` | The working directory defied with `-D` |
+| `$SLURM_ARRAY_TASK_ID` | The number of the sub-job when running parallel arrays (covered in the [Job Arrays](05-job_arrays.html) section) |
 
 
 ## Summary

@@ -625,7 +625,7 @@ More
 1. If you haven't already done so, create a new conda environment to install the necessary python libraries to run this script. Call your environment `scipy` and in that new environment install the packages `numpy` and `matplotlib` from the `conda-forge` channel. Go back to the [Conda section](04-software.html) if you need to revise how to do this. 
 -->
 <ol style="list-style-type: decimal">
-<li>Use <em>VS Code</em> to open the SLURM submission script in <code>slurm/parallel_turing_pattern.sh</code>. The first few lines of the code are used to fetch parameter values from the CSV file, using the special <code>$SLURM_ARRAY_TASK_ID</code> variable. Fix the <code>#SBATCH -a</code> option to get these values from the CSV file.
+<li>Use <em>VS Code</em> to open the SLURM submission script in <code>slurm/parallel_turing_pattern.sh</code>. The first few lines of the code are used to fetch parameter values from the CSV file, using the special <code>$SLURM_ARRAY_TASK_ID</code> variable. Edit the code where the word “FIXME” appears to automatically extract the values from the CSV file for each sample.
 <details>
 <summary>
 Hint
