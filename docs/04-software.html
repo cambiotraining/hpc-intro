@@ -13,6 +13,7 @@
 
 <title>HPC Course: Software</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -32,7 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -44,101 +44,6 @@
     </style>
 
 
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 
 
 
@@ -379,12 +284,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -473,18 +378,22 @@ div.tocify {
 <div id="managing-software" class="section level1">
 <h1>Managing Software</h1>
 <div class="highlight">
-<h4 id="questions">Questions</h4>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
 <ul>
 <li>How do I use pre-installed software on the HPC?</li>
 <li>How do I install and manage software on the HPC?</li>
 </ul>
-<h4 id="lesson-objectives">Lesson Objectives</h4>
+</div>
+<div id="lesson-objectives" class="section level4">
+<h4>Lesson Objectives</h4>
 <ul>
 <li>Use the <code>module</code> tool to search for and load pre-installed software.</li>
 <li>Understand what a package manager is, and how it can be used to manage software instalation on a HPC environment.</li>
 <li>Install the <em>Conda</em> package manager.</li>
 <li>Create a software environment and install software using <em>Conda</em>.</li>
 </ul>
+</div>
 </div>
 <div id="using-pre-installed-software" class="section level2">
 <h2>Using Pre-installed Software</h2>
@@ -586,20 +495,31 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li>Create a new conda environment named “bioinformatics”.
 <details>
-<summary>Hint</summary>Remember the syntax to create a new environment is: <code>conda create --name ENV</code>
+<summary>
+Hint
+</summary>
+Remember the syntax to create a new environment is: <code>conda create --name ENV</code>
 </details></li>
 <li>Install the <code>bowtie2</code> program in your new environment.
 <details>
-<summary>Hint</summary>Go to <a href="https://anaconda.org/">anaconda.org</a> and search for “bowtie2” to confirm it is available through <em>Conda</em> and which software <em>channel</em> it is provided from. Remember that you can install packages using <code>conda install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME</code>.
+<summary>
+Hint
+</summary>
+Go to <a href="https://anaconda.org/">anaconda.org</a> and search for “bowtie2” to confirm it is available through <em>Conda</em> and which software <em>channel</em> it is provided from. Remember that you can install packages using <code>conda install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME</code>.
 </details></li>
 <li>Check that the software installed correctly by running <code>which bowtie2</code> and <code>bowtie2 --help</code>.
 <details>
-<summary>Hint</summary>Remember to activate your environment first with <code>source activate bioinformatics</code>.
+<summary>
+Hint
+</summary>
+Remember to activate your environment first with <code>source activate bioinformatics</code>.
 </details></li>
-<li>Open the script in <code>hpc_workshop/slurm/drosophila_genome_indexing.sh</code> and edit the <code>#SBATCH</code> options with the word “FIXME”. Submit the script to SLURM using <code>sbatch</code>, check it’s progress, and whether it ran successfully. Troubleshoot any issues that may arise.</li>
+<li>Open the script in <code>slurm/drosophila_genome_indexing.sh</code> and edit the <code>#SBATCH</code> options with the word “FIXME”. Submit the script to SLURM using <code>sbatch</code>, check it’s progress, and whether it ran successfully. Troubleshoot any issues that may arise.</li>
 </ol>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p><strong>A1.</strong></p>
 <p>To create a new conda environment we run:</p>
 <pre class="console"><code>$ conda create --name bioinformatics</code></pre>
@@ -615,43 +535,62 @@ div.tocify {
 <p>We need to fix the script to specify the correct working directory with our username (only showing the relevant line of the script):</p>
 <pre><code>#SBATCH -D /scratch/USERNAME/hpc_workshop</code></pre>
 <p>Replacing “USERNAME” with your username.</p>
-<p>We can then launch it with sbatch, making sure that we’re in the correct directory on the HPC:</p>
-<pre class="console"><code>$ cd /scratch/USERNAME/hpc_workshop
-
-$ sbatch slurm/drosophila_genome_indexing.sh</code></pre>
+<p>We also need to make sure we activate our conda environment, by adding:</p>
+<pre><code>source activate bioinformatics</code></pre>
+<p>At the start of the script. This is because we did not load the conda environment in our script. Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to <strong>always load the conda environment in our SLURM submission scripts</strong>.</p>
+<p>We can then launch it with sbatch:</p>
+<pre class="console"><code>$ sbatch slurm/drosophila_genome_indexing.sh</code></pre>
 <p>We can check the job status by using <code>squeue -u USERNAME</code>. And we can obtain more information by using <code>seff JOBID</code> or <code>scontrol show job JOBID</code>.</p>
-<p>From this, we should realise that the job has failed. Examining the output log file (<code>cat logs/drosophila_genome_indexing.log</code>), we will notice that we have the following error:</p>
-<pre><code></code></pre>
-<p>This is because we did not load the conda environment in our script. Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to <strong>always load the conda environment in our SLURM submission scripts</strong>.</p>
-<p>We could modify our script by adding the line of code <code>source activate bioinformatics</code> before the rest of the code. Here is the complete script:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co"># #SBATCH -A training                      # the account for billing</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#SBATCH -J index_genome                  # job name</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#SBATCH -D /rds/user/hm533/hpc-work/hpc_workshop</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co"># #SBATCH -D /scratch/</span><span class="al">FIXME</span><span class="co">/hpc_workshop/  # working directory</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#SBATCH -o logs/drosophila_genome_indexing.log</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#SBATCH -p cclake                        # queue name</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#SBATCH -c 1                             # CPUs to use</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#SBATCH --mem=1G                         # Memory to use</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co">#SBATCH -t 00:10:00                      # Time for the job in HH:MM:SS</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="co"># load conda environment</span></span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="bu">source</span> activate bioinformatics</span>
-<span id="cb13-14"><a href="#cb13-14"></a></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co"># make a directory for the reference</span></span>
-<span id="cb13-16"><a href="#cb13-16"></a><span class="fu">mkdir</span> -p results/drosophila/genome</span>
-<span id="cb13-17"><a href="#cb13-17"></a></span>
-<span id="cb13-18"><a href="#cb13-18"></a><span class="co"># index the reference genome with bowtie2; the syntax is:</span></span>
-<span id="cb13-19"><a href="#cb13-19"></a><span class="co"># bowtie2-build input.fa output_prefix</span></span>
-<span id="cb13-20"><a href="#cb13-20"></a><span class="ex">bowtie2-build</span> data/drosophila_genome.fa results/drosophila/genome/drosophila</span></code></pre></div>
+<p>We should get several output files in the directory <code>results/drosophila/genome</code> with an extension “.bt2”:</p>
+<pre class="console"><code>$ ls results/drosophila/genome</code></pre>
+<pre><code>index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2
+
+&lt;!--
+From this, we should realise that the job has failed. 
+Examining the output log file (`cat logs/drosophila_genome_indexing.log`), we will notice that we have the following error:
+</code></pre>
+<pre><code>
+This is because we did not load the conda environment in our script. 
+Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the conda environment in our SLURM submission scripts**. 
+
+We could modify our script by adding the line of code `source activate bioinformatics` before the rest of the code. 
+Here is the complete script:
+
+```bash
+#!/bin/bash
+# #SBATCH -A training                      # the account for billing
+#SBATCH -J index_genome                  # job name
+#SBATCH -D /rds/user/hm533/hpc-work/hpc_workshop
+# #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
+#SBATCH -o logs/drosophila_genome_indexing.log
+#SBATCH -p cclake                        # queue name
+#SBATCH -c 1                             # CPUs to use
+#SBATCH --mem=1G                         # Memory to use
+#SBATCH -t 00:10:00                      # Time for the job in HH:MM:SS
+
+# load conda environment
+source activate bioinformatics
+
+# make a directory for the reference
+mkdir -p results/drosophila/genome
+
+# index the reference genome with bowtie2; the syntax is:
+# bowtie2-build input.fa output_prefix
+bowtie2-build data/drosophila_genome.fa results/drosophila/genome/drosophila</code></pre>
 <p>Re-running it should complete successfully and we should get several output files in the directory <code>results/drosophila/genome</code> with an extension “.bt2”:</p>
 <pre class="console"><code>$ ls results/drosophila/genome</code></pre>
-<pre><code>drosophila.1.bt2
-drosophila.2.bt2
-drosophila.3.bt2
-drosophila.4.bt2
-drosophila.rev.1.bt2
-drosophila.rev.2.bt2</code></pre>
+<pre><code>index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2</code></pre>
+<p>–&gt;</p>
 </details>
 </div>
 </div>
@@ -659,7 +598,8 @@ drosophila.rev.2.bt2</code></pre>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
 <div class="highlight">
-<h4 id="key-points">Key Points</h4>
+<div id="key-points" class="section level4">
+<h4>Key Points</h4>
 <ul>
 <li>The <code>module</code> tool can be used to search for and load pre-installed software packages on a HPC.
 <ul>
@@ -675,12 +615,15 @@ drosophila.rev.2.bt2</code></pre>
 <li>When submitting jobs to SLURM, always remember to include the <code>source activate</code> command at the start of the shell script you submit to <code>sbatch</code>.</li>
 </ul></li>
 </ul>
-<h4 id="further-resources">Further resources</h4>
+</div>
+<div id="further-resources" class="section level4">
+<h4>Further resources</h4>
 <ul>
 <li>Search for <em>Conda</em> packages at <a href="https://anaconda.org">anaconda.org</a></li>
 <li>Learn more about <em>Conda</em> from the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/">Conda User Guide</a></li>
 <li><a href="https://docs.conda.io/projects/conda/en/latest/_downloads/1f5ecf5a87b1c1a8aaf5a7ab8a7a0ff7/conda-cheatsheet.pdf">Conda Cheatsheet</a> (PDF)</li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -723,6 +666,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

@@ -157,7 +157,9 @@ who | wc -l
 ----
 :::exercise
 
-If you haven't already done so, connect your VS Code to the HPC following the instructions in Figure 2.
+If you haven't already done so, connect your VS Code to the HPC following the instructions below.
+
+<details><summary>Connecting VS Code to remote host</summary>![](images/vscode_ssh.svg)</details>
 
 1. Open the `hpc_workshop` folder on VS Code (this is the folder you created in the previous exercise).
 1. Create a new file (File > New File) and save it as `test.sh`. Copy the code shown below into this script and save it.
@@ -201,7 +203,7 @@ bash scripts/test.sh
 ----
 :::exercise
 
-- <a href="https://drive.google.com/uc?export=download&id=1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
+- <a href="https://drive.google.com/u/0/uc?id=14kmKqdvTxhAvwXD91yR_IzNv6Z0tY-Gh&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
 - Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder? 

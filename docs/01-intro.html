@@ -13,6 +13,7 @@
 
 <title>HPC Course: Intro</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -32,7 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -284,12 +284,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -381,18 +381,22 @@ div.tocify {
 <p>These materials have accompanying slides: <a href="https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing">Introduction to HPC slides</a></p>
 </div>
 <div class="highlight">
-<h4 id="questions">Questions</h4>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
 <ul>
 <li>What is a HPC and how does it differ from a regular computer?</li>
 <li>What can a HPC be used for?</li>
 </ul>
-<h4 id="learning-objectives">Learning Objectives</h4>
+</div>
+<div id="learning-objectives" class="section level4">
+<h4>Learning Objectives</h4>
 <ul>
 <li>Describe how a typical HPC is organised: <em>nodes</em>, <em>job scheduler</em> and <em>filesystem</em>.</li>
 <li>Distinguish the roles of a <em>login node</em> and a <em>compute node</em>.</li>
 <li>Describe the role of a <em>job scheduler</em>.</li>
 <li>Understand the difference between “scratch” and “home” storage.</li>
 </ul>
+</div>
 </div>
 <div id="what-is-a-hpc-and-what-are-its-uses" class="section level2">
 <h2>What is a HPC and what are its uses?</h2>
@@ -490,7 +494,9 @@ div.tocify {
 <p><strong>Q2.</strong> It turns out that the microscopy data were very large and compressed as a zip file. The postdoc told the student they can run <code>unzip image_files.zip</code> to decompress the file. Should they run this command from the login node or submit it as a job to one of the compute nodes?</p>
 <p><strong>Q3.</strong> The analysis script used by the student generates new versions of the images. In total, after processing the data, the student ends up with ~1TB of data (raw + processed images). Their group still has 5TB of free space on the HPC, so the student decides to keep the data there until they finish the project. Do you agree with this choice, and why? What factors would you take into consideration in deciding what data to keep and where?</p>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p><strong>A1.</strong></p>
 <p>Option C is definitely discouraged: as <code>/home</code> is typically not high-performance and has limited storage, it should not be used for storing/processing data. Option A and B only differ in terms of where the software packages are installed. Typically software can be installed in the user’s <code>/home</code>, avoiding the need to reinstall it multiple times, in case the same software is used in different projects. Therefore, option B is the best practice in this example.</p>
 <p><strong>A2.</strong></p>
@@ -503,8 +509,8 @@ div.tocify {
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<div class="highlight">
-<h4 id="key-points">Key Points</h4>
+<div id="key-points" class="section level4 highlight">
+<h4>Key Points</h4>
 <ul>
 <li>A HPC consists of several computers connected in a network. These are called <strong>nodes</strong>:
 <ul>
@@ -566,6 +572,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

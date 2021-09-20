@@ -13,6 +13,7 @@
 
 <title>HPC Course: Intro</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -32,7 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -53,19 +53,19 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -379,12 +379,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -473,19 +473,23 @@ div.tocify {
 <div id="working-on-a-hpc-cluster" class="section level1">
 <h1>Working on a HPC Cluster</h1>
 <div class="highlight">
-<h4 id="questions">Questions</h4>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
 <ul>
 <li>How do I access a HPC?</li>
 <li>How do I edit files on the HPC?</li>
 <li>How do I move files in/out of the HPC?</li>
 </ul>
-<h4 id="learning-objectives">Learning Objectives</h4>
+</div>
+<div id="learning-objectives" class="section level4">
+<h4>Learning Objectives</h4>
 <ul>
 <li>Use different software tools to work on a remote server: terminal, <em>Visual Studio Code</em> and <em>Filezilla</em>.</li>
 <li>Login to the HPC and navigate its filesystem.</li>
 <li>Use the “Remote-SSH” extension in <em>Visual Studio Code</em> to edit scripts directly on the HPC.</li>
 <li>Use <em>Filezilla</em> to connect to the HPC and move files in and out of its storage.</li>
 </ul>
+</div>
 </div>
 <div class="figure">
 <img src="images/tool_overview.svg" alt="" />
@@ -507,7 +511,7 @@ div.tocify {
 <ul>
 <li>Username: emailed separately</li>
 <li>Password: emailed separately</li>
-<li>Host: <code>oakleaf.bio.cam.ac.uk</code></li>
+<li>Host: <code>train.bio</code></li>
 <li>Port (for file transfer protocols): 22</li>
 </ul>
 <p>You were automatically allocated 40GB in <code>/home/USERNAME/</code> and 1TB in <code>/scratch/USERNAME/</code>.</p>
@@ -517,10 +521,12 @@ div.tocify {
 <p><strong>Q3.</strong> Create a directory called <code>hpc_workshop</code> in your “scratch” directory.</p>
 <p><strong>Q4.</strong> Using the commands <code>free -h</code> (available RAM memory) and <code>nproc --all</code> (number of CPU cores available) compare the capabilities of your own computer to the capabilities of the login node of our HPC. Check how many people are logged in to the HPC login node using the command <code>who</code>.</p>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p><strong>A1.</strong></p>
 <p>To login to the HPC we run the following from the terminal:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ssh</span> USERNAME@oakleaf.bio.cam.ac.uk</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> USERNAME@train.bio</span></code></pre></div>
 <p>(replace “USERNAME” by your HPC username)</p>
 <p><strong>A2.</strong></p>
 <p>We can get a detailed list of the files on our home directory:</p>
@@ -537,16 +543,19 @@ cd /scratch/user/  # using the full path</code></pre>
 <p>The main thing to consider in this question is where you run the commands from. To get the number of CPUs and memory on your computer make sure you open a new terminal and that you see something like <code>[your-local-username@laptop: ~]$</code> (where “user” is the username on your personal computer and “laptop” is the name of your personal laptop).</p>
 <p>Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. You should see something like <code>[your-hpc-username@login ~]$</code></p>
 <p>To see how many people are currently on the login node we can combine the <code>who</code> and <code>wc</code> commands:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># pipe the output of `who` to `wc`</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># the `-l` flag instructs `wc` to count &quot;lines&quot; of its input</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">who</span> <span class="kw">|</span> <span class="fu">wc</span> -l</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pipe the output of `who` to `wc`</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the `-l` flag instructs `wc` to count &quot;lines&quot; of its input</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">who</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div>
 </details>
 </div>
 <div class="note">
 <p><strong>Passwordless Login</strong></p>
 <p>To make your life easier, you can configure <code>ssh</code> to login to a server without having to type your password or username.</p>
 <details>
-<summary>More</summary> TODO: Show how to setup passwordless login and <code>.ssh/config</code>
+<summary>
+More
+</summary>
+TODO: Show how to setup passwordless login and <code>.ssh/config</code>
 </details>
 </div>
 </div>
@@ -557,30 +566,47 @@ cd /scratch/user/  # using the full path</code></pre>
 <p>In this course we will use <em>Visual Studio Code</em> (<em>VS Code</em> for short), which is an open-source software with a wide range of functionality and several extensions. Conveniently, one of those extensions allows us to connect to a remote computer (via <em>ssh</em>) and edit files as if they were on our own computer (see the <a href="99-setup.html">Setup</a> page for how to install it).</p>
 <p>To connect VS Code to the HPC (see Figure 3):</p>
 <ol style="list-style-type: decimal">
-<li>Click the “Open Remote Window” green button on the bottom left corner</li>
-<li>Click “Connect to Host…” in the popup menu that opens</li>
-<li>Type your username and HPC hostname in the same way you do with <code>ssh</code></li>
-<li>Once you are connected the green button on the bottom-left corner should change to indicate you are ssh’d into the HPC</li>
-<li>Use the left-hand “Explorer” and click “Open Folder”</li>
-<li>Type the <em>path</em> to the folder on the HPC from where you want to work from</li>
+<li>Click the “Open Remote Window” green button on the bottom left corner.</li>
+<li>Click “Connect to Host…” in the popup menu that opens.</li>
+<li>Click “+ Add New SSH Host…”.</li>
+<li>Type your username and HPC hostname in the same way you do with <code>ssh</code>.</li>
+<li>Select SSH configuration file to save this information for the future. Select the first file listed in the popup menu (a file in your user’s home under <code>.ssh/config</code>).</li>
+<li>A menu pops open on the bottom right informing the host was added to the configuration file. Click “Connect”.</li>
+<li>You may be asked what kind of platform you are connecting to. HPC environments always run on Linux.</li>
+<li>The first time you connect to a host you will also be asked if you trust this computer. You can answer “Continue”.</li>
+<li>Finally, you will be asked for your password. Once you are connected the green button on the bottom-left corner should change to indicate you are ssh’d into the HPC</li>
+<li>To open a folder on the HPC, use the left-hand “Explorer” and click “Open Folder”</li>
+<li>Type the <em>path</em> to the folder on the HPC from where you want to work from and press OK
+<ul>
+<li>You may be asked for your password again. The first time you connect to a folder you will also be asked “Do you trust the authors of the files in this folder?”, to which you can answer “Yes, I trust the authors”.</li>
+</ul></li>
 </ol>
 <div class="figure">
 <img src="images/vscode_ssh.svg" alt="" />
-<p class="caption">TODO: add further screenshots. How to connect to a remote server with <em>VS Code</em></p>
+<p class="caption">Connect to a remote server with <em>VS Code</em>.</p>
 </div>
 <p>Once you are connected to the HPC in this way, you can edit files and even create new files and folders on the HPC filesystem.</p>
 <div class="exercise">
-<p>If you haven’t already done so, connect your VS Code to the HPC following the instructions in Figure 2.</p>
+<p>If you haven’t already done so, connect your VS Code to the HPC following the instructions below.</p>
+<details>
+<summary>
+Connecting VS Code to remote host
+</summary>
+<img src="images/vscode_ssh.svg" />
+</details>
 <ol style="list-style-type: decimal">
 <li>Open the <code>hpc_workshop</code> folder on VS Code (this is the folder you created in the previous exercise).</li>
 <li>Create a new file (File &gt; New File) and save it as <code>test.sh</code>. Copy the code shown below into this script and save it.</li>
 <li>From the terminal, run this script with <code>bash test.sh</code></li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">hostname</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;This job is running on:&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span></span></code></pre></div>
 <details>
-<p><summary>Answer</summary> <strong>A1.</strong></p>
+<summary>
+Answer
+</summary>
+<p><strong>A1.</strong></p>
 <p>To open the folder we follow the instructions in Figure 3 and use the following path: <code>/scratch/user/hpc_workshop</code> (replacing “user” with your username)</p>
 <p><strong>A2.</strong></p>
 <p>To create a new script in VS Code we can go to “File &gt; New File” or use the <kbd>Ctrl + N</kbd> shortcut.</p>
@@ -628,7 +654,7 @@ cd /scratch/user/  # using the full path</code></pre>
 <li>Fill in the following information on the top panel:</li>
 </ol>
 <ul>
-<li>Host: oakleaf.bio.cam.ac.uk</li>
+<li>Host: train.bio</li>
 <li>Username: your HPC username</li>
 <li>Password: your HPC password</li>
 <li>Port: 22</li>
@@ -647,22 +673,22 @@ cd /scratch/user/  # using the full path</code></pre>
 <h3><code>scp</code> (command line)</h3>
 <p>This is a command line tool that can be used to copy files between two servers. One thing to note is that it always transfers all the files in a folder, regardless of whether they have changed or not.</p>
 <p>The syntax is as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># copy files from the local computer to the HPC</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">scp</span> -r path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/target_folder</span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># copy files from the HPC to a local directory</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">scp</span> -r <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy files from the local computer to the HPC</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@train.bio:path/to/target_folder</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># copy files from the HPC to a local directory</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>user<span class="op">&gt;</span>@train.bio:path/to/source_folder path/to/target_folder</span></code></pre></div>
 <p>The option <code>-r</code> ensures that all sub-directories are copied (instead of just files, which is the default).</p>
 </div>
 <div id="rsync-command-line" class="section level3">
 <h3><code>rsync</code> (command line)</h3>
 <p>This program is more advanced than <code>scp</code> and has options to synchronise files between two directories in multiple ways. The cost of its flexibility is that it can be a little harder to use.</p>
 <p>The most common usage is:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># copy files from the local computer to the HPC</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">rsync</span> -auvh --progress path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/target_folder</span>
-<span id="cb11-3"><a href="#cb11-3"></a></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># copy files from the HPC to a local directory</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">rsync</span> -auvh --progress <span class="op">&lt;</span>user<span class="op">&gt;</span>@oakleaf.bio.cam.ac.uk:path/to/source_folder path/to/target_folder</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy files from the local computer to the HPC</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-auvh</span> <span class="at">--progress</span> path/to/source_folder <span class="op">&lt;</span>user<span class="op">&gt;</span>@train.bio:path/to/target_folder</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># copy files from the HPC to a local directory</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-auvh</span> <span class="at">--progress</span> <span class="op">&lt;</span>user<span class="op">&gt;</span>@train.bio:path/to/source_folder path/to/target_folder</span></code></pre></div>
 <ul>
 <li>the options <code>-au</code> ensure that only files that have changed <em>and</em> are newer on the source folder are transferred</li>
 <li>the options <code>-vh</code> give detailed information about the transfer and human-readable file sizes</li>
@@ -681,26 +707,28 @@ cd /scratch/user/  # using the full path</code></pre>
 </div>
 <div class="exercise">
 <ul>
-<li><a href="https://drive.google.com/file/d/1CLvr59-LTZmMjIl6ci8gD9ERr_kNQbMT/view?usp=sharing">Download the data</a> for this course to your computer and place it on your Desktop.</li>
+<li><a href="https://drive.google.com/uc?id=1aqZTJIV8KtGsXfOuDGIIOuoPotwWj_x7&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)</li>
 <li>Use <em>Filezilla</em>, <code>scp</code> or <code>rsync</code> (your choice) to move this file to the directory we created earlier: <code>/scratch/user/hpc_workshop/</code>.</li>
 <li>The file we just downloaded is a compressed file. From the HPC terminal, use <code>unzip</code> to decompress the file.</li>
-<li>Bonus: how many shell scripts (with <code>.sh</code> extension) are there in your project folder?</li>
+<li>Bonus: how many shell scripts (files with <code>.sh</code> extension) are there in your project folder?</li>
 </ul>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p>Once we download the data to our computer, we can transfer it using either of the suggested programs. We show the solution using command-line tools.</p>
 <p>Notice that these commands are <strong>run from your local terminal</strong>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># with scp</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">scp</span> -r ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/</span>
-<span id="cb12-3"><a href="#cb12-3"></a></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># with rsync</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="fu">rsync</span> -avhu ~/Desktop/hpc_workshop_files.zip username@oakleaf.bio.cam.ac.uk:scratch/hpc_workshop/</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with scp</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># with rsync</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avhu</span> ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/</span></code></pre></div>
 <p>Once we finish transfering the files we can go ahead and decompress the data folder. Note, this is now run <strong>from the HPC terminal</strong>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># make sure to be in the correct directory</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="bu">cd</span> ~/scratch/hpc_workshop/</span>
-<span id="cb13-3"><a href="#cb13-3"></a></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co"># decompress the files</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="fu">unzip</span> hpc_workshop_files.zip</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure to be in the correct directory</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/scratch/hpc_workshop/</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># decompress the files</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> hpc_workshop_files.zip</span></code></pre></div>
 <p>Finally, we can check how many shell scripts there are using the <code>find</code> program and piping it to the <code>wc</code> (word/line count) program:</p>
 <p><code>find -type f -name "*.sh" | wc -l</code></p>
 <p><code>find</code> is a very useful tool to find files, check this <a href="https://devhints.io/find">Find cheatsheet</a> to learn more about it.</p>
@@ -710,8 +738,8 @@ cd /scratch/user/  # using the full path</code></pre>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<div class="highlight">
-<h4 id="key-points">Key Points</h4>
+<div id="key-points" class="section level4 highlight">
+<h4>Key Points</h4>
 <ul>
 <li>The terminal is used to connect and interact with the HPC.
 <ul>
@@ -765,6 +793,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

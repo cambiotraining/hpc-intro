@@ -147,20 +147,28 @@ Conveniently, one of those extensions allows us to connect to a remote computer 
 
 To connect VS Code to the HPC (see Figure 3):
 
-1. Click the "Open Remote Window" green button on the bottom left corner
-1. Click "Connect to Host..." in the popup menu that opens
-1. Type your username and HPC hostname in the same way you do with `ssh`
-1. Once you are connected the green button on the bottom-left corner should change to indicate you are ssh'd into the HPC
-1. Use the left-hand "Explorer" and click "Open Folder"
-1. Type the _path_ to the folder on the HPC from where you want to work from
+1. Click the "Open Remote Window" green button on the bottom left corner.
+1. Click "Connect to Host..." in the popup menu that opens.
+1. Click "+ Add New SSH Host...".
+1. Type your username and HPC hostname in the same way you do with `ssh`.
+1. Select SSH configuration file to save this information for the future. Select the first file listed in the popup menu (a file in your user's home under `.ssh/config`).
+1. A menu pops open on the bottom right informing the host was added to the configuration file. Click "Connect".
+1. You may be asked what kind of platform you are connecting to. HPC environments always run on Linux. 
+1. The first time you connect to a host you will also be asked if you trust this computer. You can answer "Continue". 
+1. Finally, you will be asked for your password. Once you are connected the green button on the bottom-left corner should change to indicate you are ssh'd into the HPC
+1. To open a folder on the HPC, use the left-hand "Explorer" and click "Open Folder"
+1. Type the _path_ to the folder on the HPC from where you want to work from and press OK
+    * You may be asked for your password again. The first time you connect to a folder you will also be asked "Do you trust the authors of the files in this folder?", to which you can answer "Yes, I trust the authors".
 
-![TODO: add further screenshots. How to connect to a remote server with _VS Code_](images/vscode_ssh.svg)
+![Connect to a remote server with _VS Code_.](images/vscode_ssh.svg)
 
 Once you are connected to the HPC in this way, you can edit files and even create new files and folders on the HPC filesystem.
 
 :::exercise
 
-If you haven't already done so, connect your VS Code to the HPC following the instructions in Figure 2.
+If you haven't already done so, connect your VS Code to the HPC following the instructions below.
+
+<details><summary>Connecting VS Code to remote host</summary>![](images/vscode_ssh.svg)</details>
 
 1. Open the `hpc_workshop` folder on VS Code (this is the folder you created in the previous exercise).
 1. Create a new file (File > New File) and save it as `test.sh`. Copy the code shown below into this script and save it.
@@ -287,7 +295,7 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 
 :::exercise
 
-- <a href="https://drive.google.com/uc?id=1aqZTJIV8KtGsXfOuDGIIOuoPotwWj_x7&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
+- <a href="https://drive.google.com/u/0/uc?id=14kmKqdvTxhAvwXD91yR_IzNv6Z0tY-Gh&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
 - Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder? 

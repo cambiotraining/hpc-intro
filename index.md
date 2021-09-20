@@ -32,7 +32,7 @@ We will cover:
 1. [Managing Software](04-software.html): how do I access pre-installed software or install it myself?
 1. [Parallelising Jobs](05-job_arrays.html): how can I run many similar jobs in parallel?
 
-You can also <a href="https://drive.google.com/uc?id=1aqZTJIV8KtGsXfOuDGIIOuoPotwWj_x7&export=download" target="_blank" rel="noopener noreferrer">download the data</a> for the workshop and save it on your desktop (**do not unzip the file**).
+You can also <a href="https://drive.google.com/u/0/uc?id=14kmKqdvTxhAvwXD91yR_IzNv6Z0tY-Gh&export=download" target="_blank" rel="noopener noreferrer">download the data</a> for the workshop and save it on your desktop (**do not unzip the file**).
 
 
 ## Target Audience

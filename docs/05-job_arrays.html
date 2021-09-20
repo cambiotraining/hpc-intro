@@ -13,6 +13,7 @@
 
 <title>HPC Course: Parallelising</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -32,7 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -53,19 +53,19 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -379,12 +379,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -473,17 +473,21 @@ div.tocify {
 <div id="parallelising-jobs" class="section level1">
 <h1>Parallelising Jobs</h1>
 <div class="highlight">
-<h4 id="questions">Questions</h4>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
 <ul>
 <li>How can I parallelise jobs on a HPC?</li>
 <li>How can I automate job parallelisation?</li>
 </ul>
-<h4 id="learning-objectives">Learning Objectives</h4>
+</div>
+<div id="learning-objectives" class="section level4">
+<h4>Learning Objectives</h4>
 <ul>
 <li>Distinguish between different kinds of parallel computations: multi-threading within a job and job parallelisation across independent jobs.</li>
 <li>Use SLURM <em>job arrays</em> to automatically submit several parallel jobs.</li>
 <li>Customise each parallel job of an array to use different input -&gt; output.</li>
 </ul>
+</div>
 </div>
 <div id="parallelising-tasks" class="section level2">
 <h2>Parallelising Tasks</h2>
@@ -506,19 +510,22 @@ div.tocify {
 <p><em>Job arrays</em> are a collection of jobs that run in parallel with identical parameters. Any resources you request (e.g. <code>-c</code>, <code>--mem</code>, <code>-t</code>) apply to each individual job of the “array”. This means that you only need to submit one “master” job, making it easier to manage and automate your analysis using a single script.</p>
 <p>Job arrays are created with the <em>SBATCH</em> option <code>-a START-FINISH</code> where <em>START</em> and <em>FINISH</em> are integers defining the range of array numbers created by SLURM. SLURM then creates a special shell variable <code>$SLURM_ARRAY_TASK_ID</code>, which contains the array number for the job being processed. Later in this section we will see how we can use some tricks with this variable to automate our analysis.</p>
 <p>For now let’s go through this simple example, which shows what a job array looks like (you can find this script in the course folder <code>slurm/parallel_arrays.sh</code>):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># ... some lines omitted ...</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#SBATCH -o logs/parallel_arrays_%a.log</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#SBATCH -a 1-3</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="bu">echo</span> <span class="st">&quot;This is task number </span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="bu">echo</span> <span class="st">&quot;Using </span><span class="va">$SLURM_CPUS_PER_TASK</span><span class="st"> CPUs&quot;</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="bu">echo</span> <span class="st">&quot;Running on:&quot;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">hostname</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ... some lines omitted ...</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -o logs/parallel_arrays_%a.log</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -a 1-3</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;This is task number </span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Using </span><span class="va">$SLURM_CPUS_PER_TASK</span><span class="st"> CPUs&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Running on:&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span></span></code></pre></div>
 <p>Submitting this script with <code>sbatch slurm/parallel_arrays.sh</code> will launch 3 jobs. The “<em>%a</em>” keyword is used in our output filename (<code>-o</code>) and will be replaced by the array number, so that we end up with three files: <code>parallel_arrays_1.log</code>, <code>parallel_arrays_2.log</code> and <code>parallel_arrays_3.log</code>. Looking at the output in those files should make it clearer that <code>$SLURM_ARRAY_TASK_ID</code> stores the array number of each job, and that each of them uses 2 CPUS (<code>-c 2</code> option). The compute node that they run on may be variable (depending on which node was available to run each job).</p>
 <div class="note">
 <p>You can define job array numbers in multiple ways, not just sequencially.</p>
 <details>
-<p><summary>More</summary> Here are some examples taken from SLURM’s Job Array Documentation:</p>
+<summary>
+More
+</summary>
+<p>Here are some examples taken from SLURM’s Job Array Documentation:</p>
 <table>
 <colgroup>
 <col width="22%" />
@@ -548,22 +555,32 @@ div.tocify {
 </details>
 </div>
 <div class="exercise">
-<p>Previously, we used the <code>pi_estimator.R</code> script to obtain an estimate of the number Pi. Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.</p>
+<p>Previously, we used the <code>pi_estimator.R</code> script to obtain a single estimate of the number Pi. Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.</p>
 <ol style="list-style-type: decimal">
-<li>Use <em>VS Code</em> to open the SLURM submission script in <code>slurm/parallel_estimate_pi.sh</code>. Adjust the <code>#SBATCH</code> options, to run the job 10 times using a job array.</li>
+<li>Use <em>VS Code</em> to open the SLURM submission script in <code>slurm/parallel_estimate_pi.sh</code>. Adjust the <code>#SBATCH</code> options (where word “FIXME” appears), to run the job 10 times using a job array.</li>
 <li>Launch the job with <code>sbatch</code>, monitor its progress and examine the output.
 <details>
-<summary>Hint</summary> Note that the output of <code>pi_estimator.R</code> is now being <em>appended</em> to a text file with <code>pi_estimator.R &gt;&gt; results/pi_estimates.txt</code>. So the output of all the 100 jobs of the array will be written to this same file, one after the other.
+<summary>
+Hint
+</summary>
+Note that the output of <code>pi_estimator.R</code> is now being sent to individual text files to the directory <code>results/pi/</code>.
 </details></li>
+<li>Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?</li>
 </ol>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p><strong>A1.</strong></p>
-<p>In our script, we need to add <code>#SBATCH -a 1-10</code> as one of our options, so that when we submit this scrit to <code>sbatch</code>, it will run 100 iterations of it in parallel.</p>
+<p>In our script, we need to add <code>#SBATCH -a 1-10</code> as one of our options, so that when we submit this script to <code>sbatch</code>, it will run 100 iterations of it in parallel.</p>
+<p>Also, remember to edit SLURM’s working directory with your username, at the top of the script in the <code>#SBATCH -D</code> option.</p>
 <p><strong>A2.</strong></p>
 <p>We can launch our adjusted script with <code>sbatch slurm/parallel_estimate_pi.sh</code>. When we check our jobs with <code>squeue -u USERNAME</code>, we will notice several jobs with JOBID in the format “ID_1”, “ID_2”, etc. These indicate the number of the array that is currently running as part of that job submission.</p>
-<p>In this case, we only specified a single output log file in <code>#SBATCH -o</code> (we did not use the <code>%a</code> keyword). So all the information about the jobs was sent to a single file in <code>logs/parallel_estimate_pi.log</code>.</p>
-<p>However, for our actual estimate of Pi, we redirected (<code>&gt;&gt;</code>) the output to a text file in <code>results/pi_estimate.txt</code>. If we examine this file (e.g. with <code>less results/pi_estimate.txt</code>) we can see it has the results of all the runs of our simulation.</p>
+<p>In this case, we will get 10 output log files, each with the job array number at the end of the filename (we used the <code>%a</code> keyword in the <code>#SBATCH -o</code> option to achieve this).</p>
+<p>The 10 separate estimates of Pi were written to separate text files named <code>results/pi_estimate_1.txt</code>, <code>results/pi_estimate_2.txt</code>, etc. If we examine this file (e.g. with <code>less results/pi_estimate.txt</code>) we can see it has the results of all the runs of our simulation.</p>
+<p><strong>A3.</strong></p>
+<p>To combine the results of these 10 replicate runs of our Pi estimate, we could use the Unix tool <code>cat</code>:</p>
+<p><code>cat results/pi/replicate_*.txt &gt; results/pi/combined_estimates.txt</code></p>
 </details>
 </div>
 <div id="using-slurm_array_task_id-to-automate-jobs" class="section level3">
@@ -589,7 +606,9 @@ div.tocify {
 <div class="exercise">
 A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature. They are using a type of model, first proposed by <a href="https://en.wikipedia.org/wiki/Turing_pattern">Alan Turing</a>, which models the interaction between two components that can difuse in space and promote/inhibit each other.
 <details>
-<p><summary>More</summary></p>
+<summary>
+More
+</summary>
 <p>Turing patterns can be generated with a type of mathematical model called a “Reaction-diffusion system”. It models two substances - A and B - that can difuse in space and interact with each other in the following way: substance A self-activates itself and also activates B; B inhibits A.</p>
 <div class="figure">
 <img src="https://ars.els-cdn.com/content/image/3-s2.0-B9780123821904000061-f06-05-9780123821904.jpg" alt="" />
@@ -602,16 +621,24 @@ A PhD student is working on project to understand how different patterns, such a
 <p>This would produce an image saved as <code>results/turing/f0.04_k0.06.png</code>.</p>
 <p>The student has been running this script on their laptop, but it takes a while to run and they would like to try several parameter combinations. They have prepared a CSV file in <code>data/turing_model_parameters.csv</code> with parameter values of interest (you can open this file in <em>VS Code</em> to quickly inspect its contents).</p>
 <p>Our objective is to automate running these models in parallel on the HPC.</p>
+<!--
+1. If you haven't already done so, create a new conda environment to install the necessary python libraries to run this script. Call your environment `scipy` and in that new environment install the packages `numpy` and `matplotlib` from the `conda-forge` channel. Go back to the [Conda section](04-software.html) if you need to revise how to do this. 
+-->
 <ol style="list-style-type: decimal">
 <li>Use <em>VS Code</em> to open the SLURM submission script in <code>slurm/parallel_turing_pattern.sh</code>. The first few lines of the code are used to fetch parameter values from the CSV file, using the special <code>$SLURM_ARRAY_TASK_ID</code> variable. Fix the <code>#SBATCH -a</code> option to get these values from the CSV file.
 <details>
-<summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.
+<summary>
+Hint
+</summary>
+The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.
 </details></li>
 <li>Launch the job with <code>sbatch</code> and monitor its progress (<code>squeue</code>), whether it runs successfully (<code>scontrol show job</code>), and examine the SLURM output log files.</li>
 <li>Examine the output files in the <code>results/turing/</code> folder (Note: you can preview image files by opening them in <em>VS Code</em>.)</li>
 </ol>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p><strong>A1.</strong></p>
 <p>Our array numbers should be: <code>#SBATCH -a 2-5</code>. We start at 2, because the parameter values start at the second line of the parameter file. We finish at 5, because that’s the number of lines in the CSV file.</p>
 <p><strong>A2.</strong></p>
@@ -630,13 +657,18 @@ A PhD student is working on project to understand how different patterns, such a
 <ol style="list-style-type: decimal">
 <li>Use <em>VS Code</em> to open the SLURM submission script in <code>slurm/parallel_drosophila_mapping.sh</code>. The first few lines of the code are used to fetch parameter values from the CSV file, using the special <code>$SLURM_ARRAY_TASK_ID</code> variable. Fix the <code>#SBATCH -a</code> option to get these values from the CSV file.
 <details>
-<summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.
+<summary>
+Hint
+</summary>
+The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.
 </details></li>
 <li>Launch the job with <code>sbatch</code> and monitor its progress (<code>squeue</code>), whether it runs successfully (<code>scontrol show job</code>), and examine the SLURM output log files.</li>
 <li>Examine the output files in the <code>results/drosophila/mapping</code> folder. (Note: the output files are text-based, so you can examine them by using the command line program <code>less</code>, for example.)</li>
 </ol>
 <details>
-<p><summary>Answer</summary></p>
+<summary>
+Answer
+</summary>
 <p><strong>A1.</strong></p>
 <p>Our array numbers should be: <code>#SBATCH -a 2-9</code>. We start at 2, because the parameter values start at the second line of the parameter file. We finish at 9, because that’s the number of lines in the CSV file.</p>
 <p><strong>A2.</strong></p>
@@ -651,7 +683,8 @@ A PhD student is working on project to understand how different patterns, such a
 <div id="summary" class="section level2">
 <h2>Summary</h2>
 <div class="highlight">
-<h4 id="key-points">Key Points</h4>
+<div id="key-points" class="section level4">
+<h4>Key Points</h4>
 <ul>
 <li>Some tools internally parallelise some of their computations, which is usually referred to as <em>multi-threading</em> or <em>multi-core processing</em>.</li>
 <li>When computational tasks are independent of each other, we can use job parallelisation to make them more efficient.</li>
@@ -661,10 +694,13 @@ A PhD student is working on project to understand how different patterns, such a
 <li>For example we can obtain the input/output information from a simple configuration text file using some command line tools: <code>cat config.csv | head -n $SLURM_ARRAY_TASK_ID | tail -n 1</code></li>
 </ul></li>
 </ul>
-<h4 id="further-resources">Further resources</h4>
+</div>
+<div id="further-resources" class="section level4">
+<h4>Further resources</h4>
 <ul>
 <li><a href="https://slurm.schedmd.com/job_array.html">SLURM Job Array Documentation</a></li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -707,6 +743,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
