@@ -14,7 +14,7 @@
    viewBox="0 0 175.87146 61.877964"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.4 (unknown)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="terminal_ssh.svg">
   <defs
      id="defs2" />
@@ -26,14 +26,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="374.68678"
-     inkscape:cy="170.33717"
+     inkscape:cx="248.61535"
+     inkscape:cy="167.48003"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="false"
      inkscape:window-width="1920"
-     inkscape:window-height="978"
+     inkscape:window-height="976"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -72,19 +72,19 @@
        y="18.4568"
        id="text819"><tspan
          sodipodi:role="line"
-         id="tspan817"
          x="8.5526247"
          y="18.4568"
-         style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"><tspan
+         style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan1055"><tspan
    style="line-height:0.64999998px;fill:#00d700;fill-opacity:1"
    id="tspan825">local-username@personal-laptop</tspan>:<tspan
    style="line-height:0.64999998px;fill:#0064ff;fill-opacity:1"
-   id="tspan917">~</tspan>$ ssh hpc-username@login.hpc</tspan><tspan
+   id="tspan917">~</tspan>$ ssh participant@training.bio</tspan><tspan
          sodipodi:role="line"
          x="8.5526247"
          y="31.685966"
          style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         id="tspan1055">hpc-username@login.hpc's  password: </tspan><tspan
+         id="tspan839">participant@training.bio's  password: </tspan><tspan
          sodipodi:role="line"
          x="8.5526247"
          y="44.915134"
