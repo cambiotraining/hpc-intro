@@ -29,11 +29,14 @@ navbar:
           href: 04-software.html
         - text: "Parallelising Jobs"
           href: 05-job_arrays.html
+        - text: "Job Dependencies"
+          href: 06-job_dependencies.html
+        - text: "---"
         - text: "Cambridge HPC Resources"
           href: 99-cambridge_hpc.html
     - text: "Exercises"
       href: 99-exercises.html
-    - text: "Extras"
+    - text: "Resources"
       menu:
         - text: "Unix Cheatsheet"
           href: 99-unix_cheatsheet.html
@@ -41,5 +44,5 @@ navbar:
           href: 99-slurm_cheatsheet.html
   right:
     - text: "GitHub"
-      href: https://github.com/cambiotraining
+      href: https://github.com/cambiotraining/hpc-intro
 

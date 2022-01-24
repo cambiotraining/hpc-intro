@@ -2,7 +2,7 @@
 pagetitle: "HPC Course"
 ---
 
-# Quick Reference Guide
+# SLURM Quick Reference Guide
 
 This page summarises the most relevant information to work with the HPC, to be used as a quick-reference guide. 
 
@@ -27,10 +27,10 @@ This is used in the examples that follow:
 | `sacct -o jobname,account,state,reqmem,maxrss,averss,elapsed -j JOBID` | custom information about your job |
 
 
-## Basic Submission Script
+## Submission Script Template
 
 At the top of the submission shell script, you should have your `#SBATCH` options. 
-Use this as a general reference for your scripts:
+Use this as a general template for your scripts:
 
 ```bash
 #!/bin/bash
