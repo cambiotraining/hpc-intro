@@ -1,6 +1,6 @@
 name: "HPC Course"
 output_dir: "_site"
-exclude: ["course_files", "episodes", "extras", "notes", "slides"]
+exclude: ["course_materials", "episodes", "extras", "notes", "slides"]
 output:
   html_document:
     highlight: pygments
