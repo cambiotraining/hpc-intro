@@ -65,3 +65,9 @@ Before attending the workshop, please install the necessary software following o
 If you have any issues installing the software, please [get in touch](mailto:bioinfo@hermes.cam.ac.uk) with us beforehand.
 
 
+## Acknowledgements 
+
+This course has been developed by the University of Cambridge [Bioinformatics Training Facility](https://bioinfotraining.bio.cam.ac.uk/) with contributions from Lajos Kalmar from MRC Toxicology's [Core Bioinformatics Unit](https://www.mrc-tox.cam.ac.uk/facilities/bioinformatics). 
+
+<img src="https://www.mrc-tox.cam.ac.uk/sites/www.mrc-tox.cam.ac.uk/files/MRC_TU_Cambridge_identifier_horizontal_RGB2_a.png" alt="MRC Toxicology Bioinformatics" style="width:30%">
+

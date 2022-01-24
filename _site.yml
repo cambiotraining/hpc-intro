@@ -1,14 +1,17 @@
 name: "HPC Course"
-output_dir: "docs"
+output_dir: "_site"
 exclude: ["course_files", "episodes", "extras", "notes", "slides"]
 output:
   html_document:
     highlight: pygments
     css: "assets/styles.css"
     toc: true
-    toc_float: true
+    toc_float:
+      collapsed: false
+    includes:
+      after_body: assets/footer.html
 navbar:
-  title: "<img id=\"logo\" style=\"height: 25px;\" src=\"assets/img/logo.svg\" />"
+  title: "UoC BioinfoTraining"
   left:
     - text: "Home"
       href: index.html

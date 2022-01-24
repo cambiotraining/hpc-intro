@@ -82,7 +82,7 @@ details summary > * {
 
 .highlight {
   background-image: url("img/highlight.svg"); /* https://fonts.gstatic.com/s/i/materialiconsoutlined/tips_and_updates/v1/24px.svg */
-  border-left: 10px solid #FFC107;
+  border-left: 10px solid #28828a;
 }
 
 .exercise {
@@ -124,63 +124,76 @@ details summary > * {
 }
 
 
-/*
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+/*---- Site Template ----*/
+/* changes the Rmarkdown default to match our UoC theme */
 
-.box, .warning, .question, .info, .keypoint {
-  padding: .5em 1em .5em 1em;
-  background-repeat: no-repeat;
-  background-position: 0.5em 1em;
-  background-size: 2em;
-  margin: 10px;
-  border: 3px #373c3e;
-  border-style: solid;
-  background-color: #f1f3f4;
+/* Table of contents */
+.list-group-item:hover {
+  font-weight: bold;
+}
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #28828a;
+  border-color: #28828a;
+}
+.list-group-item.active:focus,
+.list-group-item.active:hover {
+  color: #fff;
+  background-color: #28828a;
+  border-color: #28828a;
+  font-weight: bold;
 }
 
-
-.warning:before, .question:before, .info:before, .keypoint:before {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 36px;
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-  padding-bottom: 10px;
-  padding-right: 3px;
-
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-
-  -moz-osx-font-smoothing: grayscale;
+/* Navigation bar */
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover {
+  color: white;
 }
 
-
-*/
-
-
-/*
-
-
-.question {
-  border: 3px #373c3e;
-  border-style: solid;
-  background-color: #f1f3f4;
-  color: #373c3e;
-  background-image: url("icons/question.png");
+.navbar,
+.navbar-default,
+.navbar-default .navbar-nav > li > a {
+  background-color: #106470;
+  color: white;
 }
 
-
-.keypoint {
-  border: 3px #373c3e;
-  border-style: solid;
-  background-color: #f1f3f4;
-  color: #373c3e;
-  background-image: url("icons/keypoints.png");
+.navbar-default .navbar-nav > .active > a {
+  background-color: #28828a;
+  color: white;
 }
-*/
+
+.navbar-nav > li > .dropdown-menu,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > li > a:hover,
+.dropdown-menu > li > a,
+.dropdown-menu > .active > a {
+  background-color: #003a41;
+  color: white;
+}
+
+.dropdown-menu > .active > a:focus,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+  background-color: #106470;
+  color: white;
+}
+
+.dropdown-header {
+  color: white;
+}
+
+.dropdown-menu .divider {
+  background-color: #106470;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
+  background-color: #003a41;
+  color: white;
+}
