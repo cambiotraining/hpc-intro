@@ -313,5 +313,5 @@ index.rev.2.bt2
 
 - Search for _Conda_ packages at [anaconda.org](https://anaconda.org)
 - Learn more about _Conda_ from the [Conda User Guide](https://docs.conda.io/projects/conda/en/latest/user-guide/)
-- [Conda Cheatsheet](https://docs.conda.io/projects/conda/en/latest/_downloads/1f5ecf5a87b1c1a8aaf5a7ab8a7a0ff7/conda-cheatsheet.pdf) (PDF)
+- [Conda Cheatsheet](https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html) (PDF)
 :::
