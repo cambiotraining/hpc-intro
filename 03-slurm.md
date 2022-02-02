@@ -205,11 +205,24 @@ For example, let's say that we would like to keep our job output files in a fold
 For the example above, we might set these #SBATCH options:
 
 ```bash
-#SBATCH -D /scratch/username/hpc_workshop/01-slurm_basics
+#SBATCH -D /home/username/scratch/hpc_workshop/
 #SBATCH -o logs/simple_job.log
 ```
 
 But, unless we create the `logs/` directory _before running the job_, `sbatch` will fail without telling us why.
+
+Another thing to note is that you should not use the `~` home directory shortcut with the `-D` option. For example:
+
+```bash
+#SBATCH -D ~/scratch/hpc_workshop/
+```
+
+Will not work, instead you should use the full path, for example:
+
+```bash
+#SBATCH -D /home/username/scratch/hpc_workshop/
+```
+
 :::
 
 
