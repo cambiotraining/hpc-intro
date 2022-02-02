@@ -134,7 +134,7 @@ The separation into "home" and "scratch" storage space may not always apply to t
 Also, the location of the "scratch space" will most likely differ from the example used in this course. 
 Ask your local HPC admin to learn more about your specific setup.
 
-We have a specific page demonstrating the setup of [HPC servers at Cambridge University](../extras/cambridge_hpc_servers.md).
+We have a specific page demonstrating the setup of [HPC servers at Cambridge University](99-cambridge_hpc.md).
 :::
 
 
