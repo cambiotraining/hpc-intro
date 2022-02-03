@@ -120,6 +120,22 @@ Let's see this with an example, where we create a new environment called "scipy"
 $ conda install --name scipy --channel conda-forge numpy matplotlib
 ```
 
+To see all the environments you have available, you can use:
+
+```console
+$ conda info --env
+```
+
+```
+# conda environments:
+#
+base                  *  /home/participant36/miniconda3
+scipy                    /home/participant36/miniconda3/envs/scipy
+```
+
+In our case it lists the _base_ (default) environment and the newly created _scipy_ environment.
+The asterisk ("*") tells us which environment we're using at the moment.
+
 
 ### Loading _Conda_ Environments
 
@@ -139,6 +155,21 @@ $ which python
 ```
 ~/miniconda3/envs/scipy/bin/python
 ```
+
+You can also check that the new environment is in use from:
+
+```console
+$ conda info --env
+```
+
+```
+# conda environments:
+#
+base                     /home/participant36/miniconda3
+scipy                 *  /home/participant36/miniconda3/envs/scipy
+```
+
+And notice that the asterisk "*" is now showing we're using the `scipy` environment.
 
 :::note
 **Tip**
@@ -234,61 +265,7 @@ index.3.bt2
 index.4.bt2
 index.rev.1.bt2
 index.rev.2.bt2
-
-<!--
-From this, we should realise that the job has failed. 
-Examining the output log file (`cat logs/drosophila_genome_indexing.log`), we will notice that we have the following error:
-
 ```
-
-```
-
-This is because we did not load the conda environment in our script. 
-Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the conda environment in our SLURM submission scripts**. 
-
-We could modify our script by adding the line of code `source activate bioinformatics` before the rest of the code. 
-Here is the complete script:
-
-```bash
-#!/bin/bash
-# #SBATCH -A training                      # the account for billing
-#SBATCH -J index_genome                  # job name
-#SBATCH -D /rds/user/hm533/hpc-work/hpc_workshop
-# #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
-#SBATCH -o logs/drosophila_genome_indexing.log
-#SBATCH -p cclake                        # queue name
-#SBATCH -c 1                             # CPUs to use
-#SBATCH --mem=1G                         # Memory to use
-#SBATCH -t 00:10:00                      # Time for the job in HH:MM:SS
-
-# load conda environment
-source activate bioinformatics
-
-# make a directory for the reference
-mkdir -p results/drosophila/genome
-
-# index the reference genome with bowtie2; the syntax is:
-# bowtie2-build input.fa output_prefix
-bowtie2-build data/drosophila_genome.fa results/drosophila/genome/drosophila
-```
-
-Re-running it should complete successfully and we should get several output files in the directory `results/drosophila/genome` with an extension ".bt2":
-
-```console
-$ ls results/drosophila/genome
-```
-
-```
-index.1.bt2
-index.2.bt2
-index.3.bt2
-index.4.bt2
-index.rev.1.bt2
-index.rev.2.bt2
-```
-
---> 
-
 
 </details>
 
