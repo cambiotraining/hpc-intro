@@ -112,7 +112,7 @@ Here are some of the most common ones (anything in `<>` is user input):
 | `-D <path>` | *working directory* used for the job. This is the directory that SLURM will use as a reference when running the job. |
 | `-o <path/filename>` | file where the output that would normally be printed on the console is saved in. This is defined _relative_ to the working directory set above. |
 | `-A <name>` | billing account. This is sometimes needed if you're using HPC servers that charge you for their use. This information should be provided by your HPC admins. |
-| `-p <name>` | *partition* name. Often HPC servers have different types of compute node setups (e.g. queues for fast jobs, or long jobs, or high-memory jobs, etc.). This option is used to choose which of these so-called "partitions" you want to run your job on. This information should be provided by your HPC admins. |
+| `-p <name>` | *partition* name. See details in the following section. |
 | `-c <number>` | the number of CPUs you want to use for your job. |
 | `-t <HH:MM:SS>` | the time you need for your job to run. This is not always easy to estimate in advance, so if you're unsure you may want to request a good chunk of time. However, the more time you request for your job, the lower its priority in the queue. |
 | `--mem=<number>GB` | how much RAM memory you want for your job in gigabytes. |
@@ -125,11 +125,29 @@ Here are some of the most common ones (anything in `<>` is user input):
 If you don't specify any options when submitting your jobs, you will get the default configured by the HPC admins.
 For example, in our training HPC, the defaults you will get are:
 
-- 10 seconds of running time (equivalent to `-t 00:00:10`)
+- 10 minutes of running time (equivalent to `-t 00:10:00`)
 - _training_ partition (equivalent to `-p training`)
 - 1 CPU (equivalent to `-c 1`)
 - 1GB RAM (equivalent to `--mem=1GB`)
 :::
+
+
+### Partitions
+
+Often, HPC servers have different types of compute node setups (e.g. queues for fast jobs, or long jobs, or high-memory jobs, etc.). 
+SLURM calls these "partitions" and you can use the `-p` option to choose which partition your job runs on. 
+Usually, which partitions are available on your HPC should be provided by the admins.
+
+It's worth keeping in mind that partitions have separate queues, and you should always try to choose the partition that is most suited to your job. 
+
+For example, on our training HPC we have to partitions with the following characteristics:
+
+- `training` partition (default)
+  - Maximum 2 CPUs (default: 1)
+  - Maximum 4GB RAM (default: X)
+- `traininglarge` partition
+  - Maximum 8 CPUs (default: 1)
+  - Maximum 32GB RAM (default: X)
 
 
 ## Getting Job Information
@@ -371,11 +389,11 @@ We will see an example in the following exercise.
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
-For example `pi_estimator.R --nsamples 80 --ncpus 2` would use two CPUs. 
+For example `pi_estimator.R --nsamples 200 --ncpus 2` would use two CPUs. 
 
 1. Modify your submission script (`slurm/estimate_pi.sh`) to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`. 
-  1. Bonus (optional): print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
-1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes called `traininglarge` (the `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
+    1. Bonus (optional): print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
+1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes `#SBATCH -p traininglarge` (the default `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
 1. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 <details><summary>Answer</summary>
@@ -393,7 +411,7 @@ We can modify our submission script in the following manner, for example for usi
 #SBATCH -c 2                          # number of CPUs
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-Rscript exercises/pi_estimator.R --nsamples 80 --ncpus $SLURM_CPUS_PER_TASK
+Rscript exercises/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
 We can run the job multiple times by modifying the `#SBATCH -c` option. 
@@ -405,7 +423,7 @@ Alternatively, since we want to compare several jobs, we could also have used `s
 `sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
 
 In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
-For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes no difference compared to 2 CPUs. 
+For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes little difference compared to 2 CPUs (this may depend on how many `--nsamples` you used). 
 This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 
 </details>
@@ -421,6 +439,30 @@ Here is a table summarising some of the most useful environment variables that S
 | `$SLURM_JOB_NAME` | The name of the job defined with `-J` |
 | `$SLURM_SUBMIT_DIR` | The working directory defied with `-D` |
 | `$SLURM_ARRAY_TASK_ID` | The number of the sub-job when running parallel arrays (covered in the [Job Arrays](05-job_arrays.html) section) |
+
+
+## Interactive Login
+
+Sometimes it may be useful to directly get a terminal on one of the compute nodes. 
+This may be useful, for example, if you want to test some scripts or run some code that you think might be too demanding for the login node (e.g. to compress some files). 
+
+It is possible to get interactive access to a terminal on one of the compute nodes using the `sintr` command. 
+This command takes options similar to the `sbatch` program, so you can request resources in the same way you would when submitting scripts. 
+
+For example, to access to 8 CPUs and 10GB of RAM for 1h on one of the compute nodes we would do:
+
+```console
+$ sintr -c 8 --mem=10G -p traininglarge -t 01:00:00
+```
+
+You may get a message saying that SLURM is waiting to allocate your request (you go in the queue, just like any other job!). 
+Eventually, when you get in, you will notice that your terminal will indicate you are on a different node (different from the login node). 
+You can check by running `hostname`. 
+
+After you're in, you can run any commands you wish, without worrying about affecting other users' work. 
+Once you are finished, you can use the command `exit` to terminate the session, and you will go back to the login node. 
+
+Note that, if the time you requested (with the `-t` option) runs out, your session will be immediately killed. 
 
 
 ## Summary
