@@ -7,14 +7,17 @@ pagetitle: "HPC Course: Cambridge"
 The supercomputers at Cambridge University are known as _Cambridge Service for Data-Driven Discovery (CSD3)_. 
 Here is a schematic of the university HPC:
 
-![University HPC](images/uni_hpc_schematic.svg)
+![Schematic of the Cambridge University HPC setup. There are thousands of compute nodes, split into four main partitions (names and maximum resources shown in the picture). Storage is shared across the nodes. The `/rds` storage shown here is the equivalent of what we called `/scratch` during the workshop.](images/uni_hpc_schematic.svg)
 
 
-## Obtain and Account and Login
+## Registering for an Account
 
 Anyone with a _Raven_ account can have access to the HPC. 
 There are different levels of service, but the basic one can be used for free. 
 To get an account fill in the [Research Computing Cluster Account Application Form](https://www.hpc.cam.ac.uk/rcs-application). 
+
+
+## Accessing the HPC
 
 Once your account is created, you can login to the HPC with `ssh CRSid@login.hpc.cam.ac.uk` using your Raven password. 
 
@@ -40,13 +43,16 @@ There are two types of nodes that you can access on CSD3:
 - CPU-based cluster, which is suitable for most people (e.g. general bioinformatics use)
 - GPU-based cluster, which is suitable for people using tools that parallelise on GPUs (e.g. deep learning applications and image processing)
 
-We will focus on the CPU-based cluster, which is the most comonly used. 
+We will focus on the CPU-based cluster, which is the most commonly used. 
 
 There are three types of _partitions_ on the CPU nodes:
 
-- `skylake` - up to 32 CPUs and max 5980MiB RAM per CPU
-- `skylake-himem` - up to 32 CPUs and max 12030MiB RAM per CPU
-- `cclake` - up to 56 CPUs and max 3420MiB per cpu
+| Partition Name (`-p`) | Max CPUs (`-c`) | Max Total RAM (`--mem=`) | Max RAM Per CPU (`--mem-per-cpu=`) |
+| -: | :- | :- |
+| `icelake` | 76 | 256G | 3380M |
+| `icelake-himem` | 76 | 512G | 6760M |
+| `cclake` | 56 | 192G | 3420M |
+| `cclake-himem` | 384G | 6840M |
 
 You can choose these depending on your needs (whether you require more or less memory per CPU).
 
@@ -56,12 +62,11 @@ You can choose these depending on your needs (whether you require more or less m
 ```bash
 #!/bin/bash
 #SBATCH -A GROUPNAME-SL3-CPU   # account name (check with `mybalance`)
-#SBATCH -D /home/xyz123/rds/simulations  # your working directory
+#SBATCH -D /rds/xyz123/hpc-work/simulations  # your working directory
 #SBATCH -o logs/simulation.log # standard output and standard error will be saved in this file
-#SBATCH -p skylake             # or `skylake-himem` or `cclake`
-#SBATCH -p skylake             # partition name
+#SBATCH -p icelake             # or `icelake-himem` or `cclake` or `cclake-himem`
 #SBATCH -c 2                   # number of CPUs
-#SBATCH -t 00:02:00            # maximum 12:00:00 for SL3 or 36:00:00 for SL2
+#SBATCH -t 01:00:00            # maximum 12:00:00 for SL3 or 36:00:00 for SL2
 ```
 
 
@@ -70,9 +75,9 @@ You can choose these depending on your needs (whether you require more or less m
 If you don't specify some of the options listed above, this is the default you will get:
 
 - 10 minutes of running time (`-t 00:10:00`)
-- _skylake_ partition (`-p skylake`)
+- _cclake_ partition (`-p cclake`)
 - 1 CPU (`-c 1`)
-- 5980MB RAM (`--mem=5980MB` or `--mem-per-cpu=5980MB`)
+- 3420 MiB RAM (`--mem=3420M` or `--mem-per-cpu=3420M`)
 
 
 :::note
@@ -84,7 +89,9 @@ If you don't specify some of the options listed above, this is the default you w
 
 ### Long Jobs
 
-As a standard you are limited to 36h for jobs on the University HPC. Long jobs (up to 7 days) can be run on special queues, for which you need to request access. See instructions on the [documentation page](https://docs.hpc.cam.ac.uk/hpc/user-guide/long.html).
+As a standard you are limited to 36h for jobs on the University HPC. 
+Long jobs (up to 7 days) can be run on special queues, for which you need to request access. 
+See instructions on the [documentation page](https://docs.hpc.cam.ac.uk/hpc/user-guide/long.html).
 
 
 ### Billing
@@ -92,9 +99,10 @@ As a standard you are limited to 36h for jobs on the University HPC. Long jobs (
 The billing on the University HPC is done by CPU-hour. Here's some examples:
 
 - You requested 3 CPUs (`-c 3`) and 10 hours (`-t 10:00:00`). Your job only took 2 hours to finish. You are charged 3*2 = 6 hours of compute time.
-- You requested 1 CPU (`-c 1`) and 15000MB of total RAM (`--mem=15000MB`) on _skylake-himem_ (`-p skylake-himem`), and the job took 1 hour to run. Because this partition provides 12030MB per CPU, you will actually be charged for 2 CPUs, so 2*1 = 2 hours of compute time.
+- You requested 1 CPU (`-c 1`) and 15000 MiB of total RAM (`--mem=10G`) on _icelake-himem_ (`-p icelake-himem`), and the job took 1 hour to run. Because this partition provides 6760 MiB (or 6.7 GiB) _per CPU_, you will actually be charged for 2 CPUs, so 2*1 = 2 hours of compute time.
 
-If you're using a SL3 account (free), your allowance is capped. Each PI receives 200,000 CPU hours per quarter.
+If you're using a SL3 account (free), your allowance is capped. 
+Each PI receives 200,000 CPU hours per quarter.
 
 
 ## Additional Resources
