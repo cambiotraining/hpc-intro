@@ -53,7 +53,7 @@ If you are on Windows, you can install MobaXterm to get a Unix-like terminal.
 | :---- | :---- |
 | `mkdir {dirname}`     | create a directory with specified name |
 | `rmdir {dirname}`     | remove a directory (only works if the directory is empty) |
-| `rmdir -r {dirname}`  | remove the directory and all it's contents (use with care) |
+| `rm -r {dirname}`  | remove the directory and all it's contents (use with care) |
 
 
 ## Copy, Move and Remove Files 
