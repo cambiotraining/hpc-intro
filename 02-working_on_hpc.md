@@ -128,10 +128,8 @@ This is why we should **never run resource-intensive applications on the login n
 **Passwordless Login**
 
 To make your life easier, you can configure `ssh` to login to a server without having to type your password or username.
-
-<details><summary>More</summary>
-TODO: Show how to setup passwordless login and `.ssh/config`
-</details>
+This can be done using SSH key based authentication. 
+See [this page](https://code.visualstudio.com/docs/remote/troubleshooting#_quick-start-using-ssh-keys) with detailed instructions of how to create a key and add it to the remote host. 
 :::
 
 
@@ -243,7 +241,7 @@ To connect to the remote server (see Figure 3):
 1. Navigate to your desired location by either clicking on the folder browser or typing the directory path in the box "Remote site:".
 1. You can then drag-and-drop files between the left side panel (your local filesystem) and the right side panel (the HPC filesystem), or vice-versa.
 
-![TODO: Filezilla screenshots.]()
+![Example of a Filezilla session. Arrows in red highlight: the connection panel, on the top; the file browser panels, in the middle; the transfer progress panel on the bottom.](images/filezilla.svg)
 
 
 ### `scp` (command line)
