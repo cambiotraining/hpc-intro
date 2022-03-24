@@ -59,8 +59,8 @@ Can you identify and navigate to your scratch directory?
 Create a directory called `hpc_workshop` in your "scratch" directory.
 
 **Q4.**
-Using the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) compare the capabilities of your own computer to the capabilities of the login node of our HPC. 
-Check how many people are logged in to the HPC login node using the command `who`. 
+Use the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) to check the capabilities of the login node of our HPC. 
+Check how many people are logged in to the HPC login node using the command `who`.
 
 <details><summary>Answer</summary>
 
@@ -106,6 +106,7 @@ mkdir hpc_workshop
 
 The main thing to consider in this question is where you run the commands from. 
 To get the number of CPUs and memory on your computer make sure you open a new terminal and that you see something like `[your-local-username@laptop: ~]$` (where "user" is the username on your personal computer and "laptop" is the name of your personal laptop).
+Note that this does not work on the MacOS shell (see [this post](https://www.macworld.co.uk/how-to/how-check-mac-specs-processor-ram-3594298/) for instructions to find the specs of your Mac). 
 
 Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. You should see something like `[your-hpc-username@login ~]$`
 
@@ -116,6 +117,9 @@ To see how many people are currently on the login node we can combine the `who` 
 # the `-l` flag instructs `wc` to count "lines" of its input
 who | wc -l
 ```
+
+You should notice that several people are using the same login node as you.
+This is why we should **never run resource-intensive applications on the login node** of a HPC. 
 
 </details>
 :::
