@@ -15,9 +15,12 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+      icon: fa-home
     - text: "Setup"
       href: 99-setup.html
+      icon: fa-gear
     - text: "Materials"
+      icon: fa-file-lines
       menu:
         - text: "Introduction to HPC"
           href: 01-intro.html
@@ -35,8 +38,10 @@ navbar:
         - text: "Cambridge HPC Resources"
           href: 99-cambridge_hpc.html
     - text: "Exercises"
+      icon: fa-pencil
       href: 99-exercises.html
-    - text: "Resources"
+    - text: "Extras"
+      icon: fa-book
       menu:
         - text: "Unix Cheatsheet"
           href: 99-unix_cheatsheet.html
@@ -44,5 +49,6 @@ navbar:
           href: 99-slurm_cheatsheet.html
   right:
     - text: "GitHub"
+      icon: fa-brands fa-github
       href: https://github.com/cambiotraining/hpc-intro
 
