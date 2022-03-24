@@ -1,6 +1,10 @@
 # Practical introduction to High Performance Computing (HPC)
 
-Course Materials repository. 
+## License
+
+These materials are made available under a [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/). 
+This means that you can share and adapt these materials, as long as you give credit to the original materials and authors. 
+
 
 ## Contributing
 
@@ -8,17 +12,11 @@ The materials are written in markdown.
 Files are numbered according to their order in the materials sections. 
 Some materials are "extra" and are prefixed with number "99-". 
 
-The repository is compiled using the `{rmarkdown}` R package. 
-From the command line, this would create the html files: 
-
-```console
-Rscript -e "rmarkdown::render_site()"
-```
-
-The _html_ files are built into the `docs` folder, from which the GitHub pages are built. 
-
 The `_site.yml` file can be edited to configure the pages that appear on the rendered site. 
 This is necessary if a new file is created and we want to add a new page for it. 
+
+The website is built automatically on the `gh-pages` branch when a new push is sent to the repository. 
+See below for how to build and preview the site locally.
 
 
 ### Text Boxes
@@ -56,3 +54,32 @@ Answer goes here.
 </details>
 :::
 ```
+
+## Build Website Locally
+
+### Using RStudio
+
+RStudio already has all the dependencies installed, so you can build the site by setting the working directory to your local copy of the repository and run `rmarkdown::render_site()` from the console. 
+
+### From the Terminal
+
+First you need to make sure you have installed: 
+
+* R - [https://www.r-project.org/](https://www.r-project.org/)
+* pandoc - [https://pandoc.org/installing.html](https://pandoc.org/installing.html)
+
+Then, install the `rmarkdown` package:
+
+```bash
+Rscript -e 'install.packages("rmarkdown")'
+```
+
+> Note: On Windows make sure that R is added to Windows PATH. 
+
+You can then build the website with:
+
+```bash
+Rscript -e 'rmarkdown::render_site()'
+```
+
+If there is no error then you will see a `_site` directory, under which you will find all the html files.
