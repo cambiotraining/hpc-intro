@@ -144,10 +144,10 @@ For example, on our training HPC we have to partitions with the following charac
 
 - `training` partition (default)
   - Maximum 2 CPUs (default: 1)
-  - Maximum 4GB RAM (default: X)
+  - Maximum 3928 MB RAM (default: 1024)
 - `traininglarge` partition
   - Maximum 8 CPUs (default: 1)
-  - Maximum 32GB RAM (default: X)
+  - Maximum 31758 MB RAM (default: 1024)
 
 
 ## Getting Job Information
@@ -265,7 +265,7 @@ Instead, we use a shell script to submit this to the job scheduler.
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
 2. How long did the job take to run? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show job JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
-    - Adjust your SLURM submission script to use 800 million samples (`Rscript scripts/pi_estimator.R --nsamples 800`), and save the job output in `logs/estimate_pi_800M.log`.
+    - Adjust your SLURM submission script to use 200 million samples (`Rscript scripts/pi_estimator.R --nsamples 200`), and save the job output in `logs/estimate_pi_200M.log`.
     - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues?
 
 <details><summary>Answer</summary>
@@ -315,15 +315,15 @@ The modified script should look similar to this:
 #!/bin/bash
 #SBATCH -p training 
 #SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi_800M.log  # standard output file
+#SBATCH -o logs/estimate_pi_200M.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS.
 
 # run the script
-Rscript scripts/pi_estimator.R --nsamples 800
+Rscript scripts/pi_estimator.R --nsamples 200
 ```
 
-However, when we run this job, examining the output file (`cat logs/estimate_pi_800M.log`) will reveal and error indicating that our job was killed. 
+However, when we run this job, examining the output file (`cat logs/estimate_pi_200M.log`) will reveal and error indicating that our job was killed. 
 
 Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. (**Note:** on our training machines it may show `State: FAILED (exit code 137)`, which is the exit code for an out-of-memory error in our cloud setup)
 
@@ -331,6 +331,7 @@ This suggests that the job required more memory than we requested.
 We can also check this by seeing what `seff` reports as "Memory Utilized" and see that it exceeded the default 1GB (although sometimes it shows 0.0GB if it ran too fast and SLURM didn't register the memory usage peak). 
 
 To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=30G` to request 30Gb of RAM memory for the job. 
+In this case, you would also have to use a different partition that gives you access to high memory notes (`#SBATCH -p traininglarge`).
 
 </details>
 
@@ -391,10 +392,13 @@ The R script used in the previous exercise supports parallelisation of some of i
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
 For example `pi_estimator.R --nsamples 200 --ncpus 2` would use two CPUs. 
 
-1. Modify your submission script (`slurm/estimate_pi.sh`) to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`. 
-    1. Bonus (optional): print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
-1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes `#SBATCH -p traininglarge` (the default `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
-1. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
+1. Modify your submission script (`slurm/estimate_pi.sh`) to:
+    1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs).
+    1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R` (and ensure you have set `--nsamples 200` as well). 
+    1. Request 10G of RAM memory for the job.
+    1. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
+2. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make a note of each job's ID.
+3. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 <details><summary>Answer</summary>
 
@@ -406,7 +410,7 @@ We can modify our submission script in the following manner, for example for usi
 #!/bin/bash
 #SBATCH -p training     # partiton name
 #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi.log      # output file
+#SBATCH -o logs/estimate_pi_200M.log      # output file
 #SBATCH --mem=10G
 #SBATCH -c 2                          # number of CPUs
 
@@ -414,7 +418,7 @@ We can modify our submission script in the following manner, for example for usi
 Rscript exercises/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
-We can run the job multiple times by modifying the `#SBATCH -c` option. 
+We can run the job multiple times by modifying the `#SBATCH -c` option, saving the file and re-running `sbatch slurm/estimate_pi.sh`. 
 
 After running each job we can use `seff JOBID` (or `scontrol show job JOBID`) command to obtain information about how long it took to run.
 
@@ -455,7 +459,7 @@ For example, to access to 8 CPUs and 10GB of RAM for 1h on one of the compute no
 $ sintr -c 8 --mem=10G -p traininglarge -t 01:00:00
 ```
 
-You may get a message saying that SLURM is waiting to allocate your request (you go in the queue, just like any other job!). 
+You may get a message saying that SLURM is waiting to allocate your request (you go in the queue, just like any other job!).
 Eventually, when you get in, you will notice that your terminal will indicate you are on a different node (different from the login node). 
 You can check by running `hostname`. 
 
