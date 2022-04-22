@@ -77,6 +77,8 @@ Other criteria that could be used to decide which data to leave on the HPC, back
 
 :::exercise
 
+**Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we will instead use VS Code throughout the workshop (see next section).
+
 After registering for a HPC account, you were sent the following information by the computing support:
 
 > An account has been created for you on our HPC. 
@@ -98,8 +100,8 @@ Can you identify and navigate to your scratch directory?
 Create a directory called `hpc_workshop` in your "scratch" directory.
 
 **Q4.**
-Using the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) compare the capabilities of your own computer to the capabilities of the login node of our HPC. 
-Check how many people are logged in to the HPC login node using the command `who`. 
+Use the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) to check the capabilities of the login node of our HPC. 
+Check how many people are logged in to the HPC login node using the command `who`.
 
 <details><summary>Answer</summary>
 
@@ -145,6 +147,7 @@ mkdir hpc_workshop
 
 The main thing to consider in this question is where you run the commands from. 
 To get the number of CPUs and memory on your computer make sure you open a new terminal and that you see something like `[your-local-username@laptop: ~]$` (where "user" is the username on your personal computer and "laptop" is the name of your personal laptop).
+Note that this does not work on the MacOS shell (see [this post](https://www.macworld.co.uk/how-to/how-check-mac-specs-processor-ram-3594298/) for instructions to find the specs of your Mac). 
 
 Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. You should see something like `[your-hpc-username@login ~]$`
 
@@ -155,6 +158,9 @@ To see how many people are currently on the login node we can combine the `who` 
 # the `-l` flag instructs `wc` to count "lines" of its input
 who | wc -l
 ```
+
+You should notice that several people are using the same login node as you.
+This is why we should **never run resource-intensive applications on the login node** of a HPC. 
 
 </details>
 :::
@@ -209,6 +215,8 @@ bash scripts/test.sh
 ----
 
 :::exercise
+
+**Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we already put the materials on the training HPC.
 
 - <a href="https://drive.google.com/u/0/uc?id=14kmKqdvTxhAvwXD91yR_IzNv6Z0tY-Gh&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
@@ -273,7 +281,7 @@ Instead, we use a shell script to submit this to the job scheduler.
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
 2. How long did the job take to run? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show job JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
-    - Adjust your SLURM submission script to use 500 million samples (`Rscript scripts/pi_estimator.R --nsamples 500`), and save the job output in `logs/estimate_pi_500M.log`.
+    - Adjust your SLURM submission script to use 200 million samples (`Rscript scripts/pi_estimator.R --nsamples 200`), and save the job output in `logs/estimate_pi_200M.log`.
     - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues?
 
 <details><summary>Answer</summary>
@@ -323,23 +331,23 @@ The modified script should look similar to this:
 #!/bin/bash
 #SBATCH -p training 
 #SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi.log  # standard output file
+#SBATCH -o logs/estimate_pi_200M.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS.
 
 # run the script
-Rscript scripts/pi_estimator.R --nsamples 500
+Rscript scripts/pi_estimator.R --nsamples 200
 ```
 
-However, when we run this job, examining the output file (`cat logs/estimate_pi_500M.log`) will reveal and error indicating that our job was killed. 
+However, when we run this job, examining the output file (`cat logs/estimate_pi_200M.log`) will reveal and error indicating that our job was killed. 
 
 Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. (**Note:** on our training machines it may show `State: FAILED (exit code 137)`, which is the exit code for an out-of-memory error in our cloud setup)
 
 This suggests that the job required more memory than we requested. 
-To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=10G` to request 10Gb of RAM memory for the job. 
+We can also check this by seeing what `seff` reports as "Memory Utilized" and see that it exceeded the default 1GB (although sometimes it shows 0.0GB if it ran too fast and SLURM didn't register the memory usage peak). 
 
-Again, `seff` is rather unhelpful in accurately reporting how much memory the job used. 
-Clearly, it ran out of memory, but because it ran so fast SLURM didn't register the memory usage peak. 
+To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=30G` to request 30Gb of RAM memory for the job. 
+In this case, you would also have to use a different partition that gives you access to high memory notes (`#SBATCH -p traininglarge`).
 
 </details>
 
@@ -351,12 +359,15 @@ Clearly, it ran out of memory, but because it ran so fast SLURM didn't register 
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
-For example `pi_estimator.R --nsamples 80 --ncpus 2` would use two CPUs. 
+For example `pi_estimator.R --nsamples 200 --ncpus 2` would use two CPUs. 
 
-1. Modify your submission script (`slurm/estimate_pi.sh`) to use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R`. 
-  1. Bonus (optional): print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
-1. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make sure to submit these jobs to the partition of nodes called `traininglarge` (the `training` partition has nodes with only 2 CPUs). Make a note of each job's ID. 
-1. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
+1. Modify your submission script (`slurm/estimate_pi.sh`) to:
+    1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs).
+    1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R` (and ensure you have set `--nsamples 200` as well). 
+    1. Request 10G of RAM memory for the job.
+    1. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
+2. Submit the job a few times, each one using 1, 2 and then 8 CPUs. Make a note of each job's ID.
+3. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 <details><summary>Answer</summary>
 
@@ -368,15 +379,15 @@ We can modify our submission script in the following manner, for example for usi
 #!/bin/bash
 #SBATCH -p training     # partiton name
 #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi.log      # output file
+#SBATCH -o logs/estimate_pi_200M.log      # output file
 #SBATCH --mem=10G
 #SBATCH -c 2                          # number of CPUs
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-Rscript exercises/pi_estimator.R --nsamples 80 --ncpus $SLURM_CPUS_PER_TASK
+Rscript exercises/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
-We can run the job multiple times by modifying the `#SBATCH -c` option. 
+We can run the job multiple times by modifying the `#SBATCH -c` option, saving the file and re-running `sbatch slurm/estimate_pi.sh`. 
 
 After running each job we can use `seff JOBID` (or `scontrol show job JOBID`) command to obtain information about how long it took to run.
 
@@ -385,7 +396,7 @@ Alternatively, since we want to compare several jobs, we could also have used `s
 `sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
 
 In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
-For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes no difference compared to 2 CPUs. 
+For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes little difference compared to 2 CPUs (this may depend on how many `--nsamples` you used). 
 This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 
 </details>
@@ -481,61 +492,7 @@ index.3.bt2
 index.4.bt2
 index.rev.1.bt2
 index.rev.2.bt2
-
-<!--
-From this, we should realise that the job has failed. 
-Examining the output log file (`cat logs/drosophila_genome_indexing.log`), we will notice that we have the following error:
-
 ```
-
-```
-
-This is because we did not load the conda environment in our script. 
-Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the conda environment in our SLURM submission scripts**. 
-
-We could modify our script by adding the line of code `source activate bioinformatics` before the rest of the code. 
-Here is the complete script:
-
-```bash
-#!/bin/bash
-# #SBATCH -A training                      # the account for billing
-#SBATCH -J index_genome                  # job name
-#SBATCH -D /rds/user/hm533/hpc-work/hpc_workshop
-# #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
-#SBATCH -o logs/drosophila_genome_indexing.log
-#SBATCH -p cclake                        # queue name
-#SBATCH -c 1                             # CPUs to use
-#SBATCH --mem=1G                         # Memory to use
-#SBATCH -t 00:10:00                      # Time for the job in HH:MM:SS
-
-# load conda environment
-source activate bioinformatics
-
-# make a directory for the reference
-mkdir -p results/drosophila/genome
-
-# index the reference genome with bowtie2; the syntax is:
-# bowtie2-build input.fa output_prefix
-bowtie2-build data/drosophila_genome.fa results/drosophila/genome/drosophila
-```
-
-Re-running it should complete successfully and we should get several output files in the directory `results/drosophila/genome` with an extension ".bt2":
-
-```console
-$ ls results/drosophila/genome
-```
-
-```
-index.1.bt2
-index.2.bt2
-index.3.bt2
-index.4.bt2
-index.rev.1.bt2
-index.rev.2.bt2
-```
-
---> 
-
 
 </details>
 
@@ -697,6 +654,85 @@ The actual output of the `bowtie2` program is a file in [SAM](https://en.wikiped
 Once all the array jobs finish, we should have 8 SAM files in `ls results/drosophila/mapping`.
 We can examine the content of these files, although they are not terribly useful by themselves. 
 In a typical bioinformatics workflow these files would be used for further analysis, for example SNP-calling. 
+
+</details>
+
+:::
+
+----
+
+:::exercise
+
+In [Exercise 1 of the job arrays section](05-job_arrays.html#Job_Arrays), we had adjusted the script `slurm/parallel_estimate_pi.sh` to repeatedly run our stochastic _Pi_ number estimator algorithm. 
+In that exercise, we had then combined our results by running the `cat` command from the terminal:
+
+```console
+cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt
+```
+
+How could you instead submit this as a job to SLURM, ensuring that it only runs once the previous jobs are finished?
+
+<details><summary>Answer</summary>
+
+There are two ways to do this: using `singleton` or `afterok` dependencies. 
+
+----
+
+**Using the `singleton` option**
+
+For this solution, we first need to ensure that we give a job name to our first script `slurm/parallel_estimate_pi.sh` by adding `#SBATCH -J pi_simulations`, for example. 
+
+Then, we could create a new submission script with the following:
+
+```bash
+#!/bin/bash
+#SBATCH -p training  # name of the partition to run job on
+#SBATCH -D /scratch/FIXME/hpc_workshop
+#SBATCH -o logs/combine_pi_results.log
+#SBATCH -c 1        # number of CPUs. Default: 1
+#SBATCH --mem=1G    # RAM memory. Default: 1G
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
+#SBATCH -J pi_simulations
+#SBATCH --dependency=singleton
+
+cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt
+```
+
+The two key SBATCH options are `-J pi_simulations` (which would match the job name with the one from the previous script) and `--dependency=singleton` (which will only run the job once all jobs with that same name complete).
+
+----
+
+**Using the `afterok` option**
+
+In this case, we would need to capture the JOBID of the first job and then launch the second job using that ID as its dependency. 
+
+Let's say that the script to combine the results was called `combine_pi.sh`, with the following code: 
+
+```bash
+#!/bin/bash
+#SBATCH -p training  # name of the partition to run job on
+#SBATCH -D /scratch/FIXME/hpc_workshop
+#SBATCH -o logs/combine_pi_results.log
+#SBATCH -c 1        # number of CPUs. Default: 1
+#SBATCH --mem=1G    # RAM memory. Default: 1G
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
+
+cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt
+```
+
+Note that we do not specify the `--dependency` option within the script.
+Instead, we can specify it in a separate command where we capture the JOBID of the first job and then use that for the second job:
+
+```bash
+# launch the first job - capture the JOB ID into a variable
+JOB1=$(sbatch slurm/parallel_estimate_pi.sh | cut -d " " -f 4)
+
+# launch the second job
+sbatch  --dependency=afterok:$JOB1  slurm/combine_pi.sh
+```
+
+It is also worth noting that, in this case, the first job submits a series of sub-jobs using arrays. 
+But all we need to do is use the main JOBID as the dependency, and this will ensure that it only starts when _all_ the job arrays have completed. 
 
 </details>
 
