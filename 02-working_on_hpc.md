@@ -164,7 +164,14 @@ To connect VS Code to the HPC (see Figure 3):
 1. Type the _path_ to the folder on the HPC from where you want to work from and press OK
     * You may be asked for your password again. The first time you connect to a folder you will also be asked "Do you trust the authors of the files in this folder?", to which you can answer "Yes, I trust the authors".
 
-![Connect to a remote server with _VS Code_.](images/vscode_ssh.svg)
+<div class="figure">
+  <a href="images/vscode_ssh.svg" target="_blank">
+    <img align="center" src="images/vscode_ssh.svg"/>
+  </a>
+  <p class="caption">
+    Steps to connect to a remote server with _VS Code_. Click the image to open a larger size.
+  </p>
+</div>
 
 Once you are connected to the HPC in this way, you can edit files and even create new files and folders on the HPC filesystem.
 You can also **open a terminal within VS Code** by going to the menu "Terminal > New Terminal".
