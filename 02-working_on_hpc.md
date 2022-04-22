@@ -38,6 +38,8 @@ After running this command you will be asked for your password and after typing 
 
 :::exercise
 
+**Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we will instead use VS Code throughout the workshop (see next section).
+
 After registering for a HPC account, you were sent the following information by the computing support:
 
 > An account has been created for you on our HPC. 
@@ -297,6 +299,8 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 
 
 :::exercise
+
+**Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we already put the materials on the training HPC.
 
 - <a href="https://drive.google.com/u/0/uc?id=14kmKqdvTxhAvwXD91yR_IzNv6Z0tY-Gh&export=download" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
 - Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
