@@ -113,6 +113,7 @@ Each PI receives 200,000 CPU hours per quarter.
   - [Running jobs](https://docs.hpc.cam.ac.uk/hpc/user-guide/batch.html)
   - [Billing policies](https://docs.hpc.cam.ac.uk/hpc/user-guide/policies.html)
 - [Price list for HPC storage](https://www.hpc.cam.ac.uk/research-data-storage-services/price-list)
+- [Slack Workspace](https://join.slack.com/t/uoc-hpcworkspace/shared_invite/zt-wttp25ar-ipv48CQtlPbRAVkkN6RJhw) - you can use this workspace to get help from other uses of the University of Cambridge HPC.
 
 
 ## Other University Departments
