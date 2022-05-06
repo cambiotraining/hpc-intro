@@ -408,7 +408,7 @@ We can modify our submission script in the following manner, for example for usi
 
 ```bash
 #!/bin/bash
-#SBATCH -p training     # partiton name
+#SBATCH -p traininglarge     # partiton name
 #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
 #SBATCH -o logs/estimate_pi_200M.log      # output file
 #SBATCH --mem=10G
