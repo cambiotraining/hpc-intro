@@ -77,8 +77,6 @@ Other criteria that could be used to decide which data to leave on the HPC, back
 
 :::exercise
 
-**Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we will instead use VS Code throughout the workshop (see next section).
-
 After registering for a HPC account, you were sent the following information by the computing support:
 
 > An account has been created for you on our HPC. 
@@ -86,22 +84,13 @@ After registering for a HPC account, you were sent the following information by 
 > - Username: emailed separately
 > - Password: emailed separately
 > - Host: `train.bio`
-> - Port (for file transfer protocols): 22 
 > 
 > You were automatically allocated 40GB in `/home/USERNAME/` and 1TB in `/scratch/USERNAME/`. 
 
-**Q1.** Connect to the training HPC using `ssh`
-
-**Q2.** 
-Take some time to explore your home directory to identify what files and folders are in there. 
+1. Connect to the training HPC using `ssh`. (Note: when you type your password, nothing shows on the screen - that's normal, the password is still being input.)
+2. Take some time to explore your home directory to identify what files and folders are in there. 
 Can you identify and navigate to your scratch directory?
-
-**Q3.**
-Create a directory called `hpc_workshop` in your "scratch" directory.
-
-**Q4.**
-Use the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) to check the capabilities of the login node of our HPC. 
-Check how many people are logged in to the HPC login node using the command `who`.
+3. Use the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) to check the capabilities of the login node of our HPC. Check how many people are logged in to the HPC login node using the command `who`.
 
 <details><summary>Answer</summary>
 
@@ -113,7 +102,10 @@ To login to the HPC we run the following from the terminal:
 ssh USERNAME@train.bio
 ```
 
-(replace "USERNAME" by your HPC username)
+Replacing "USERNAME" by your HPC username. 
+After typing it, you will be prompted for your password. 
+Note that as you type the password nothing shows on the screen - that's normal! 
+The password is still being input. 
 
 **A2.**
 
@@ -130,26 +122,19 @@ Therefore, to navigate to our scratch directory we can either use the shortcut f
 
 ```console
 cd ~/scratch       # using the shortcut from the home directory
-cd /scratch/user/  # using the full path
+cd /scratch/USERNAME/  # using the full path
 ```
 
-Remember that `~` indicates your home directory.
+Remember that `~` indicates your home directory, which in Linux filesystems is `/home/USERNAME/`.
 
 **A3.**
-
-Once we are in the scratch directory, we can use `mkdir` to create our workshop sub-directory:
-
-```console
-mkdir hpc_workshop
-```
-
-**A4.**
 
 The main thing to consider in this question is where you run the commands from. 
 To get the number of CPUs and memory on your computer make sure you open a new terminal and that you see something like `[your-local-username@laptop: ~]$` (where "user" is the username on your personal computer and "laptop" is the name of your personal laptop).
 Note that this does not work on the MacOS shell (see [this post](https://www.macworld.co.uk/how-to/how-check-mac-specs-processor-ram-3594298/) for instructions to find the specs of your Mac). 
 
-Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. You should see something like `[your-hpc-username@login ~]$`
+Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. 
+You should see something like `[your-hpc-username@login ~]$`.
 
 To see how many people are currently on the login node we can combine the `who` and `wc` commands:
 
@@ -169,13 +154,59 @@ This is why we should **never run resource-intensive applications on the login n
 
 :::exercise
 
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+
+1. Create a new script file called `check_hostname.sh`. Copy the code shown below into this script and save it.
+1. From the terminal, run the script using `bash`.
+
+```bash
+#!/bin/bash
+echo "This job is running on:"
+hostname
+```
+
+<details><summary>Answer</summary>
+**A1.**
+
+To create a new script in _Nano_ we use the command:
+
+```console
+nano check_hostname.sh
+```
+
+This opens the editor, where we can copy/paste our code. 
+When we are finished we can click <kbd>Ctrl</kbd>+<kbd>X</kbd> to exit the program, and it will ask if we would like to save the file. 
+We can type "Y" (Yes) followed by <kbd>Enter</kbd> to confirm the file name. 
+
+**A2.**
+
+We can run the script from the terminal using:
+
+```console
+bash test.sh
+```
+
+Which should print the result (your hostname might vary slightly from this answer):
+
+```
+This job is running on:
+train.bio
+```
+
+</details>
+:::
+
+----
+
+:::exercise
+
 If you haven't already done so, connect your VS Code to the HPC following the instructions below.
 
 <details><summary>Connecting VS Code to remote host</summary>![](images/vscode_ssh.svg)</details>
 
 1. Open the `hpc_workshop` folder on VS Code (this is the folder you created in the previous exercise).
-1. Create a new file (File > New File) and save it as `test.sh`. Copy the code shown below into this script and save it.
-1. From the terminal, run this script with `bash test.sh`
+1. Create a new file (File > New File) and save it as `check_hostname.sh`. Copy the code shown below into this script and save it.
+1. From the terminal, run this script with `bash check_hostname.sh`
 
 ```bash
 #!/bin/bash
@@ -193,6 +224,7 @@ To open the folder we follow the instructions in Figure 3 and use the following 
 **A2.**
 
 To create a new script in VS Code we can go to "File > New File" or use the <kbd>Ctrl + N</kbd> shortcut.
+To save the file we can use the <kbd>Ctrl + S</kbd> shortcut. 
 
 **A3.**
 
@@ -206,7 +238,7 @@ cd /scratch/user/hpc_workshop
 Then run the script:
 
 ```console
-bash scripts/test.sh
+bash test.sh
 ```
 
 </details>
@@ -377,7 +409,7 @@ We can modify our submission script in the following manner, for example for usi
 
 ```bash
 #!/bin/bash
-#SBATCH -p training     # partiton name
+#SBATCH -p traininglarge     # partiton name
 #SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
 #SBATCH -o logs/estimate_pi_200M.log      # output file
 #SBATCH --mem=10G
@@ -505,7 +537,7 @@ index.rev.2.bt2
 Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
-1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
 1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being sent to individual text files to the directory `results/pi/`. </details>
 1. Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?
 
@@ -568,7 +600,7 @@ $ python scripts/turing_model.py --feed 0.04 --kill 0.06 --outdir results/turing
 This would produce an image saved as `results/turing/f0.04_k0.06.png`. 
 
 The student has been running this script on their laptop, but it takes a while to run and they would like to try several parameter combinations. 
-They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can open this file in _VS Code_ to quickly inspect its contents). 
+They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can look at the content of this file using `cat`). 
 
 Our objective is to automate running these models in parallel on the HPC.
 
@@ -576,9 +608,9 @@ Our objective is to automate running these models in parallel on the HPC.
 1. If you haven't already done so, create a new conda environment to install the necessary python libraries to run this script. Call your environment `scipy` and in that new environment install the packages `numpy` and `matplotlib` from the `conda-forge` channel. Go back to the [Conda section](04-software.html) if you need to revise how to do this. 
 -->
 
-1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/turing/` folder (Note: you can preview image files by opening them in _VS Code_.)
+3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by login in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program.
 
 <details><summary>Answer</summary>
 
@@ -602,7 +634,7 @@ The actual output of the python script is an image, which is saved into the `res
 **A3.**
 
 Once all the array jobs finish, we should have 5 image files in `ls results/turing`.
-We can open these images from within _VS Code_, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync` commands), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
+We can open these images using the `eog` program, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync`), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
 
 </details>
 
@@ -626,7 +658,7 @@ We have created a CSV file with three columns.
 One column contains the sample's name (which we will use for our output files) and the other two columns contain the path to the first and second pairs of the input files.
 With the information on this table, we should be able to automate our data processing using a SLURM job array. 
 
-1. Use _VS Code_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
 3. Examine the output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based, so you can examine them by using the command line program `less`, for example.)
 
@@ -737,6 +769,245 @@ But all we need to do is use the main JOBID as the dependency, and this will ens
 </details>
 
 :::
+
+----
+
+:::exercise
+A PhD student wants to process some microscopy data using a python script developed by a postodoc colleague. 
+They have instructions for how to install the necessary python packages, and also the actual python script to process the images. 
+
+**Q1.**
+Which of the following describes the best practice for the student to organise their files/software?
+
+Option A:
+
+```
+/scratch/user/project_name/software/ # python packages
+/scratch/user/project_name/data/     # image files
+/scratch/user/project_name/scripts/  # analysis script
+```
+
+Option B:
+
+```
+/home/user/software/                # python packages
+/scratch/user/project_name/data/    # image files 
+/scratch/user/project_name/scripts/ # analysis script
+```
+
+Option C:
+
+```
+/home/user/project_name/software/ # python packages
+/home/user/project_name/data/        # image files
+/home/user/project_name/scripts/     # analysis script
+```
+
+**Q2.** 
+It turns out that the microscopy data were very large and compressed as a zip file. 
+The postdoc told the student they can run `unzip image_files.zip` to decompress the file. 
+Should they run this command from the login node or submit it as a job to one of the compute nodes? 
+
+**Q3.**
+The analysis script used by the student generates new versions of the images. 
+In total, after processing the data, the student ends up with ~1TB of data (raw + processed images).
+Their group still has 5TB of free space on the HPC, so the student decides to keep the data there until they finish the project. 
+Do you agree with this choice, and why? What factors would you take into consideration in deciding what data to keep and where?
+
+<details><summary>Answer</summary>
+
+**A1.**
+
+Option C is definitely discouraged: as `/home` is typically not high-performance and has limited storage, it should not be used for storing/processing data.
+Option A and B only differ in terms of where the software packages are installed. 
+Typically software can be installed in the user's `/home`, avoiding the need to reinstall it multiple times, in case the same software is used in different projects. 
+Therefore, option B is the best practice in this example. 
+
+**A2.**
+
+Since compressing/uncompressing files is a fairly routine task and unlikely to require too many resources, it would be OK to run it on the login node. 
+If in doubt, the student could have gained "interactive" access to one of the compute nodes (we will cover this in another section). 
+
+**A3.**
+
+Leaving the data on the HPC is probably a bad choice. 
+Since typically "scratch" storage is not backed-up it should not be relied on to store important data. 
+If the student doesn't have access to enough backed-up space for all the data, they should at least back up the raw data and the scripts used to process it. 
+This way, if there is a problem with "scratch" and some processed files are lost, they can recreate them by re-running the scripts on the raw data. 
+
+Other criteria that could be used to decide which data to leave on the HPC, backup or even delete is how long each step of the analysis takes to run, as there may be a significant computational cost associated with re-running heavy data processing steps.
+
+</details>
+
+:::
+
+----
+
+:::exercise
+
+After registering for a HPC account, you were sent the following information by the computing support:
+
+> An account has been created for you on our HPC. 
+> 
+> - Username: emailed separately
+> - Password: emailed separately
+> - Host: `train.bio`
+> 
+> You were automatically allocated 40GB in `/home/USERNAME/` and 1TB in `/scratch/USERNAME/`. 
+
+1. Connect to the training HPC using `ssh`. (Note: when you type your password, nothing shows on the screen - that's normal, the password is still being input.)
+2. Take some time to explore your home directory to identify what files and folders are in there. 
+Can you identify and navigate to your scratch directory?
+3. Use the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) to check the capabilities of the login node of our HPC. Check how many people are logged in to the HPC login node using the command `who`.
+
+<details><summary>Answer</summary>
+
+**A1.**
+
+To login to the HPC we run the following from the terminal:
+
+```bash
+ssh USERNAME@train.bio
+```
+
+Replacing "USERNAME" by your HPC username. 
+After typing it, you will be prompted for your password. 
+Note that as you type the password nothing shows on the screen - that's normal! 
+The password is still being input. 
+
+**A2.**
+
+We can get a detailed list of the files on our home directory:
+
+```console
+ls -l
+```
+
+This will reveal that there is a shell script (`.sh` extension) named `slurm_submit_template.sh` and also a shortcut to our scratch directory. 
+We can see that this is a shortcut because of the way the output is printed as `scratch -> /scratch/username/`. 
+
+Therefore, to navigate to our scratch directory we can either use the shortcut from our home or use the full path:
+
+```console
+cd ~/scratch       # using the shortcut from the home directory
+cd /scratch/USERNAME/  # using the full path
+```
+
+Remember that `~` indicates your home directory, which in Linux filesystems is `/home/USERNAME/`.
+
+**A3.**
+
+The main thing to consider in this question is where you run the commands from. 
+To get the number of CPUs and memory on your computer make sure you open a new terminal and that you see something like `[your-local-username@laptop: ~]$` (where "user" is the username on your personal computer and "laptop" is the name of your personal laptop).
+Note that this does not work on the MacOS shell (see [this post](https://www.macworld.co.uk/how-to/how-check-mac-specs-processor-ram-3594298/) for instructions to find the specs of your Mac). 
+
+Conversely, to obtain the same information for the HPC, make sure you are logged in to the HPC when you run the commands. 
+You should see something like `[your-hpc-username@login ~]$`.
+
+To see how many people are currently on the login node we can combine the `who` and `wc` commands:
+
+```bash
+# pipe the output of `who` to `wc`
+# the `-l` flag instructs `wc` to count "lines" of its input
+who | wc -l
+```
+
+You should notice that several people are using the same login node as you.
+This is why we should **never run resource-intensive applications on the login node** of a HPC. 
+
+</details>
+:::
+
+----
+
+:::exercise
+
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+
+1. Create a new script file called `check_hostname.sh`. Copy the code shown below into this script and save it.
+1. From the terminal, run the script using `bash`.
+
+```bash
+#!/bin/bash
+echo "This job is running on:"
+hostname
+```
+
+<details><summary>Answer</summary>
+**A1.**
+
+To create a new script in _Nano_ we use the command:
+
+```console
+nano check_hostname.sh
+```
+
+This opens the editor, where we can copy/paste our code. 
+When we are finished we can click <kbd>Ctrl</kbd>+<kbd>X</kbd> to exit the program, and it will ask if we would like to save the file. 
+We can type "Y" (Yes) followed by <kbd>Enter</kbd> to confirm the file name. 
+
+**A2.**
+
+We can run the script from the terminal using:
+
+```console
+bash test.sh
+```
+
+Which should print the result (your hostname might vary slightly from this answer):
+
+```
+This job is running on:
+train.bio
+```
+
+</details>
+:::
+
+----
+
+:::exercise
+
+If you haven't already done so, connect your VS Code to the HPC following the instructions below.
+
+<details><summary>Connecting VS Code to remote host</summary>![](images/vscode_ssh.svg)</details>
+
+1. Open the `hpc_workshop` folder on VS Code (this is the folder you created in the previous exercise).
+1. Create a new file (File > New File) and save it as `check_hostname.sh`. Copy the code shown below into this script and save it.
+1. From the terminal, run this script with `bash check_hostname.sh`
+
+```bash
+#!/bin/bash
+echo "This job is running on:"
+hostname
+```
+
+<details><summary>Answer</summary>
+**A1.**
+
+To open the folder we follow the instructions in Figure 3 and use the following path:
+`/scratch/user/hpc_workshop`
+(replacing "user" with your username)
+
+**A2.**
+
+To create a new script in VS Code we can go to "File > New File" or use the <kbd>Ctrl + N</kbd> shortcut.
+To save th---
+pagetitle: "HPC Course: Glossary"
+---
+
+- command line: see _terminal_
+- CPU
+- GPU
+- node
+- remote server
+- server
+- terminal
+---
+pagetitle: "HPC Course: Setup"
+---
+
+:::warning
 
 ----
 

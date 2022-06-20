@@ -91,7 +91,7 @@ Instead, we usually want to customise our job, by specifying options at the top 
 
 For example, one option we may want to change in our previous script is the name of the file to where our standard output is written to. We can do this using the `-o` option. 
 
-Here is how we could modify our script (you can do it using _VS Code_):
+Here is how we could modify our script (you can do it using _Nano_):
 
 ```bash
 #!/bin/bash
