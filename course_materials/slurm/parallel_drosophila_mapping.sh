@@ -3,7 +3,7 @@
 #SBATCH -D /scratch/FIXME/hpc_workshop
 #SBATCH -o logs/drosophila_mapping_%a.log
 #SBATCH -c 2         # number of CPUs. Default: 1
-#SBATCH --mem=1G     # RAM memory. Default: 1G
+#SBATCH --mem=1G     # RAM memory. Default: maximum available
 #SBATCH -t 00:30:00  # time for the job HH:MM:SS. Default: 1 min
 #SBATCH -a 2-FIXME   # we start at 2 because of the header
 

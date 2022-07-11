@@ -125,10 +125,10 @@ Here are some of the most common ones (anything in `<>` is user input):
 If you don't specify any options when submitting your jobs, you will get the default configured by the HPC admins.
 For example, in our training HPC, the defaults you will get are:
 
-- 10 minutes of running time (equivalent to `-t 00:10:00`)
+- 1 minute of running time (equivalent to `-t 00:01:00`)
 - _training_ partition (equivalent to `-p training`)
 - 1 CPU (equivalent to `-c 1`)
-- 1GB RAM (equivalent to `--mem=1GB`)
+- Maximum available (equivalent to `--mem=3298M`)
 :::
 
 
@@ -144,10 +144,10 @@ For example, on our training HPC we have to partitions with the following charac
 
 - `training` partition (default)
   - Maximum 2 CPUs (default: 1)
-  - Maximum 3928 MB RAM (default: 1024)
+  - Maximum 3928 MB RAM (default: 3928)
 - `traininglarge` partition
   - Maximum 8 CPUs (default: 1)
-  - Maximum 31758 MB RAM (default: 1024)
+  - Maximum 31758 MB RAM (default: 31758)
 
 
 ## Getting Job Information
@@ -265,14 +265,14 @@ Instead, we use a shell script to submit this to the job scheduler.
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting the code where the word "FIXME" appears. Submit the job to SLURM and check its status in the queue.
 2. How long did the job take to run? <details><summary>Hint</summary>Use `seff JOBID` or `scontrol show job JOBID`.</details>
 3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
-    - Adjust your SLURM submission script to use 200 million samples (`Rscript scripts/pi_estimator.R --nsamples 200`), and save the job output in `logs/estimate_pi_200M.log`.
-    - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues?
+    - Adjust your SLURM submission script to use 50 million samples (`Rscript scripts/pi_estimator.R --nsamples 50`), and save the job output in `logs/estimate_pi_50M.log`.
+    - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues? How would you fix it?
 
 <details><summary>Answer</summary>
 
 **A1.**
 
-In the shell script we needed to correct the user-specific details in the `#SBATCH` options. 
+In the shell script we needed to correct the user-specific details in the `#SBATCH -D` option. 
 Also, we needed to specify the path to the script we wanted to run.
 This can be defined relative to the working directory that we've set with `-D`.
 For example:
@@ -315,23 +315,27 @@ The modified script should look similar to this:
 #!/bin/bash
 #SBATCH -p training 
 #SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi_200M.log  # standard output file
+#SBATCH -o logs/estimate_pi_50M.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS.
 
 # run the script
-Rscript scripts/pi_estimator.R --nsamples 200
+Rscript scripts/pi_estimator.R --nsamples 50
 ```
 
-However, when we run this job, examining the output file (`cat logs/estimate_pi_200M.log`) will reveal and error indicating that our job was killed. 
+However, when we run this job, examining the output file (`cat logs/estimate_pi_50M.log`) will reveal an error indicating that our job was killed. 
 
-Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. (**Note:** on our training machines it may show `State: FAILED (exit code 137)`, which is the exit code for an out-of-memory error in our cloud setup)
+```
+/var/spool/slurmd/job02038/slurm_script: line 9:  6682 Killed                  Rscript scripts/pi_estimator.R --nsamples 50
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=2038.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+```
+
+Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`. (**Note:** on our training machines it may sometimes show `State: FAILED (exit code 137)`, which is the exit code for an out-of-memory error in our cloud setup)
 
 This suggests that the job required more memory than we requested. 
-We can also check this by seeing what `seff` reports as "Memory Utilized" and see that it exceeded the default 1GB (although sometimes it shows 0.0GB if it ran too fast and SLURM didn't register the memory usage peak). 
+We can also check this by seeing what `seff` reports as "Memory Utilized" and see that it exceeded the requested 1GB (although sometimes it shows much less than that, if it ran too fast and SLURM didn't register the memory usage peak). 
 
-To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=30G` to request 30Gb of RAM memory for the job. 
-In this case, you would also have to use a different partition that gives you access to high memory notes (`#SBATCH -p traininglarge`).
+To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=3G` to request 3Gb of RAM memory for the job. 
 
 </details>
 
@@ -409,7 +413,7 @@ We can modify our submission script in the following manner, for example for usi
 ```bash
 #!/bin/bash
 #SBATCH -p traininglarge     # partiton name
-#SBATCH -D /scratch/FIXME/hpc_workshop/  # working directory
+#SBATCH -D /scratch/USERNAME/hpc_workshop/  # working directory
 #SBATCH -o logs/estimate_pi_200M.log      # output file
 #SBATCH --mem=10G
 #SBATCH -c 2                          # number of CPUs

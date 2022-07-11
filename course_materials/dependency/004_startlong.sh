@@ -6,6 +6,6 @@
 #SBATCH -t 00:01:00 # time for the job HH:MM:SS. Default: 1 min
 
 touch long_test.txt
-sleep 80
+sleep 120
 mv long_test.txt long_final.txt
 #exit 0
