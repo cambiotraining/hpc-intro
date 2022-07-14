@@ -214,7 +214,7 @@ Our objective is to automate running these models in parallel on the HPC.
 
 1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by login in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program.
+3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by login in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `fim` program (for example: `fim results/turing/f0.03_k0.055.png`).
 
 <details><summary>Answer</summary>
 
@@ -237,8 +237,13 @@ The actual output of the python script is an image, which is saved into the `res
 
 **A3.**
 
-Once all the array jobs finish, we should have 5 image files in `ls results/turing`.
-We can open these images using the `eog` program, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync`), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
+Once all the array jobs finish, we should have 5 image files in `ls results/turing`:
+
+```
+f0.03_k0.055.png  f0.046_k0.065.png  f0.055_k0.062.png  f0.059_k0.061.png
+```
+
+We can open these images using the `fim` program, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync`), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
 
 </details>
 
