@@ -7,6 +7,7 @@
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
 
 # activate conda environment
+source $CONDA_PREFIX/etc/profile.d/conda.sh
 FIXME
 
 # make an output directory for the index

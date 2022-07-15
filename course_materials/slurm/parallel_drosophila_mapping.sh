@@ -8,7 +8,8 @@
 #SBATCH -a 2-FIXME   # we start at 2 because of the header
 
 # load conda environment
-source activate bioinformatics
+source $CONDA_PREFIX/etc/profile.d/conda.sh
+conda activate bioinformatics
 
 # get the relevant line of the CSV sample information file
 # see http://bigdatums.net/2016/02/22/3-ways-to-get-the-nth-line-of-a-file-in-linux/

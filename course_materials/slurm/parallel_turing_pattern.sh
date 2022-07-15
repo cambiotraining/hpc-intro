@@ -10,7 +10,8 @@
 echo "Starting array: $SLURM_ARRAY_TASK_ID"
 
 # activate software environment
-source activate scipy
+source $CONDA_PREFIX/etc/profile.d/conda.sh
+conda activate scipy
 
 # make output directory
 mkdir -p results/turing

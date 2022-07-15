@@ -114,9 +114,10 @@ To search for the software packages that are available through `conda`:
 If you need to install a program from a different channel than the defaults, you can specify it during the install command using the `-c` option. 
 For example `conda install --chanel CHANNEL --name ENV PROGRAM`.
 
-Let's see this with an example, where we create a new environment called "scipy", where we install the python scientific packages:
+Let's see this with an example, where we create a new environment called "scipy" and install the python scientific packages:
 
 ```console
+$ conda create --name scipy
 $ conda install --name scipy --channel conda-forge numpy matplotlib
 ```
 
@@ -139,11 +140,11 @@ The asterisk ("*") tells us which environment we're using at the moment.
 
 ### Loading _Conda_ Environments
 
-Once your packages are installed in an environment, you can load that environment by using `source activate ENV`, where "ENV" is the name of your environment. 
+Once your packages are installed in an environment, you can load that environment by using `conda activate ENV`, where "ENV" is the name of your environment. 
 For example, we can activate our previously created environment with:
 
 ```console
-$ source activate scipy
+$ conda activate scipy
 ```
 
 If you chech which `python` executable is being used now, you will notice it's the one from this new environment:
@@ -159,7 +160,7 @@ $ which python
 You can also check that the new environment is in use from:
 
 ```console
-$ conda info --env
+$ conda env list
 ```
 
 ```
@@ -171,10 +172,19 @@ scipy                 *  /home/participant36/miniconda3/envs/scipy
 
 And notice that the asterisk "*" is now showing we're using the `scipy` environment.
 
-:::note
-**Tip**
+:::warning
+**Loading Environments in Shell Script**
 
-If you forget which environments you have created, you can use `conda env list` to get a list of environments. 
+To load environments in a shell script that is being submitted to SLURM, you need to first source a configuration file from _Conda_.
+For example, to load the `scipy` environment we created, this would be the code:
+
+```
+source $CONDA_PREFIX/etc/profile.d/conda.sh  # Always add this command to your scripts
+conda activate scipy
+```
+
+This is because when we submit jobs to SLURM the jobs will start in a non-interactive shell, and `conda` doesn't get automatically set. 
+Running the `source` command shown will ensure `conda activate` becomes available. 
 :::
 
 
@@ -190,7 +200,7 @@ We have a file with the _Drosophila_ genome in `data/genome/drosophila_genome.fa
 
 1. Create a new conda environment named "bioinformatics". <details><summary>Hint</summary>Remember the syntax to create a new environment is: `conda create --name ENV`</details>
 1. Install the `bowtie2` program in your new environment. <details><summary>Hint</summary>Go to [anaconda.org](https://anaconda.org/) and search for "bowtie2" to confirm it is available through _Conda_ and which software _channel_ it is provided from. Remember that you can install packages using `conda install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME`.</details>
-1. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`. <details><summary>Hint</summary>Remember to activate your environment first with `source activate bioinformatics`.</details>
+1. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`. <details><summary>Hint</summary>Remember to activate your environment first with `conda activate bioinformatics`.</details>
 1. Open the script in `slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
 
 <details><summary>Answer</summary>
@@ -218,7 +228,7 @@ $ conda install --name bioinformatics --channel bioconda bowtie2
 First we need to activate our environment:
 
 ```console
-$ source activate bioinformatics
+$ conda activate bioinformatics
 ```
 
 Then, if we run `bowtie2 --help`, we should get the software help printed on the console.
@@ -236,7 +246,8 @@ Replacing "USERNAME" with your username.
 We also need to make sure we activate our conda environment, by adding: 
 
 ```
-source activate bioinformatics
+source $CONDA_PREFIX/etc/profile.d/conda.sh
+conda activate bioinformatics
 ```
 
 At the start of the script.
@@ -283,8 +294,8 @@ index.rev.2.bt2
 - To install your own software, you can use the _Conda_ package manager.
   - _Conda_ allows you to have separate "software environments", where multiple package versions can co-exist on your system.
 - Use `conda env create <ENV>` to create a new software environment and `conda install -n <ENV> <PROGRAM>` to install a program on that environment. 
-- Use `source activate <ENV>` to "activate" the software environment and make all the programs installed there available. 
-  - When submitting jobs to SLURM, always remember to include the `source activate` command at the start of the shell script you submit to `sbatch`. 
+- Use `conda activate <ENV>` to "activate" the software environment and make all the programs installed there available. 
+  - When submitting jobs to `sbatch`, always remember to include `source $CONDA_PREFIX/etc/profile.d/conda.sh` at the start of the shell script, followed by the `conda activate` command. 
 
 #### Further resources
 
