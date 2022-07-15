@@ -32,7 +32,11 @@ We will cover:
 1. [Managing Software](04-software.html): how do I access pre-installed software or install it myself?
 1. [Parallelising Jobs](05-job_arrays.html): how can I run many similar jobs in parallel?
 
-You can also <a href="https://drive.google.com/u/0/uc?id=14kmKqdvTxhAvwXD91yR_IzNv6Z0tY-Gh&export=download" target="_blank" rel="noopener noreferrer">download the data</a> for the workshop and save it on your desktop (**do not unzip the file**).
+
+## Data
+
+If you are attending our workshop, then all the data is already provided on our training environment. 
+If you want to practice after the course on your own HPC, you can download the data we used: <a href="https://drive.google.com/uc?export=download&id=1wX3m13ZAMaZ51rmtRkKDDQl_biPZv8Wg" target="_blank" rel="noopener noreferrer">HPC workshop data</a>.
 
 
 ## Target Audience
