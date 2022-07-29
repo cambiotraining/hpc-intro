@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="873.7868"
+   height="502.44312"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="uni_hpc_schematic.svg">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient933">
+      <stop
+         style="stop-color:#cbc4dc;stop-opacity:1;"
+         offset="0"
+         id="stop929" />
+      <stop
+         style="stop-color:#cbc4dc;stop-opacity:0;"
+         offset="1"
+         id="stop931" />
+    </linearGradient>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Mend"
+       style="overflow:visible">
+      <path
+         id="path3814"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient933"
+       id="linearGradient935"
+       x1="391.5773"
+       y1="218.02219"
+       x2="330.06924"
+       y2="218.02219"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.001686,0,0,1,-0.5903686,0)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.9174434"
+     inkscape:cx="540.58667"
+     inkscape:cy="181.69482"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="976"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="2"
+     fit-margin-right="2"
+     fit-margin-bottom="2"
+     fit-margin-left="2"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1061"
+       originx="109.89595"
+       originy="-454.30097" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(109.89595,-95.618126)">
+    <path
+       style="fill:url(#linearGradient935);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 350.15784,262.94019 40.4737,-96.02521 v 104.93939 z"
+       id="path927"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#cbc4dc;fill-opacity:1;stroke:none;stroke-width:0.99999994"
+       id="rect1133"
+       width="371.32742"
+       height="104.93941"
+       x="390.56342"
+       y="166.91498"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path972"
+       d="m 239.14222,481.5548 c 27.24834,-18.12864 31.66761,-42.09751 79.29644,-55.32562"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.99999998, 1.99999996;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.99999998, 1.99999996;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 238.64467,481.55481 c 171.74759,0 274.79614,-53.13367 274.79614,-53.13367"
+       id="path934"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path936"
+       d="m 238.64467,481.55481 c -171.747587,0 -274.79614,-53.13367 -274.79614,-53.13367"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.99999998, 1.99999996;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.99999998, 1.99999996;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 238.58484,481.5548 C 211.3365,463.42616 206.91723,439.45729 159.2884,426.22918"
+       id="path938"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <rect
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       y="456.43869"
+       x="69.166451"
+       height="139.62254"
+       width="352.05902"
+       id="rect880"
+       style="fill:#c4dcd5;fill-opacity:1;stroke:none;stroke-width:1" />
+    <rect
+       style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:1"
+       id="rect2985"
+       width="78.478958"
+       height="66.523949"
+       x="205.95648"
+       y="156.70593"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       x="243.87946"
+       y="184.50056"
+       id="text3755"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan3757"
+         x="243.87946"
+         y="184.50056"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif">Login</tspan><tspan
+         sodipodi:role="line"
+         x="243.87946"
+         y="214.50056"
+         id="tspan3759"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif">node</tspan></text>
+    <text
+       id="text3761"
+       y="111.29391"
+       x="244.56754"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         id="tspan3765"
+         y="111.29391"
+         x="244.56754"
+         sodipodi:role="line"
+         style="font-size:18px;line-height:1.25;font-family:sans-serif">login:</tspan><tspan
+         y="133.79391"
+         x="244.56754"
+         sodipodi:role="line"
+         id="tspan3769"
+         style="font-weight:bold;font-size:18px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'Sans Bold';fill:#005fdd;fill-opacity:1">ssh &lt;CRSid&gt;@login.hpc.cam.ac.uk</tspan></text>
+    <text
+       id="text4259"
+       y="354.1701"
+       x="304.62442"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       xml:space="preserve"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         id="tspan1074"
+         y="357.28729"
+         x="304.62442"
+         sodipodi:role="line"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="245.44205"
+       y="246.08553"
+       id="text4737"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         x="245.44205"
+         y="246.08553"
+         id="tspan4739"
+         style="font-size:18px;line-height:1.25;font-family:sans-serif">submit jobs</tspan><tspan
+         style="font-weight:bold;font-size:18px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'Sans Bold';fill:#005fdd;fill-opacity:1"
+         id="tspan4741"
+         sodipodi:role="line"
+         x="245.44205"
+         y="268.58551">sbatch my_script.sh</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 245.18635,140.96673 c 0,11.56104 0,11.56104 0,11.56104"
+       id="path4762"
+       inkscape:connector-curvature="0" />
+    <path
+       style="stroke-width:0.99999994"
+       inkscape:connector-curvature="0"
+       id="path2"
+       d="m 111.80372,470.99314 c -0.0599,-4.64702 -9.23419,-7.04911 -18.333687,-7.04911 -9.099493,0 -18.273818,2.40209 -18.333683,7.04911 0,0.007 0,22.40451 0,22.40451 0,4.662 9.166842,7.07157 18.258852,7.07157 9.092008,0 18.258848,-2.40957 18.408518,-7.1464 0,-0.007 0,-22.32219 0,-22.32968 z m -18.333687,-4.09327 c 9.436237,0 15.288047,2.64903 15.288047,4.05586 0,1.40683 -5.85181,4.05586 -15.288047,4.05586 -9.518549,0 -15.288047,-2.64903 -15.288047,-4.05586 0,-1.39935 5.851813,-4.05586 15.288047,-4.05586 z m 15.228177,26.41547 c 0,1.39935 -5.82936,4.04089 -15.228177,4.04089 -9.481133,0 -15.228182,-2.64154 -15.228182,-4.04089 v -6.97428 c 3.457209,1.94561 9.316505,2.93339 15.153351,2.93339 5.896711,0 11.823358,-1.01023 15.303008,-3.00074 z m -15.228177,-7.07156 c -9.481133,0 -15.228182,-2.64155 -15.228182,-4.0409 v -7.01918 c 3.464692,1.9531 9.361404,2.95584 15.228182,2.95584 5.866779,0 11.756007,-1.03267 15.228177,-2.98577 v 7.05659 c 0,1.39187 -5.82936,4.03342 -15.228177,4.03342 z" />
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
+       x="137.10489"
+       y="569.0979"
+       id="text905"><tspan
+         style="font-size:16px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start"
+         sodipodi:role="line"
+         x="137.10489"
+         y="569.0979"
+         id="tspan923">1 TB free + £54 TB/yr</tspan><tspan
+         style="font-size:16px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start"
+         sodipodi:role="line"
+         x="137.10489"
+         y="589.0979"
+         id="tspan982">not backed up</tspan></text>
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       id="text977"
+       y="551.69928"
+       x="269.26205"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         y="551.69928"
+         x="269.26205"
+         sodipodi:role="line"
+         id="tspan975"
+         style="font-weight:bold;font-size:18px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'Sans Bold';fill:#005fdd;fill-opacity:1">/rds/user/$USER/hpc-work</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="206.04291"
+       y="509.54974"
+       id="text953"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         style="font-weight:bold;font-size:18px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'Sans Bold';fill:#005fdd;fill-opacity:1"
+         id="tspan951"
+         sodipodi:role="line"
+         x="206.04291"
+         y="509.54974">/home/$USER</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       x="167.15459"
+       y="486.44415"
+       id="text963"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         x="167.15459"
+         y="486.44415"
+         id="tspan961"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif">Storage</tspan></text>
+    <text
+       id="text980"
+       y="526.40344"
+       x="139.20433"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         id="tspan978"
+         y="526.40344"
+         x="139.20433"
+         sodipodi:role="line"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start">40 GB backed up</tspan></text>
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       id="text1137"
+       y="163.00806"
+       x="392.54193"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#db1e00;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-size:13.33333302px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start"
+         y="163.00806"
+         x="392.54193"
+         sodipodi:role="line"
+         id="tspan1168">(at top of script)</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot920"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"><flowRegion
+         id="flowRegion922"><rect
+           id="rect924"
+           width="96.205887"
+           height="125"
+           x="121.06311"
+           y="213.10568" /></flowRegion><flowPara
+         id="flowPara926" /></flowRoot>    <rect
+       y="314.30444"
+       x="-107.89594"
+       height="103.41939"
+       width="143.99153"
+       id="rect4229"
+       style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:0.99999994"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       id="text4231"
+       y="346.1701"
+       x="-36.502918"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       xml:space="preserve"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         y="346.1701"
+         x="-36.502918"
+         sodipodi:role="line"
+         id="tspan4345"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif">cclake</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="-36.822178"
+       y="365.38568"
+       id="text4237"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         x="-36.822178"
+         y="365.38568"
+         id="tspan4239"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif">56 CPU</tspan><tspan
+         id="tspan4241"
+         sodipodi:role="line"
+         x="-36.822178"
+         y="385.38568"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif">192GiB RAM</tspan><tspan
+         sodipodi:role="line"
+         x="-36.822178"
+         y="405.38568"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         id="tspan1131">(3.4GiB per CPU)</tspan></text>
+    <rect
+       style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:0.99999994"
+       id="rect4363"
+       width="202.18213"
+       height="103.41939"
+       x="51.61517"
+       y="314.30444"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       x="152.43413"
+       y="341.26517"
+       id="text1108"><tspan
+         style="font-size:24px;line-height:1.25;font-family:sans-serif"
+         sodipodi:role="line"
+         x="152.43413"
+         y="341.26517"
+         id="tspan1110">cclake-highmem</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="158.09499"
+       y="368.65564"
+       id="text4265"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         x="158.09499"
+         y="368.65564"
+         id="tspan4267"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif">56 CPU</tspan><tspan
+         id="tspan4269"
+         sodipodi:role="line"
+         x="158.09499"
+         y="388.65564"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif">384GiB RAM</tspan><tspan
+         sodipodi:role="line"
+         x="158.09499"
+         y="408.65564"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         id="tspan1127">(6.8GiB per CPU)</tspan></text>
+    <rect
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       y="314.30444"
+       x="267.76053"
+       height="103.41939"
+       width="142.83545"
+       id="rect898"
+       style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:0.99999994" />
+    <text
+       id="text906"
+       y="341.26517"
+       x="334.83298"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       xml:space="preserve"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         id="tspan903"
+         y="341.26517"
+         x="334.83298"
+         sodipodi:role="line"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif">icelake</tspan></text>
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       id="text914"
+       y="368.65564"
+       x="340.49384"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         id="tspan908"
+         y="368.65564"
+         x="340.49384"
+         sodipodi:role="line">76 CPU</tspan><tspan
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         y="388.65564"
+         x="340.49384"
+         sodipodi:role="line"
+         id="tspan910">256GiB RAM</tspan><tspan
+         id="tspan912"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         y="408.65564"
+         x="340.49384"
+         sodipodi:role="line">(3.3GiB per CPU)</tspan></text>
+    <rect
+       style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:0.99999994"
+       id="rect909"
+       width="182.14299"
+       height="103.41939"
+       x="416.14487"
+       y="314.30444"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       x="506.94427"
+       y="341.26517"
+       id="text913"><tspan
+         style="font-size:24px;line-height:1.25;font-family:sans-serif"
+         sodipodi:role="line"
+         x="506.94427"
+         y="341.26517"
+         id="tspan911">icelake-himem</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="512.6051"
+       y="368.65564"
+       id="text921"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         x="512.6051"
+         y="368.65564"
+         id="tspan915"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif">76 CPU</tspan><tspan
+         id="tspan917"
+         sodipodi:role="line"
+         x="512.6051"
+         y="388.65564"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif">512GiB RAM</tspan><tspan
+         sodipodi:role="line"
+         x="512.6051"
+         y="408.65564"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         id="tspan919">(6.7GiB per CPU)</tspan></text>
+    <path
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="M 245.16897,278.68594 C 90.783893,271.2008 24.498146,296.45264 -17.50886,309.11995"
+       id="path906"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path908"
+       d="m 245.11273,278.68594 c -30.54282,2.76015 -58.91044,8.23928 -77.93396,25.39855"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 245.20273,278.68594 c 30.54283,2.76015 58.91044,8.23928 77.93397,25.39855"
+       id="path929"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path931"
+       d="m 245.2174,278.68594 c 154.38508,-7.48514 220.67083,17.7667 262.67783,30.43401"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       x="393.95856"
+       y="187.25888"
+       id="text982"><tspan
+         sodipodi:role="line"
+         x="393.95856"
+         y="187.25888"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1px;font-family:'Courier New';-inkscape-font-specification:'Courier New'"
+         id="tspan994">#SBATCH -D /rds/user/USERNAME/hpc-work</tspan></text>
+    <text
+       id="text1010"
+       y="207.15129"
+       x="393.95856"
+       style="font-style:normal;font-weight:normal;font-size:40px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1px;font-family:'Courier New';-inkscape-font-specification:'Courier New'"
+         y="207.15129"
+         x="393.95856"
+         sodipodi:role="line"
+         id="tspan1012">#SBATCH -A GROUPNAME-SL3-CPU</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       x="393.95856"
+       y="225.2117"
+       id="text1018"><tspan
+         id="tspan1016"
+         sodipodi:role="line"
+         x="393.95856"
+         y="225.2117"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1px;font-family:'Courier New';-inkscape-font-specification:'Courier New'">#SBATCH -p icelake</tspan></text>
+    <text
+       id="text1022"
+       y="245.27209"
+       x="393.95856"
+       style="font-style:normal;font-weight:normal;font-size:40px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1px;font-family:'Courier New';-inkscape-font-specification:'Courier New'"
+         y="245.27209"
+         x="393.95856"
+         sodipodi:role="line"
+         id="tspan1020">#SBATCH -c 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       x="393.95856"
+       y="264.33249"
+       id="text1028"><tspan
+         id="tspan1026"
+         sodipodi:role="line"
+         x="393.95856"
+         y="264.33249"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1px;font-family:'Courier New';-inkscape-font-specification:'Courier New'">#SBATCH -t 01:00:00</tspan></text>
+  </g>
+</svg>
