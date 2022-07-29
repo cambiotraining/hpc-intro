@@ -68,7 +68,7 @@ In this course we will install the _Miniconda_ bundle, as it's lighter and faste
 1. download the _Miniconda_ installer by running: `wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh`
 1. run the installation script just downloaded: `bash Miniconda3-latest-Linux-x86_64.sh`
 1. follow the installation instructions accepting default options (answering 'yes' to any questions)
-1. run `conda config --add channels conda-forge; conda config --add channels bioconda`.
+1. run `conda config --add channels defaults; conda config --add channels bioconda; conda config --add channels conda-forge; conda config --set channel_priority strict`.
 This adds two *channels* (sources of software) useful for bioinformatics and data science applications.
 
 :::note
