@@ -122,4 +122,4 @@ Here are some links to HPC information in other University Departments:
 
 - CRUK: https://bioinformatics-core-shared-training.github.io/hpc/
 - SLCU: https://gitlab.com/slcu/computing/hpc-cam-intro/ 
-
+- Plant Sciences: https://wiki.cam.ac.uk/plantsci-bioinfo/Hydrogen (Raven login required)
