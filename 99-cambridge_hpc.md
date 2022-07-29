@@ -31,6 +31,8 @@ There are two main storage locations of interest available on the CSD3 HPC:
 
 When you login to the HPC you will notice there is a link (aka shortcut) to the `rds` directory. Try `ls -l` to see it.
 
+You can see how much space you are using on your storage partitions using the command `quota`.
+
 <!--
 [Note: there's also a shortcut to `/rcs/user/$USER`. This is access to "cold storage", which is the long-term slow-access storage provided by the university. Most likely you will not be using this unless you want to access/deposit archival data.]
 -->
@@ -58,6 +60,8 @@ You can choose these depending on your needs (whether you require more or less m
 
 
 ### Submission Script
+
+Here is a simple skeleton for your submission script:
 
 ```bash
 #!/bin/bash
@@ -87,22 +91,26 @@ If you don't specify some of the options listed above, this is the default you w
 :::
 
 
-### Long Jobs
-
-As a standard you are limited to 36h for jobs on the University HPC. 
-Long jobs (up to 7 days) can be run on special queues, for which you need to request access. 
-See instructions on the [documentation page](https://docs.hpc.cam.ac.uk/hpc/user-guide/long.html).
-
-
-### Billing
+### Ballance & Billing
 
 The billing on the University HPC is done by CPU-hour. Here's some examples:
 
 - You requested 3 CPUs (`-c 3`) and 10 hours (`-t 10:00:00`). Your job only took 2 hours to finish. You are charged 3*2 = 6 hours of compute time.
-- You requested 1 CPU (`-c 1`) and 15000 MiB of total RAM (`--mem=10G`) on _icelake-himem_ (`-p icelake-himem`), and the job took 1 hour to run. Because this partition provides 6760 MiB (or 6.7 GiB) _per CPU_, you will actually be charged for 2 CPUs, so 2*1 = 2 hours of compute time.
+- You requested 1 CPU (`-c 1`) and 10000 MiB of total RAM (`--mem=10G`) on _icelake-himem_ (`-p icelake-himem`), and the job took 1 hour to run. Because this partition provides 6760 MiB (or 6.7 GiB) _per CPU_, you will actually be charged for 2 CPUs, so 2*1 = 2 hours of compute time.
 
 If you're using a SL3 account (free), your allowance is capped. 
 Each PI receives 200,000 CPU hours per quarter.
+You can check your allowance with the command `mybalance`.
+
+You can [purchase CPU hours](https://www.hpc.cam.ac.uk/policies/charges) on the SL2 service level. 
+This service level gives you higher priority in the queue and jobs can run up to 36h (on the free SL3 the maximum running time is 12h). 
+
+
+### Long Jobs
+
+As a standard, you are limited to a maximum of 36h for running jobs using an SL2 account (12h with SL3). 
+Long jobs (up to 7 days) can be run on special queues, for which you need to request access. 
+See instructions on the [documentation page](https://docs.hpc.cam.ac.uk/hpc/user-guide/long.html).
 
 
 ## Additional Resources
