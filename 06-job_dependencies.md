@@ -2,8 +2,8 @@
 pagetitle: "HPC Course: Dependencies"
 ---
 
-:::warning
-This section of the materials page is still under development
+:::note
+This section has an accompanying <a href="https://docs.google.com/presentation/d/1aanCBGFCpAgPfsrlYFP3QzdZOxXlySgYFuZk4Lbx6E4/edit?usp=sharing" target="_blank">slide deck</a>.
 :::
 
 # Job Dependencies

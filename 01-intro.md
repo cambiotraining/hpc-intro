@@ -2,12 +2,11 @@
 pagetitle: "HPC Course: Intro"
 ---
 
-# Introduction to High Performance Computing
-
 :::note
-These materials have accompanying slides:
-[Introduction to HPC slides](https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing)
+This section has an accompanying <a href="https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing" target="_blank">slide deck</a>.
 :::
+
+# Introduction to High Performance Computing
 
 :::highlight
 #### Questions
