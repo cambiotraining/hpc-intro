@@ -2,6 +2,12 @@
 pagetitle: "HPC Course: Cambridge"
 ---
 
+:::note
+These materials have accompanying slides:
+<a href="https://docs.google.com/presentation/d/1WlRqDjaTR3V-fIPBc0LJm_TLnYjUZRrlbfK8Vb_45zU/edit?usp=sharing" target="_blank">Cambridge HPC slides</a>
+:::
+
+
 # Cambridge University HPC Resources
 
 The supercomputers at Cambridge University are known as _Cambridge Service for Data-Driven Discovery (CSD3)_. 
