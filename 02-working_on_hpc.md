@@ -33,6 +33,18 @@ ssh your-hpc-username@hpc-address
 
 After running this command you will be asked for your password and after typing it you will be logged in to the HPC. 
 
+Note that **the first time you login** to a server, you will be presented with a message similar to: 
+
+```
+The authenticity of host '[192.168.1.59]:2231 ([192.168.1.59]:2231)' can't be established.
+RSA key fingerprint is SHA256:4X1kUMDOG021U52XDL2U56GFIyC+S5koImofnTHvALk.
+Are you sure you want to continue connecting (yes/no)?
+```
+
+If you are confident about the security of the server you are connecting to, you can type `yes`. 
+Often, the server fingerprint is sent by the HPC admins ahead of time (or available in the documentation) for you to compare and confirm you are connecting to the correct server. 
+For example, at Cambridge, we are provided with this information on the [CSD3 documentation page](https://docs.hpc.cam.ac.uk/hpc/user-guide/hostkeys.html?highlight=fingerprint). 
+
 ### Mac / Linux
 
 On Mac and Linux you can open your inbuilt terminal:
