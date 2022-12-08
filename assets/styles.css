@@ -200,3 +200,13 @@ details summary > * {
   background-color: #003a41;
   color: white;
 }
+
+
+/* Tabs */
+.tab-content {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
