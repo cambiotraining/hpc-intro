@@ -133,7 +133,7 @@ To combine the results of these 10 replicate runs of our Pi estimate, we could u
 :::
 
 
-### Using `$SLURM_ARRAY_TASK_ID` to Automate Jobs
+## Using `$SLURM_ARRAY_TASK_ID` to Automate Jobs
 
 One way to automate our jobs is to use the job array number (stored in the `$SLURM_ARRAY_TASK_ID` variable) with some command-line tricks. 
 The trick we will demonstrate here is to parse a CSV file to read input parameters for our scripts. 
@@ -184,12 +184,74 @@ Let's see this in practice in our next exercise.
 
 :::exercise
 
+## {.unlisted .unnumbered .tabset}
+
+This exercise is composed of two equivalent sub-exercises. 
+
+One exemplifies how to automate a common bioinformatics task of mapping sequencing reads to a reference genome. 
+It is suitable for life scientists who may want to go through a bioinformatics-flavoured example. 
+
+The other sub-exercise uses a more generic simulation script, which takes as input two parameters that determine the simulation outcome. 
+If it's any motivation, this version of the exercise produces pretty pictures as an output. :) 
+
+You can choose one of the two to start with (whichever one suits your work better), and then do the other one if you also have time. 
+
+### Bioinformatics
+
+Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#Loading_Conda_Environments), we now want to map each of our samples' sequence data to the reference genome.
+
+![](images/mapping.png){ width=50% }
+
+Looking at our data directory (`ls hpc_workshop/data/reads`), we can see several sequence files in standard _fastq_ format. 
+These files come in pairs (with suffix "_1" and "_2"), and we have 8 different samples. 
+Ideally we want to process these samples in parallel in an automated way.
+
+We have created a CSV file with three columns.
+One column contains the sample's name (which we will use for our output files) and the other two columns contain the path to the first and second pairs of the input files.
+With the information on this table, we should be able to automate our data processing using a SLURM job array. 
+
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
+3. Examine the output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based, so you can examine them by using the command line program `less`, for example.)
+
+Study the submission script to see if you understand the code - and ask the trainers for clarifications if you are unfamiliar with some of the code we used.
+
+<details><summary>Answer</summary>
+
+**A1.**
+
+Our array numbers should be: `#SBATCH -a 2-9`.
+We start at 2, because the parameter values start at the second line of the parameter file. 
+We finish at 9, because that's the number of lines in the CSV file. 
+
+**A2.**
+
+We can submit the script with `sbatch slurm/parallel_drosophila_mapping.sh`.
+While the job is running we can monitor its status with `squeue -u USERNAME`. 
+We should see several jobs listed with IDs as `JOBID_ARRAYID` format. 
+
+Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
+We can list these log files with `ls logs/parallel_drosophila_mapping_*.log` (using the "*" wildcard to match any character). 
+If we examine the content of one of these files (e.g. `cat logs/parallel_drosophila_mapping_1.log`), we should only see the messages we printed with the `echo` commands. 
+The actual output of the `bowtie2` program is a file in [SAM](https://en.wikipedia.org/wiki/SAM_(file_format) format, which is saved into the `results/drosophila/mapping` folder. 
+
+**A3.**
+
+Once all the array jobs finish, we should have 8 SAM files in `ls results/drosophila/mapping`.
+We can examine the content of these files, although they are not terribly useful by themselves. 
+In a typical bioinformatics workflow these files would be used for further analysis, for example SNP-calling. 
+
+</details>
+
+### Simulation
+
 A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature. 
 They are using a type of model, first proposed by [Alan Turing](https://en.wikipedia.org/wiki/Turing_pattern), which models the interaction between two components that can difuse in space and promote/inhibit each other.
-<details><summary>More</summary>
+
+<details><summary>Click for more about this model</summary>
 
 Turing patterns can be generated with a type of mathematical model called a "Reaction-diffusion system". 
-It models two substances - A and B - that can difuse in space and interact with each other in the following way: substance A self-activates itself and also activates B; B inhibits A. 
+It models two substances - A and B - that can difuse in space and interact with each other in the following way: substance A self-activates and also activates B, while B inhibits A. 
 
 ![https://doi.org/10.1016/B978-0-12-382190-4.00006-1](https://ars.els-cdn.com/content/image/3-s2.0-B9780123821904000061-f06-05-9780123821904.jpg)
 
@@ -198,7 +260,7 @@ Here is a very friendly video illustrating this: https://youtu.be/alH3yc6tX98
 
 </details>
 
-They have a python script which runs this model and produces an output image as exemplified above. 
+The student has a python script that runs this model taking some input parameters and outputs an image file with the final result of the model. 
 The two main parameters in the model are called "feed" and "kill", and their python script accepts these as options, for example:
 
 ```console 
@@ -251,55 +313,7 @@ We can open these images using the `fim` program, or alternatively we could move
 
 </details>
 
-:::
-
-:::exercise
-
-(This is a bioinformatics-flavoured version of the previous exercise.)
-
-Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#Loading_Conda_Environments), we now want to map each of our samples' sequence data to the reference genome.
-
-![](images/mapping.png){ width=50% }
-
-Looking at our data directory (`ls hpc_workshop/data/reads`), we can see several sequence files in standard _fastq_ format. 
-These files come in pairs (with suffix "_1" and "_2"), and we have 8 different samples. 
-Ideally we want to process these samples in parallel in an automated way.
-
-We have created a CSV file with three columns.
-One column contains the sample's name (which we will use for our output files) and the other two columns contain the path to the first and second pairs of the input files.
-With the information on this table, we should be able to automate our data processing using a SLURM job array. 
-
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
-2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based, so you can examine them by using the command line program `less`, for example.)
-
-<details><summary>Answer</summary>
-
-**A1.**
-
-Our array numbers should be: `#SBATCH -a 2-9`.
-We start at 2, because the parameter values start at the second line of the parameter file. 
-We finish at 9, because that's the number of lines in the CSV file. 
-
-**A2.**
-
-We can submit the script with `sbatch slurm/parallel_drosophila_mapping.sh`.
-While the job is running we can monitor its status with `squeue -u USERNAME`. 
-We should see several jobs listed with IDs as `JOBID_ARRAYID` format. 
-
-Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
-We can list these log files with `ls logs/parallel_drosophila_mapping_*.log` (using the "*" wildcard to match any character). 
-If we examine the content of one of these files (e.g. `cat logs/parallel_drosophila_mapping_1.log`), we should only see the messages we printed with the `echo` commands. 
-The actual output of the `bowtie2` program is a file in [SAM](https://en.wikipedia.org/wiki/SAM_(file_format) format, which is saved into the `results/drosophila/mapping` folder. 
-
-**A3.**
-
-Once all the array jobs finish, we should have 8 SAM files in `ls results/drosophila/mapping`.
-We can examine the content of these files, although they are not terribly useful by themselves. 
-In a typical bioinformatics workflow these files would be used for further analysis, for example SNP-calling. 
-
-</details>
-
+## {.unlisted .unnumbered}
 :::
 
 
@@ -313,7 +327,7 @@ In a typical bioinformatics workflow these files would be used for further analy
 - When computational tasks are independent of each other, we can use job parallelisation to make them more efficient. 
 - We can automatically generate parallel jobs using SLURM job arrays with the `sbatch` option `-a`.
 - SLURM creates a variable called `$SLURM_ARRAY_TASK_ID`, which can be used to customise each individual job of the array. 
-  - For example we can obtain the input/output information from a simple configuration text file using some command line tools: 
+  - For example we can obtain the input/output information from a simple configuration text file using some command line tricks: 
   `cat config.csv | head -n $SLURM_ARRAY_TASK_ID | tail -n 1`
 
 #### Further resources
