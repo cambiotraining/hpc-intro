@@ -283,6 +283,18 @@ To connect VS Code to the HPC (see Figure 3):
 Once you are connected to the HPC in this way, you can edit files and even create new files and folders on the HPC filesystem.
 You can also **open a terminal within VS Code** by going to the menu "Terminal > New Terminal".
 
+:::note
+**Two-factor authentication**
+
+If your HPC requires two-factor authentication, then you need to make sure to have the correct setting in the `Remote-SSH` extension: 
+
+- Go to <kbd>File</kbd> → <kbd>Preferences</kbd> → <kbd>Settings</kbd>
+- In the search box type "Remote SSH: Show Login Terminal"
+- Make sure the option "Always reveal the SSH login terminal" is _ticked_.
+
+With this option turned on, when you try to connect to the HPC, a terminal will open that will ask for your password and two-factor authentication code. 
+:::
+
 :::exercise
 
 If you haven't already done so, connect your VS Code to the HPC following the instructions below.
@@ -290,8 +302,8 @@ If you haven't already done so, connect your VS Code to the HPC following the in
 <details><summary>Connecting VS Code to remote host</summary>![](images/vscode_ssh.svg)</details>
 
 1. Open the `hpc_workshop` folder on VS Code (this is the folder you created in the previous exercise).
-1. Create a new file (File > New File) and save it as `check_hostname.sh`. Copy the code shown below into this script and save it.
-1. From the terminal, run this script with `bash check_hostname.sh`
+2. Create a new file (File > New File) and save it as `check_hostname.sh`. Copy the code shown below into this script and save it.
+3. Open a terminal within VS Code ("Terminal > New Terminal") and run this script with `bash check_hostname.sh`
 
 ```bash
 #!/bin/bash

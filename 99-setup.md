@@ -32,7 +32,7 @@ This document gives instructions on how to install or access these on different 
   - Go to the [Filezilla Download page](https://filezilla-project.org/download.php?show_all=1) and download the file _FileZilla_3.57.1_win64-setup.exe_ (the latest version might be slightly different). Double-click the downloaded file to install the software, accepting all the default options. 
   - After completing the installation, go to your Windows Menu, search for "Filezilla" and launch the application, to test that it was installed successfully. 
 
-- Text editor:
+- Text editor (optional):
   - Go to the [Visual Studio Code download page](https://code.visualstudio.com/Download) and download the installer for Windows. Double-click the downloaded file to install the software, accepting all the default options. 
   - After completing the installation, go to your Windows Menu, search for "Visual Studio Code" and launch the application. 
   - Go to "_File > Preferences > Settings_", then select "_Text Editor > Files_" on the drop-down menu on the left. Scroll down to the section named "_EOL_" and choose "_\\n_" (this will ensure that the files you edit on Windows are compatible with the Linux operating system on the HPC).
@@ -54,7 +54,7 @@ Press <kbd><kbd>&#8984;</kbd> + <kbd>space</kbd></kbd> to open _spotlight search
   - Go to the Downloads folder and double-click the file you just downloaded to extract the application. Drag-and-drop the "Filezilla" file into your "Applications" folder. 
   - You can now open the installed application to check that it was installed successfully (the first time you launch the application you will get a warning that this is an application downloaded from the internet - you can go ahead and click "Open").
 
-- Text editor:
+- Text editor (optional):
   - Go to the [Visual Studio Code download page](https://code.visualstudio.com/Download) and download the installer for Mac.
   - Go to the Downloads folder and double-click the file you just downloaded to extract the application. Drag-and-drop the "Visual Studio Code" file to your "Applications" folder. 
   - You can now open the installed application to check that it was installed successfully (the first time you launch the application you will get a warning that this is an application downloaded from the internet - you can go ahead and click "Open").
@@ -77,7 +77,7 @@ Press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></kbd> to open it.
     - Ubuntu: `sudo apt-get update && sudo apt-get install filezilla`
     - CentOS: `sudo yum -y install epel-release && sudo yum -y install filezilla`
 
-- Text editor:
+- Text editor (optional):
   - Go to the [Visual Studio Code download page](https://code.visualstudio.com/Download) and download the installer for your Linux distribution. Install the package using your system's installer.
   - Follow the instructions in "[Configuring Visual Studio Code](#configuring-visual-studio-code)" at the bottom of this page.
 
@@ -93,8 +93,11 @@ Press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></kbd> to open it.
 We will use an extension called "Remote-SSH". 
 To install the extension (see Figure):
 
-1. Click the "Extensions" button on the side bar (or use <kbd>Ctrl + Shift + X</kbd>)
-1. In the search box type "remote ssh" and choose the "Remote - SSH" extension
-1. Click the "Install" button in the window that opens
+1. Click the "Extensions" button on the side bar (or use <kbd>Ctrl + Shift + X</kbd>).
+2. In the search box type "remote ssh" and choose the "Remote - SSH" extension.
+3. Click the "Install" button in the window that opens.
+4. Go to <kbd>File</kbd> → <kbd>Preferences</kbd> → <kbd>Settings</kbd>
+5. In the search box type "Remote SSH: Show Login Terminal"
+6. Tick the option "Always reveal the SSH login terminal"
 
 ![Installing Remote-SSH extension in VS Code](images/vscode_extension_install.svg)
