@@ -128,7 +128,7 @@ For example, in our training HPC, the defaults you will get are:
 - 1 minute of running time (equivalent to `-t 00:01:00`)
 - _training_ partition (equivalent to `-p training`)
 - 1 CPU (equivalent to `-c 1`)
-- Maximum available (equivalent to `--mem=3298M`)
+- 1GB RAM (equivalent to `--mem=1024M`)
 :::
 
 
@@ -144,10 +144,10 @@ For example, on our training HPC we have to partitions with the following charac
 
 - `training` partition (default)
   - Maximum 2 CPUs (default: 1)
-  - Maximum 3928 MB RAM (default: 3928)
+  - Maximum 3928 MB RAM (default: 1024)
 - `traininglarge` partition
   - Maximum 8 CPUs (default: 1)
-  - Maximum 31758 MB RAM (default: 31758)
+  - Maximum 31758 MB RAM (default: 1024)
 
 
 ## Getting Job Information

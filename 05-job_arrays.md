@@ -211,8 +211,8 @@ One column contains the sample's name (which we will use for our output files) a
 With the information on this table, we should be able to automate our data processing using a SLURM job array. 
 
 1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
-2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based, so you can examine them by using the command line program `less`, for example.)
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
+3. Check if you got the expected output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based in a standard bioinformatics format called [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)).)
 
 Study the submission script to see if you understand the code - and ask the trainers for clarifications if you are unfamiliar with some of the code we used.
 
@@ -279,7 +279,7 @@ Our objective is to automate running these models in parallel on the HPC.
 -->
 
 1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.</details>
-2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job`), and examine the SLURM output log files. 
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
 3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by login in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `fim` program (for example: `fim results/turing/f0.03_k0.055.png`).
 
 <details><summary>Answer</summary>

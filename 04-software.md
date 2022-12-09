@@ -31,6 +31,43 @@ The following table summarises the most common commands for this tool:
 | `module avail ` | List all available packages. |
 | `module avail 2>&1 | grep -i <pattern>` | Search the available package list that matches "pattern". |
 | `module load <program>` | Load the program and make it available for use. |
+| `module unload <program>` | Unload the program (removes it from your PATH). |
+
+For example, on our training HPC, you can try to run `module avail` to see which software is available. 
+We can see a software called `bowtie2`. 
+If we try to use this software at the moment we get an error: 
+
+```bash
+$ bowtie2 --version
+```
+
+```
+Command 'bowtie2' not found, but can be installed with:
+
+apt install bowtie2
+Please ask your administrator.
+```
+
+But if we load the software first, then the command works: 
+
+```bash
+$ module load bowtie2
+$ bowtie2 --version
+```
+
+```
+/scratch/applications/bowtie2/bowtie2-2.4.5-linux-x86_64/bowtie2-align-s version 2.4.5
+64-bit
+Built on 51df6955ec49
+Mon Jan 17 00:22:22 UTC 2022
+Compiler: gcc version 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC)
+Options: -O3 -msse2 -funroll-loops -g3 -g -O2 -fvisibility=hidden -I/hbb_exe_gc_hardened/include -ffunction-sections -fdata-sections -fstack-protector -D_FORTIFY_SOURCE=2 -fPIE -std=c++11 -DPOPCNT_CAPABILITY -DNO_SPINLOCK -DWITH_QUEUELOCK=1
+Sizeof {int, long, long long, void*, size_t, off_t}: {4, 8, 8, 8, 8, 8}
+```
+
+If you `echo $PATH`, you will notice the installer has been added to your PATH variable (the environment variable that tells the shell where to find programs to run). 
+Once you run `module unload bowtie2`, and then `echo $PATH` again, you notice the PATH variable will have been modified. 
+This is how the _Environment Modules_ package makes software available for you to use. 
 
 If a package is not available through the `module` command, your only option is to contact the HPC admin and ask them to install it for you. 
 Alternatively, you can use a package manager as we show in the next section.
