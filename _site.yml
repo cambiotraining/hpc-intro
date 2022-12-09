@@ -37,9 +37,9 @@ navbar:
         - text: "---"
         - text: "Cambridge HPC Resources"
           href: 99-cambridge_hpc.html
-    - text: "Exercises"
-      icon: fa-pencil
-      href: 99-exercises.html
+    # - text: "Exercises"
+    #   icon: fa-pencil
+    #   href: 99-exercises.html
     - text: "Extras"
       icon: fa-book
       menu:
