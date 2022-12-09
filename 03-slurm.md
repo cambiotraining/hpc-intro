@@ -2,6 +2,10 @@
 pagetitle: "HPC Course: SLURM"
 ---
 
+:::note
+See accompanying <a href="https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing" target="_blank">slide deck</a>.
+:::
+
 # Using the SLURM Job Scheduler
 
 :::highlight

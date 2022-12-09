@@ -3,7 +3,7 @@ pagetitle: "HPC Course: Parallelising"
 ---
 
 :::note
-This section has an accompanying <a href="https://docs.google.com/presentation/d/1MU7fEMgRpzMxcVM5LYxrF5tPu3gBzwtGA1XQfwvzCRk/edit?usp=sharing" target="_blank">slide deck</a>.
+See accompanying <a href="https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing" target="_blank">slide deck</a>.
 :::
 
 # Parallelising Jobs

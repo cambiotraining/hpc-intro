@@ -3,7 +3,7 @@ pagetitle: "HPC Course: Dependencies"
 ---
 
 :::note
-This section has an accompanying <a href="https://docs.google.com/presentation/d/1aanCBGFCpAgPfsrlYFP3QzdZOxXlySgYFuZk4Lbx6E4/edit?usp=sharing" target="_blank">slide deck</a>.
+See accompanying <a href="https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing" target="_blank">slide deck</a>.
 :::
 
 # Job Dependencies
