@@ -220,7 +220,8 @@ To load environments in a shell script that is being submitted to SLURM, you nee
 For example, to load the `scipy` environment we created, this would be the code:
 
 ```
-source $CONDA_PREFIX/etc/profile.d/conda.sh  # Always add this command to your scripts
+# Always add this command to your scripts
+source $CONDA_PREFIX/etc/profile.d/conda.sh 
 conda activate scipy
 ```
 
