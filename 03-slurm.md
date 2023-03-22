@@ -423,7 +423,7 @@ We can modify our submission script in the following manner, for example for usi
 #SBATCH -c 2                          # number of CPUs
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-Rscript exercises/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
+Rscript scripts/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
 We can run the job multiple times by modifying the `#SBATCH -c` option, saving the file and re-running `sbatch slurm/estimate_pi.sh`. 
