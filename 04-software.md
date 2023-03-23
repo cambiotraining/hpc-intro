@@ -221,7 +221,7 @@ For example, to load the `scipy` environment we created, this would be the code:
 
 ```
 # Always add this command to your scripts
-source $CONDA_PREFIX/etc/profile.d/conda.sh 
+source $(conda info --base)/etc/profile.d/conda.sh
 conda activate scipy
 ```
 
@@ -288,7 +288,7 @@ Replacing "USERNAME" with your username.
 We also need to make sure we activate our conda environment, by adding: 
 
 ```
-source $CONDA_PREFIX/etc/profile.d/conda.sh
+source $(conda info --base)/etc/profile.d/conda.sh
 conda activate bioinformatics
 ```
 
@@ -337,7 +337,7 @@ index.rev.2.bt2
   - _Conda_ allows you to have separate "software environments", where multiple package versions can co-exist on your system.
 - Use `conda env create <ENV>` to create a new software environment and `conda install -n <ENV> <PROGRAM>` to install a program on that environment. 
 - Use `conda activate <ENV>` to "activate" the software environment and make all the programs installed there available. 
-  - When submitting jobs to `sbatch`, always remember to include `source $CONDA_PREFIX/etc/profile.d/conda.sh` at the start of the shell script, followed by the `conda activate` command. 
+  - When submitting jobs to `sbatch`, always remember to include `source $(conda info --base)/etc/profile.d/conda.sh` at the start of the shell script, followed by the `conda activate` command. 
 
 #### Further resources
 
