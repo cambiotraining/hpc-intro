@@ -74,10 +74,10 @@ To automate the job submission process, we could write the following job submiss
 
 ```bash
 # launch the first job, capturing the JOB ID into a variable
-RUN_ID_1=$(sbatch 001_create.sh | cut -d " " -f 4)
+RUN_ID_1=$(sbatch --parsable 001_create.sh)
 echo "First job submitted with the run ID ${RUN_ID_1}"
 
-RUN_ID_2=$(sbatch --dependency=afterok:${RUN_ID_1} 002_move.sh | cut -d " " -f 4)
+RUN_ID_2=$(sbatch --dependency=afterok:${RUN_ID_1} --parsable 002_move.sh)
 echo "Second job submitted with the run ID ${RUN_ID_2}"
 ```
 
@@ -155,7 +155,7 @@ Instead, we can specify it in a separate command where we capture the JOBID of t
 
 ```bash
 # launch the first job - capture the JOB ID into a variable
-JOB1=$(sbatch slurm/parallel_estimate_pi.sh | cut -d " " -f 4)
+JOB1=$(sbatch --parsable slurm/parallel_estimate_pi.sh)
 
 # launch the second job
 sbatch  --dependency=afterok:$JOB1  slurm/combine_pi.sh
@@ -188,6 +188,6 @@ Covering these is out of the scope for this workshop, but both tools have severa
   - `--dependency=afterok:JOBID` which starts a job after a previous job with a certain ID finishes successfully (no error).
   - `--dependency=singleton` which starts a job after all jobs with the same `--job-name` complete.
 - To automate the submission of jobs with dependencies we can:
-  - Capture the JOBID of a submission into a variable: `JOB1=$(sbatch job1.sh | cut -d " " -f 4)`
+  - Capture the JOBID of a submission into a variable: `JOB1=$(sbatch --parsable job1.sh)`
   - Use that variable to set the dependency for another job: `sbatch --dependency=afterok:$JOB1 job2.sh`
 :::

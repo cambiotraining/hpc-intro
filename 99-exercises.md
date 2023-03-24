@@ -767,7 +767,7 @@ Instead, we can specify it in a separate command where we capture the JOBID of t
 
 ```bash
 # launch the first job - capture the JOB ID into a variable
-JOB1=$(sbatch slurm/parallel_estimate_pi.sh | cut -d " " -f 4)
+JOB1=$(sbatch --parsable slurm/parallel_estimate_pi.sh)
 
 # launch the second job
 sbatch  --dependency=afterok:$JOB1  slurm/combine_pi.sh
