@@ -102,13 +102,16 @@ This means you will use fewer resources and your jobs will complete faster.
 
 ### Installing _Conda_
 
-To start with, let's install _Conda_ on the HPC. 
-In this course we will install the _Miniconda_ bundle, as it's lighter and faster to install:
+Before you use _Conda_, you will need to install it on the HPC. 
+If you are attending our live course, we already have _Conda_ installed, so you can skip this step. 
+
+But if you are working on your own HPC, then we advise that you install the _Miniconda_ bundle, as it's lighter and faster to install:
 
 1. Make sure you're logged in to the HPC and in the home directory (`cd ~`).
 1. download the _Miniconda_ installer by running: `wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh`
 1. run the installation script just downloaded: `bash Miniconda3-latest-Linux-x86_64.sh`
 1. follow the installation instructions accepting default options (answering 'yes' to any questions)
+1. restart your shell by logging out (with `exit` command) and logging back in to the HPC
 1. run `conda config --add channels defaults; conda config --add channels bioconda; conda config --add channels conda-forge; conda config --set channel_priority strict`.
 This adds two *channels* (sources of software) useful for bioinformatics and data science applications.
 
