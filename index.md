@@ -75,3 +75,4 @@ This course has been developed by the University of Cambridge [Bioinformatics Tr
 
 <img src="https://www.mrc-tox.cam.ac.uk/sites/www.mrc-tox.cam.ac.uk/files/MRC_TU_Cambridge_identifier_horizontal_RGB2_a.png" alt="MRC Toxicology Bioinformatics" style="width:30%">
 
+We also thank [@Alylaxy](https://github.com/Alylaxy) for his pull requests to the repo ([#34](https://github.com/cambiotraining/hpc-intro/pull/34)).
