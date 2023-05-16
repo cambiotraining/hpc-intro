@@ -33,7 +33,7 @@ Once your account is created, you can login to the HPC with `ssh CRSid@login.hpc
 There are two main storage locations of interest available on the CSD3 HPC:
 
 - `/home/USERNAME` is the user's home directory. It has a 40GB quota and is backed up. This should be used for example for local software and perhaps some very generic scripts.
-- `/rds/user/USERNAME/hpc-work` is the user's working directory. It has a 1TB quota and is _NOT_ backed up. More space [can be purchased](https://www.hpc.cam.ac.uk/research-data-storage-services/price-list)).
+- `/rds/user/USERNAME/hpc-work` is the user's working directory. It has a 1TB quota and is _NOT_ backed up. More space [can be purchased](https://docs.hpc.cam.ac.uk/storage/prices.html)).
 
 When you login to the HPC you will notice there is a link (aka shortcut) to the `rds` directory. Try `ls -l` to see it.
 
@@ -108,7 +108,7 @@ If you're using a SL3 account (free), your allowance is capped.
 Each PI receives 200,000 CPU hours per quarter.
 You can check your allowance with the command `mybalance`.
 
-You can [purchase CPU hours](https://www.hpc.cam.ac.uk/policies/charges) on the SL2 service level. 
+You can [purchase CPU hours](https://www.csd3.cam.ac.uk/charges) on the SL2 service level. 
 This service level gives you higher priority in the queue and jobs can run up to 36h (on the free SL3 the maximum running time is 12h). 
 
 
@@ -126,7 +126,7 @@ See instructions on the [documentation page](https://docs.hpc.cam.ac.uk/hpc/user
   - [File transfer](https://docs.hpc.cam.ac.uk/hpc/user-guide/transfer.html)
   - [Running jobs](https://docs.hpc.cam.ac.uk/hpc/user-guide/batch.html)
   - [Billing policies](https://docs.hpc.cam.ac.uk/hpc/user-guide/policies.html)
-- [Price list for HPC storage](https://www.hpc.cam.ac.uk/research-data-storage-services/price-list)
+- [Price list for HPC storage](https://docs.hpc.cam.ac.uk/storage/prices.html)
 - [Slack Workspace](https://join.slack.com/t/uoc-hpcworkspace/shared_invite/zt-wttp25ar-ipv48CQtlPbRAVkkN6RJhw) - you can use this workspace to get help from other uses of the University of Cambridge HPC.
 
 
