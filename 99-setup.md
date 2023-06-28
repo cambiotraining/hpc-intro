@@ -21,12 +21,10 @@ This document gives instructions on how to install or access these on different 
 
 ## Windows 10
 
-- Terminal (we will use the program _MobaXterm_ to have a Unix-like terminal on Windows): 
-  - Go the the [MobaXterm download page](https://mobaxterm.mobatek.net/download-home-edition.html) and download the "_Installer edition_" (green button). Unzip the downloaded file and double-click the `MobaXterm_installer_21.5` installer (note: the latest version number might be slightly different). Accept default options during installation.
-  - After completing the installation, go to your Windows Menu, search for "MobaXterm" and launch the application, to test that it was installed successfully. 
-<!--
-  - (Optional) Windows 10 has its own command line program, which has all the functionality we need for this course. Press <kbd><kbd>Windows</kbd> + <kbd>X</kbd></kbd> and then choose “Command Prompt”.
--->
+- Command line: the Windows 10 command prompt has most of the necessary functionality you need for this course.  
+  -  Open your Windows menu and search for “Command Prompt”. Then type the command `ssh`. 
+     If you get an output about "usage" then you're ready to go. 
+     If you get an error `'ssh' is not recognized as an internal or external command` then you need to proceed with the optional "Unix terminal" instructions below.
 
 - File transfer software:
   - Go to the [Filezilla Download page](https://filezilla-project.org/download.php?show_all=1) and download the file _FileZilla_3.57.1_win64-setup.exe_ (the latest version might be slightly different). Double-click the downloaded file to install the software, accepting all the default options. 
@@ -38,6 +36,9 @@ This document gives instructions on how to install or access these on different 
   - Go to "_File > Preferences > Settings_", then select "_Text Editor > Files_" on the drop-down menu on the left. Scroll down to the section named "_EOL_" and choose "_\\n_" (this will ensure that the files you edit on Windows are compatible with the Linux operating system on the HPC).
   - Follow the instructions in "[Configuring Visual Studio Code](#configuring-visual-studio-code)" at the bottom of this page.
 
+- Unix-like terminal (optional): if you want a fully-functional Unix terminal on Windows 10/11 we highly recommend installing _WSL2_. 
+  We provide instructions on how to install this in our [Unix course setup instructions](https://cambiotraining.github.io/unix-shell/setup.html#setup).
+
 <!--
 - (Optional) filesystem client:
   - Download and install [SFTP Drive Personal Edition](https://www.nsoftware.com/sftp/drive/download.aspx). It will ask for your email for download and installation. You can use a [10 minute disposable email](https://10minutemail.com/10MinuteMail/index.html) to avoid potential spam.
@@ -46,7 +47,7 @@ This document gives instructions on how to install or access these on different 
 ## Mac
 
 - Unix terminal: Mac OS already has a terminal available.
-Press <kbd><kbd>&#8984;</kbd> + <kbd>space</kbd></kbd> to open _spotlight search_ and type "terminal".
+  - Press <kbd><kbd>&#8984;</kbd> + <kbd>space</kbd></kbd> to open _spotlight search_ and type "terminal".
 
 - File transfer software:
   - Go to the [Filezilla Download page](https://filezilla-project.org/download.php?show_all=1) and download the file _FileZilla_3.57.1_macosx-x86.app.tar.bz2_ (the latest version might be slightly different).
@@ -69,7 +70,7 @@ Press <kbd><kbd>&#8984;</kbd> + <kbd>space</kbd></kbd> to open _spotlight search
 ## Linux (Ubuntu)
 
 - Unix terminal: Ubuntu already has a terminal available.
-Press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></kbd> to open it.
+  - Press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></kbd> to open it.
 
 - File transfer software:
   - _Filezilla_ often comes pre-installed in major Linux distributions such as Ubuntu. Search your applications to check that it is installed already. 
