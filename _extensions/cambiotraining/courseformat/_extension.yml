@@ -1,0 +1,16 @@
+title: Course Page Format
+author: Cambridge Informatics Training
+version: 1.0.6
+contributes:
+  formats:
+    html:
+      theme: [default, theme.scss]
+      toc: true
+      number-sections: true
+      number-depth: 3
+      code-link: true
+      code-copy: true
+  shortcodes:
+    - star_levels.lua
+  filters:
+    - callout_exercise.lua

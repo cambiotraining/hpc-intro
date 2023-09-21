@@ -1,21 +1,33 @@
+# Quarto files
+/.quarto/
+_site
+
+# python notebooks
+*.ipynb
+
+# R files
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+.Rproj.user/
+*_cache/
+/cache/
+*.utf8.md
+*.knit.md
+.Renviron
+.Rbuildignore
+
+# Jupyter cache
+.jupyter_cache
+/.luarc.json
+
 # directories we use for extra materials
 slides
 notes
 
 # specific files from course_materials that we do not version control
-course_materials/data
-course_materials/hpc_workshop_files.zip
-course_materials/logs
-course_materials/results
-
-# local site rendering is not pushed (built with github actions)
-_site
-
-# in case RStudio is used for editing/building site
-.Rhistory
-.Rproj.user
-*.Rproj
-.Rbuildignore
-
-# VS Code workspace file
-*.code-workspace
+course_files/data
+course_files/logs
+course_files/results

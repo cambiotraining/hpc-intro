@@ -1,0 +1,14 @@
+book:
+  chapters:
+    - part: "Working on a HPC"
+      chapters:
+        - materials/01-intro.md
+        - materials/02-ssh.md
+        - materials/03-slurm.md
+        - materials/04-software.md
+        - materials/05-arrays.md
+        - materials/06-dependencies.md
+        - materials/07-files.md
+  appendices:
+    - materials/appendices/csd3.md
+    - materials/appendices/slurm_cheatsheet.md

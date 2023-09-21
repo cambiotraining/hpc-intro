@@ -1,0 +1,139 @@
+/*-- Importing fa icons --*/
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+
+
+/*-- scss:defaults --*/
+
+// UoC green colour scheme (from dark to light)
+// #003a41
+// #0c5963
+// #106470
+// #28828A
+$navbar-bg: #106470;
+$navbar-fg: white;
+$body-color: black;
+$link-color: #003a41;
+
+//make font size a bit larger than default
+// $font-size-root: 1.2rem;
+// $toc-font-size: 0.9rem;
+// $sidebar-font-size: 0.9rem;
+// $sidebar-font-size-section: 0.9rem !default;
+
+//tweak callout colours to match our scheme
+//based on https://coolors.co/28828a-106470-003a41-d62828-f77f00
+$callout-color-note: #C6C5B9;
+$callout-color-tip: #28828A;
+$callout-color-caution: #D62828;
+$callout-color-warning: #D62828;
+$callout-color-important: #28828A;
+
+
+/*-- scss:rules --*/
+
+// headings colour
+title, h1, h2, h3, h4, h5, h6 {
+  color: #003a41;
+}
+
+// active section heading - affects content navigation bar on the left
+div.sidebar-item-container .active {
+  font-weight: bold;
+}
+
+// active links - affects header and TOC navigation bar
+.sidebar .nav-link.active {
+  font-weight: bold;
+}
+
+// active links on the header specifically
+.navbar-dark .navbar-nav .nav-link.active {
+  color: white;
+  text-decoration: underline;
+}
+
+// links on the header upon hover or after visited
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:visited {
+  text-decoration: underline;
+  color: white;
+}
+
+// font size on footer - make larger than default
+.nav-footer, .nav-footer-left, .nav-footer-right, .nav-footer-center {
+  font-size: 1rem;
+}
+
+// figure display
+.figure {
+  text-align: center;
+  text-indent: 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+// course title
+.navbar-title {
+  padding-left: 20px;
+}
+
+// Download button
+// Style buttons
+.btn {
+  background-color: #106470;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+// Darker background on mouse-over
+.btn:hover {
+  color: white;
+  background-color: #003a41;
+}
+
+
+// Exercise callout styling
+div.callout-exercise.callout {
+  border-left-color: #c6c5b9;
+}
+
+div.callout-exercise.callout-style-default > .callout-header {
+  background-color: #f9f9f8;
+}
+
+.callout-exercise > .callout-header::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f303";
+  margin-right: 10px;
+}
+
+// Answer callout styling
+.callout-answer > .callout-header::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f002 ";
+  margin-right: 10px;
+}
+
+div.callout-answer.callout {
+  border-left-color: #28828A;
+}
+
+div.callout-answer.callout-style-default > .callout-header {
+  background-color: #eaf3f3;
+}
+
+// Hint callout styling
+.callout-hint > .callout-header::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f12e ";
+  margin-right: 10px;
+}
+
+div.callout-hint.callout {
+  border-left-color: #6c757d;
+}
+
+div.callout-hint.callout-style-default > .callout-header {
+  background-color: #f9f9f8;
+}

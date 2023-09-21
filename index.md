@@ -1,47 +1,35 @@
 ---
-pagetitle: "HPC Course"
+title: "Hands-On Introduction to HPC Clusters"
+author: "Hugo Tavares, Lajos Kalmar"
+date: today
+number-sections: false
 ---
 
-# Practical Introduction to High-Performance Computing
-
-**Authors & Contributors:** Hugo Tavares, Lajos Kalmar, Qi Wang
-
-:::highlight
+## Overview 
 
 Knowing how to work on a **High Performance Computing (HPC)** system is an essential skill for applications such as bioinformatics, big-data analysis, image processing, machine learning, parallelising tasks, and other high-throughput applications. 
 
-In this course we will cover the basics of High Performance Computing, what it is and how you can use it in practice. This is a hands-on workshop, which should be accessible to researchers from a range of backgrounds and offering several opportunities to practice the skills we learn along the way.
+These materials give a practical overview of High Performance Computing, what it is and how you can use it in practice. 
+This is a hands-on workshop, which should be accessible to researchers from a range of backgrounds and offering several opportunities to practice the skills we learn along the way.
 
-> By the end of this course you will be able to independently work on a typical HPC server.
+By the end of this course you will be able to independently work on a typical HPC server.
 
-We will cover:
+:::{.callout-tip}
+#### Learning Objectives
 
-- What is a HPC and how does it differ from a regular computer?
-- What can a HPC be used for?
-- How do I access and work on a HPC?
-- How do I run jobs on a HPC? 
-- How can I run many similar jobs in parallel?
-- How can I access, install and manage software on a HPC?
+- Describe how a HPC server is typically organised and how it differs from a regular computer.
+- Recognise the tasks that a HPC is suitable for. 
+- Access and work on a HPC server.
+- Submit and manage jobs running on a HPC.
+- Paralelise similar tasks at scale.
+- Access, install and manage software on a HPC.
 :::
-
-## Materials
-
-1. [Introduction to High Performance Computing](01-intro.html): what is a HPC cluster and how is it organised? ([slides](https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing))
-1. [Working on a HPC Cluster](02-working_on_hpc.html): how do I access and work from a HPC?
-1. [Using the SLURM Job Scheduler](03-slurm.html): how do I use a job scheduler to run jobs on the HPC?
-1. [Managing Software](04-software.html): how do I access pre-installed software or install it myself?
-1. [Parallelising Jobs](05-job_arrays.html): how can I run many similar jobs in parallel?
-
-
-## Data
-
-If you are attending our workshop, then all the data is already provided on our training environment. 
-If you want to practice after the course on your own HPC, you can download the data we used: <a href="https://drive.google.com/uc?export=download&id=1wX3m13ZAMaZ51rmtRkKDDQl_biPZv8Wg" target="_blank" rel="noopener noreferrer">HPC workshop data</a>.
 
 
 ## Target Audience
 
-This course is aimed at students and researchers of any background. We assume no prior knowledge of what a HPC is or how to use it.
+This course is aimed at students and researchers of any background. 
+We assume no prior knowledge of what a HPC is or how to use it.
 
 It may be particularly useful for those who have attended other of our [Bioinformatics Training Courses](https://www.training.cam.ac.uk/bioinformatics/search) and now need to process their data on a Linux server. 
 It will also benefit those who find themselves using their personal computers to run computationally demanding analysis/simulations and would like to learn how to adapt these to run on a HPC.
@@ -49,13 +37,13 @@ It will also benefit those who find themselves using their personal computers to
 
 ## Prerequisites
 
-We assume a basic knowledge of the Unix command line. 
-If you don't feel comfortable with the command line, please attend our accompanying [Introduction to the Unix Command Line](https://training.csx.cam.ac.uk/bioinformatics/course/bioinfo-unix2) course, which is scheduled to run just before this one.
+We assume a solid knowledge of the Unix command line. 
+If you don't feel comfortable with the command line, please attend our accompanying [Introduction to the Unix Command Line](https://training.csx.cam.ac.uk/bioinformatics/course/bioinfo-unix2) course.
 Alternatively, if all you need is a refresher, please consult our [Command Line Cheatsheet](99-unix_cheatsheet.html). 
 
 Namely, we expect you to be familiar with the following:
 
-- Navigate the filesystem, for example: `pwd` (where am I?), `ls` (what's in here?), `cd` (how do I get there?)
+- Navigate the filesystem: `pwd` (where am I?), `ls` (what's in here?), `cd` (how do I get there?)
 - Investigate file content using utilities such as: `head`/`tail`, `less`, `cat`/`zcat`, `grep`
 - Using "flags" to modify a program's behaviour, for example: `ls -l`
 - Redirect output with `>`, for example: `echo "Hello world" > some_file.txt`
@@ -63,16 +51,64 @@ Namely, we expect you to be familiar with the following:
 - Execute shell scripts with `bash some_script.sh`
 
 
-## Setup
+<!-- Training Developer note: comment the following section out if you did not assign levels to your exercises -->
+### Exercises
 
-Before attending the workshop, please install the necessary software following our **[setup instructions](99-setup.html)**.
-If you have any issues installing the software, please [get in touch](mailto:bioinfo@hermes.cam.ac.uk) with us beforehand.
+Exercises in these materials are labelled according to their level of difficulty:
+
+| Level | Description |
+| ----: | :---------- |
+| {{< fa solid star >}} {{< fa regular star >}} {{< fa regular star >}} | Exercises in level 1 are simpler and designed to get you familiar with the concepts and syntax covered in the course. |
+| {{< fa solid star >}} {{< fa solid star >}} {{< fa regular star >}} | Exercises in level 2 combine different concepts together and apply it to a given task. |
+| {{< fa solid star >}} {{< fa solid star >}} {{< fa solid star >}} | Exercises in level 3 require going beyond the concepts and syntax introduced to solve new problems. |
 
 
-## Acknowledgements 
+## Authors
+<!-- 
+The listing below shows an example of how you can give more details about yourself.
+These examples include icons with links to GitHub and Orcid. 
+-->
 
-This course has been developed by the University of Cambridge [Bioinformatics Training Facility](https://bioinfotraining.bio.cam.ac.uk/) with contributions from Lajos Kalmar from MRC Toxicology's [Core Bioinformatics Unit](https://www.mrc-tox.cam.ac.uk/facilities/bioinformatics). 
+About the authors:
 
-<img src="https://www.mrc-tox.cam.ac.uk/sites/www.mrc-tox.cam.ac.uk/files/MRC_TU_Cambridge_identifier_horizontal_RGB2_a.png" alt="MRC Toxicology Bioinformatics" style="width:30%">
+- **Hugo Tavares**
+  <a href="https://orcid.org/0000-0001-9373-2726" target="_blank"><i class="fa-brands fa-orcid" style="color:#a6ce39"></i></a> 
+  <a href="https://github.com/tavareshugo" target="_blank"><i class="fa-brands fa-github" style="color:#4078c0"></i></a>  
+  _Affiliation_: Bioinformatics Training Facility, University of Cambridge  
+  _Roles_: writing - original content; conceptualisation; coding
+- **Lajos Kalmar**
+  <a href="https://github.com/" target="_blank"><i class="fa-brands fa-github" style="color:#4078c0"></i></a>  
+  _Affiliation_: MRC Toxicology Unit, University of Cambridge  
+  _Roles_: writing - original content; conceptualisation; coding
 
-We also thank [@Alylaxy](https://github.com/Alylaxy) for his pull requests to the repo ([#34](https://github.com/cambiotraining/hpc-intro/pull/34)).
+
+## Citation
+
+Please cite these materials if:
+
+- You adapted or used any of them in your own teaching.
+- These materials were useful for your research work. For example, you can cite us in the methods section of your paper: "We carried our analyses based on the recommendations in Tavares & Kalmar (2023).".
+
+You can cite these materials as:
+
+> Tavares H, Kalmar L (2023) “cambiotraining/hpc-intro: Hands-On Introduction to HPC Clusters”, https://cambiotraining.github.io/hpc-intro
+
+Or in BibTeX format:
+
+```
+@Misc{,
+  author = {Tavares Hugo AND Kalmar, Lajos},
+  title = {cambiotraining/hpc-intro: Hands-On Introduction to HPC Clusters},
+  month = {September},
+  year = {2023},
+  url = {https://cambiotraining.github.io/hpc-intro}
+}
+```
+
+## Acknowledgements
+
+<!-- if there are no acknowledgements we can delete this section -->
+
+- Thanks to Qi Wang (Department of Plant Sciences, University of Cambridge) for constructive feedback and ideas in the early iterations of this course.
+- Thanks to [@Alylaxy](https://github.com/Alylaxy) for his pull requests to the repo ([#34](https://github.com/cambiotraining/hpc-intro/pull/34)).
+- Thanks to the [HPC Carpentry](https://www.hpc-carpentry.org/index.html) community for developing similar content.
