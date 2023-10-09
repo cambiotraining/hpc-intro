@@ -2,20 +2,20 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="228.9064mm"
-   height="77.590858mm"
-   viewBox="0 0 228.9064 77.590858"
+   width="231.83571mm"
+   height="77.827095mm"
+   viewBox="0 0 231.83571 77.827095"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.4 (unknown)"
-   sodipodi:docname="conda_environments.svg">
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="conda_environments.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,21 +25,24 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="622.21241"
-     inkscape:cy="286.93869"
+     inkscape:zoom="2.8"
+     inkscape:cx="459.46429"
+     inkscape:cy="258.92857"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="978"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-width="3840"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -48,7 +51,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,145 +58,144 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(56.396248,-0.76669979)">
+     transform="translate(50.443115,-0.76669967)">
     <rect
-       ry="6.6636553"
+       ry="6.6636558"
        y="1.7666997"
-       x="-55.396248"
-       height="75.590858"
-       width="226.9064"
+       x="-49.443115"
+       height="75.827095"
+       width="229.83571"
        id="rect894"
-       style="opacity:1;fill:#0d3d56;fill-opacity:0.97619042;fill-rule:nonzero;stroke:#1d87bd;stroke-width:1.99999976;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.97647059" />
+       style="opacity:1;fill:#0d3d56;fill-opacity:0.97619;fill-rule:nonzero;stroke:#1d87bd;stroke-width:2;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.976471"
+       rx="6.6636543" />
     <text
        id="text898"
        y="15.644893"
-       x="-23.700603"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-17.879765"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          y="15.644893"
-         x="-23.700603"
+         x="-17.879765"
          id="tspan896"
          sodipodi:role="line">Computer</tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         y="25.346281"
-         x="-23.700603"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         y="25.346279"
+         x="-17.879765"
          sodipodi:role="line"
          id="tspan900">Environment</tspan></text>
     <rect
-       style="opacity:1;fill:#9a2617;fill-opacity:0.99523806;fill-rule:nonzero;stroke:#eb877a;stroke-width:1.88748574;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.99607843"
+       style="opacity:1;fill:#9a2617;fill-opacity:0.995238;fill-rule:nonzero;stroke:#eb877a;stroke-width:1.88749;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.996078"
        id="rect888"
-       width="152.18887"
-       height="62.919914"
-       x="12.50541"
-       y="8.0253839"
-       ry="5.5466585" />
+       width="158.14642"
+       height="63.11655"
+       x="15.163476"
+       y="8.0449438"
+       ry="5.546659"
+       rx="5.546658" />
     <rect
-       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#eb877a;stroke-width:1;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.99607843"
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#eb877a;stroke-width:1;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.996078"
        id="rect815"
-       width="61.399708"
+       width="73.400452"
        height="33.107937"
        x="20.54369"
        y="33.367825"
-       ry="5.0584674" />
+       ry="5.0584674"
+       rx="5.0584674" />
     <rect
-       y="32.965508"
-       x="90.820335"
-       height="33.385288"
-       width="67.66375"
+       y="33.063011"
+       x="96.544098"
+       height="33.489624"
+       width="70.312492"
        id="rect821"
-       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#eb877a;stroke-width:1;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.99607843"
-       ry="4.1154666" />
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#eb877a;stroke-width:1;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.996078"
+       ry="4.1154666"
+       rx="4.1154661" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="90.461098"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="94.172264"
        y="18.237885"
        id="text928"><tspan
          id="tspan926"
          sodipodi:role="line"
-         x="90.461098"
+         x="94.172264"
          y="18.237885"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">Conda Environments</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583">Conda Environments</tspan></text>
     <text
        id="text934"
        y="31.220604"
-       x="50.370663"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="57.255283"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          y="31.220604"
-         x="50.370663"
+         x="57.255283"
          sodipodi:role="line"
          id="tspan932">Environment 1</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="125.24506"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="131.5336"
        y="31.220604"
        id="text938"><tspan
          id="tspan936"
          sodipodi:role="line"
-         x="125.24506"
+         x="131.5336"
          y="31.220604"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">Environment 2</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583">Environment 2</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-48.269058"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-42.448219"
        y="42.103226"
        id="text870"><tspan
-         id="tspan868"
          sodipodi:role="line"
-         x="-48.269058"
+         x="-42.448219"
          y="42.103226"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">python 2.7</tspan><tspan
-         sodipodi:role="line"
-         x="-48.269058"
-         y="52.686558"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         id="tspan874">R 3.1</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         id="tspan874">python 3.9</tspan></text>
     <text
        id="text880"
        y="42.103226"
        x="23.50708"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          y="42.103226"
          x="23.50708"
          sodipodi:role="line"
-         id="tspan876">python 3.6</tspan><tspan
-         id="tspan878"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         y="52.686558"
-         x="23.50708"
-         sodipodi:role="line">bowtie2 2.4</tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         y="63.26989"
+         id="tspan876">python 3.7</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         y="52.686562"
          x="23.50708"
          sodipodi:role="line"
-         id="tspan888">samtools 1.9</tspan></text>
+         id="tspan888">NumPy 1.15</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         y="63.269901"
+         x="23.50708"
+         sodipodi:role="line"
+         id="tspan416">scikit-learn 0.20</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.76111126px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="93.114937"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="98.406609"
        y="42.103226"
        id="text886"><tspan
          sodipodi:role="line"
-         x="93.114937"
+         x="98.406609"
          y="42.103226"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         id="tspan884">python 3.8</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         id="tspan884">python 3.11</tspan><tspan
          sodipodi:role="line"
-         x="93.114937"
-         y="52.686558"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         id="tspan892">numpy 1.21</tspan><tspan
+         x="98.406609"
+         y="52.686562"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         id="tspan892">numpy 1.26</tspan><tspan
          sodipodi:role="line"
-         x="93.114937"
-         y="63.26989"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
-         id="tspan894">matplotlib 3.4</tspan></text>
+         x="98.406609"
+         y="63.269901"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         id="tspan894">Tensorflow 2.13</tspan></text>
   </g>
 </svg>

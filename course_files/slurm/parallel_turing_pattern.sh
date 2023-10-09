@@ -10,7 +10,7 @@
 echo "Starting array: $SLURM_ARRAY_TASK_ID"
 
 # activate software environment
-source $CONDA_PREFIX/etc/profile.d/conda.sh
+source $(mamba info --base)/etc/profile.d/mamba.sh
 conda activate scipy
 
 # make output directory

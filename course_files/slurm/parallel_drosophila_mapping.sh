@@ -8,7 +8,7 @@
 #SBATCH -a 2-FIXME   # we start at 2 because of the header
 
 # load conda environment
-source $CONDA_PREFIX/etc/profile.d/conda.sh
+source $(mamba info --base)/etc/profile.d/mamba.sh
 conda activate bioinformatics
 
 # get the relevant line of the CSV sample information file

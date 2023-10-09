@@ -3,11 +3,6 @@ title: "Job Parallelisation"
 ---
 
 :::{.callout-tip}
-#### Questions
-
-- How can I parallelise jobs on a HPC?
-- How can I automate job parallelisation?
-
 #### Learning Objectives
 
 - Distinguish between different kinds of parallel computations: multi-threading within a job and job parallelisation across independent jobs.
@@ -86,14 +81,21 @@ Here are some examples taken from SLURM's Job Array Documentation:
 :::
 :::
 
+
+### Exercise: arrays with no inputs
+
 :::{.callout-exercise}
 
 Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
 1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
-1. Launch the job with `sbatch`, monitor its progress and examine the output. <details><summary>Hint</summary> Note that the output of `pi_estimator.R` is now being sent to individual text files to the directory `results/pi/`. :::
+1. Launch the job with `sbatch`, monitor its progress and examine the output. 
 1. Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?
+
+:::{.callout-hint}
+Note that the output of `pi_estimator.R` is now being sent to individual text files to the directory `results/pi/`.
+:::
 
 :::{.callout-answer}
 
@@ -120,10 +122,9 @@ To combine the results of these 10 replicate runs of our Pi estimate, we could u
 
 `cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt`
 
-
-
+This operation is not computationally demanding at all, so it makes sense to run it from the login node.
+In fact, submitting it to the scheduler would not be an efficient use of it.
 :::
-
 :::
 
 
@@ -176,21 +177,24 @@ Schematically, this is what we've done:
 So, if we wanted to use job arrays to automatically retrieve the relevant line of this file as its input, we could use `head -n $SLURM_ARRAY_TASK_ID` in our command pipe above. 
 Let's see this in practice in our next exercise. 
 
-:::{.callout-exercise}
 
-## {.unlisted .unnumbered .tabset}
+### Exercise: arrays with multiple inputs
+
+:::{.callout-exercise}
 
 This exercise is composed of two equivalent sub-exercises. 
 
 One exemplifies how to automate a common bioinformatics task of mapping sequencing reads to a reference genome. 
 It is suitable for life scientists who may want to go through a bioinformatics-flavoured example. 
 
-The other sub-exercise uses a more generic simulation script, which takes as input two parameters that determine the simulation outcome. 
+The other exercise uses a more generic simulation script, which takes as input two parameters that determine the simulation outcome. 
 If it's any motivation, this version of the exercise produces pretty pictures as an output. :) 
 
 You can choose one of the two to start with (whichever one suits your work better), and then do the other one if you also have time. 
 
-### Bioinformatics
+:::{.panel-tabset}
+
+#### Bioinformatics
 
 Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#Loading_Conda_Environments), we now want to map each of our samples' sequence data to the reference genome.
 
@@ -237,7 +241,7 @@ In a typical bioinformatics workflow these files would be used for further analy
 
 :::
 
-### Simulation
+#### Simulation
 
 A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature. 
 They are using a type of model, first proposed by [Alan Turing](https://en.wikipedia.org/wiki/Turing_pattern), which models the interaction between two components that can difuse in space and promote/inhibit each other.
@@ -252,29 +256,29 @@ It models two substances - A and B - that can difuse in space and interact with 
 This seemingly simple interaction can generate complex spatial patterns, some of which capture the diversity of patterns observed in nature.
 Here is a very friendly video illustrating this: https://youtu.be/alH3yc6tX98
 
-:::
+</details>
 
 The student has a python script that runs this model taking some input parameters and outputs an image file with the final result of the model. 
 The two main parameters in the model are called "feed" and "kill", and their python script accepts these as options, for example:
 
 ```bash 
-$ python scripts/turing_model.py --feed 0.04 --kill 0.06 --outdir results/turing/
+python scripts/turing_model.py --feed 0.04 --kill 0.06 --outdir results/turing/
 ```
 
-This would produce an image saved as `results/turing/f0.04_k0.06.png`. 
+This would produce an image saved as `results/turing/f0.04_k0.06.png`.
 
 The student has been running this script on their laptop, but it takes a while to run and they would like to try several parameter combinations. 
 They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can look at the content of this file using `cat`). 
 
 Our objective is to automate running these models in parallel on the HPC.
 
-<!--
-1. If you haven't already done so, create a new conda environment to install the necessary python libraries to run this script. Call your environment `scipy` and in that new environment install the packages `numpy` and `matplotlib` from the `conda-forge` channel. Go back to the [Conda section](04-software.html) if you need to revise how to do this. 
--->
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. 
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`seff JOBID`), and examine the SLURM output log files. 
+3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by loging in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program (for example: `eog results/turing/f0.03_k0.055.png`).
 
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.:::
-2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by login in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program (for example: `eog results/turing/f0.03_k0.055.png`).
+:::{.callout-hint}
+The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.
+:::
 
 :::{.callout-answer}
 
@@ -306,8 +310,7 @@ f0.03_k0.055.png  f0.046_k0.065.png  f0.055_k0.062.png  f0.059_k0.061.png
 We can open these images using the `eog` program, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync`), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
 
 :::
-
-## {.unlisted .unnumbered}
+:::
 :::
 
 
@@ -324,7 +327,7 @@ We can open these images using the `eog` program, or alternatively we could move
   - For example we can obtain the input/output information from a simple configuration text file using some command line tricks: 
   `cat config.csv | head -n $SLURM_ARRAY_TASK_ID | tail -n 1`
 
-#### Further resources
+Further resources:
 
 - [SLURM Job Array Documentation](https://slurm.schedmd.com/job_array.html)
 :::
