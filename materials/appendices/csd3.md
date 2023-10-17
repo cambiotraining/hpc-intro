@@ -13,7 +13,7 @@ These materials have accompanying slides:
 The supercomputers at Cambridge University are known as _Cambridge Service for Data-Driven Discovery (CSD3)_. 
 Here is a schematic of the university HPC:
 
-![Schematic of the Cambridge University HPC setup. There are thousands of compute nodes, split into four main partitions (names and maximum resources shown in the picture). Storage is shared across the nodes. The `/rds` storage shown here is the equivalent of what we called `/scratch` during the workshop.](images/uni_hpc_schematic.svg)
+![Schematic of the Cambridge University HPC setup. There are thousands of compute nodes, split into four main partitions (names and maximum resources shown in the picture). Storage is shared across the nodes. The `/rds` storage shown here is the equivalent of what we called `/scratch` during the workshop.](../images/uni_hpc_schematic.svg)
 
 
 ## Registering for an Account
@@ -56,11 +56,11 @@ We will focus on the CPU-based cluster, which is the most commonly used.
 There are three types of _partitions_ on the CPU nodes:
 
 | Partition Name (`-p`) | Max CPUs (`-c`) | Max Total RAM (`--mem=`) | Max RAM Per CPU (`--mem-per-cpu=`) |
-| -: | :- | :- |
+| -: | :- | :- | :- |
 | `icelake` | 76 | 256G | 3380M |
 | `icelake-himem` | 76 | 512G | 6760M |
 | `cclake` | 56 | 192G | 3420M |
-| `cclake-himem` | 384G | 6840M |
+| `cclake-himem` | 56 | 384G | 6840M |
 
 You can choose these depending on your needs (whether you require more or less memory per CPU).
 
@@ -134,6 +134,6 @@ See instructions on the [documentation page](https://docs.hpc.cam.ac.uk/hpc/user
 
 Here are some links to HPC information in other University Departments:
 
-- CRUK: https://bioinformatics-core-shared-training.github.io/hpc/
-- SLCU: https://gitlab.com/slcu/computing/hpc-cam-intro/ 
-- Plant Sciences: https://wiki.cam.ac.uk/plantsci-bioinfo/Hydrogen (Raven login required)
+- [CRUK](https://bioinformatics-core-shared-training.github.io/hpc/) 
+- [SLCU](https://gitlab.com/slcu/computing/hpc-cam-intro/) 
+- [Plant Sciences](https://wiki.cam.ac.uk/plantsci-bioinfo/Hydrogen) (Raven login required)
