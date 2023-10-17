@@ -1,5 +1,5 @@
 ---
-title: "Hands-On Introduction to HPC Clusters"
+title: "Working on HPC Clusters using SLURM"
 author: "Hugo Tavares, Lajos Kalmar"
 date: today
 number-sections: false
@@ -9,7 +9,8 @@ number-sections: false
 
 Knowing how to work on a **High Performance Computing (HPC)** system is an essential skill for applications such as bioinformatics, big-data analysis, image processing, machine learning, parallelising tasks, and other high-throughput applications. 
 
-These materials give a practical overview of High Performance Computing, what it is and how you can use it in practice. 
+These materials give a practical overview of working on HPC servers, with a particular focus on submitting and monitoring jobs using a job scheduling software. 
+We focus on the job scheduler SLURM, although the concepts covered are applicable to other commonly used job scheduling software.
 This is a hands-on workshop, which should be accessible to researchers from a range of backgrounds and offering several opportunities to practice the skills we learn along the way.
 
 By the end of this course you will be able to independently work on a typical HPC server.
@@ -17,8 +18,8 @@ By the end of this course you will be able to independently work on a typical HP
 :::{.callout-tip}
 #### Learning Objectives
 
-- Describe how a HPC server is typically organised and how it differs from a regular computer.
-- Recognise the tasks that a HPC is suitable for. 
+- Describe how a HPC cluster is typically organised and how it differs from a regular computer.
+- Recognise the tasks that a HPC cluster is suitable for. 
 - Access and work on a HPC server.
 - Submit and manage jobs running on a HPC.
 - Paralelise similar tasks at scale.

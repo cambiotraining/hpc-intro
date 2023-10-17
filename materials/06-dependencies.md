@@ -3,10 +3,6 @@ title: "Job Dependencies"
 ---
 
 :::{.callout-tip}
-#### Questions
-
-- How can I submit jobs that start depending on the status of another job in the queue?
-
 #### Learning Objectives
 
 - Recognise the use of job dependencies to automate complicated analysis pipelines. 
@@ -42,6 +38,12 @@ In this case the option `--dependency=singleton` can be used, and the job will s
 
 ![Example of a pipeline using job dependencies. Each of the first steps of the pipeline (`filtering.sh`) have no dependencies. The second steps of the pipeline (`mapping.sh`) each have a dependency from the previous job; in this case the `--dependency=afterok:JOBID` option is used with `sbatch`. The final step of the pipeline (`variant_call.sh`) depends on all the previous steps being completed; in this case the `--dependency=singleton` is used, which will only start this job when all other jobs with the same name (`-J variant_pipeline`) complete.](images/dependencies.svg)
 
+:::{.callout-note}
+**Dependencies and Arrays**
+
+The job dependency feature can be combined with [job arrays](05-job_arrays.html) to automate the running of parallel jobs as well as launching downstream jobs that depend on the output of other jobs.
+:::
+
 
 ## Automating Dependency Submissions
 
@@ -75,15 +77,9 @@ RUN_ID_2=$(sbatch --dependency=afterok:${RUN_ID_1} --parsable 002_move.sh)
 echo "Second job submitted with the run ID ${RUN_ID_2}"
 ```
 
-The trick here is to use the `cut` command to retrieve the job number from the message that `sbatch` produces, which looks like "Submitted batch job <ID>".
-We then pass that number to the `--dependency` option of the next job.
-
-
-:::{.callout-note}
-**Dependencies and Arrays**
-
-The job dependency feature can be combined with [job arrays](05-job_arrays.html) to automate the running of parallel jobs as well as launching downstream jobs that depend on the output of other jobs.
-:::
+The trick here is to use the `--parsable` option to retrieve the job number from the message that `sbatch` produces. 
+Usually the message looks like "Submitted batch job XXXX". 
+With the `--parsable` option, `sbatch` only outputs the job number itself. 
 
 :::{.callout-exercise}
 
@@ -166,9 +162,9 @@ But all we need to do is use the main JOBID as the dependency, and this will ens
 **Building Complex Pipelines**
 
 Although the `--dependency` feature of SLURM can be very powerful, it can be somewhat restrictive to build very large and complex pipelines using SLURM only. 
-Instead, you may wish to build pipelines using dedicated _workflow management_ programs that can work with any type of job scheduler or even just on a single server (like your local computer). 
+Instead, you may wish to build pipelines using dedicated **workflow management software** that can work with any type of job scheduler or even just on a single server (like your local computer). 
 
-There are several _workflow management_ languages available, with two of the most popular ones being [_Snakemake_](https://snakemake.readthedocs.io/en/stable/) and [_Nextflow_](https://www.nextflow.io/).
+There are several workflow management languages available, with two of the most popular ones being [**_Snakemake_**](https://snakemake.readthedocs.io/en/stable/) and [**_Nextflow_**](https://www.nextflow.io/).
 Covering these is out of the scope for this workshop, but both tools have several tutorials and standardised workflows developed by the community. 
 :::
 

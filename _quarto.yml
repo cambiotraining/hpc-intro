@@ -52,7 +52,7 @@ book:
       - icon: twitter
         href: https://twitter.com/bioinfocambs
         aria-label: Bioinformatics Training Facility Twitter
-    title: "Hands-On Introduction to HPC Clusters"
+    title: "Working on HPC Clusters using SLURM"
   chapters:
     - part: "Welcome"
       chapters:
