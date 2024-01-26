@@ -47,7 +47,7 @@ book:
         href: https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing
     right:
       - icon: github
-        href: https://github.com/cambiotraining/
+        href: https://github.com/cambiotraining/hpc-intro
         aria-label: Bioinformatics Training Facility GitHub
       - icon: twitter
         href: https://twitter.com/bioinfocambs
