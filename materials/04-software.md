@@ -254,8 +254,11 @@ To load environments in a shell script that is being submitted to SLURM, you nee
 For example, to load the `scipy` environment we created, this would be the code:
 
 ```bash
-# Always add this command to your scripts
+# Always add these two commands to your scripts
+eval "$(conda shell.bash hook)"
 source $(mamba info --base)/etc/profile.d/mamba.sh
+
+# then you can activate the environment
 mamba activate scipy
 ```
 
