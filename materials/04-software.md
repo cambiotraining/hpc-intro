@@ -178,6 +178,9 @@ Where "PROGRAM" is the name of the software we want to install.
 
 One way to organise your software environments is to create an environment for each kind of analysis that you might be doing regularly. 
 For example, you could have an environment named `imaging` with software that you use for image processing (e.g. Python's scikit-image or the ImageMagick package) and another called `deeplearn` with software you use for deep learning applications (e.g. Python's Keras).
+
+In some situations (in particular in bioinformatics), software packages can have a very large number of software dependencies leading to incompatibilities across packages. 
+In those situations, it may be best to have a separate environment for each software.
 :::
 
 To search for the software packages that are available through `mamba`:
@@ -189,12 +192,16 @@ To search for the software packages that are available through `mamba`:
 If you need to install a program from a different channel than the defaults, you can specify it during the install command using the `-c` option. 
 For example `mamba install --channel CHANNEL --name ENV PROGRAM`.
 
-Let's see this with an example, where we create a new environment called "scipy" and install some python scientific packages:
+Let's see this with an example, where we create a new environment called "datasci" and install some python packages for data science work:
 
 ```bash
-mamba create --name scipy
-mamba install --name scipy --channel conda-forge numpy matplotlib
+mamba create --name datasci
+mamba install --name datasci --channel conda-forge numpy=1.12.0 matplotlib=3.8.3
 ```
+
+Note that, in this case, we were explicit in specifying the version of each software we want. 
+This is recommended for reproducibility of analysis and can make environments more stable to manage. 
+If you don't specify the version you want, then Mamba will install the latest version that is compatible with your environment. 
 
 To see all the environments you have available, you can use:
 
@@ -206,10 +213,10 @@ mamba env list
 # conda environments:
 #
 base                  *  /home/participant36/mambaforge
-scipy                    /home/participant36/mambaforge/envs/scipy
+datasci                  /home/participant36/mambaforge/envs/datasci
 ```
 
-In our case it lists the _base_ (default) environment and the newly created _scipy_ environment.
+In our case it lists the _base_ (default) environment and the newly created _datasci_ environment.
 The asterisk ("*") tells us which environment we're using at the moment.
 
 
@@ -219,7 +226,7 @@ Once your packages are installed in an environment, you can load that environmen
 For example, we can activate our previously created environment with:
 
 ```bash
-mamba activate scipy
+mamba activate datasci
 ```
 
 If you chech which `python` executable is being used now, you will notice it's the one from this new environment:
@@ -229,7 +236,7 @@ which python
 ```
 
 ```
-~/mambaforge/envs/scipy/bin/python
+~/mambaforge/envs/datasci/bin/python
 ```
 
 You can also check that the new environment is in use from:
@@ -242,16 +249,16 @@ mamba env list
 # conda environments:
 #
 base                     /home/participant36/mambaforge
-scipy                 *  /home/participant36/mambaforge/envs/scipy
+datasci               *  /home/participant36/mambaforge/envs/datasci
 ```
 
-And notice that the asterisk "*" is now showing we're using the `scipy` environment.
+And notice that the asterisk "*" is now showing we're using the `datasci` environment.
 
 :::{.callout-warning}
 #### Loading environments in shell scripts
 
 To load environments in a shell script that is being submitted to SLURM, you need to first source a configuration file from _Mamba_.
-For example, to load the `scipy` environment we created, this would be the code:
+For example, to load the `datasci` environment we created, this would be the code:
 
 ```bash
 # Always add these two commands to your scripts
@@ -259,7 +266,7 @@ eval "$(conda shell.bash hook)"
 source $(mamba info --base)/etc/profile.d/mamba.sh
 
 # then you can activate the environment
-mamba activate scipy
+mamba activate datasci
 ```
 
 This is because when we submit jobs to SLURM the jobs will start in a non-interactive shell, and `mamba` doesn't get automatically set. 
@@ -280,7 +287,7 @@ But first, we need to prepare our genome for this alignment procedure (this is r
 We have a file with the _Drosophila_ genome in `data/genome/drosophila_genome.fa`. 
 
 1. Create a new Mamba environment named "bioinformatics".
-2. Install the `bowtie2` program in your new environment.
+2. Install the `bowtie2=2.5.3` program in your new environment.
 3. Activate the new environment.
 4. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`. 
 5. Open the script in `slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
@@ -289,7 +296,6 @@ We have a file with the _Drosophila_ genome in `data/genome/drosophila_genome.fa
 - The syntax to create a new environment is: `mamba create --name ENV`
 - Go to [anaconda.org](https://anaconda.org/) and search for "bowtie2" to confirm it is available through _Mamba_ and which software _channel_ it is provided from. 
 - The syntax to install packages is: `mamba install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME`.
-- Remember to activate your environment first with `mamba activate bioinformatics`.
 :::
 
 :::{.callout-answer}
@@ -309,7 +315,7 @@ If we search for this software on the _Anaconda_ website, we will find that it i
 We can install it on our environment with:
 
 ```bash
-mamba install --name bioinformatics --channel bioconda bowtie2
+mamba install --name bioinformatics --channel bioconda bowtie2=2.5.3
 ```
 
 **A3.**
