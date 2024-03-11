@@ -371,6 +371,42 @@ index.rev.2.bt2
 
 :::
 
+## 6.3 Alternatives to package managers: containers
+
+Containers are a technology that can be used to create and manage computational environments. A container is a lightweight, standalone executable package that contains everything needed to run a piece of software, including the operating system, libraries, and application code. Containers are isolated from the host system, meaning that they can run the same software in different environments without conflicts or interference. By using containers, researchers can ensure that their code runs consistently across different systems and platforms, without having to worry about dependencies or conflicts with other software on the host system.
+
+We will focus on one of the most popular container platforms for cluster systems: _Singularity_. [Singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html) is a free and open-source computer program that performs operating-system-level virtualization also known as containerization. Singularity is also designed to create and manage isolated environments as [Docker](https://www.docker.com/), which is another popular and wildly used container platform (i.e. images created with docker can be compatible with Singularity and _vice versa_)*.
+
+::: {.callout-note appearance="simple"}
+## *Docker vs singularity
+There are some key differences between docker containers and singularity containers. The most important being the necessary *permission level* of the containers. Docker containers run as root by default, which means that they have full access to the host system. While this can be advantageous in some cases, it can also pose security risks, particularly in multi-user environments. Singularity, on the other hand, runs containers as non-root users by default, which can improve security and prevent unauthorized access to the host system. Singularity is specifically designed for use in HPC environments and can run on a wide variety of platforms and systems without root access.
+
+**TL;TR:**
+- Docker is well-suited for building and distributing software across different platforms and operating systems
+- Singularity is specifically designed for use in HPC environments and can provide improved security and performance in those settings.
+:::
+
+#### 6.3.1 Exercise: running singularity 
+Let's start with a fresh singularity installation using mamba `mamba create singularity -c conda-forge singularity`. Run `which singularity` to make sure you path looks like this: `/home/user/hpc-work/miniforge3/envs/singularity/bin/singularity`
+We have a samtools image that we can download from [here](https://depot.galaxyproject.org/singularity/samtools%3A1.9--h91753b0_8) (you can download with the command `wget https://depot.galaxyproject.org/singularity/samtools%3A1.9--h91753b0_8 -O samtools1.9.img`). Let's check on its stats with the `samtools flagstats` command.
+
+```
+singularity run /path/to/image/samtools.img samtools flagstats /path/to/bam
+```
+
+When you run the command you might see some warnings and/or info messages like: 
+
+```
+INFO:    Converting SIF file to temporary sandbox...
+WARNING: Skipping mount /rds/user/rm889/hpc-work/miniforge3/envs/singularity_test/var/singularity/mnt/session/etc/resolv.conf [files]: /etc/resolv.conf doesn't exist in container
+INFO:    Cleaning up image...
+```
+
+Those are just related to singularity running and configuration in the HPC, it is normal and not an error or something to worry about.
+
+
+Once the command is finished, you will see a samtools flagstat summary with information about your bam file without having to configure your mamba environment.
+
 
 
 ## Summary
