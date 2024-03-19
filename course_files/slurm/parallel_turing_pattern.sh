@@ -9,9 +9,13 @@
 
 echo "Starting array: $SLURM_ARRAY_TASK_ID"
 
-# activate software environment
+# these lines are needed to source the mamba activate command
+# include them if you want to activate environments in your script
+eval "$(conda shell.bash hook)"
 source $(mamba info --base)/etc/profile.d/mamba.sh
-conda activate scipy
+
+# activate conda environment
+mamba activate scipy
 
 # make output directory
 mkdir -p results/turing

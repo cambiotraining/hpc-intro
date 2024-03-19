@@ -2,20 +2,20 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="873.7868"
    height="502.44312"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="uni_hpc_schematic.svg">
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="uni_hpc_schematic.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <linearGradient
@@ -62,22 +62,25 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9174434"
-     inkscape:cx="540.58667"
-     inkscape:cy="181.69482"
+     inkscape:zoom="1.8348868"
+     inkscape:cx="442.80661"
+     inkscape:cy="198.37736"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="976"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-width="3840"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
      fit-margin-top="2"
      fit-margin-right="2"
      fit-margin-bottom="2"
      fit-margin-left="2"
-     inkscape:snap-global="false">
+     inkscape:snap-global="false"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
        id="grid1061"
@@ -92,7 +95,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -101,6 +104,20 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(109.89595,-95.618126)">
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path569"
+       d="m 319.23898,481.54603 c 62.66315,-18.88369 72.82617,-43.85085 182.35844,-57.62991"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 2;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       style="fill:none;stroke:#000000;stroke-width:0.999997;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.999997, 2;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 238.63953,464.75264 c 281.10245,0 449.76392,-36.45931 449.76392,-36.45931"
+       id="path567"
+       inkscape:connector-curvature="0" />
     <path
        style="fill:url(#linearGradient935);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 350.15784,262.94019 40.4737,-96.02521 v 104.93939 z"
@@ -122,14 +139,6 @@
        id="path972"
        d="m 239.14222,481.5548 c 27.24834,-18.12864 31.66761,-42.09751 79.29644,-55.32562"
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.99999998, 1.99999996;stroke-dashoffset:0;stroke-opacity:1" />
-    <path
-       inkscape:export-ydpi="300"
-       inkscape:export-xdpi="300"
-       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.99999998, 1.99999996;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 238.64467,481.55481 c 171.74759,0 274.79614,-53.13367 274.79614,-53.13367"
-       id="path934"
-       inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
        id="path936"
@@ -210,12 +219,7 @@
        xml:space="preserve"
        inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
        inkscape:export-xdpi="300"
-       inkscape:export-ydpi="300"><tspan
-         id="tspan1074"
-         y="357.28729"
-         x="304.62442"
-         sodipodi:role="line"
-         style="font-size:24px;line-height:1.25;font-family:sans-serif" /></text>
+       inkscape:export-ydpi="300" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
@@ -329,7 +333,7 @@
        x="392.54193"
        style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#db1e00;fill-opacity:1;stroke:none"
        xml:space="preserve"><tspan
-         style="font-size:13.33333302px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start"
+         style="font-size:13.3333px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start"
          y="163.00806"
          x="392.54193"
          sodipodi:role="line"
@@ -344,7 +348,8 @@
            height="125"
            x="121.06311"
            y="213.10568" /></flowRegion><flowPara
-         id="flowPara926" /></flowRoot>    <rect
+         id="flowPara926" /></flowRoot>
+    <rect
        y="314.30444"
        x="-107.89594"
        height="103.41939"
@@ -621,5 +626,62 @@
          x="393.95856"
          y="264.33249"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1px;font-family:'Courier New';-inkscape-font-specification:'Courier New'">#SBATCH -t 01:00:00</tspan></text>
+    <rect
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       y="314.30444"
+       x="607.7605"
+       height="103.41939"
+       width="142.83545"
+       id="rect327"
+       style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:1" />
+    <text
+       id="text331"
+       y="341.26517"
+       x="674.83301"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#db1e00;fill-opacity:1;stroke:none"
+       xml:space="preserve"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         id="tspan329"
+         y="341.26517"
+         x="674.83301"
+         sodipodi:role="line"
+         style="font-size:24px;line-height:1.25;font-family:sans-serif">sapphire</tspan></text>
+    <text
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       id="text339"
+       y="368.65564"
+       x="680.49384"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         id="tspan333"
+         y="368.65564"
+         x="680.49384"
+         sodipodi:role="line">112 CPU</tspan><tspan
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         y="388.65564"
+         x="680.49384"
+         sodipodi:role="line"
+         id="tspan335">512GiB RAM</tspan><tspan
+         id="tspan337"
+         style="font-size:16px;line-height:1.25;font-family:sans-serif"
+         y="408.65564"
+         x="680.49384"
+         sodipodi:role="line">(4.5GiB per CPU)</tspan></text>
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path565"
+       d="m 245.00897,278.85349 c 251.12836,-7.40024 358.95116,17.56518 427.28126,30.0888"
+       style="fill:none;stroke:#000000;stroke-width:1.26814;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       inkscape:export-filename="/home/hugo/mount/leyser_slcu/personal_folders/hugot/hpc_admin/hpc_cartoon.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
   </g>
 </svg>

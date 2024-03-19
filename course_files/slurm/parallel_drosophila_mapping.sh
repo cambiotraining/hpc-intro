@@ -7,9 +7,13 @@
 #SBATCH -t 00:30:00  # time for the job HH:MM:SS. Default: 1 min
 #SBATCH -a 2-FIXME   # we start at 2 because of the header
 
-# load conda environment
+# these lines are needed to source the mamba activate command
+# include them if you want to activate environments in your script
+eval "$(conda shell.bash hook)"
 source $(mamba info --base)/etc/profile.d/mamba.sh
-conda activate bioinformatics
+
+# activate conda environment
+mamba activate mapping
 
 # get the relevant line of the CSV sample information file
 # see http://bigdatums.net/2016/02/22/3-ways-to-get-the-nth-line-of-a-file-in-linux/
