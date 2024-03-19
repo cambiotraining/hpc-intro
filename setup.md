@@ -158,9 +158,10 @@ To install the extension (see @fig-vscode-ssh):
 1. Click the "Extensions" button on the side bar (or use <kbd>Ctrl + Shift + X</kbd>).
 2. In the search box type "remote ssh" and choose the "Remote - SSH" extension.
 3. Click the "Install" button in the window that opens.
-4. Go to <kbd>File</kbd> → <kbd>Preferences</kbd> → <kbd>Settings</kbd>
-5. In the search box type "Remote SSH: Show Login Terminal"
-6. Tick the option "Always reveal the SSH login terminal"
+4. Restart VS Code.
+5. Go to <kbd>File</kbd> → <kbd>Preferences</kbd> → <kbd>Settings</kbd>
+6. In the search box type "Remote SSH: Show Login Terminal"
+7. Tick the option "Always reveal the SSH login terminal"
 
 ![Installing Remote-SSH extension in VS Code](materials/images/vscode_extension_install.svg){#fig-vscode-ssh}
 
