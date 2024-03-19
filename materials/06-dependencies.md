@@ -81,9 +81,83 @@ The trick here is to use the `--parsable` option to retrieve the job number from
 Usually the message looks like "Submitted batch job XXXX". 
 With the `--parsable` option, `sbatch` only outputs the job number itself. 
 
+
+## Exercises
+
+:::{.callout-exercise}
+#### Dependencies & Arrays
+
+In this exercise we'll use a new script that runs a stochastic simulation of the classic epidemiological model known as SIR (Susceptible, Infectious, or Recovered). 
+
+We have two scripts: 
+
+1. `scripts/epi_simulator.py` runs a stochastic simulation of the SIR model (note: our model implementation should not be used for research!). This script outputs a CSV file with 4 columns: day, # infected, # susceptible, # recovered. 
+2. `scripts/epi_plotter.py` takes as input an arbitrary number of CSV files from the previous script and produces a plot, as shown below. 
+
+
+Because the simulations are stochastic, we want to run a set of 10 simulations and then make a plot with the output from all of them, to get a sense of the variation across simulation replicates.
+We already prepared two SLURM submission scripts for this: `slurm/simulate_sir.sh` and `slurm/plot_sir.sh`. 
+Your tasks are to: 
+
+- Correct the scripts where the word "FIXME" appears.
+- Submit both scripts to SLURM, ensuring that the second script (`slurm/plot_sir.sh`) uses the first one as a dependency. 
+  Note that the first script is actually submitting a _job array_, so make sure you set your dependency taking that into account. 
+
+
+:::{.callout-answer}
+
+There are two ways to do this: using `singleton` or `afterok` dependencies. 
+
+----
+
+**Using the `afterok` option**
+
+In this case, we would need to capture the JOBID of the first job (`slurm/simulate_sir.sh`) and then launch the second job (`slurm/plot_sir.sh`) using that ID as its dependency. 
+
+Here is how we would launch both scripts:
+
+```bash
+# launch the first job - capture the JOB ID into a variable
+JOB1=$(sbatch --parsable slurm/simulate_sir.sh)
+
+# launch the second job
+sbatch  --dependency=afterok:$JOB1  slurm/plot_sir.sh
+```
+
+Note that the first job submits a series of sub-jobs using arrays. 
+But all we need to do is use the main JOBID as the dependency, and this will ensure that it only starts when _all_ the job arrays have completed. 
+
+----
+
+**Using the `singleton` option**
+
+For this solution, we first need to ensure that we give a job name to our first script `slurm/simulate_sir.sh` by adding `#SBATCH -J sir_simulations`, for example. 
+Then, for `slurm/plot_sir.sh` we would add the same job name and use `--dependency=singleton`. 
+Here is the full script: 
+
+```bash
+#!/bin/bash
+#SBATCH -p training  # name of the partition to run job on
+#SBATCH -D /scratch/YOUR_USERNAME/hpc_workshop
+#SBATCH -o logs/plot_sir.log
+#SBATCH -c 1        # number of CPUs. Default: 1
+#SBATCH --mem=1G    # RAM memory. Default: 1G
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
+#SBATCH -J sir_simulations
+#SBATCH --dependency=singleton
+
+python scripts/sir_plotter.py --out results/sir/simulation_plot.png results/sir/*.csv
+```
+
+The two key SBATCH options are `-J sir_simulations` (which would match the job name with the one from the previous script) and `--dependency=singleton` (which will only run the job once all other jobs with that same name complete).
+
+:::
+:::
+
+
 :::{.callout-exercise}
 
-In [Exercise 1 of the job arrays section](05-job_arrays.html#Job_Arrays), we had adjusted the script `slurm/parallel_estimate_pi.sh` to repeatedly run our stochastic _Pi_ number estimator algorithm. 
+In [Exercise 1 of the job arrays section](05-arrays.md#exercise-arrays-with-no-inputs), we had adjusted the script `slurm/parallel_estimate_pi.sh` to repeatedly run our stochastic _Pi_ number estimator algorithm. 
 In that exercise, we had then combined our results by running the `cat` command from the terminal:
 
 ```bash
@@ -155,8 +229,8 @@ It is also worth noting that, in this case, the first job submits a series of su
 But all we need to do is use the main JOBID as the dependency, and this will ensure that it only starts when _all_ the job arrays have completed. 
 
 :::
-
 :::
+
 
 :::{.callout-note}
 **Building Complex Pipelines**

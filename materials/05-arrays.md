@@ -70,7 +70,6 @@ The compute node that they run on may be variable (depending on which node was a
 :::{.callout-note}
 You can define job array numbers in multiple ways, not just sequencially. 
 
-<details><summary>More</summary>
 Here are some examples taken from SLURM's Job Array Documentation: 
 
 | Option | Description |
@@ -78,7 +77,7 @@ Here are some examples taken from SLURM's Job Array Documentation:
 | `-a 0-31` | index values between 0 and 31 |
 | `-a 1,3,5,7` | index values of 1, 3, 5 and 7 |
 | `-a 1-7:2` | index values between 1 and 7 with a step size of 2 (i.e. 1, 3, 5 and 7) |
-:::
+
 :::
 
 
@@ -208,7 +207,10 @@ We have created a CSV file with three columns.
 One column contains the sample's name (which we will use for our output files) and the other two columns contain the path to the first and second pairs of the input files.
 With the information on this table, we should be able to automate our data processing using a SLURM job array. 
 
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Fix the `#SBATCH -a` option to get these values from the CSV file. <details><summary>Hint</summary>The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.:::
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. 
+  The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. 
+  - Fix the `#SBATCH -a` option and the `head` command further down the script, to get these values of each line from the CSV file.
+  - Fix your username in `#SBATCH -D`
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
 3. Check if you got the expected output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based in a standard bioinformatics format called [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)).)
 
