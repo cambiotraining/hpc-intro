@@ -6,9 +6,11 @@ title: "Software Management"
 #### Learning Objectives
 
 - Use the `module` tool to search for and load pre-installed software.
-- Understand what a package manager is, and how it can be used to manage software instalation on a HPC environment.
+- Describe what a package manager is, and how it can be used to manage software instalation on a HPC environment.
 - Install the _Mamba_ package manager.
 - Create a software environment and install software using _Mamba_.
+- Describe what a software container is and how it differs from a package manager.
+- Download and use a pre-existing software container for bioinformatics and scientific computing applications. 
 :::
 
 
@@ -196,7 +198,7 @@ Let's see this with an example, where we create a new environment called "datasc
 
 ```bash
 mamba create --name datasci
-mamba install --name datasci --channel conda-forge numpy=1.12.0 matplotlib=3.8.3
+mamba install --name datasci --channel conda-forge numpy=1.26.4 matplotlib=3.8.3
 ```
 
 Note that, in this case, we were explicit in specifying the version of each software we want. 
@@ -263,11 +265,13 @@ For example, to load the `datasci` environment we created, this would be the cod
 ```bash
 # Always add these two commands to your scripts
 eval "$(conda shell.bash hook)"
-source $(mamba info --base)/etc/profile.d/mamba.sh
+source $CONDA_PREFIX/etc/profile.d/mamba.sh
 
 # then you can activate the environment
 mamba activate datasci
 ```
+
+<!-- source $(conda info --base)/etc/profile.d/mamba.sh -->
 
 This is because when we submit jobs to SLURM the jobs will start in a non-interactive shell, and `mamba` doesn't get automatically set. 
 Running the `source` command shown will ensure `mamba activate` becomes available. 
@@ -374,7 +378,140 @@ index.rev.2.bt2
 ```
 
 :::
+:::
 
+
+## Containers
+
+Containers are a technology that can be used to create and manage computational environments. 
+A container is a lightweight, standalone executable package that contains everything needed to run a piece of software, including the operating system, libraries, and application code.
+Containers are isolated from the host system, meaning that they can run the same software in different environments without conflicts or interference. 
+By using containers, researchers can ensure that their code runs consistently across different systems and platforms, without having to worry about dependencies or conflicts with other software on the host system.
+
+We will focus on one of the most popular container platforms for cluster systems: _Singularity_. 
+[Singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html) is a free and open-source computer program that performs operating-system-level virtualization also known as containerization. 
+Singularity is also designed to create and manage isolated environments as [Docker](https://www.docker.com/), which is another popular and wildly used container platform (i.e. images created with docker can be compatible with Singularity and _vice versa_)*.
+
+:::{.callout-note collapse=true}
+#### Docker vs singularity
+
+There are some key differences between Docker containers and Singularity containers. 
+The most important being the necessary *permission level* of the containers. 
+Docker containers run as root by default, which means that they have full access to the host system. 
+While this can be advantageous in some cases, it can also pose security risks, particularly in multi-user environments. 
+Singularity, on the other hand, runs containers as non-root users by default, which can improve security and prevent unauthorized access to the host system. 
+Singularity is specifically designed for use in HPC environments and can run on a wide variety of platforms and systems without root access.
+
+**TL;TR:**
+
+- Docker is well-suited for building and distributing software across different platforms and operating systems
+- Singularity is specifically designed for use in HPC environments and can provide improved security and performance in those settings.
+:::
+
+
+### Singularity installation
+
+Typically, Singularity is pre-installed on HPC servers by the system administrators, and **we recommend that you use the version installed by your system admins**. 
+
+Alternatively, it is also possible to install Singularity using _Mamba_: 
+
+```bash
+mamba create singularity -c conda-forge singularity
+```
+
+However, we have found this to be a less reliable way to setup _Singularity_ on a HPC, as it may require further configuration to interact with the filesystem (in particular as we submit jobs to SLURM).
+
+
+### Singularity images
+
+Although you can build your own Singularity images, for many popular software there are already pre-built images available from public repositories. 
+Some popular ones are: 
+
+- [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/)
+- [Sylabs](https://cloud.sylabs.io/)
+
+For example, let's consider the [SeqKit program](https://bioinf.shenwei.me/seqkit/), which is a toolkit for manipulating FASTA/Q files. 
+If we search on either of those websites, we will see this software is available on both. 
+In this case, the version on Sylabs ([here](https://cloud.sylabs.io/library/bhargava-morampalli/containers/seqkit)) is older than the one on the Galaxy server (at the time of writing we have 2.8.0 available). 
+
+Therefore, let's consider the file on the Galaxy server.
+First, go to [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/) and search for the software of interest (use <kbd>Ctrl</kbd> + <kbd>F</kbd> to find the text of interest). 
+When you find the software and version of interest, right-click the file and click "Copy Link". 
+Then use that link with the `singularity pull` command: 
+
+```bash
+# create a directory for our singularity images
+mkdir images
+
+# download the image
+singularity pull images/seqkit-2.8.0.sif https://depot.galaxyproject.org/singularity/seqkit%3A2.8.0--h9ee0642_0
+```
+
+Here, we are saving the image file as `seqkit-2.8.0.sif` (`.sif` is the standard extension for singularity images). 
+Once we have this image available, we are ready to run the software, which will see in practice with the exercise below. 
+
+
+### Exercise: running singularity
+
+:::{.callout-exercise}
+
+To illustrate the use of Singularity, we will use the `seqkit` software to extract some basic statistics from the sequencing files in the `data/drosophila` directory. 
+If you haven't done so already, first download the container image with the commands shown above. 
+
+The way to run a command within a singularity container is: 
+
+```bash
+singularity run PATH-TO-IMAGE YOUR COMMANDS HERE
+```
+
+- Write a command to run the command `seqkit stats data/reads/*.fastq.gz` using the singularity image we downloaded earlier.
+- Test your command by running it on the login node. Note: this would usually be **bad practice**, we are only doing this for demonstration purposes.
+- Modify the script `slurm/seqkit_singularity.sh` and add your command to it, submitting it as a job.
+  - Where do you think the output will be saved in this case?
+  - As an optional bonus, modify the command to output the results to a file called `results/fastq_stats.txt`. 
+
+:::{.callout-answer}
+The Singularity command is: 
+
+```bash
+singularity run images/seqkit-2.8.0.sif seqkit stats data/reads/*.fastq.gz
+```
+
+If we run this on the login node, it produces an output like this: 
+
+```
+file                             format  type  num_seqs  sum_len  min_len  avg_len  max_len
+data/reads/SRR307023_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+data/reads/SRR307023_2.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+data/reads/SRR307024_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+
+... etc ...
+```
+
+For high-compute tasks, **we should not run our command directly on the login node**. 
+Instead, we can modify the SLURM submission script to include this command inside it: 
+
+```bash
+#!/bin/bash
+#SBATCH -p training  # name of the partition to run job on
+#SBATCH -D /home/YOUR-USERNAME/scratch/hpc_workshop/  # working directory
+#SBATCH -o logs/seqkit.log  # standard output file
+#SBATCH -c 1        # number of CPUs. Default: 1
+#SBATCH --mem=1G    # RAM memory. Default: 1G
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
+
+singularity run images/seqkit-2.8.0.sif seqkit stats data/reads/*.fastq.gz
+```
+
+(Don't forget to adjust the username in `#SBATCH -D`.)
+
+In this case the output would be saved to the `.log` file. 
+We could, instead, modify our command to save the output to a file using the standard `>` redirection operator: 
+
+```bash
+singularity run images/seqkit-2.8.0.sif seqkit stats data/reads/*.fastq.gz > results/fastq_stats.txt
+```
+:::
 :::
 
 
@@ -390,7 +527,10 @@ index.rev.2.bt2
   - _Mamba_ allows you to have separate "software environments", where multiple package versions can co-exist on your system.
 - Use `mamba env create ENV` to create a new software environment and `mamba install -n ENV PROGRAM` to install a program on that environment. 
 - Use `mamba activate ENV` to "activate" the software environment and make all the programs installed there available. 
-  - When submitting jobs to `sbatch`, always remember to include `source $(mamba info --base)/etc/profile.d/mamba.sh` at the start of the shell script, followed by the `mamba activate` command. 
+  - When submitting jobs to `sbatch`, always remember to include `source $CONDA_PREFIX/etc/profile.d/mamba.sh` at the start of the shell script, followed by the `mamba activate` command. 
+- Software containers can be a reliable alternative to _Mamba_ environments, with many pre-existing containers available at [Sylabs](https://cloud.sylabs.io/) and [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/).
+- To download a software container from public repositories, use the `singularity pull` command.
+- To run a command within the software container, use the `singularity run` command.
 
 Further resources:
 
