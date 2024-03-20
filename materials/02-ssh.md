@@ -49,7 +49,7 @@ To **paste** text to the MobaXterm terminal you can use the right-click mouse bu
 The first time you right-click with your mouse on the terminal, a window will open asking what you would like to do. 
 Select "Paste" (the default) and, from there on, every time you right-click on the terminal it will paste text from your clipboard. 
 
-![Login to HPC using the _MobaXterm_ terminal. 1) Click "Start local terminal" 2) Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". 3) You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. A window might open asking you whether you would like to save the password - answer "No". 4) You will receive a login message your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_mobaxterm.svg)
+![Login to HPC using the _MobaXterm_ terminal. **1)** Click "Start local terminal" **2)** Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". **3)** You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. A window might open asking you whether you would like to save the password - answer "No". **4)** You will receive a login message your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_mobaxterm.svg)
 
 
 #### WSL
@@ -59,7 +59,7 @@ To open the terminal search for "Terminal" on your Windows apps.
 To **copy and paste** text you can use the usual keyboard shortcuts <kbd>Ctrl</kbd> + <kbd>C</kbd> and <kbd>Ctrl</kbd> + <kbd>V</kbd>.
 Alternatively, you can use the right mouse button. 
 
-![Login to HPC using the terminal. 1) Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". 3) You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. 3) You will receive a login message and your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_ssh.svg)
+![Login to HPC using the terminal. **1)** Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". **2)** You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. **3)** You will receive a login message and your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_ssh.svg)
 
 
 #### Putty
@@ -67,7 +67,7 @@ Alternatively, you can use the right mouse button.
 An alternative way to connect to a remote server on Windows is to use the program [_Putty_](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html). 
 This is less flexible than the other two alternatives, as it doesn't give you command-line tools for file transfer (covered in a [later chapter](07-files.md)).
 
-![Login to HPC using the _Putty_ application. 1) Under "Host Name" type your username@hostname. 2) Click "Open". 3) The first time you connect you get a warning if this is the first time you connect; if you trust the server, press "Accept". 4) A terminal will open and ask for your password. Note that as you type the password nothing shows on the screen, but that's normal. After typing your password you will be given a terminal on the remote HPC.](images/putty.svg)
+![Login to HPC using the _Putty_ application. **1)** Under "Host Name" type your username@hostname. **2)** Click "Open". **3)** The first time you connect you get a warning if this is the first time you connect; if you trust the server, press "Accept". **4)** A terminal will open and ask for your password. Note that as you type the password nothing shows on the screen, but that's normal. After typing your password you will be given a terminal on the remote HPC.](images/putty.svg)
 
 :::
 
@@ -80,7 +80,7 @@ Search for "terminal" and press enter.
 To **copy and paste** text you can use the usual keyboard shortcuts <kbd><kbd>&#8984;</kbd> + <kbd>C</kbd></kbd> and <kbd><kbd>&#8984;</kbd> + <kbd>V</kbd></kbd>.
 Alternatively, you can use the right mouse button. 
 
-![Login to HPC using the terminal. 1) Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". 3) You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. 3) You will receive a login message and your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_ssh.svg)
+![Login to HPC using the terminal. **1)** Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". **2)** You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. **3)** You will receive a login message and your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_ssh.svg)
 
 
 ### Linux
@@ -89,7 +89,7 @@ You can open your terminal using the keyboard shortcut: <kbd><kbd>Ctrl</kbd> + <
 To **copy and paste** text on the terminal you have to use the shortcut <kbd><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd></kbd> and <kbd><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd></kbd>.
 Alternatively, you can use the right mouse button. 
 
-![Login to HPC using the terminal. 1) Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". 3) You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. 3) You will receive a login message and your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_ssh.svg)
+![Login to HPC using the terminal. **1)** Use the ssh program to connect to the HPC. You may get a warning if this is the first time you connect; if you trust the server, type "yes". **2)** You will then be asked for your password. Note that as you type the password nothing shows on the screen, but that's normal. **3)** You will receive a login message and your terminal will now indicate your HPC username and the name of the HPC server.](images/terminal_ssh.svg)
 
 :::
 
