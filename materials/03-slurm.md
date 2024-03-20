@@ -66,8 +66,26 @@ To submit the job to the scheduler we instead use the `sbatch` command in a very
 sbatch slurm/simple_job.sh
 ```
 
-In this case, we are informed that the job is submitted, but the output is not printed back on the console. 
-Instead the output is sent to a file, by default named as `slurm-JOBID.out`, where "JOBID" is a number corresponding to the job ID assigned to the job by the scheduler. 
+In this case, we are informed that the job is submitted to the SLURM queue. 
+We can see all the jobs in the queue with: 
+
+```bash
+squeue
+```
+
+```
+JOBID  PARTITION      NAME      USER  ST  TIME  NODES  NODELIST(REASON)
+  193   training  simple_j  particip   R  0:02      1  training-dy-t2medium-2
+```
+
+This gives a list of all the jobs running, with their "status" (ST column), which is usually: 
+
+- `PD` for a pending job, meaning the job is waiting the queue to get started.
+- `R` for a running job, meaning the job is currently running on one of the compute nodes. 
+
+But if our job is running on a compute node, where does the output go?
+Instead of being printed to the terminal, the output of this script will be saved to a file.
+By default the file is named `slurm-JOBID.out`, where "JOBID" is a number corresponding to the job ID assigned to the job by the scheduler. 
 This file will be located in the same directory where you launched the job from. 
 
 We can investigate the output by looking inside the file, for example `cat slurm-JOBID.out`.
@@ -157,13 +175,14 @@ After submitting a job, we may want to know:
 - How many resources (e.g. RAM) did it use?
 - What if I want to cancel a job because I realised there was a mistake in my script?
 
-You can check the **status of your jobs** in the queue by using:
+We've already seen the `squeue` command to check the **status of your jobs**.
+Without any options you will get _all_ jobs in the queue (yours and other users'), to see only your jobs you can do:
 
 ```bash
 squeue -u <user>
 ```
 
-This gives you information about the job's status: `PD` means it's *pending* (waiting in the queue) and `R` means it's *running*.
+This gives you information about the job's status: `PD` means it's *pending* (waiting in the queue) and `R` means it's *running* on a compute node.
 
 To see more **information for a job** (and whether it completed or failed), you can use:
 
@@ -179,20 +198,30 @@ Alternatively, you can use the `sacct` command, which allows displaying this and
 For example:
 
 ```bash
-sacct --format jobname,account,state,AllocCPUs,reqmem,maxrss,averss,elapsed -j JOBID
+sacct --format JobName,Account,State,AllocCPUs,ReqMem,MaxRSS,AveRSS,Elapsed -j JOBID
 ```
 
-- `jobname` is the job's name
-- `account` is the account used for the job
-- `state` gives you the state of the job
+- `JobName` is the job's name
+- `Account` is the account used for the job
+- `State` gives you the state of the job
 - `AllocCPUs` is the number of CPUs you requested for the job
-- `reqmem` is the memory that you asked for (Mc or Gc indicates MB or GB per core; Mn or Gn indicates MB or GB per node)
-- `maxrss` is the maximum memory used during the job *per core*
-- `averss` is the average memory used *per core*
-- `elapsed` how much time it took to run your job
+- `ReqMem` is the memory that you asked for (Mc or Gc indicates MB or GB per core; Mn or Gn indicates MB or GB per node)
+- `MaxRSS` is the maximum memory used during the job *per core*
+- `AveRSS` is the average memory used *per core*
+- `Elapsed` how much time it took to run your job
 
-All the options available with `sacct` can be listed using `sacct -e`.
-If you forgot what the job id is, running `sacct` with no other options will show you information about your last few jobs.
+All the format options available with `sacct` can be listed using `sacct -e`.
+
+If you forgot what your job id is, running `sacct` with no other options will show you information about the jobs that ran recently.
+If you want to know the ID of jobs that ran in a period of time, you can do: 
+
+```bash
+sacct -S 2024-01-01 -E 2024-02-01 --format=JobID,JobName,Start,End,State
+```
+
+Here, `-S` is the start date and `-E` the end date of the time period you want to list jobs for. 
+You can omit the `-E` option, in which case it will list all the jobs that ran up to the current date. 
+
 
 :::{.callout-note}
 The `sacct` command may not be available on every HPC, as it depends on how it was configured by the admins.
@@ -220,7 +249,7 @@ For example, let's say that we would like to keep our job output files in a fold
 For the example above, we might set these #SBATCH options:
 
 ```bash
-#SBATCH -D /home/username/scratch/hpc_workshop/
+#SBATCH -D /home/YOUR-USERNAME/scratch/hpc_workshop/
 #SBATCH -o logs/simple_job.log
 ```
 
@@ -235,7 +264,7 @@ Another thing to note is that you should not use the `~` home directory shortcut
 Will not work, instead you should use the full path, for example:
 
 ```bash
-#SBATCH -D /home/username/scratch/hpc_workshop/
+#SBATCH -D /home/YOUR-USERNAME/scratch/hpc_workshop/
 ```
 
 :::
