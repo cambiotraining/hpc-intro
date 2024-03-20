@@ -212,7 +212,7 @@ sacct --format JobName,Account,State,AllocCPUs,ReqMem,MaxRSS,AveRSS,Elapsed -j J
 
 All the format options available with `sacct` can be listed using `sacct -e`.
 
-If you forgot what your job id is, running `sacct` with no other options will show you information about the jobs that ran recently.
+If you **forgot what your job id is**, running `sacct` with no other options will show you information about the jobs that ran recently.
 If you want to know the ID of jobs that ran in a period of time, you can do: 
 
 ```bash
