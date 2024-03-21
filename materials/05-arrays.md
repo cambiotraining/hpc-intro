@@ -85,6 +85,8 @@ Here are some examples taken from SLURM's Job Array Documentation:
 
 :::{.callout-exercise}
 
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+
 Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
@@ -195,6 +197,8 @@ You can choose one of the two to start with (whichever one suits your work bette
 
 #### Bioinformatics
 
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+
 Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#Loading_Conda_Environments), we now want to map each of our samples' sequence data to the reference genome.
 
 ![](images/mapping.png){ width=50% }
@@ -244,6 +248,8 @@ In a typical bioinformatics workflow these files would be used for further analy
 :::
 
 #### Simulation
+
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
 
 A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature. 
 They are using a type of model, first proposed by [Alan Turing](https://en.wikipedia.org/wiki/Turing_pattern), which models the interaction between two components that can difuse in space and promote/inhibit each other.

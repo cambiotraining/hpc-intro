@@ -283,7 +283,9 @@ Running the `source` command shown will ensure `mamba activate` becomes availabl
 
 :::{.callout-exercise}
 
-In the `hpc_workshop/data` folder, you will find some files resulting from whole-genome sequencing individuals from the model organism _Drosophila melanogaster_ (fruit fly). 
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+
+In the `data` folder, you will find some files resulting from whole-genome sequencing individuals from the model organism _Drosophila melanogaster_ (fruit fly). 
 Our objective will be to align our sequences to the reference genome, using a software called _bowtie2_.
 
 ![](images/mapping.png){ width=50% }
@@ -453,6 +455,8 @@ Once we have this image available, we are ready to run the software, which will 
 ### Exercise: running singularity
 
 :::{.callout-exercise}
+
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
 
 To illustrate the use of Singularity, we will use the `seqkit` software to extract some basic statistics from the sequencing files in the `data/drosophila` directory. 
 If you haven't done so already, first download the container image with the commands shown above. 

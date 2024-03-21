@@ -84,8 +84,11 @@ With the `--parsable` option, `sbatch` only outputs the job number itself.
 
 ## Exercises
 
+<!-- 
 :::{.callout-exercise}
 #### Dependencies & Arrays
+
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
 
 In this exercise we'll use a new script that runs a stochastic simulation of the classic epidemiological model known as SIR (Susceptible, Infectious, or Recovered). 
 
@@ -150,10 +153,9 @@ python scripts/sir_plotter.py --out results/sir/simulation_plot.png results/sir/
 ```
 
 The two key SBATCH options are `-J sir_simulations` (which would match the job name with the one from the previous script) and `--dependency=singleton` (which will only run the job once all other jobs with that same name complete).
-
 :::
 :::
-
+ -->
 
 :::{.callout-exercise}
 

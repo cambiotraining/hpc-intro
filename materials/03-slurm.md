@@ -274,6 +274,8 @@ Will not work, instead you should use the full path, for example:
 
 :::{.callout-exercise}
 
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+
 In the "scripts" directory, you will find an R script called `pi_estimator.R`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
 
@@ -425,6 +427,8 @@ Here is a table summarising some of the most useful environment variables that S
 ### Exercise: SLURM environment variables
 
 :::{.callout-exercise}
+
+Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
