@@ -419,7 +419,7 @@ Typically, Singularity is pre-installed on HPC servers by the system administrat
 Alternatively, it is also possible to install Singularity using _Mamba_: 
 
 ```bash
-mamba create singularity -c conda-forge singularity
+mamba create -n singularity -c conda-forge singularity
 ```
 
 However, we have found this to be a less reliable way to setup _Singularity_ on a HPC, as it may require further configuration to interact with the filesystem (in particular as we submit jobs to SLURM).
