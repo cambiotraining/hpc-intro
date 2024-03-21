@@ -342,15 +342,18 @@ We need to fix the script to specify the correct working directory with our user
 
 Replacing "USERNAME" with your username. 
 
-We also need to make sure we activate our environment, by adding: 
+We also need to make sure we activate our environment, by adding the `mamba activate` command, like this: 
 
-```
-source $(mamba info --base)/etc/profile.d/mamba.sh
+```bash
+# these lines are needed to source the mamba activate command
+# include them if you want to activate environments in your script
+eval "$(conda shell.bash hook)"
+source $CONDA_PREFIX/etc/profile.d/mamba.sh
+
+# activate conda environment
 mamba activate bioinformatics
 ```
 
-At the start of the script.
-This is because we did not load the environment in our script. 
 Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the mamba environment in our SLURM submission scripts**. 
 
 We can then launch it with sbatch:
