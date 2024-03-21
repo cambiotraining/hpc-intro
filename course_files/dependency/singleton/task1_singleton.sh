@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -o dep1.log
+#SBATCH -J my_pipeline  # name for the job
+#SBATCH -o logs/task1_singleton_%j.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:01:00 # time for the job HH:MM:SS. Default: 1 min
 
-# sleep for 20 seconds
-sleep 20
+# sleep for 10 seconds (to have time to see the job in the queue)
+sleep 10
 
-# Create a file
-touch dep_test.txt
-exit 0
+# create a file
+echo "Output from task1" > result_task1.txt
