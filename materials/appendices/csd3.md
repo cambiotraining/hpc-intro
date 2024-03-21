@@ -44,6 +44,27 @@ You can see how much space you are using on your storage partitions using the co
 -->
 
 
+## Software {#sec-software-csd3}
+
+There are several **software packages pre-installed** on the HPC and available through the `module` command, as covered in @sec-module. 
+However, the latest versions of software are not always available.
+You can request the HPC helpdesk to install newer versions (or an entirely new software), although they may sometimes not do so, if it's a fast-changing software. 
+
+Alternatively, we recommend that you **manage local software using _Mamba_**. 
+However, due to some software packages being quite large, we recommend you install _Mamba_ on your RDS `rds/hpc-work/` directory (which is 1TB), rather than the home directory (only 40GB). 
+Here are the instructions to do this: 
+
+```bash
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/rds/hpc-work/miniforge3
+rm Miniforge3-$(uname)-$(uname -m).sh
+$HOME/rds/hpc-work/miniforge3/bin/mamba init
+```
+
+Finally, you can use **containers with Singularity**, which is pre-installed on the HPC (no need to load anything). 
+Do not install your own _Singularity_ (e.g. via Mamba), as it will not be correctly configured for the HPC filesystem.
+
+
 ## Running Jobs
 
 There are two types of nodes that you can access on CSD3: 

@@ -14,7 +14,7 @@ title: "Software Management"
 :::
 
 
-## Using pre-installed software 
+## Using pre-installed software {#sec-module}
 
 It is very often the case that HPC admins have pre-installed several software packages that are regularly used by their users. 
 Because there can be a large number of packages (and often different versions of the same program), you need to load the programs you want to use in your script using the `module` tool. 
@@ -121,12 +121,13 @@ This means you will use fewer resources and your jobs will complete faster.
 Before you use _Mamba_, you will need to install it on the HPC. 
 If you are attending our live course, we already have _Mamba_ installed, so you can skip this step. 
 
-To install _Mamba_, run the following commands from the terminal: 
+To install _Mamba_, run the following commands from the terminal (this will install it in its default location in the home directory. See @sec-software-csd3 for Cambridge HPC): 
 
 ```bash
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
-bash Mambaforge-$(uname)-$(uname -m).sh -b
-rm Mambaforge-$(uname)-$(uname -m).sh
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/miniforge3
+rm Miniforge3-$(uname)-$(uname -m).sh
+$HOME/miniforge3/bin/mamba init
 ```
 
 Logout of the HPC and login again, to restart your terminal. 
@@ -416,13 +417,8 @@ Singularity is specifically designed for use in HPC environments and can run on 
 
 Typically, Singularity is pre-installed on HPC servers by the system administrators, and **we recommend that you use the version installed by your system admins**. 
 
-Alternatively, it is also possible to install Singularity using _Mamba_: 
-
-```bash
-mamba create -n singularity -c conda-forge singularity
-```
-
-However, we have found this to be a less reliable way to setup _Singularity_ on a HPC, as it may require further configuration to interact with the filesystem (in particular as we submit jobs to SLURM).
+Although it is possible to install it yourself (e.g. with Mamba), we have found this to be a less reliable way to setup _Singularity_ on a HPC.
+This is because it requires further configuration to interact with the filesystem (in particular as we submit jobs to SLURM).
 
 
 ### Singularity images
