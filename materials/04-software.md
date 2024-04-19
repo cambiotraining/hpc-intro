@@ -121,7 +121,7 @@ This means you will use fewer resources and your jobs will complete faster.
 Before you use _Mamba_, you will need to install it on the HPC. 
 If you are attending our live course, we already have _Mamba_ installed, so you can skip this step. 
 
-To install _Mamba_, run the following commands from the terminal (this will install it in its default location in the home directory. See @sec-software-csd3 for Cambridge HPC): 
+To install _Mamba_, run the following commands from the terminal (this will install it in its default location in the home directory): 
 
 ```bash
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"

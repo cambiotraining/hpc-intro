@@ -8,7 +8,7 @@ These materials have accompanying slides:
 :::
 
 
-# Cambridge University HPC Resources
+# Cambridge University HPC Resources {.unnumbered}
 
 The supercomputers at Cambridge University are known as _Cambridge Service for Data-Driven Discovery (CSD3)_. 
 Here is a schematic of the university HPC:
@@ -22,10 +22,14 @@ Anyone with a _Raven_ account can have access to the HPC.
 There are different levels of service, but the basic one can be used for free. 
 To get an account fill in the [Research Computing Cluster Account Application Form](https://www.hpc.cam.ac.uk/rcs-application). 
 
+After your account is created, you will receive an email. 
+Please read it carefully, as it contains instructions to set up two-factor authentication, which is necessary to use the Cambridge HPC. 
+
 
 ## Accessing the HPC
 
 Once your account is created, you can login to the HPC with `ssh CRSid@login.hpc.cam.ac.uk` using your Raven password. 
+You will also require a TOTP code (time-based one-time password), which should be setup on your phone when you create the account (see above).
 
 
 ## Filesystem
@@ -43,6 +47,20 @@ You can see how much space you are using on your storage partitions using the co
 [Note: there's also a shortcut to `/rcs/user/$USER`. This is access to "cold storage", which is the long-term slow-access storage provided by the university. Most likely you will not be using this unless you want to access/deposit archival data.]
 -->
 
+## File Transfer
+
+Using `scp` and `rsync` work very similarly to the standard `ssh` command, they will request your password and TOTP code to transfer the files. 
+
+For _Filezilla_, you will need some extra configuration, which is [detailed here](https://docs.hpc.cam.ac.uk/storage/rds/gui.html#using-filezilla). 
+
+
+:::{.callout-note}
+#### Tip
+
+It can be quite tedious to have to type a TOTP every time you run `scp`, `rsync` or `ssh`. 
+There is a way to reduce this somewhat, see [this page of the docs](https://docs.hpc.cam.ac.uk/hpc/user-guide/mfa.html#reducing-the-effort-of-mfa-connection-sharing).
+:::
+
 
 ## Software {#sec-software-csd3}
 
@@ -50,7 +68,19 @@ There are several **software packages pre-installed** on the HPC and available t
 However, the latest versions of software are not always available.
 You can request the HPC helpdesk to install newer versions (or an entirely new software), although they may sometimes not do so, if it's a fast-changing software. 
 
-Alternatively, we recommend that you **manage local software using _Mamba_**. 
+Alternatively, we recommend that you **manage local software using _Mamba_**, as explained in [Software Management](../04-software.md). 
+Note that some software packages can be quite large, but the home directory on CSD3 only has 50GB. 
+This risks running out of space in the home as you install more and more software. 
+There are a few things we recommend to avoid this situation: 
+
+- If you don't anticipate needing to use an environment again soon (e.g. you finished a project), delete the environment using `mamba env remove -n ENV_NAME`.
+- Occasionally remove unused packages and clear the cache using `mamba clean --all`. You can first run this command with the additional option `--dry-run` to see what would be removed, before actually removing it.
+- Install the large environment in a non-default directory using the option `-p`. For example, running `mamba create -p ~/rds/hpc-work/condaenvs/mapping bowtie2` will install the environment in the specified directory. The disadvantage is that you then have to activate the environment with the path: `mamba activate ~/rds/hpc-work/condaenvs/mapping`.
+
+
+<!-- 
+Update: we don't recommend this now, because `hpc-work` has file number restrictions, which can also cause problems.
+
 However, due to some software packages being quite large, we recommend you install _Mamba_ on your RDS `rds/hpc-work/` directory (which is 1TB), rather than the home directory (only 40GB). 
 Here are the instructions to do this: 
 
@@ -59,7 +89,8 @@ wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforg
 bash Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/rds/hpc-work/miniforge3
 rm Miniforge3-$(uname)-$(uname -m).sh
 $HOME/rds/hpc-work/miniforge3/bin/mamba init
-```
+``` 
+-->
 
 Finally, you can use **containers with Singularity**, which is pre-installed on the HPC (no need to load anything). 
 Do not install your own _Singularity_ (e.g. via Mamba), as it will not be correctly configured for the HPC filesystem.
@@ -82,6 +113,7 @@ There are three types of _partitions_ on the CPU nodes:
 | `icelake-himem` | 76 | 512G | 6760M |
 | `cclake` | 56 | 192G | 3420M |
 | `cclake-himem` | 56 | 384G | 6840M |
+| `sapphire` | 112 | 512G | 4580M |
 
 You can choose these depending on your needs (whether you require more or less memory per CPU).
 

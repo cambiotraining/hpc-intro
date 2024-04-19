@@ -2,7 +2,7 @@
 pagetitle: "HPC Course"
 ---
 
-# SLURM Quick Reference Guide
+# SLURM Quick Reference Guide {.unnumbered}
 
 This page summarises the most relevant information to work with the HPC, to be used as a quick-reference guide. 
 
