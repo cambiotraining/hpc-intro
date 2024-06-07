@@ -97,7 +97,7 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 **Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we already put the materials on the training HPC.
 
 - <a href="https://www.dropbox.com/sh/mcu1hjxlr8yqxxa/AAB8s5NcHZH1Tkof4B5JXuyLa?dl=0" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
-- Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/scratch/user/hpc_workshop/`. 
+- Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/home/USERNAME/rds/hpc-work/hpc_workshop/`. 
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
 - Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder? 
 
@@ -110,10 +110,10 @@ Notice that these commands are **run from your local terminal**:
 
 ```bash
 # with scp
-scp -r ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/
+scp -r ~/Desktop/hpc_workshop_files.zip username@train.bio:rds/hpc-work/hpc_workshop/
 
 # with rsync
-rsync -avhu ~/Desktop/hpc_workshop_files.zip username@train.bio:scratch/hpc_workshop/
+rsync -avhu ~/Desktop/hpc_workshop_files.zip username@train.bio:rds/hpc-work/hpc_workshop/
 ```
 
 Once we finish transfering the files we can go ahead and decompress the data folder. 
@@ -121,7 +121,7 @@ Note, this is now run **from the HPC terminal**:
 
 ```bash
 # make sure to be in the correct directory
-cd ~/scratch/hpc_workshop/
+cd ~/rds/hpc-work/hpc_workshop/
 
 # decompress the files
 unzip hpc_workshop_files.zip

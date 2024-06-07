@@ -13,7 +13,7 @@ These materials have accompanying slides:
 The supercomputers at Cambridge University are known as _Cambridge Service for Data-Driven Discovery (CSD3)_. 
 Here is a schematic of the university HPC:
 
-![Schematic of the Cambridge University HPC setup. There are thousands of compute nodes, split into four main partitions (names and maximum resources shown in the picture). Storage is shared across the nodes. The `/rds` storage shown here is the equivalent of what we called `/scratch` during the workshop.](../images/uni_hpc_schematic.svg)
+![Schematic of the Cambridge University HPC setup. There are thousands of compute nodes, split into four main partitions (names and maximum resources shown in the picture). Storage is shared across the nodes. The `/rds` storage shown here is the equivalent of what we referred as "scratch" during the workshop.](../images/uni_hpc_schematic.svg)
 
 
 ## Registering for an Account

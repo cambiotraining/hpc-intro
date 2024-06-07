@@ -47,7 +47,7 @@ echo "This job is running on:"
 hostname
 ```
 
-We can run this script from the login node using the `bash` interpreter (make sure you are in the correct directory first: `cd ~/scratch/hpc_workshop/`): 
+We can run this script from the login node using the `bash` interpreter (make sure you are in the correct directory first: `cd ~/rds/hpc-work/hpc_workshop/`): 
 
 ```bash
 bash slurm/simple_job.sh
@@ -249,7 +249,7 @@ For example, let's say that we would like to keep our job output files in a fold
 For the example above, we might set these #SBATCH options:
 
 ```bash
-#SBATCH -D /home/YOUR-USERNAME/scratch/hpc_workshop/
+#SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/
 #SBATCH -o logs/simple_job.log
 ```
 
@@ -258,13 +258,13 @@ But, unless we create the `logs/` directory _before running the job_, `sbatch` w
 Another thing to note is that you should not use the `~` home directory shortcut with the `-D` option. For example:
 
 ```bash
-#SBATCH -D ~/scratch/hpc_workshop/
+#SBATCH -D ~/rds/hpc-work/hpc_workshop/
 ```
 
 Will not work, instead you should use the full path, for example:
 
 ```bash
-#SBATCH -D /home/YOUR-USERNAME/scratch/hpc_workshop/
+#SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/
 ```
 
 :::
@@ -274,7 +274,7 @@ Will not work, instead you should use the full path, for example:
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 In the "scripts" directory, you will find an R script called `pi_estimator.R`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
@@ -341,7 +341,7 @@ The modified script should look similar to this:
 ```bash
 #!/bin/bash
 #SBATCH -p training 
-#SBATCH -D /home/USERNAME/scratch/hpc_workshop/  # working directory
+#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop/  # working directory
 #SBATCH -o logs/estimate_pi_50M.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS.
@@ -398,7 +398,7 @@ Try these examples:
 
 ```shell
 # Make a variable with a path starting from the user's /home
-DATADIR="$HOME/scratch/data/"
+DATADIR="$HOME/rds/hpc-work/data/"
 
 # list files in that directory
 ls $DATADIR
@@ -421,14 +421,14 @@ Here is a table summarising some of the most useful environment variables that S
 | `$SLURM_JOB_ID` | The job ID | 
 | `$SLURM_JOB_NAME` | The name of the job defined with `-J` |
 | `$SLURM_SUBMIT_DIR` | The working directory defied with `-D` |
-| `$SLURM_ARRAY_TASK_ID` | The number of the sub-job when running parallel arrays (covered in the [Job Arrays](05-job_arrays.html) section) |
+| `$SLURM_ARRAY_TASK_ID` | The number of the sub-job when running parallel arrays (covered in the [Job Arrays](05-arrays.md) section) |
 
 
 ### Exercise: SLURM environment variables
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
@@ -451,7 +451,7 @@ We can modify our submission script in the following manner, for example for usi
 ```bash
 #!/bin/bash
 #SBATCH -p traininglarge     # partiton name
-#SBATCH -D /home/USERNAME/scratch/hpc_workshop/  # working directory
+#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop/  # working directory
 #SBATCH -o logs/estimate_pi_200M.log      # output file
 #SBATCH --mem=10G
 #SBATCH -c 2                          # number of CPUs

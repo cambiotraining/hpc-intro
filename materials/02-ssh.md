@@ -106,11 +106,11 @@ After registering for a HPC account, you were sent the following information by 
 > - Password: emailed separately
 > - Host: `train.bio`
 > 
-> You were automatically allocated 40GB in `/home/USERNAME/` and 1TB in `/scratch/USERNAME/`. 
+> You were automatically allocated 40GB in `/home/USERNAME/` (backed storage) and 1TB in `/home/USERNAME/rds/hpc-work` (non-backed high-performance "scratch" space for computations). 
 
 1. Connect to the training HPC using `ssh`. (Note: when you type your password, nothing shows on the screen - that's normal, the password is still being input.)
 2. Take some time to explore your home directory to identify what files and folders are in there. 
-Can you identify and navigate to your scratch directory?
+Can you identify and navigate to your high-performance compute directory?
 3. Use the commands `free -h` (available RAM memory) and `nproc --all` (number of CPU cores available) to check the capabilities of the login node of our HPC. Check how many people are logged in to the HPC login node using the command `who`.
 
 :::{.callout-answer}
@@ -136,14 +136,13 @@ We can get a detailed list of the files on our home directory:
 ls -l
 ```
 
-This will reveal that there is a shell script (`.sh` extension) named `slurm_submit_template.sh` and also a shortcut to our scratch directory. 
-We can see that this is a shortcut because of the way the output is printed as `scratch -> /scratch/username/`. 
+This will reveal that there is a shell script (`.sh` extension) named `slurm_submit_template.sh` and also a shortcut to our scratch directory, in this case `/home/username/rds/`. 
+Within that directory, we have another one named `hpc-work`, which is the default high-performance storage we were given on this cluster. 
 
-Therefore, to navigate to our scratch directory we can either use the shortcut from our home or use the full path:
+Therefore, to navigate to our scratch directory we can do:
 
 ```bash
-cd ~/scratch       # using the shortcut from the home directory
-cd /scratch/USERNAME/  # using the full path
+cd ~/rds/hpc-work
 ```
 
 Remember that `~` indicates your home directory, which in Linux filesystems is `/home/USERNAME/`.
@@ -220,7 +219,7 @@ Note that because we saved our file with `.sh` extension (the conventional exten
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 1. Create a new script file called `check_hostname.sh`. Copy the code shown below into this script and save it.
 1. From the terminal, run the script using `bash`.
@@ -339,8 +338,8 @@ If you haven't already done so, connect your VS Code to the HPC following the in
 **A1.**
 
 To open the folder we follow the instructions in @sec-vscode (steps 10 and 11) and use the following path:
-`/scratch/user/hpc_workshop`
-(replacing "user" with your username)
+`/home/username/rds/hpc-work/hpc_workshop`
+(replacing "username" with your username)
 
 **A2.**
 

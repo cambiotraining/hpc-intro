@@ -10,7 +10,7 @@ This is used in the examples that follow:
 
 - username `xyz123`
 - submitting the script `simulation.sh`
-- project's directory is `/home/xyz123/scratch/simulations/`
+- project's directory is `/home/xyz123/rds/hpc-work/simulations/`
 - billing account is `TRAINING-SL3-CPU`
 - partition name is `skylake`
 
@@ -36,7 +36,7 @@ Use this as a general template for your scripts:
 #!/bin/bash
 #SBATCH -A TRAINING-SL3-CPU        # account name
 #SBATCH -J my_simulation           # a job name for convenience
-#SBATCH -D /home/xyz123/scratch/simulations  # your working directory
+#SBATCH -D /home/xyz123/rds/hpc-work/simulations  # your working directory
 #SBATCH -o logs/simulation.log     # standard output and standard error will be saved in this file
 #SBATCH -p skylake                 # partition
 #SBATCH -c 2                       # number of CPUs

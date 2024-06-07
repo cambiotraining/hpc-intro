@@ -46,22 +46,22 @@ Please ask your administrator.
 But if we load the software first, then the command works: 
 
 ```bash
-module load bowtie2
+module load bowtie/2.5.0
 bowtie2 --version
 ```
 
 ```
-/scratch/applications/bowtie2/bowtie2-2.4.5-linux-x86_64/bowtie2-align-s version 2.4.5
+/usr/local/Cluster-Apps/bowtie/2.5.0/bowtie2-align-s version 2.5.0
 64-bit
-Built on 51df6955ec49
-Mon Jan 17 00:22:22 UTC 2022
-Compiler: gcc version 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC)
-Options: -O3 -msse2 -funroll-loops -g3 -g -O2 -fvisibility=hidden -I/hbb_exe_gc_hardened/include -ffunction-sections -fdata-sections -fstack-protector -D_FORTIFY_SOURCE=2 -fPIE -std=c++11 -DPOPCNT_CAPABILITY -DNO_SPINLOCK -DWITH_QUEUELOCK=1
+Built on login-e-12
+Mon 14 Nov 12:11:12 UTC 2022
+Compiler: gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC)
+Options: -O3 -msse2 -funroll-loops -g3 -std=c++11 -DPOPCNT_CAPABILITY -DNO_SPINLOCK -DWITH_QUEUELOCK=1
 Sizeof {int, long, long long, void*, size_t, off_t}: {4, 8, 8, 8, 8, 8}
 ```
 
 If you `echo $PATH`, you will notice the installer has been added to your PATH variable (the environment variable that tells the shell where to find programs to run). 
-Once you run `module unload bowtie2`, and then `echo $PATH` again, you notice the PATH variable will have been modified. 
+Once you run `module unload bowtie2/2.5.0`, and then `echo $PATH` again, you notice the PATH variable will have been modified. 
 This is how the _Environment Modules_ package makes software available for you to use. 
 
 If a package is not available through the `module` command, your only option is to contact the HPC admin and ask them to install it for you. 
@@ -283,7 +283,7 @@ Running the `source` command shown will ensure `mamba activate` becomes availabl
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 In the `data` folder, you will find some files resulting from whole-genome sequencing individuals from the model organism _Drosophila melanogaster_ (fruit fly). 
 Our objective will be to align our sequences to the reference genome, using a software called _bowtie2_.
@@ -340,7 +340,7 @@ Then, if we run `bowtie2 --help`, we should get the software help printed on the
 We need to fix the script to specify the correct working directory with our username (only showing the relevant line of the script):
 
 ```
-#SBATCH -D /home/USERNAME/scratch/hpc_workshop
+#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop
 ```
 
 Replacing "USERNAME" with your username. 
@@ -456,7 +456,7 @@ Once we have this image available, we are ready to run the software, which will 
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 To illustrate the use of Singularity, we will use the `seqkit` software to extract some basic statistics from the sequencing files in the `data/drosophila` directory. 
 If you haven't done so already, first download the container image with the commands shown above. 
@@ -497,7 +497,7 @@ Instead, we can modify the SLURM submission script to include this command insid
 ```bash
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -D /home/YOUR-USERNAME/scratch/hpc_workshop/  # working directory
+#SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
 #SBATCH -o logs/seqkit.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G

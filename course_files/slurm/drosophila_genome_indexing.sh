@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -D /home/FIX-YOUR-USERNAME/scratch/hpc_workshop/  # working directory
+#SBATCH -D /home/FIX-YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
 #SBATCH -o logs/drosophila_genome_indexing.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G

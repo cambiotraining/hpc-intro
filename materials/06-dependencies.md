@@ -42,7 +42,7 @@ We will give examples of `afterok`, `afternotok` and `singleton`, which are comm
 :::{.callout-note}
 **Dependencies and Arrays**
 
-The job dependency feature can be combined with [job arrays](05-job_arrays.md) to automate the running of parallel jobs as well as launching downstream jobs that depend on the output of other jobs.
+The job dependency feature can be combined with [job arrays](05-arrays.md) to automate the running of parallel jobs as well as launching downstream jobs that depend on the output of other jobs.
 :::
 
 ## Successful Run: `afterok`
@@ -174,7 +174,7 @@ Furthermore, to the `tast3.sh` script we add `--dependency singleton`, to indica
 :::{.callout-exercise}
 #### Dependencies & Arrays
 
-Make sure you are in the workshop folder (`cd ~/scratch/hpc_workshop`).
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 In this exercise we'll use a new script that runs a stochastic simulation of the classic epidemiological model known as SIR (Susceptible, Infectious, or Recovered). 
 
@@ -227,7 +227,7 @@ Here is the full script:
 ```bash
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -D /scratch/YOUR_USERNAME/hpc_workshop
+#SBATCH -D /home/YOUR_USERNAME/rds/hpc-work/hpc_workshop
 #SBATCH -o logs/plot_sir.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
@@ -269,7 +269,7 @@ Then, we could create a new submission script with the following:
 ```bash
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -D /scratch/FIXME/hpc_workshop
+#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop
 #SBATCH -o logs/combine_pi_results.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
@@ -293,7 +293,7 @@ Let's say that the script to combine the results was called `combine_pi.sh`, wit
 ```bash
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -D /scratch/FIXME/hpc_workshop
+#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop
 #SBATCH -o logs/combine_pi_results.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
