@@ -28,6 +28,6 @@ slides
 notes
 
 # specific files from course_materials that we do not version control
-course_files/data
-course_files/logs
-course_files/results
+course_files/**/data
+course_files/**/logs
+course_files/**/results
