@@ -168,8 +168,37 @@ To install the extension (see @fig-vscode-ssh):
 ## Data
 
 If you are attending our workshop, then all the data is already provided on our training HPC. 
-However, if you want to practice after the course on your HPC, you can download a Zip file with the data used in the exercises:
+However, if you want to practice after the course on your HPC, you can download the data and scripts used in the exercises from the links below. 
+
+Note the two versions below are very similar, some SLURM options are different depending on our training environment, but for practicing in your own HPC it won't make a difference, as you will have to change the SLURM options regardless. 
+
+:::{.panel-tabset}
+#### Generic
 
 <a href="https://www.dropbox.com/sh/mcu1hjxlr8yqxxa/AAB8s5NcHZH1Tkof4B5JXuyLa?dl=1">
   <button class="btn"><i class="fa fa-download"></i> Download</button>
 </a>
+
+Programmatically, you can do: 
+
+```bash
+# generic version
+wget -O data.zip "https://www.dropbox.com/sh/mcu1hjxlr8yqxxa/AAB8s5NcHZH1Tkof4B5JXuyLa?dl=1"
+unzip data.zip -d DIRECTORY_OF_YOUR_CHOICE
+```
+
+#### CSD3 
+
+<a href="https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=0">
+  <button class="btn"><i class="fa fa-download"></i> Download</button>
+</a>
+
+Programmatically, you can do: 
+
+```bash
+# CSD3 version
+wget -O data.zip "https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=1"
+unzip data.zip -d ~/rds/hpc-work/
+```
+
+:::
