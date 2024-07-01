@@ -85,12 +85,12 @@ When you specify the *source* directory as `path/to/source_folder/` (with `/` at
 - `path/to/source_folder` will copy the actual `source_folder` as well as all the files within it
 :::
 
-:::{.callout-note}
-**TIP** 
-
+:::{.callout-tip}
 To check what files `rsync` would transfer but not actually transfer them, add the `--dry-run` option. This is useful to check that you've specified the right source and target directories and options.
 :::
 
+<!-- 
+## Exercises
 
 :::{.callout-exercise}
 
@@ -134,7 +134,8 @@ Finally, we can check how many shell scripts there are using the `find` program 
 `find` is a very useful tool to find files, check this [Find cheatsheet](https://devhints.io/find) to learn more about it.
 
 :::
-:::
+::: 
+-->
 
 
 ## Summary
