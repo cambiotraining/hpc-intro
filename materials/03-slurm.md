@@ -241,34 +241,6 @@ scancel <JOBID>
 
 And to cancel all your jobs simultaneously: `scancel -u <USERNAME>` (you will not be able to cancel other people's jobs, so don't worry about it).
 
-:::{.callout-warning}
-
-When specifying the `-o` option, if the output directory for the log file does not exist, `sbatch` will **fail without an error**. 
-
-For example, let's say that we would like to keep our job output files in a folder called "logs".
-For the example above, we might set these #SBATCH options:
-
-```bash
-#SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/
-#SBATCH -o logs/simple_job.log
-```
-
-But, unless we create the `logs/` directory _before running the job_, `sbatch` will fail without telling us why.
-
-Another thing to note is that you should not use the `~` home directory shortcut with the `-D` option. For example:
-
-```bash
-#SBATCH -D ~/rds/hpc-work/hpc_workshop/
-```
-
-Will not work, instead you should use the full path, for example:
-
-```bash
-#SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/
-```
-
-:::
-
 
 ### Exercise: Submit SLURM job
 
