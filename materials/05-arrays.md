@@ -212,11 +212,12 @@ One column contains the sample's name (which we will use for our output files) a
 With the information on this table, we should be able to automate our data processing using a SLURM job array. 
 
 1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. 
-  The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. 
-  - Fix the `#SBATCH -a` option and the `head` command further down the script, to get these values of each line from the CSV file.
-  - Fix your username in `#SBATCH -D`
-2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
-3. Check if you got the expected output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based in a standard bioinformatics format called [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)).)
+  The first few lines of the code are used to fetch parameter values from the CSV file:
+    - Fix your username in `#SBATCH -D`.
+    - Fix the `#SBATCH -a` option - this array should have as many jobs as we have samples in our CSV samplesheet.
+    - Fix the `head` command further down the script. This command intends to fetch each line from the CSV samplesheet using the `$SLURM_ARRAY_TASK_ID` variable.
+1. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
+2. Check if you got the expected output files in the `results/drosophila/mapping` folder. (Note: the output files are text-based in a standard bioinformatics format called [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)).)
 
 Study the submission script to see if you understand the code - and ask the trainers for clarifications if you are unfamiliar with some of the code we used.
 
@@ -280,8 +281,12 @@ They have prepared a CSV file in `data/turing_model_parameters.csv` with paramet
 
 Our objective is to automate running these models in parallel on the HPC.
 
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. The first few lines of the code are used to fetch parameter values from the CSV file, using the special `$SLURM_ARRAY_TASK_ID` variable. Edit the code where the word "FIXME" appears to automatically extract the values from the CSV file for each sample. 
-2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`seff JOBID`), and examine the SLURM output log files. 
+1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. 
+   The first few lines of the code are used to fetch parameter values from the CSV file:
+    - Fix your username in `#SBATCH -D`.
+    - Fix the `#SBATCH -a` option - this array should have as many jobs as we have parameter combinations in our CSV file.
+    - Fix the `head` command further down the script. This command intends to fetch each line from the CSV parameters file, using the `$SLURM_ARRAY_TASK_ID` variable.
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
 3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by loging in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program (for example: `eog results/turing/f0.03_k0.055.png`).
 
 :::{.callout-hint}
