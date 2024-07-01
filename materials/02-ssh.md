@@ -215,53 +215,6 @@ We can check with `ls` that our new file is there.
 Note that because we saved our file with `.sh` extension (the conventional extension used for shell scripts), _Nano_ does some colouring of our commands (this is called _syntax highlighting_) to make it easier to read the code. 
 
 
-### Exercise: Nano
-
-:::{.callout-exercise}
-
-Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
-
-1. Create a new script file called `check_hostname.sh`. Copy the code shown below into this script and save it.
-1. From the terminal, run the script using `bash`.
-
-```bash
-#!/bin/bash
-echo "This job is running on:"
-hostname
-```
-
-:::{.callout-answer}
-**A1.**
-
-To create a new script in _Nano_ we use the command:
-
-```bash
-nano check_hostname.sh
-```
-
-This opens the editor, where we can copy/paste our code. 
-When we are finished we can click <kbd>Ctrl</kbd>+<kbd>X</kbd> to exit the program, and it will ask if we would like to save the file. 
-We can type "Y" (Yes) followed by <kbd>Enter</kbd> to confirm the file name. 
-
-**A2.**
-
-We can run the script from the terminal using:
-
-```bash
-bash test.sh
-```
-
-Which should print the result (your hostname might vary slightly from this answer):
-
-```
-This job is running on:
-train.bio
-```
-
-:::
-:::
-
-
 ### Visual Studio Code {#sec-vscode}
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="Visual Studio Code text editor logo" style="float:right;width:20%">
@@ -313,48 +266,6 @@ If your HPC requires two-factor authentication, then you need to make sure to ha
 - Make sure the option "Always reveal the SSH login terminal" is _ticked_.
 
 With this option turned on, when you try to connect to the HPC, a terminal will open that will ask for your password and two-factor authentication code. 
-:::
-
-
-### Exercise: VS Code
-
-:::{.callout-exercise}
-
-If you haven't already done so, connect your VS Code to the HPC following the instructions detailed in @sec-vscode.
-
-1. Open the `hpc_workshop` folder on VS Code.
-2. Create a new file (File > New File) and save it as `check_hostname.sh`. Copy the code shown below into this script and save it.
-
-    ```bash
-    #!/bin/bash
-    echo "This job is running on:"
-    hostname
-    ```
-
-3. Open a terminal within VS Code ("Terminal > New Terminal") and run this script with `bash check_hostname.sh`
-
-
-:::{.callout-answer}
-**A1.**
-
-To open the folder we follow the instructions in @sec-vscode (steps 10 and 11) and use the following path:
-`/home/username/rds/hpc-work/hpc_workshop`
-(replacing "username" with your username)
-
-**A2.**
-
-To create a new script in VS Code we can go to "File > New File" or use the <kbd>Ctrl + N</kbd> shortcut.
-To save the file we can use the <kbd>Ctrl + S</kbd> shortcut. 
-
-**A3.**
-
-After opening the terminal, we can run the script using _Bash_: 
-
-```bash
-bash check_hostname.sh
-```
-
-:::
 :::
 
 
