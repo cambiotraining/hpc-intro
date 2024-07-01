@@ -467,32 +467,22 @@ The way to run a command within a singularity container is:
 singularity run PATH-TO-IMAGE YOUR COMMANDS HERE
 ```
 
-- Write a command to run the command `seqkit stats data/reads/*.fastq.gz` using the singularity image we downloaded earlier.
-- Test your command by running it on the login node. Note: this would usually be **bad practice**, we are only doing this for demonstration purposes.
-- Modify the script `slurm/seqkit_singularity.sh` and add your command to it, submitting it as a job.
-  - Where do you think the output will be saved in this case?
+- Test your singularity image by running the command `seqkit --help` within the container. 
+- Modify the script `slurm/seqkit_singularity.sh` and add the command `seqkit stats data/reads/*.fastq.gz`, running inside the image container. 
+- Submit this script as a job.
+  - Where do you think the output will be saved?
   - As an optional bonus, modify the command to output the results to a file called `results/fastq_stats.txt`. 
 
 :::{.callout-answer}
-The Singularity command is: 
+The Singularity command to test our software is: 
 
 ```bash
-singularity run images/seqkit-2.8.0.sif seqkit stats data/reads/*.fastq.gz
+singularity run images/seqkit-2.8.0.sif seqkit --help
 ```
 
-If we run this on the login node, it produces an output like this: 
+This prints the help documentation of the SeqKit software, confirming that our image is working and contains the intended software. 
 
-```
-file                             format  type  num_seqs  sum_len  min_len  avg_len  max_len
-data/reads/SRR307023_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
-data/reads/SRR307023_2.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
-data/reads/SRR307024_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
-
-... etc ...
-```
-
-For high-compute tasks, **we should not run our command directly on the login node**. 
-Instead, we can modify the SLURM submission script to include this command inside it: 
+We are ready to run our analysis, and so we modify the SLURM submission script to include our intended command inside it: 
 
 ```bash
 #!/bin/bash
@@ -514,6 +504,18 @@ We could, instead, modify our command to save the output to a file using the sta
 ```bash
 singularity run images/seqkit-2.8.0.sif seqkit stats data/reads/*.fastq.gz > results/fastq_stats.txt
 ```
+
+The output generated contains some basic statistics for our sequencing files: 
+
+```
+file                             format  type  num_seqs  sum_len  min_len  avg_len  max_len
+data/reads/SRR307023_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+data/reads/SRR307023_2.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+data/reads/SRR307024_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+
+... etc ...
+```
+
 :::
 :::
 
