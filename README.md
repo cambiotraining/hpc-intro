@@ -1,4 +1,4 @@
-# Course Name
+# Working on HPC clusters using SLURM
 
 This repository contains the materials for the course.
 

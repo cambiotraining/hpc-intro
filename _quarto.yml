@@ -52,6 +52,9 @@ book:
       - icon: twitter
         href: https://twitter.com/bioinfocambs
         aria-label: Bioinformatics Training Facility Twitter
+      - icon: mastodon
+        href: https://genomic.social/@BioInfoCambs
+        aria-label: Bioinformatics Training Facility Mastodon
     title: "Working on HPC Clusters using SLURM"
   chapters:
     - part: "Welcome"
