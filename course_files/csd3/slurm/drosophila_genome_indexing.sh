@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH -A TRAINING-CPU
-#SBATCH --reservation=training
 #SBATCH -p icelake  # name of the partition to run job on
 #SBATCH -D /home/FIX-YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
 #SBATCH -o logs/drosophila_genome_indexing.log
