@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="166.22995mm"
+   height="63.877964mm"
+   viewBox="0 0 166.22995 63.877964"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="terminal_ssh.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="126.32345"
+     inkscape:cy="168.40242"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="false"
+     inkscape:window-width="2560"
+     inkscape:window-height="1336"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="1"
+     fit-margin-left="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-2.9433217,-5.9364938)">
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#7e7e7e;stroke-width:0.59744275;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815"
+       width="160.68161"
+       height="53.357265"
+       x="5.9356885"
+       y="11.120144" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="8.5526247"
+       y="18.4568"
+       id="text819"><tspan
+         sodipodi:role="line"
+         x="8.5526247"
+         y="18.4568"
+         style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan1055"><tspan
+   style="line-height:0.64999998px;fill:#00d700;fill-opacity:1"
+   id="tspan825">local-username@personal-laptop</tspan>:<tspan
+   style="line-height:0.64999998px;fill:#0064ff;fill-opacity:1"
+   id="tspan917">~</tspan>$ ssh participant@train.bio</tspan><tspan
+         sodipodi:role="line"
+         x="8.5526247"
+         y="31.685966"
+         style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan839">participant@training.bio's  password: </tspan><tspan
+         sodipodi:role="line"
+         x="8.5526247"
+         y="44.915134"
+         style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan969">Last login: Thu May 20 12:02:22</tspan><tspan
+         sodipodi:role="line"
+         x="8.5526247"
+         y="58.144299"
+         style="font-size:4.93888903px;line-height:0.64999998px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan973"><tspan
+   style="line-height:0.64999998px;fill:#00d700;fill-opacity:1"
+   id="tspan975">hpc-username@login</tspan>:<tspan
+   style="line-height:0.64999998px;fill:#0064ff;fill-opacity:1"
+   id="tspan1031">~</tspan>$ </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="162.41652"
+       y="14.651785"
+       id="text1063"><tspan
+         sodipodi:role="line"
+         id="tspan1061"
+         x="162.41652"
+         y="14.651785"
+         style="fill:#ff0000;fill-opacity:1;stroke-width:0.26458332">1</tspan></text>
+    <text
+       id="text1067"
+       y="33.17263"
+       x="108.97049"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="fill:#ff0000;fill-opacity:1;stroke-width:0.26458332"
+         y="33.17263"
+         x="108.97049"
+         id="tspan1065"
+         sodipodi:role="line">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="3.1371694"
+       y="68.664597"
+       id="text1071"><tspan
+         sodipodi:role="line"
+         id="tspan1069"
+         x="3.1371694"
+         y="68.664597"
+         style="fill:#ff0000;fill-opacity:1;stroke-width:0.26458332">3</tspan></text>
+  </g>
+</svg>
