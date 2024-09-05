@@ -1,6 +1,8 @@
 ---
-title: "Remote Work"
+pagetitle: "HPC SLURM"
 ---
+
+# Remote Work
 
 :::{.callout-tip}
 #### Learning Objectives

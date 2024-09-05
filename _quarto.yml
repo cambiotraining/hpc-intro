@@ -33,6 +33,7 @@ book:
   search:
     location: sidebar
   favicon: "_extensions/cambiotraining/courseformat/img/university-of-cambridge-favicon.ico"
+  bread-crumbs: false
   page-navigation: true
   page-footer: 
     center: |

@@ -1,6 +1,8 @@
 ---
-title: "SLURM Scheduler"
+pagetitle: "HPC SLURM"
 ---
+
+# SLURM Scheduler
 
 :::{.callout-tip}
 #### Learning Objectives

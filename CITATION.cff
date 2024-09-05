@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+# Note: we use the author alias to record author contributions
+# This is a known limitation of CFF files: https://github.com/citation-file-format/citation-file-format/issues/112
+
+cff-version: 1.2.0
+title: Course Development Guidelines
+message: >-
+  You may cite these materials using the metadata in this
+  file. Please cite our materials if you publish materials
+  derived from these, run a workshop using them, or use
+  the information in your own work.
+type: dataset
+authors:
+  - given-names: Hugo
+    family-names: Tavares
+    affiliation: Cambridge Centre for Research Informatics Training
+    website: 'https://bioinfotraining.bio.cam.ac.uk/staff/hugo-tavares-phd'
+    orcid: 'https://orcid.org/0000-0001-9373-2726'
+    alias: 'writing - original draft; conceptualisation; software'
+  - given-names: Lajos 
+    family-names: Kalmár
+    affiliation: MRC Toxicology Unit, University of Cambridge
+    orcid: 'https://orcid.org/0000-0003-3691-8350'
+    alias: 'conceptualisation; software'
+repository-code: 'https://github.com/cambiotraining/hpc-intro-sanger'
+url: 'https://cambiotraining.github.io/hpc-intro-sanger/'
+license: CC-BY-4.0
+commit: TODO
+date-released: '2024-09-03'

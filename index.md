@@ -1,6 +1,5 @@
 ---
 title: "Working on HPC Clusters using SLURM"
-author: "Hugo Tavares, Lajos Kalmar"
 date: today
 number-sections: false
 ---
@@ -40,7 +39,6 @@ It will also benefit those who find themselves using their personal computers to
 
 We assume a solid knowledge of the Unix command line. 
 If you don't feel comfortable with the command line, please attend our accompanying [Introduction to the Unix Command Line](https://training.csx.cam.ac.uk/bioinformatics/course/bioinfo-unix2) course.
-Alternatively, if all you need is a refresher, please consult our [Command Line Cheatsheet](99-unix_cheatsheet.html). 
 
 Namely, we expect you to be familiar with the following:
 
@@ -52,59 +50,20 @@ Namely, we expect you to be familiar with the following:
 - Execute shell scripts with `bash some_script.sh`
 
 
-<!-- Training Developer note: comment the following section out if you did not assign levels to your exercises -->
-### Exercises
-
-Exercises in these materials are labelled according to their level of difficulty:
-
-| Level | Description |
-| ----: | :---------- |
-| {{< fa solid star >}} {{< fa regular star >}} {{< fa regular star >}} | Exercises in level 1 are simpler and designed to get you familiar with the concepts and syntax covered in the course. |
-| {{< fa solid star >}} {{< fa solid star >}} {{< fa regular star >}} | Exercises in level 2 combine different concepts together and apply it to a given task. |
-| {{< fa solid star >}} {{< fa solid star >}} {{< fa solid star >}} | Exercises in level 3 require going beyond the concepts and syntax introduced to solve new problems. |
-
-
 ## Authors
-<!-- 
-The listing below shows an example of how you can give more details about yourself.
-These examples include icons with links to GitHub and Orcid. 
--->
-
-About the authors:
-
-- **Hugo Tavares**
-  <a href="https://orcid.org/0000-0001-9373-2726" target="_blank"><i class="fa-brands fa-orcid" style="color:#a6ce39"></i></a> 
-  <a href="https://github.com/tavareshugo" target="_blank"><i class="fa-brands fa-github" style="color:#4078c0"></i></a>  
-  _Affiliation_: Bioinformatics Training Facility, University of Cambridge  
-  _Roles_: writing - original content; conceptualisation; coding
-- **Lajos Kalmar**
-  <a href="https://github.com/" target="_blank"><i class="fa-brands fa-github" style="color:#4078c0"></i></a>  
-  _Affiliation_: MRC Toxicology Unit, University of Cambridge  
-  _Roles_: writing - original content; conceptualisation; coding
-
-
-## Citation
 
 Please cite these materials if:
 
 - You adapted or used any of them in your own teaching.
-- These materials were useful for your research work. For example, you can cite us in the methods section of your paper: "We carried our analyses based on the recommendations in Tavares & Kalmar (2023).".
+- These materials were useful for your research work. For example, you can cite us in the methods section of your paper: "We carried our analyses based on the recommendations in _YourReferenceHere_".
 
-You can cite these materials as:
+<!-- 
+This is generated automatically from the CITATION.cff file. 
+If you think you should be added as an author, please get in touch with us.
+-->
 
-> Tavares H, Kalmar L (2023) “cambiotraining/hpc-intro: Hands-On Introduction to HPC Clusters”, https://cambiotraining.github.io/hpc-intro
+{{< citation CITATION.cff >}}
 
-Or in BibTeX format:
-
-```
-@Misc{,
-  author = {Tavares Hugo AND Kalmar, Lajos},
-  title = {cambiotraining/hpc-intro: Hands-On Introduction to HPC Clusters},
-  month = {September},
-  year = {2023},
-  url = {https://cambiotraining.github.io/hpc-intro}
-}
-```
 
 ## Acknowledgements
 

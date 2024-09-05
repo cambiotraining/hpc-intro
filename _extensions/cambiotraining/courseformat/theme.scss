@@ -93,6 +93,40 @@ div.sidebar-item-container .active {
 }
 
 
+// Callout styling //
+
+// /* General style for the callout toggle */
+// .callout-header .callout-toggle {
+//   display: inline-block;
+//   transition: transform 0.3s ease; /* Smooth animation */
+//   font-size: 1.2rem;
+//   margin-right: 8px;
+// }
+
+// /* Right-pointing triangle (initial state) */
+// .callout-header .callout-toggle::before {
+//   content: '\25B6'; /* Unicode for right-pointing triangle */
+// }
+
+// /* When the parent is not collapsed: rotate the triangle */
+// .callout-header:not(.collapsed) .callout-toggle::before {
+//   content: '\25BC'; /* Unicode for down-pointing triangle */
+// }
+
+
+// this is here due to a styling bug where a callout within a callout adds an unecessary padding at the bottom by default
+// in our case this would affect answer callout within an exercise callout
+.callout.callout-titled .callout-body > :last-child:not(.sourceCode), .callout.callout-titled .callout-body > div > :last-child:not(.sourceCode) {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+// this is here so there's some padding for a callout within a callout
+// again this mostly affects our answer callout within an exercise callout
+.callout.callout-style-default .callout-body {
+  padding-bottom: 0.5rem;
+}
+
 // Exercise callout styling
 div.callout-exercise.callout {
   border-left-color: #c6c5b9;

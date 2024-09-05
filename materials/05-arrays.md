@@ -1,6 +1,8 @@
 ---
-title: "Job Parallelisation"
+pagetitle: "HPC SLURM"
 ---
+
+# Job Paralellisation
 
 :::{.callout-tip}
 #### Learning Objectives

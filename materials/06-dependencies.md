@@ -1,6 +1,8 @@
 ---
-title: "Job Dependencies"
+pagetitle: "HPC SLURM"
 ---
+
+# Job Dependencies
 
 :::{.callout-tip}
 #### Learning Objectives

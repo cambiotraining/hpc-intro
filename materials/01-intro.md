@@ -1,6 +1,8 @@
 ---
-title: "HPC Introduction"
+pagetitle: "HPC SLURM"
 ---
+
+# HPC Introduction
 
 :::{.callout-tip}
 #### Learning Objectives

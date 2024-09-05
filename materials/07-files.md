@@ -1,6 +1,8 @@
 ---
-title: "File Transfer"
+pagetitle: "HPC SLURM"
 ---
+
+# File Transfer
 
 :::{.callout-tip}
 #### Learning Objectives
