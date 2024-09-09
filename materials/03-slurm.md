@@ -409,26 +409,29 @@ The number of CPUs used by the script can be modified using the `--ncpus` option
 For example `pi_estimator.R --nsamples 200 --ncpus 2` would use two CPUs. 
 
 1. Modify your submission script (`slurm/estimate_pi.sh`) to:
-    1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs).
+    <!-- 1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs). -->
     1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R` (and ensure you have set `--nsamples 200` as well). 
-    1. Request 10G of RAM memory for the job.
+    1. Request 3 CPUs and 9G of RAM memory for the job.
     1. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
-2. Submit the job three times, each one using 1, 2 and then 8 CPUs. Make a note of each job's ID.
+2. Submit the job again but this time requesting 8 CPUs. Make a note of each job's ID.
 3. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
 :::{.callout-answer}
 
 **A1.**
 
-We can modify our submission script in the following manner, for example for using 2 CPUs:
+We can modify our submission script in the following manner, requesting 3 CPUs and 9GB or RAM:
 
 ```bash
+
 #!/bin/bash
-#SBATCH -p traininglarge     # partiton name
-#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi_200M.log      # output file
-#SBATCH --mem=10G
-#SBATCH -c 2                          # number of CPUs
+#SBATCH -A TRAINING-CPU
+#SBATCH -p icelake  # name of the partition to run job on
+#SBATCH -D /home/FIX-YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
+#SBATCH -o logs/estimate_pi_200M_3CPU.log  # standard output file
+#SBATCH -c 3        # number of CPUs. Default: 1
+#SBATCH --mem=9G    # RAM memory. Default: 1G
+#SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
 Rscript scripts/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
@@ -440,12 +443,10 @@ After running each job we can use `seff JOBID` command to obtain information abo
 
 Alternatively, since we want to compare several jobs, we could also have used `sacct` like this:
 
-`sacct -o JobID,elapsed -j JOBID1,JOBID2,JOBID3`
+`sacct -o JobID,elapsed -j JOBID1,JOBID2`
 
-In this case, it does seem that increasing the number of CPUs shortens the time the job takes to run. However, the increase is not linear at all. 
-For example going from 1 to 2 CPUs seems to make the job run faster, however increasing to 8 CPUs makes little difference compared to 2 CPUs (this may depend on how many `--nsamples` you used). 
-This is possibly because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
-
+In this case, it doesn't seem that increasing the number of CPUs from 3 to 8 shortens the time the job takes to run. 
+It is often the case that the time to run a parallelised tasks doesn't scale linearly, which is likely because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing). 
 :::
 :::
 
@@ -461,7 +462,7 @@ This command takes options similar to the `sbatch` program, so you can request r
 For example, to access to 8 CPUs and 10GB of RAM for 1h on one of the compute nodes we would do:
 
 ```bash
-sintr -c 8 --mem=10G -p traininglarge -t 01:00:00
+sintr -c 8 --mem=10G -p icelake -t 01:00:00
 ```
 
 You may get a message saying that SLURM is waiting to allocate your request (you go in the queue, just like any other job!).
