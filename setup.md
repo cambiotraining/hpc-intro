@@ -198,7 +198,7 @@ Programmatically, you can do:
 ```bash
 # CSD3 version
 wget -O data.zip "https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=1"
-unzip data.zip -d ~/rds/hpc-work/
+unzip data.zip -d ~/rds/hpc-work/hpc_workshop
 ```
 
 :::
