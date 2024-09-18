@@ -5,7 +5,7 @@
 # This is a known limitation of CFF files: https://github.com/citation-file-format/citation-file-format/issues/112
 
 cff-version: 1.2.0
-title: Course Development Guidelines
+title: Working on HPC Clusters using SLURM
 message: >-
   You may cite these materials using the metadata in this
   file. Please cite our materials if you publish materials
@@ -24,8 +24,8 @@ authors:
     affiliation: MRC Toxicology Unit, University of Cambridge
     orcid: 'https://orcid.org/0000-0003-3691-8350'
     alias: 'conceptualisation; software'
-repository-code: 'https://github.com/cambiotraining/hpc-intro-sanger'
-url: 'https://cambiotraining.github.io/hpc-intro-sanger/'
+repository-code: 'https://github.com/cambiotraining/hpc-intro'
+url: 'https://cambiotraining.github.io/hpc-intro'
 license: CC-BY-4.0
 commit: TODO
-date-released: '2024-09-03'
+date-released: '2024-09-18'
