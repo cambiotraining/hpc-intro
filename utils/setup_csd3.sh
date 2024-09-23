@@ -5,6 +5,9 @@
 # backup bashrc
 cp ~/.bashrc ~/.bashrc_bkp
 
+# download data
+wget -O ~/rds/rds-introhpc/data.zip "https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=1"
+
 # unzip data to hpc-work
 unzip ~/rds/rds-introhpc/data.zip -d ~/rds/hpc-work/hpc_workshop
 
