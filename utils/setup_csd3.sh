@@ -5,8 +5,15 @@
 # backup bashrc
 cp ~/.bashrc ~/.bashrc_bkp
 
-# download data
-wget -O ~/rds/rds-introhpc/data.zip "https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=1"
+# download Miniforge if it doesn't already exist
+if [ ! -f ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh ]; then
+    wget -O ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+fi
+
+# download data.zip if it doesn't already exist
+if [ ! -f ~/rds/rds-introhpc/data.zip ]; then
+    wget -O ~/rds/rds-introhpc/data.zip "https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=1"
+fi
 
 # unzip data to hpc-work
 unzip ~/rds/rds-introhpc/data.zip -d ~/rds/hpc-work/hpc_workshop
