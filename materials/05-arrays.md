@@ -289,7 +289,7 @@ Our objective is to automate running these models in parallel on the HPC.
     - Fix the `#SBATCH -a` option - this array should have as many jobs as we have parameter combinations in our CSV file.
     - Fix the `head` command further down the script. This command intends to fetch each line from the CSV parameters file, using the `$SLURM_ARRAY_TASK_ID` variable.
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by loging in to the HPC using `ssh -Y username@train.bio` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program (for example: `eog results/turing/f0.03_k0.055.png`).
+3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by loging in to the HPC using `ssh -Y username@login.hpc.cam.ac.uk` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program (for example: `eog results/turing/f0.03_k0.055.png`).
 
 :::{.callout-hint}
 The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.

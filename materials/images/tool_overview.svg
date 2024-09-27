@@ -235,7 +235,7 @@
          x="155.05191"
          sodipodi:role="line"
          id="tspan3769"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.33333302px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#606060;fill-opacity:1">$ ssh participant@train.bio</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.33333302px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#606060;fill-opacity:1">$ ssh participant@login.hpc.cam.ac.uk</tspan></text>
     <text
        id="text4259"
        y="354.1701"

@@ -106,7 +106,7 @@ After registering for a HPC account, you were sent the following information by 
 > 
 > - Username: emailed separately
 > - Password: emailed separately
-> - Host: `train.bio`
+> - Host: `login.hpc.cam.ac.uk`
 > 
 > You were automatically allocated 40GB in `/home/USERNAME/` (backed storage) and 1TB in `/home/USERNAME/rds/hpc-work` (non-backed high-performance "scratch" space for computations). 
 
@@ -122,10 +122,10 @@ Can you identify and navigate to your high-performance compute directory?
 To login to the HPC we run the following from the terminal:
 
 ```bash
-ssh USERNAME@train.bio
+ssh USERNAME@HOSTNAME
 ```
 
-Replacing "USERNAME" by your HPC username. 
+Replacing "USERNAME" by your HPC username and "HOSTNAME" with the name of the server you are accessing. 
 After typing it, you will be prompted for your password. 
 Note that as you type the password nothing shows on the screen - that's normal! 
 The password is still being input. 

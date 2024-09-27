@@ -31,7 +31,7 @@ This program has a graphical interface, for those that prefer it and its use is 
 To connect to the remote server (see Figure 3): 
 
 1. Fill in the following information on the top panel:
-  - Host: train.bio
+  - Host: login.hpc.cam.ac.uk
   - Username: your HPC username
   - Password: your HPC password
   - Port: 22
@@ -51,10 +51,10 @@ The syntax is as follows:
 
 ```bash
 # copy files from the local computer to the HPC
-scp -r path/to/source_folder <user>@train.bio:path/to/target_folder
+scp -r path/to/source_folder <user>@login.hpc.cam.ac.uk:path/to/target_folder
 
 # copy files from the HPC to a local directory
-scp -r <user>@train.bio:path/to/source_folder path/to/target_folder
+scp -r <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder
 ```
 
 The option `-r` ensures that all sub-directories are copied (instead of just files, which is the default).
@@ -69,10 +69,10 @@ The most common usage is:
 
 ```bash
 # copy files from the local computer to the HPC
-rsync -auvh --progress path/to/source_folder <user>@train.bio:path/to/target_folder
+rsync -auvh --progress path/to/source_folder <user>@login.hpc.cam.ac.uk:path/to/target_folder
 
 # copy files from the HPC to a local directory
-rsync -auvh --progress <user>@train.bio:path/to/source_folder path/to/target_folder
+rsync -auvh --progress <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder
 ```
 
 - the options `-au` ensure that only files that have changed _and_ are newer on the source folder are transferred
@@ -112,10 +112,10 @@ Notice that these commands are **run from your local terminal**:
 
 ```bash
 # with scp
-scp -r ~/Desktop/hpc_workshop_files.zip username@train.bio:rds/hpc-work/hpc_workshop/
+scp -r ~/Desktop/hpc_workshop_files.zip username@login.hpc.cam.ac.uk:rds/hpc-work/hpc_workshop/
 
 # with rsync
-rsync -avhu ~/Desktop/hpc_workshop_files.zip username@train.bio:rds/hpc-work/hpc_workshop/
+rsync -avhu ~/Desktop/hpc_workshop_files.zip username@login.hpc.cam.ac.uk:rds/hpc-work/hpc_workshop/
 ```
 
 Once we finish transfering the files we can go ahead and decompress the data folder. 
