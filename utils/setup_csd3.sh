@@ -9,7 +9,7 @@ cp ~/.bashrc ~/.bashrc_bkp
 unzip ~/rds/rds-introhpc/data.zip -d ~/rds/hpc-work/hpc_workshop
 
 # install mamba
-wget -O ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+# wget -O ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 bash ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/miniforge3
 $HOME/miniforge3/bin/mamba init
 source ~/.bashrc
