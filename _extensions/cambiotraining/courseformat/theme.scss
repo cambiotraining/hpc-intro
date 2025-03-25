@@ -63,6 +63,11 @@ div.sidebar-item-container .active {
   font-size: 1rem;
 }
 
+// navigation bar when zoomed-in or mobile
+.quarto-secondary-nav .quarto-btn-toggle {
+  color: white;
+}
+
 // figure display
 .figure {
   text-align: center;

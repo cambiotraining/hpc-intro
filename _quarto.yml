@@ -14,6 +14,9 @@ project:
     - "!materials/*/no_render"
 
 format: courseformat-html
+exercises:
+  number: true
+  hide-answers: false
 
 filters:
   - courseformat
@@ -39,7 +42,7 @@ book:
     center: |
       Licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 
       ![](https://creativecommons.org/images/deed/cc_icon_black_x2.png){width=25px} 
-      Bioinformatics Training Facility
+      Cambridge Research Informatics Training
   navbar:
     pinned: true
     logo: "_extensions/cambiotraining/courseformat/img/university_crest_reversed.png"
@@ -47,15 +50,14 @@ book:
       - text: Slides
         href: https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing
     right:
-      - icon: github
-        href: https://github.com/cambiotraining/hpc-intro
-        aria-label: Bioinformatics Training Facility GitHub
-      - icon: twitter
-        href: https://twitter.com/bioinfocambs
-        aria-label: Bioinformatics Training Facility Twitter
-      - icon: mastodon
+      - text: "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}"
+        href: https://github.com/cambiotraining/
+      - text: "{{< iconify fa6-brands bluesky size=lg title='CRIT Bluesky' >}}"
+        href: https://bsky.app/profile/bioinfocambs.bsky.social
+      - text: "{{< iconify fa6-brands mastodon size=lg title='CCRIT Mastodon' >}}"
         href: https://genomic.social/@BioInfoCambs
-        aria-label: Bioinformatics Training Facility Mastodon
+      - text: "{{< iconify mdi web size=lg title='CCRIT Website' >}}"
+        href: https://bioinfotraining.bio.cam.ac.uk/
     title: "Working on HPC Clusters using SLURM"
   chapters:
     - part: "Welcome"
