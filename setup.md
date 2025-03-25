@@ -1,5 +1,6 @@
 ---
 title: "Data & Setup"
+pagetitle: "HPC SLURM"
 number-sections: false
 ---
 

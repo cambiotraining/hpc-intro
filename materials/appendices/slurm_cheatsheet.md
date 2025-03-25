@@ -1,5 +1,5 @@
 ---
-pagetitle: "HPC Course"
+pagetitle: "HPC SLURM"
 ---
 
 # SLURM Quick Reference Guide {.unnumbered}

@@ -1,5 +1,5 @@
 ---
-pagetitle: "HPC Course: Cambridge"
+pagetitle: "HPC SLURM"
 ---
 
 :::note
