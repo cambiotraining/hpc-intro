@@ -1,5 +1,6 @@
 ---
 title: "Working on HPC Clusters using SLURM"
+pagetitle: "HPC SLURM"
 date: today
 number-sections: false
 ---
