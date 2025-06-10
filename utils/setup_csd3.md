@@ -7,7 +7,7 @@
     wget -O ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 
     # data
-    wget -O ~/rds/rds-introhpc/data.zip "https://www.dropbox.com/scl/fo/x1ery8kni952gz450jt3z/ADbTA_FLJxPejtY30QLf1G4?rlkey=dq2sah0gknmdfx9dp1nvdzd51&dl=1"
+    wget -O ~/rds/rds-introhpc/data.zip "https://www.dropbox.com/scl/fo/c87w8w50fvw0vqrf4daiw/AGLNUyI6H7_kS2zdBwPSais?rlkey=j1dfqqb39sfnxffmnu953r19z&st=6y656zxd&dl=1"
 
     # setup script
     wget -O ~/rds/rds-introhpc/setup_csd3.sh "https://raw.githubusercontent.com/cambiotraining/hpc-intro/refs/heads/main/utils/setup_csd3.sh"
