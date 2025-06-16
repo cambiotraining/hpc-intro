@@ -117,7 +117,6 @@ These indicate the number of the array that is currently running as part of that
 In this case, we will get 10 output log files, each with the job array number at the end of the filename (we used the `%a` keyword in the `#SBATCH -o` option to achieve this). 
 
 The 10 separate estimates of Pi were written to separate text files named `results/pi_estimate_1.txt`, `results/pi_estimate_2.txt`, etc. 
-If we examine this file (e.g. with `less results/pi_estimate.txt`) we can see it has the results of all the runs of our simulation. 
 
 **A3.**
 
@@ -125,7 +124,9 @@ To combine the results of these 10 replicate runs of our Pi estimate, we could u
 
 `cat results/pi/replicate_*.txt > results/pi/combined_estimates.txt`
 
-This operation is not computationally demanding at all, so it makes sense to run it from the login node.
+If we examine this file (e.g. with `less results/combined_estimates.txt`) we can see it has the results of all the runs of our simulation. 
+
+This `cat` operation is not computationally demanding at all, so it makes sense to run it from the login node.
 In fact, submitting it to the scheduler would not be an efficient use of it.
 :::
 :::
