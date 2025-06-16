@@ -248,7 +248,11 @@ And to cancel all your jobs simultaneously: `scancel -u <USERNAME>` (you will no
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+Before starting this exercise:
+
+- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
+  - Your prompt should now start with the prefix `(base)`
 
 In the "scripts" directory, you will find an R script called `pi_estimator.R`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
@@ -268,8 +272,8 @@ Instead, we use a shell script to submit this to the job scheduler.
 
 1. Edit the shell script in `slurm/estimate_pi.sh` by correcting your username in the working directory path (under `#SBATCH -D`). 
   Submit the job to SLURM and check its status in the queue.
-2. Did your job run successfully, and how long did it take to run?
-3. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
+1. Did your job run successfully, and how long did it take to run?
+2. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
     - Adjust your SLURM submission script to use 50 million samples (`Rscript scripts/pi_estimator.R --nsamples 50`), and save the job output in `logs/estimate_pi_50M.log`.
     - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues? How would you fix it?
 
@@ -401,8 +405,11 @@ Here is a table summarising some of the most useful environment variables that S
 ### Exercise: SLURM environment variables
 
 :::{.callout-exercise}
+Before starting this exercise:
 
-Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
+  - Your prompt should now start with the prefix `(base)`
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
