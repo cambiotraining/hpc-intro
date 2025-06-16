@@ -51,7 +51,7 @@ book:
         href: https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing
     right:
       - text: "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}"
-        href: https://github.com/cambiotraining/
+        href: https://github.com/cambiotraining/hpc-intro
       - text: "{{< iconify fa6-brands bluesky size=lg title='CRIT Bluesky' >}}"
         href: https://bsky.app/profile/bioinfocambs.bsky.social
       - text: "{{< iconify fa6-brands mastodon size=lg title='CCRIT Mastodon' >}}"
