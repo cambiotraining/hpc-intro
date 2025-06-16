@@ -13,7 +13,7 @@ unzip ~/rds/rds-introhpc/data.zip -d ~/rds/hpc-work/hpc_workshop
 bash ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/miniforge3
 $HOME/miniforge3/bin/mamba shell init --shell bash
 source ~/.bashrc
-conda config --add channels defaults; conda config --add channels bioconda; conda config --add channels conda-forge
+conda config --add channels bioconda; conda config --add channels conda-forge
 conda config --set remote_read_timeout_secs 1000
 
 # set R up
