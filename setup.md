@@ -176,7 +176,7 @@ Note the two versions below are very similar, some SLURM options are different d
 :::{.panel-tabset}
 #### Generic
 
-<a href="https://www.dropbox.com/scl/fo/5s692xhuoux7yc7r6r2pt/AKuJpv5dfP3-mdNiD_mxfvk?rlkey=ui0tjjhlwyx2gns2auugw1qlj&st=mciy8tgp&dl=1">
+<a href="https://www.dropbox.com/scl/fo/5s692xhuoux7yc7r6r2pt/AKuJpv5dfP3-mdNiD_mxfvk?rlkey=ui0tjjhlwyx2gns2auugw1qlj&st=y6a2m392&dl=1">
   <button class="btn"><i class="fa fa-download"></i> Download</button>
 </a>
 
@@ -184,13 +184,13 @@ Programmatically, you can do:
 
 ```bash
 # generic version
-wget -O data.zip "https://www.dropbox.com/scl/fo/5s692xhuoux7yc7r6r2pt/AKuJpv5dfP3-mdNiD_mxfvk?rlkey=ui0tjjhlwyx2gns2auugw1qlj&st=mciy8tgp&dl=1"
+wget -O data.zip "https://www.dropbox.com/scl/fo/5s692xhuoux7yc7r6r2pt/AKuJpv5dfP3-mdNiD_mxfvk?rlkey=ui0tjjhlwyx2gns2auugw1qlj&st=y6a2m392&dl=1"
 unzip data.zip -d DIRECTORY_OF_YOUR_CHOICE
 ```
 
 #### CSD3 
 
-<a href="https://www.dropbox.com/scl/fo/c87w8w50fvw0vqrf4daiw/AGLNUyI6H7_kS2zdBwPSais?rlkey=j1dfqqb39sfnxffmnu953r19z&st=6y656zxd&dl=1">
+<a href="https://www.dropbox.com/scl/fo/c87w8w50fvw0vqrf4daiw/AGLNUyI6H7_kS2zdBwPSais?rlkey=j1dfqqb39sfnxffmnu953r19z&st=93ya9s80&dl=1">
   <button class="btn"><i class="fa fa-download"></i> Download</button>
 </a>
 
@@ -198,7 +198,7 @@ Programmatically, you can do:
 
 ```bash
 # CSD3 version
-wget -O data.zip "https://www.dropbox.com/scl/fo/c87w8w50fvw0vqrf4daiw/AGLNUyI6H7_kS2zdBwPSais?rlkey=j1dfqqb39sfnxffmnu953r19z&st=6y656zxd&dl=1"
+wget -O data.zip "https://www.dropbox.com/scl/fo/c87w8w50fvw0vqrf4daiw/AGLNUyI6H7_kS2zdBwPSais?rlkey=j1dfqqb39sfnxffmnu953r19z&st=93ya9s80&dl=1"
 unzip data.zip -d ~/rds/hpc-work/hpc_workshop
 ```
 
