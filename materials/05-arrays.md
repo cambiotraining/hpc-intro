@@ -104,7 +104,7 @@ Note that the output of `pi_estimator.R` is now being sent to individual text fi
 
 **A1.**
 
-In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this script to `sbatch`, it will run 100 iterations of it in parallel. 
+In our script, we need to add `#SBATCH -a 1-10` as one of our options, so that when we submit this script to `sbatch`, it will run 10 iterations of it in parallel. 
 
 Also, remember to edit SLURM's working directory with your username, at the top of the script in the `#SBATCH -D` option. 
 

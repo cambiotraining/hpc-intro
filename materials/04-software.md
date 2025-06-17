@@ -398,7 +398,7 @@ By using containers, researchers can ensure that their code runs consistently ac
 
 We will focus on one of the most popular container platforms for cluster systems: _Singularity_. 
 [Singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html) is a free and open-source computer program that performs operating-system-level virtualization also known as containerization. 
-Singularity is also designed to create and manage isolated environments as [Docker](https://www.docker.com/), which is another popular and wildly used container platform (i.e. images created with docker can be compatible with Singularity and _vice versa_)*.
+Singularity is also designed to create and manage isolated environments as [Docker](https://www.docker.com/), which is another popular and widely used container platform (i.e. images created with docker can be compatible with Singularity and _vice versa_)*.
 
 :::{.callout-note collapse=true}
 #### Docker vs singularity

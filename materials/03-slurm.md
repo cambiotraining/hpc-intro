@@ -120,7 +120,7 @@ echo "This job is running on:"
 hostname
 ```
 
-If we now re-run the script using `sbatch test_job.sh`, the output goes to a file named `simple_job.log`. 
+If we now re-run the script using `sbatch simple_job.sh`, the output goes to a file named `simple_job.log`. 
 
 There are several other options we can specify when using SLURM, and we will encounter several more of them as we progress through the materials.
 Here are some of the most common ones (anything in `<>` is user input):
@@ -141,12 +141,12 @@ Here are some of the most common ones (anything in `<>` is user input):
 #### Default Resources
 
 If you don't specify any options when submitting your jobs, you will get the default configured by the HPC admins.
-For example, in our training HPC, the defaults you will get are:
+For example, in our Cambridge HPC, the defaults you will get are:
 
-- 1 minute of running time (equivalent to `-t 00:01:00`)
-- _training_ partition (equivalent to `-p training`)
+- 10 minutes of running time (equivalent to `-t 00:10:00`)
+- _cclake_ partition (equivalent to `-p cclake`)
 - 1 CPU (equivalent to `-c 1`)
-- 1GB RAM (equivalent to `--mem=1024M`)
+- ~3.4 GiB RAM (equivalent to `--mem=3.4G`)
 :::
 
 
@@ -158,10 +158,10 @@ Usually, which partitions are available on your HPC should be provided by the ad
 
 It's worth keeping in mind that partitions have separate queues, and you should always try to choose the partition that is most suited to your job. 
 
-For example, on our training HPC we have to partitions with the following characteristics:
+For example, on the Cambridge HPC we have several partitions, here are two examples:
 
-- `training` partition (default)
-  - Maximum 2 CPUs (default: 1)
+- `cclake` partition (default)
+  - Maximum 56 CPUs (default: 1)
   - Maximum 3928 MB RAM (default: 1024)
 - `traininglarge` partition
   - Maximum 8 CPUs (default: 1)
