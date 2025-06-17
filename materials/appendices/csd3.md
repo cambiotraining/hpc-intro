@@ -88,7 +88,7 @@ Here are the instructions to do this:
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 bash Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/rds/hpc-work/miniforge3
 rm Miniforge3-$(uname)-$(uname -m).sh
-$HOME/rds/hpc-work/miniforge3/bin/mamba init
+$HOME/rds/hpc-work/miniforge3/bin/mamba shell init --shell bash
 ``` 
 -->
 
