@@ -192,9 +192,9 @@ To search for the software packages that are available through `mamba`:
 
 - go to [anaconda.org](https://anaconda.org).
 - in the search box search for a program of your choice. For example: "bowtie2".
-- the results should be listed as `CHANNEL/PROGRAM`, where *CHANNEL* will the the source channel/repository from where the software is available. Usually scientific/bioinformatics software is available through the `conda-forge` and `bioconda` channels.
+- the results should be listed as `CHANNEL/PROGRAM`, where *CHANNEL* will the the source repository from where the software is available. Usually scientific/bioinformatics software is available through the `conda-forge` and `bioconda` channels.
 
-If you need to install a program from a different channel than the defaults, you can specify it during the install command using the `-c` option. 
+You can specify the channel explicitly during the install command using the `-c` option. 
 For example `mamba install --channel CHANNEL --name ENV PROGRAM`.
 
 Let's see this with an example, where we create a new environment called "datasci" and install some python packages for data science work:
