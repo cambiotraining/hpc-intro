@@ -469,7 +469,7 @@ This command takes options similar to the `sbatch` program, so you can request r
 For example, to access to 8 CPUs and 10GB of RAM for 1h on one of the compute nodes we would do:
 
 ```bash
-sintr -c 8 --mem=10G -p icelake -t 01:00:00
+sintr -c 8 --mem=10G -p icelake -t 01:00:00 -A TRAINING-CPU
 ```
 
 You may get a message saying that SLURM is waiting to allocate your request (you go in the queue, just like any other job!).
