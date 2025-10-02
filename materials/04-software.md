@@ -26,7 +26,7 @@ The following table summarises the most common commands for this tool:
 | Command | Description |
 | -: | :- |
 | `module avail ` | List all available packages. |
-| `module avail -a -i "pattern"` <br> or <br> `module avail 2>&1 | grep -i "pattern"` | Search the available package list that matches "pattern". Note the second option is given as some versions of `module` do not support case-insensitive search (`-i` option). |
+| `module avail -a -i "pattern"` <br> or <br> `module avail | grep -i "pattern"` | Search the available package list that matches "pattern". Note the second option is given as some versions of `module` do not support case-insensitive search (`-i` option). |
 | `module load <program>` | Load the program and make it available for use. |
 | `module unload <program>` | Unload the program (removes it from your PATH). |
 
