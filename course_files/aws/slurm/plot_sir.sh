@@ -11,4 +11,4 @@ module load pandas
 module load matplotlib
 
 # run sir_plotter script
-python scripts/sir_plotter.py   --out results/sir/simulation_plot.png   results/sir/*.csv
+python analysis_scripts/sir_plotter.py   --out results/sir/simulation_plot.png   results/sir/*.csv

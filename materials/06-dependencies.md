@@ -182,8 +182,8 @@ In this exercise we'll use a new script that runs a stochastic simulation of the
 
 We have two scripts: 
 
-1. `scripts/epi_simulator.py` runs a stochastic simulation of the SIR model (note: our model implementation should not be used for research!). This script outputs a CSV file with 4 columns: day, # infected, # susceptible, # recovered. 
-2. `scripts/epi_plotter.py` takes as input an arbitrary number of CSV files from the previous script and produces a plot, as shown below. 
+1. `analysis_scripts/epi_simulator.py` runs a stochastic simulation of the SIR model (note: our model implementation should not be used for research!). This script outputs a CSV file with 4 columns: day, # infected, # susceptible, # recovered. 
+2. `analysis_scripts/epi_plotter.py` takes as input an arbitrary number of CSV files from the previous script and produces a plot, as shown below. 
 
 
 Because the simulations are stochastic, we want to run a set of 10 simulations and then make a plot with the output from all of them, to get a sense of the variation across simulation replicates.
@@ -237,7 +237,7 @@ Here is the full script:
 #SBATCH -J sir_simulations
 #SBATCH --dependency=singleton
 
-python scripts/sir_plotter.py --out results/sir/simulation_plot.png results/sir/*.csv
+python analysis_scripts/sir_plotter.py --out results/sir/simulation_plot.png results/sir/*.csv
 ```
 
 The two key SBATCH options are `-J sir_simulations` (which would match the job name with the one from the previous script) and `--dependency=singleton` (which will only run the job once all other jobs with that same name complete).

@@ -7,4 +7,4 @@
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
 
-Rscript scripts/pi_estimator.R
+Rscript analysis_scripts/pi_estimator.R

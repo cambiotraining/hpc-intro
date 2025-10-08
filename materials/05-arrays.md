@@ -274,7 +274,7 @@ The student has a python script that runs this model taking some input parameter
 The two main parameters in the model are called "feed" and "kill", and their python script accepts these as options, for example:
 
 ```bash 
-python scripts/turing_pattern.py --feed 0.04 --kill 0.06 --outdir results/turing/
+python analysis_scripts/turing_pattern.py --feed 0.04 --kill 0.06 --outdir results/turing/
 ```
 
 This would produce an image saved as `results/turing/f0.04_k0.06.png`.

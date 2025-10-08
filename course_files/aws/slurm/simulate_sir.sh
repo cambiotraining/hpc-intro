@@ -18,7 +18,7 @@ echo "Starting array: $SLURM_ARRAY_TASK_ID"
 mkdir -p results/sir
 
 # run sir_simulator script
-python scripts/sir_simulator.py   --out results/sir/replicate_${SLURM_ARRAY_TASK_ID}.csv
+python analysis_scripts/sir_simulator.py   --out results/sir/replicate_${SLURM_ARRAY_TASK_ID}.csv
 
 # print message
 echo "Finished array: $SLURM_ARRAY_TASK_ID"
