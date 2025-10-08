@@ -126,7 +126,7 @@ Here is a simple skeleton for your submission script:
 #!/bin/bash
 #SBATCH -A GROUPNAME-SL3-CPU   # account name (check with `mybalance`)
 #SBATCH -D /rds/xyz123/hpc-work/simulations  # your working directory
-#SBATCH -o logs/simulation.log # standard output and standard error will be saved in this file
+#SBATCH -o job_logs/simulation.log # standard output and standard error will be saved in this file
 #SBATCH -p icelake             # or `icelake-himem` or `cclake` or `cclake-himem`
 #SBATCH -c 2                   # number of CPUs
 #SBATCH -t 01:00:00            # maximum 12:00:00 for SL3 or 36:00:00 for SL2
