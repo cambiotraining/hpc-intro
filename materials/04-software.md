@@ -299,7 +299,7 @@ We have a file with the _Drosophila_ genome in `data/genome/drosophila_genome.fa
 2. Install the `bowtie2=2.5.3` program in your new environment.
 3. Activate the new environment.
 4. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`. 
-5. Open the script in `slurm/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
+5. Open the script in `job_scripts/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME". Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully. Troubleshoot any issues that may arise.
 
 :::{.callout-hint}
 - The syntax to create a new environment is: `mamba create --name ENV`
@@ -364,7 +364,7 @@ Remember that even though we may have loaded the environment on the login node, 
 We can then launch it with sbatch:
 
 ```bash
-sbatch slurm/drosophila_genome_indexing.sh
+sbatch job_scripts/drosophila_genome_indexing.sh
 ```
 
 We can check the job status by using `squeue -u USERNAME`. 
@@ -470,7 +470,7 @@ singularity run PATH-TO-IMAGE YOUR COMMANDS HERE
 ```
 
 - Test your singularity image by running the command `seqkit --help` within the container. 
-- Modify the script `slurm/seqkit_singularity.sh` and add the command `seqkit stats data/reads/*.fastq.gz`, running inside the image container. 
+- Modify the script `job_scripts/seqkit_singularity.sh` and add the command `seqkit stats data/reads/*.fastq.gz`, running inside the image container. 
 - Submit this script as a job.
   - Where do you think the output will be saved?
   - As an optional bonus, modify the command to output the results to a file called `results/fastq_stats.txt`. 
@@ -490,7 +490,7 @@ We are ready to run our analysis, and so we modify the SLURM submission script t
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
 #SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
-#SBATCH -o logs/seqkit.log  # standard output file
+#SBATCH -o job_logs/seqkit.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min

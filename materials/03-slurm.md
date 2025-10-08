@@ -52,7 +52,7 @@ hostname
 We can run this script from the login node using the `bash` interpreter (make sure you are in the correct directory first: `cd ~/rds/hpc-work/hpc_workshop/`): 
 
 ```bash
-bash slurm/simple_job.sh
+bash job_scripts/simple_job.sh
 ```
 
 Which prints the output:
@@ -65,7 +65,7 @@ login-node
 To submit the job to the scheduler we instead use the `sbatch` command in a very similar way:
 
 ```bash
-sbatch slurm/simple_job.sh
+sbatch job_scripts/simple_job.sh
 ```
 
 In this case, we are informed that the job is submitted to the SLURM queue. 
@@ -113,7 +113,7 @@ Here is how we could modify our script (you can do it using _Nano_ or _VS Code_)
 
 ```bash
 #!/bin/bash
-#SBATCH -o logs/simple_job.log
+#SBATCH -o job_logs/simple_job.log
 
 sleep 8 # hold for 8 seconds
 echo "This job is running on:"
@@ -266,11 +266,11 @@ If you are interested in the details, here is a short description of what the sc
 If you were running this script interactively (i.e. directly from the console), you would use the R script interpreter: `Rscript analysis_scripts/pi_estimator.R`.
 Instead, we use a shell script to submit this to the job scheduler. 
 
-1. Edit the shell script in `slurm/estimate_pi.sh` by correcting your username in the working directory path (under `#SBATCH -D`). 
+1. Edit the shell script in `job_scripts/estimate_pi.sh` by correcting your username in the working directory path (under `#SBATCH -D`). 
   Submit the job to SLURM and check its status in the queue.
 1. Did your job run successfully, and how long did it take to run?
 2. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
-    - Adjust your SLURM submission script to use 50 million samples (`Rscript analysis_scripts/pi_estimator.R --nsamples 50`), and save the job output in `logs/estimate_pi_50M.log`.
+    - Adjust your SLURM submission script to use 50 million samples (`Rscript analysis_scripts/pi_estimator.R --nsamples 50`), and save the job output in `job_logs/estimate_pi_50M.log`.
     - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues? How would you fix it?
 
 :::{.callout-hint}
@@ -284,7 +284,7 @@ Instead, we use a shell script to submit this to the job scheduler.
 In the shell script we needed to correct the path specified in the `#SBATCH -D` option, which defines the working directory that SLURM will run our code from. 
 We needed to replace "FIX-YOUR-USERNAME" with our actual username. 
 
-We could then submit the script using `sbatch slurm/estimate_pi.sh`. 
+We could then submit the script using `sbatch job_scripts/estimate_pi.sh`. 
 And check the status of the job with `squeue -u USERNAME` (using our respective username). 
 
 Because the job runs very fast, we may not have time to see it in the queue at all.
@@ -316,7 +316,7 @@ The modified script should look similar to this:
 #!/bin/bash
 #SBATCH -p training 
 #SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi_50M.log  # standard output file
+#SBATCH -o job_logs/estimate_pi_50M.log  # standard output file
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS.
 
@@ -324,7 +324,7 @@ The modified script should look similar to this:
 Rscript analysis_scripts/pi_estimator.R --nsamples 50
 ```
 
-However, when we run this job, examining the output file (`cat logs/estimate_pi_50M.log`) will reveal an error indicating that our job was killed. 
+However, when we run this job, examining the output file (`cat job_logs/estimate_pi_50M.log`) will reveal an error indicating that our job was killed. 
 
 ```
 /var/spool/slurmd/job02038/slurm_script: line 9:  6682 Killed                  Rscript analysis_scripts/pi_estimator.R --nsamples 50
@@ -407,7 +407,7 @@ The R script used in the previous exercise supports parallelisation of some of i
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
 For example `pi_estimator.R --nsamples 200 --ncpus 2` would use two CPUs. 
 
-1. Modify your submission script (`slurm/estimate_pi.sh`) to:
+1. Modify your submission script (`job_scripts/estimate_pi.sh`) to:
     <!-- 1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs). -->
     1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R` (and ensure you have set `--nsamples 200` as well). 
     1. Request 3 CPUs and 9G of RAM memory for the job.
@@ -427,7 +427,7 @@ We can modify our submission script in the following manner, requesting 3 CPUs a
 #SBATCH -A TRAINING-CPU
 #SBATCH -p icelake  # name of the partition to run job on
 #SBATCH -D /home/FIX-YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
-#SBATCH -o logs/estimate_pi_200M_3CPU.log  # standard output file
+#SBATCH -o job_logs/estimate_pi_200M_3CPU.log  # standard output file
 #SBATCH -c 3        # number of CPUs. Default: 1
 #SBATCH --mem=9G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
@@ -436,7 +436,7 @@ We can modify our submission script in the following manner, requesting 3 CPUs a
 Rscript analysis_scripts/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
-To run the job each time, we modify the `#SBATCH -c` option, save the file and then re-submit it with `sbatch slurm/estimate_pi.sh`. 
+To run the job each time, we modify the `#SBATCH -c` option, save the file and then re-submit it with `sbatch job_scripts/estimate_pi.sh`. 
 
 After running each job we can use `seff JOBID` command to obtain information about how long it took to run.
 

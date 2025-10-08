@@ -37,7 +37,7 @@ Use this as a general template for your scripts:
 #SBATCH -A TRAINING-SL3-CPU        # account name
 #SBATCH -J my_simulation           # a job name for convenience
 #SBATCH -D /home/xyz123/rds/hpc-work/simulations  # your working directory
-#SBATCH -o logs/simulation.log     # standard output and standard error will be saved in this file
+#SBATCH -o job_logs/simulation.log     # standard output and standard error will be saved in this file
 #SBATCH -p skylake                 # partition
 #SBATCH -c 2                       # number of CPUs
 #SBATCH --mem=1GB                  # RAM memory

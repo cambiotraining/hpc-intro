@@ -50,11 +50,11 @@ Job arrays are created with the *SBATCH* option `-a START-FINISH` where *START* 
 SLURM then creates a special shell variable `$SLURM_ARRAY_TASK_ID`, which contains the array number for the job being processed.
 Later in this section we will see how we can use some tricks with this variable to automate our analysis.
 
-For now let's go through this simple example, which shows what a job array looks like (you can find this script in the course folder `slurm/parallel_arrays.sh`):
+For now let's go through this simple example, which shows what a job array looks like (you can find this script in the course folder `job_scripts/parallel_arrays.sh`):
 
 ```bash
 # ... some lines omitted ...
-#SBATCH -o logs/parallel_arrays_%a.log
+#SBATCH -o job_logs/parallel_arrays_%a.log
 #SBATCH -a 1-3
 
 echo "This is task number $SLURM_ARRAY_TASK_ID"
@@ -63,7 +63,7 @@ echo "Running on:"
 hostname
 ```
 
-Submitting this script with `sbatch slurm/parallel_arrays.sh` will launch 3 jobs. 
+Submitting this script with `sbatch job_scripts/parallel_arrays.sh` will launch 3 jobs. 
 The "_%a_" keyword is used in our output filename (`-o`) and will be replaced by the array number, so that we end up with three files: `parallel_arrays_1.log`, `parallel_arrays_2.log` and `parallel_arrays_3.log`. 
 Looking at the output in those files should make it clearer that `$SLURM_ARRAY_TASK_ID` stores the array number of each job, and that each of them uses 2 CPUS (`-c 2` option). 
 The compute node that they run on may be variable (depending on which node was available to run each job).
@@ -92,7 +92,7 @@ Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
+1. Use _Nano_ to open the SLURM submission script in `job_scripts/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
 1. Launch the job with `sbatch`, monitor its progress and examine the output. 
 1. Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?
 
@@ -110,7 +110,7 @@ Also, remember to edit SLURM's working directory with your username, at the top 
 
 **A2.**
 
-We can launch our adjusted script with `sbatch slurm/parallel_estimate_pi.sh`. 
+We can launch our adjusted script with `sbatch job_scripts/parallel_estimate_pi.sh`. 
 When we check our jobs with `squeue -u USERNAME`, we will notice several jobs with JOBID in the format "ID_1", "ID_2", etc. 
 These indicate the number of the array that is currently running as part of that job submission. 
 
@@ -214,7 +214,7 @@ We have created a CSV file with three columns.
 One column contains the sample's name (which we will use for our output files) and the other two columns contain the path to the first and second pairs of the input files.
 With the information on this table, we should be able to automate our data processing using a SLURM job array. 
 
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_drosophila_mapping.sh`. 
+1. Use _Nano_ to open the SLURM submission script in `job_scripts/parallel_drosophila_mapping.sh`. 
   The first few lines of the code are used to fetch parameter values from the CSV file:
     - Fix your username in `#SBATCH -D`.
     - Fix the `#SBATCH -a` option - this array should have as many jobs as we have samples in our CSV samplesheet.
@@ -234,13 +234,13 @@ We finish at 9, because that's the number of lines in the CSV file.
 
 **A2.**
 
-We can submit the script with `sbatch slurm/parallel_drosophila_mapping.sh`.
+We can submit the script with `sbatch job_scripts/parallel_drosophila_mapping.sh`.
 While the job is running we can monitor its status with `squeue -u USERNAME`. 
 We should see several jobs listed with IDs as `JOBID_ARRAYID` format. 
 
 Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
-We can list these log files with `ls logs/parallel_drosophila_mapping_*.log` (using the "*" wildcard to match any character). 
-If we examine the content of one of these files (e.g. `cat logs/parallel_drosophila_mapping_1.log`), we should only see the messages we printed with the `echo` commands. 
+We can list these log files with `ls job_logs/parallel_drosophila_mapping_*.log` (using the "*" wildcard to match any character). 
+If we examine the content of one of these files (e.g. `cat job_logs/parallel_drosophila_mapping_1.log`), we should only see the messages we printed with the `echo` commands. 
 The actual output of the `bowtie2` program is a file in [SAM](https://en.wikipedia.org/wiki/SAM_(file_format) format, which is saved into the `results/drosophila/mapping` folder. 
 
 **A3.**
@@ -284,7 +284,7 @@ They have prepared a CSV file in `data/turing_model_parameters.csv` with paramet
 
 Our objective is to automate running these models in parallel on the HPC.
 
-1. Use _Nano_ to open the SLURM submission script in `slurm/parallel_turing_pattern.sh`. 
+1. Use _Nano_ to open the SLURM submission script in `job_scripts/parallel_turing_pattern.sh`. 
    The first few lines of the code are used to fetch parameter values from the CSV file:
     - Fix your username in `#SBATCH -D`.
     - Fix the `#SBATCH -a` option - this array should have as many jobs as we have parameter combinations in our CSV file.
@@ -306,13 +306,13 @@ We finish at 5, because that's the number of lines in the CSV file.
 
 **A2.**
 
-We can submit the script with `sbatch slurm/parallel_turing_pattern.sh`.
+We can submit the script with `sbatch job_scripts/parallel_turing_pattern.sh`.
 While the job is running we can monitor its status with `squeue -u USERNAME`. 
 We should see several jobs listed with IDs as `JOBID_ARRAYID` format. 
 
 Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
-We can list these log files with `ls logs/parallel_turing_pattern_*.log` (using the "*" wildcard to match any character). 
-If we examine the content of one of these files (e.g. `cat logs/parallel_turing_pattern_1.log`), we should only see the messages we printed with the `echo` commands. 
+We can list these log files with `ls job_logs/parallel_turing_pattern_*.log` (using the "*" wildcard to match any character). 
+If we examine the content of one of these files (e.g. `cat job_logs/parallel_turing_pattern_1.log`), we should only see the messages we printed with the `echo` commands. 
 The actual output of the python script is an image, which is saved into the `results/turing` folder. 
 
 **A3.**

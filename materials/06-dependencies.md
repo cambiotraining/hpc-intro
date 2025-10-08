@@ -187,11 +187,11 @@ We have two scripts:
 
 
 Because the simulations are stochastic, we want to run a set of 10 simulations and then make a plot with the output from all of them, to get a sense of the variation across simulation replicates.
-We already prepared two SLURM submission scripts for this: `slurm/simulate_sir.sh` and `slurm/plot_sir.sh`. 
+We already prepared two SLURM submission scripts for this: `job_scripts/simulate_sir.sh` and `job_scripts/plot_sir.sh`. 
 Your tasks are to: 
 
 - Correct the scripts where the word "FIXME" appears.
-- Submit both scripts to SLURM, ensuring that the second script (`slurm/plot_sir.sh`) uses the first one as a dependency. 
+- Submit both scripts to SLURM, ensuring that the second script (`job_scripts/plot_sir.sh`) uses the first one as a dependency. 
   Note that the first script is actually submitting a _job array_, so make sure you set your dependency taking that into account. 
 
 
@@ -203,16 +203,16 @@ There are two ways to do this: using `singleton` or `afterok` dependencies.
 
 **Using the `afterok` option**
 
-In this case, we would need to capture the JOBID of the first job (`slurm/simulate_sir.sh`) and then launch the second job (`slurm/plot_sir.sh`) using that ID as its dependency. 
+In this case, we would need to capture the JOBID of the first job (`job_scripts/simulate_sir.sh`) and then launch the second job (`job_scripts/plot_sir.sh`) using that ID as its dependency. 
 
 Here is how we would launch both scripts:
 
 ```bash
 # launch the first job - capture the JOB ID into a variable
-JOB1=$(sbatch --parsable slurm/simulate_sir.sh)
+JOB1=$(sbatch --parsable job_scripts/simulate_sir.sh)
 
 # launch the second job
-sbatch  --dependency=afterok:$JOB1  slurm/plot_sir.sh
+sbatch  --dependency=afterok:$JOB1  job_scripts/plot_sir.sh
 ```
 
 Note that the first job submits a series of sub-jobs using arrays. 
@@ -222,15 +222,15 @@ But all we need to do is use the main JOBID as the dependency, and this will ens
 
 **Using the `singleton` option**
 
-For this solution, we first need to ensure that we give a job name to our first script `slurm/simulate_sir.sh` by adding `#SBATCH -J sir_simulations`, for example. 
-Then, for `slurm/plot_sir.sh` we would add the same job name and use `--dependency=singleton`. 
+For this solution, we first need to ensure that we give a job name to our first script `job_scripts/simulate_sir.sh` by adding `#SBATCH -J sir_simulations`, for example. 
+Then, for `job_scripts/plot_sir.sh` we would add the same job name and use `--dependency=singleton`. 
 Here is the full script: 
 
 ```bash
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
 #SBATCH -D /home/YOUR_USERNAME/rds/hpc-work/hpc_workshop
-#SBATCH -o logs/plot_sir.log
+#SBATCH -o job_logs/plot_sir.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
@@ -247,7 +247,7 @@ The two key SBATCH options are `-J sir_simulations` (which would match the job n
 
 :::{.callout-exercise}
 
-In [Exercise 1 of the job arrays section](05-arrays.md#exercise-arrays-with-no-inputs), we had adjusted the script `slurm/parallel_estimate_pi.sh` to repeatedly run our stochastic _Pi_ number estimator algorithm. 
+In [Exercise 1 of the job arrays section](05-arrays.md#exercise-arrays-with-no-inputs), we had adjusted the script `job_scripts/parallel_estimate_pi.sh` to repeatedly run our stochastic _Pi_ number estimator algorithm. 
 In that exercise, we had then combined our results by running the `cat` command from the terminal:
 
 ```bash
@@ -264,7 +264,7 @@ There are two ways to do this: using `singleton` or `afterok` dependencies.
 
 **Using the `singleton` option**
 
-For this solution, we first need to ensure that we give a job name to our first script `slurm/parallel_estimate_pi.sh` by adding `#SBATCH -J pi_simulations`, for example. 
+For this solution, we first need to ensure that we give a job name to our first script `job_scripts/parallel_estimate_pi.sh` by adding `#SBATCH -J pi_simulations`, for example. 
 
 Then, we could create a new submission script with the following:
 
@@ -272,7 +272,7 @@ Then, we could create a new submission script with the following:
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
 #SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop
-#SBATCH -o logs/combine_pi_results.log
+#SBATCH -o job_logs/combine_pi_results.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
@@ -296,7 +296,7 @@ Let's say that the script to combine the results was called `combine_pi.sh`, wit
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
 #SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop
-#SBATCH -o logs/combine_pi_results.log
+#SBATCH -o job_logs/combine_pi_results.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
@@ -309,10 +309,10 @@ Instead, we can specify it in a separate command where we capture the JOBID of t
 
 ```bash
 # launch the first job - capture the JOB ID into a variable
-JOB1=$(sbatch --parsable slurm/parallel_estimate_pi.sh)
+JOB1=$(sbatch --parsable job_scripts/parallel_estimate_pi.sh)
 
 # launch the second job
-sbatch  --dependency=afterok:$JOB1  slurm/combine_pi.sh
+sbatch  --dependency=afterok:$JOB1  job_scripts/combine_pi.sh
 ```
 
 It is also worth noting that, in this case, the first job submits a series of sub-jobs using arrays. 

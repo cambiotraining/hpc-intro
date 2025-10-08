@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p training  # name of the partition to run job on
-#SBATCH -o logs/task_with_checkpoints_%j.log
+#SBATCH -o job_logs/task_with_checkpoints_%j.log
 #SBATCH -c 1        # number of CPUs. Default: 1
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:01:00 # time for the job HH:MM:SS. Default: 1 min
