@@ -290,7 +290,8 @@ Our objective is to automate running these models in parallel on the HPC.
     - Fix the `#SBATCH -a` option - this array should have as many jobs as we have parameter combinations in our CSV file.
     - Fix the `head` command further down the script. This command intends to fetch each line from the CSV parameters file, using the `$SLURM_ARRAY_TASK_ID` variable.
 2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files. 
-3. Examine the output files in the `results/turing/` folder. Note: to view image files on the HPC, you have to enable X11 forwarding. You can do this by loging in to the HPC using `ssh -Y username@login.hpc.cam.ac.uk` (note the `-Y` option). Then, you can preview a PNG file using the `eog` program (for example: `eog results/turing/f0.03_k0.055.png`).
+3. Examine the output files in the `results/turing/` folder. You should have several PNG files. 
+   These cannot be easily viewed on the HPC, but you can transfer them to your computer using _Filezilla_ or the command-line (`scp` or `rsync`), as will be covered in the [File Transfer](07-files.md) section.
 
 :::{.callout-hint}
 The array should have as many numbers as there are lines in our CSV file. However, make sure the array number starts at 2 because the CSV file has a header with column names.
@@ -323,7 +324,8 @@ Once all the array jobs finish, we should have 5 image files in `ls results/turi
 f0.03_k0.055.png  f0.046_k0.065.png  f0.055_k0.062.png  f0.059_k0.061.png
 ```
 
-We can open these images using the `eog` program, or alternatively we could move them to our computer with _Filezilla_ (or the command-line `scp` or `rsync`), as we covered in the [Moving Files Session](02-working_on_hpc.html#Moving_Files).
+As these are images, they cannot be viewed on the HPC. 
+Instead, we can move these files to our computer as will be covered in the [File Transfer](07-files.md) section.
 
 :::
 :::
