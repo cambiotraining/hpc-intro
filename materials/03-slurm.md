@@ -248,7 +248,11 @@ And to cancel all your jobs simultaneously: `scancel -u <USERNAME>` (you will no
 
 :::{.callout-exercise}
 
-Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+Before starting this exercise:
+
+- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
+  - Your prompt should now start with the prefix `(base)`
 
 In the "analysis_scripts" directory, you will find an R script called `pi_estimator.R`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
@@ -401,7 +405,11 @@ Here is a table summarising some of the most useful environment variables that S
 ### Exercise: SLURM environment variables
 
 :::{.callout-exercise}
-Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+Before starting this exercise:
+
+- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
+  - Your prompt should now start with the prefix `(base)`
 
 The R script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 

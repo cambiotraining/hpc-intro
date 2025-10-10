@@ -87,7 +87,11 @@ Here are some examples taken from SLURM's Job Array Documentation:
 
 :::{.callout-exercise}
 
-Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+Before starting this exercise:
+
+- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
+  - Your prompt should now start with the prefix `(base)`
 
 Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
