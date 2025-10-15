@@ -232,9 +232,13 @@ Study the submission script to see if you understand the code - and ask the trai
 
 **A1.**
 
-Our array numbers should be: `#SBATCH -a 2-9`.
-We start at 2, because the parameter values start at the second line of the parameter file. 
-We finish at 9, because that's the number of lines in the CSV file. 
+We fixed the code in three places: 
+
+- As usual, we fixed the `#SBATCH -D` option to point to our home directory in the cluster.
+- We fixed the `#SBATCH -a` option - this array should have as many jobs as we have samples in our CSV samplesheet. We used `#SBATCH -a 2-9`:
+  - Starting at 2, because the parameter values start at the second line of the parameter file. And finishing at 9, because that's the number of lines in the CSV file.
+- We also fixed the `head` command further down the script. This command intends to fetch each line from the CSV parameters file, using the `$SLURM_ARRAY_TASK_ID` variable. 
+  - We changed `head -n FIXME` to `head -n $SLURM_ARRAY_TASK_ID`, so that each job of the array fetches its corresponding line from the CSV file.
 
 **A2.**
 
@@ -305,9 +309,13 @@ The array should have as many numbers as there are lines in our CSV file. Howeve
 
 **A1.**
 
-Our array numbers should be: `#SBATCH -a 2-5`.
-We start at 2, because the parameter values start at the second line of the parameter file. 
-We finish at 5, because that's the number of lines in the CSV file. 
+We fixed the code in three places: 
+
+- As usual, we fixed the `#SBATCH -D` option to point to our home directory in the cluster.
+- We fixed the `#SBATCH -a` option - this array should have as many jobs as we have simulation parameters in our CSV samplesheet. We used `#SBATCH -a 2-5`:
+  - Starting at 2, because the parameter values start at the second line of the parameter file. And finishing at 5, because that's the number of lines in the CSV file.
+- We also fixed the `head` command further down the script. This command intends to fetch each line from the CSV parameters file, using the `$SLURM_ARRAY_TASK_ID` variable. 
+  - We changed `head -n FIXME` to `head -n $SLURM_ARRAY_TASK_ID`, so that each job of the array fetches its corresponding line from the CSV file.
 
 **A2.**
 
