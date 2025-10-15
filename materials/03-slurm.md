@@ -69,10 +69,10 @@ sbatch job_scripts/simple_job.sh
 ```
 
 In this case, we are informed that the job is submitted to the SLURM queue. 
-We can see all the jobs in the queue with: 
+We can see all our jobs in the queue with: 
 
 ```bash
-squeue
+squeue --me
 ```
 
 ```
@@ -178,10 +178,12 @@ After submitting a job, we may want to know:
 - What if I want to cancel a job because I realised there was a mistake in my script?
 
 We've already seen the `squeue` command to check the **status of your jobs**.
-Without any options you will get _all_ jobs in the queue (yours and other users'), to see only your jobs you can do:
+Without any options you will get _all_ jobs in the queue (yours and other users').
+To see only your jobs you can add the `--me` option, or `-u <your-username>`:
 
 ```bash
-squeue -u <user>
+squeue --me           # list the jobs for my user
+squeue -u <username>  # list the jobs for a specific user
 ```
 
 This gives you information about the job's status: `PD` means it's *pending* (waiting in the queue) and `R` means it's *running* on a compute node.
@@ -289,7 +291,7 @@ In the shell script we needed to correct the path specified in the `#SBATCH -D` 
 We needed to replace "FIX-YOUR-USERNAME" with our actual username. 
 
 We could then submit the script using `sbatch job_scripts/estimate_pi.sh`. 
-And check the status of the job with `squeue -u USERNAME` (using our respective username). 
+And check the status of the job with `squeue --me`. 
 
 Because the job runs very fast, we may not have time to see it in the queue at all.
 However, we can check if it ran successfully in the next step. 
@@ -505,7 +507,7 @@ For this reason, some HPC clusters are configured to limit the time for interact
 - Submit jobs to the scheduler using `sbatch submission_script.sh`.
 - Customise the jobs by including `#SBATCH` options at the top of your script (see table in the materials above for a summary of options).
   - As a good practice, always define an output file with `#SBATCH -o`. All the information about the job will be saved in that file, including any errors. 
-- Check the status of a submitted job by using `squeue -u USERNAME` and `seff JOBID`.
+- Check the status of a submitted job by using `squeue --me` and `seff JOBID`.
 - To cancel a running job use `scancel JOBID`.
 
 See this [SLURM cheatsheet](https://slurm.schedmd.com/pdfs/summary.pdf) for a summary of the available commands.
