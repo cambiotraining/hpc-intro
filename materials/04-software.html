@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>HPC SLURM</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../materials/05-arrays.html" rel="next">
+<link href="../materials/03-slurm.html" rel="prev">
+<link href="../site_libs/quarto-contrib/quarto-project/cambiotraining/courseformat/img/university-of-cambridge-favicon.ico" rel="icon">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fd4369bcce5669dc6f092a5d180a1716.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/courseformat/img/university_crest_reversed.png" alt="" class="navbar-logo light-content">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/courseformat/img/university_crest_reversed.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Working on HPC Clusters using SLURM</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://docs.google.com/presentation/d/1KmnSznETddQdRYa6UAXtT-eMOsW7tEwbsOh0fK62c84/edit?usp=sharing"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/cambiotraining/hpc-intro"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="CRIT GitHub"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/bioinfocambs.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="CRIT Bluesky"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://genomic.social/@BioInfoCambs"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="CCRIT Mastodon"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bioinfotraining.bio.cam.ac.uk/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="mdi:web" style="font-size: 1.25em;" aria-label="Icon web from mdi Iconify.design set." title="CCRIT Website"></iconify-icon></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Software Management</span></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Welcome</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data &amp; Setup</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Working on a HPC</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">HPC Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-ssh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Remote Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/03-slurm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SLURM Scheduler</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/04-software.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Software Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/05-arrays.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Job Paralellisation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/06-dependencies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Job Dependencies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/07-files.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">File Transfer</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/csd3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cambridge University HPC Resources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/slurm_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLURM Quick Reference Guide</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-module" id="toc-sec-module" class="nav-link active" data-scroll-target="#sec-module"><span class="header-section-number">6.1</span> Using pre-installed software</a></li>
+  <li><a href="#the-mamba-package-manager" id="toc-the-mamba-package-manager" class="nav-link" data-scroll-target="#the-mamba-package-manager"><span class="header-section-number">6.2</span> The <em>Mamba</em> package manager</a>
+  <ul class="collapse">
+  <li><a href="#installing-mamba" id="toc-installing-mamba" class="nav-link" data-scroll-target="#installing-mamba"><span class="header-section-number">6.2.1</span> Installing <em>Mamba</em></a></li>
+  <li><a href="#installing-software-with-mamba" id="toc-installing-software-with-mamba" class="nav-link" data-scroll-target="#installing-software-with-mamba"><span class="header-section-number">6.2.2</span> Installing software with <code>mamba</code></a></li>
+  <li><a href="#loading-mamba-environments" id="toc-loading-mamba-environments" class="nav-link" data-scroll-target="#loading-mamba-environments"><span class="header-section-number">6.2.3</span> Loading <em>Mamba</em> environments</a></li>
+  <li><a href="#exercise-mamba-environments" id="toc-exercise-mamba-environments" class="nav-link" data-scroll-target="#exercise-mamba-environments"><span class="header-section-number">6.2.4</span> Exercise: mamba environments</a></li>
+  </ul></li>
+  <li><a href="#containers" id="toc-containers" class="nav-link" data-scroll-target="#containers"><span class="header-section-number">6.3</span> Containers</a>
+  <ul class="collapse">
+  <li><a href="#singularity-installation" id="toc-singularity-installation" class="nav-link" data-scroll-target="#singularity-installation"><span class="header-section-number">6.3.1</span> Singularity installation</a></li>
+  <li><a href="#singularity-images" id="toc-singularity-images" class="nav-link" data-scroll-target="#singularity-images"><span class="header-section-number">6.3.2</span> Singularity images</a></li>
+  <li><a href="#exercise-running-singularity" id="toc-exercise-running-singularity" class="nav-link" data-scroll-target="#exercise-running-singularity"><span class="header-section-number">6.3.3</span> Exercise: running singularity</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.4</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Software Management</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Use the <code>module</code> tool to search for and load pre-installed software.</li>
+<li>Describe what a package manager is, and how it can be used to manage software instalation on a HPC environment.</li>
+<li>Install the <em>Mamba</em> package manager.</li>
+<li>Create a software environment and install software using <em>Mamba</em>.</li>
+<li>Describe what a software container is and how it differs from a package manager.</li>
+<li>Download and use a pre-existing software container for bioinformatics and scientific computing applications.</li>
+</ul>
+</div>
+</div>
+<section id="sec-module" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-module"><span class="header-section-number">6.1</span> Using pre-installed software</h2>
+<p>It is very often the case that HPC admins have pre-installed several software packages that are regularly used by their users. Because there can be a large number of packages (and often different versions of the same program), you need to load the programs you want to use in your script using the <code>module</code> tool.</p>
+<p>The following table summarises the most common commands for this tool:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Command</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><code>module avail</code></td>
+<td style="text-align: left;">List all available packages.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>module avail -a -i "pattern"</code> <br> or <br> <code>module avail | grep -i "pattern"</code></td>
+<td style="text-align: left;">Search the available package list that matches “pattern”. Note the second option is given as some versions of <code>module</code> do not support case-insensitive search (<code>-i</code> option).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>module load &lt;program&gt;</code></td>
+<td style="text-align: left;">Load the program and make it available for use.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>module unload &lt;program&gt;</code></td>
+<td style="text-align: left;">Unload the program (removes it from your PATH).</td>
+</tr>
+</tbody>
+</table>
+<p>For example, on our training HPC, you can try to run <code>module avail</code> to see which software is available. We can see a software called <code>bowtie2</code>. If we try to use this software at the moment we get an error:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Command 'bowtie2' not found, but can be installed with:
+
+apt install bowtie2
+Please ask your administrator.</code></pre>
+<p>But if we load the software first, then the command works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bowtie/2.5.0</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bowtie2</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>/usr/local/Cluster-Apps/bowtie/2.5.0/bowtie2-align-s version 2.5.0
+64-bit
+Built on login-e-12
+Mon 14 Nov 12:11:12 UTC 2022
+Compiler: gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC)
+Options: -O3 -msse2 -funroll-loops -g3 -std=c++11 -DPOPCNT_CAPABILITY -DNO_SPINLOCK -DWITH_QUEUELOCK=1
+Sizeof {int, long, long long, void*, size_t, off_t}: {4, 8, 8, 8, 8, 8}</code></pre>
+<p>If you <code>echo $PATH</code>, you will notice the installer has been added to your PATH variable (the environment variable that tells the shell where to find programs to run). Once you run <code>module unload bowtie2/2.5.0</code>, and then <code>echo $PATH</code> again, you notice the PATH variable will have been modified. This is how the <em>Environment Modules</em> package makes software available for you to use.</p>
+<p>If a package is not available through the <code>module</code> command, your only option is to contact the HPC admin and ask them to install it for you. Alternatively, you can use a package manager as we show in the next section.</p>
+</section>
+<section id="the-mamba-package-manager" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-mamba-package-manager"><span class="header-section-number">6.2</span> The <em>Mamba</em> package manager</h2>
+<p>Often you may want to use software packages that are not installed by default on the HPC. There are several ways you could manage your own software installation, but in this course we will be using the <strong>package manager <em>Mamba</em></strong>, which is a successor to another package manager called <em>Conda</em>.</p>
+<p><em>Conda</em> and <em>Mamba</em> are package managers commonly used in data science, scientific computing, and bioinformatics. <em>Conda</em>, originally developed by <a href="https://anaconda.org/">Anaconda</a>, is a package manager and environment manager that simplifies the creation, distribution, and management of software environments containing different packages and dependencies. It is known for its cross-platform compatibility and ease of use. <strong><em>Mamba</em></strong> is a more recent and high-performance alternative to <em>Conda</em>. While it maintains compatibility with Conda’s package and environment management capabilities, <em>Mamba</em> is designed for faster dependency resolution and installation, making it a better choice nowadays.</p>
+<p>One of the strengths of using <em>Mamba</em> to manage your software is that you can have different versions of your software installed alongside each other, organised in <strong>environments</strong>. Organising software packages into environments is extremely useful, as it allows to have a <em>reproducible</em> set of software versions that you can use and resuse in your projects.</p>
+<p>For example, imagine you are a data scientist working on a project that involves machine learning. You have two projects with different requirements (<a href="#fig-conda" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>):</p>
+<ul>
+<li>Project A: This project requires Python 3.7, NumPy 1.15, and scikit-learn 0.20, among other libraries.</li>
+<li>Project B: This project needs Python 3.9, the latest version of NumPy, and TensorFlow 2.0.</li>
+</ul>
+<p>If you don’t use environments, you would need to install and maintain these packages globally on your system. This can lead to several issues:</p>
+<ul>
+<li>Version conflicts: different projects may require different versions of the same library. For example, Project A might not be compatible with the latest NumPy, while Project B needs it.</li>
+<li>Dependency chaos: as your projects grow, you might install numerous packages, and they could interfere with each other, causing unexpected errors or instability.</li>
+<li>Difficulty collaborating: sharing your code with colleagues or collaborators becomes complex because they may have different versions of packages installed, leading to compatibility issues.</li>
+</ul>
+<div id="fig-conda" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/conda_environments.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Illustration of <em>Conda</em>/<em>Mamba</em> environments. Each environment is isolated from the others (effectively in its own folder), so different versions of the packages can be installed for distinct projects or parts of a long analysis pipeline.
+</figcaption>
+</figure>
+</div>
+<p><strong>Environments allow you to create isolated, self-contained environments for each project</strong>, addressing these issues:</p>
+<ul>
+<li>Isolation: you can create a separate environment for each project using tools like <em>Conda</em>/<em>Mamba</em> or virtualenv in Python. This ensures that the dependencies for one project don’t affect another.</li>
+<li>Version control: you can specify the exact versions of libraries and packages required for each project within its environment. This eliminates version conflicts and ensures reproducibility.</li>
+<li>Ease of collaboration: sharing your code and environment file (e.g., requirements.txt for Python) makes it easy for collaborators to replicate your environment and run your project without worrying about conflicts.</li>
+<li>Simplified maintenance: If you need to update a library for one project, it won’t impact others. You can manage environments separately, making maintenance more straightforward.</li>
+</ul>
+<p>In the context of HPC clusters, another advantage of using <em>Mamba</em> is that the <strong>software is installed locally</strong> (by default in your home directory), without the need for admin permissions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Mamba versus Module
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Although <em>Mamba</em> is a great tool to manage your own software installation, the disadvantage is that the software is not compiled specifically taking into account the hardware of the HPC. This is a slightly technical topic, but the main practical consequence is that software installed by HPC admins and made available through the <code>module</code> system may sometimes run faster than software installed via <code>mamba</code>. This means you will use fewer resources and your jobs will complete faster.</p>
+</div>
+</div>
+<section id="installing-mamba" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="installing-mamba"><span class="header-section-number">6.2.1</span> Installing <em>Mamba</em></h3>
+<p>Before you use <em>Mamba</em>, you will need to install it on the HPC. If you are attending our live course, we already have <em>Mamba</em> installed, so you can skip this step.</p>
+<p>To install <em>Mamba</em>, run the following commands from the terminal (this will install it in its default location in the home directory):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="st">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="va">$(</span><span class="fu">uname</span><span class="va">)</span><span class="st">-</span><span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span><span class="st">.sh"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Miniforge3-<span class="va">$(</span><span class="fu">uname</span><span class="va">)</span>-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span>.sh <span class="at">-b</span> <span class="at">-p</span> <span class="va">$HOME</span>/miniforge3</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> Miniforge3-<span class="va">$(</span><span class="fu">uname</span><span class="va">)</span>-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span>.sh</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">$HOME</span><span class="ex">/miniforge3/bin/mamba</span> shell init <span class="at">--shell</span> bash</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Logout of the HPC and login again, to restart your terminal. Your shell should now start with the word <code>(base)</code>.</p>
+<p>Then run the following commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--add</span> channels bioconda<span class="kw">;</span> <span class="ex">conda</span> config <span class="at">--add</span> channels conda-forge</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--set</span> remote_read_timeout_secs 1000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The software installation “recipes” used by <em>Mamba</em> are maintained by large communities of software developers. These communities are organised by <strong>channels</strong>, i.e.&nbsp;software repositories. Two popular channels are “<a href="https://bioconda.github.io/conda-package_index.html">bioconda</a>”, which maintains bioinformatics software and “<a href="https://conda-forge.org/feedstock-outputs/">conda-forge</a>”, which maintains several data science packages. Some of the commands we just ran add these channels to our <em>Mamba</em> installation, so that it looks for software in those repositories by default.</p>
+</section>
+<section id="installing-software-with-mamba" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="installing-software-with-mamba"><span class="header-section-number">6.2.2</span> Installing software with <code>mamba</code></h3>
+<p>The command used to install and manage software is called <code>mamba</code>. Although we will only cover the basics in this course, it has an <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/">excellent documentation</a> and a useful <a href="https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf">cheatsheet</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>conda</code> or <code>mamba</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some of the documentation we point to is for <code>conda</code>, but as we said earlier <code>mamba</code> is its newer implementation, so these two commands can be used interchangeably (mostly). The easy rule-of-thumb is: whenever you see the command <code>conda</code> you can use <code>mamba</code> instead.</p>
+</div>
+</div>
+<p>The first thing to do is to <strong>create a software environment</strong> for our project. Although this is optional (you could instead install everything in the “base” default environment), it is a good practice as it means the software versions remain stable within each project.</p>
+<p>To create an environment we use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">--name</span> ENV</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Where “ENV” is the name we want to give to that environment. Once the environment is created, we can install packages using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">--name</span> ENV PROGRAM</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Where “PROGRAM” is the name of the software we want to install.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Organising environments
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One way to organise your software environments is to create an environment for each kind of analysis that you might be doing regularly. For example, you could have an environment named <code>imaging</code> with software that you use for image processing (e.g.&nbsp;Python’s scikit-image or the ImageMagick package) and another called <code>deeplearn</code> with software you use for deep learning applications (e.g.&nbsp;Python’s Keras).</p>
+<p>In some situations (in particular in bioinformatics), software packages can have a very large number of software dependencies leading to incompatibilities across packages. In those situations, it may be best to have a separate environment for each software.</p>
+</div>
+</div>
+<p>To search for the software packages that are available through <code>mamba</code>:</p>
+<ul>
+<li>go to <a href="https://anaconda.org">anaconda.org</a>.</li>
+<li>in the search box search for a program of your choice. For example: “bowtie2”.</li>
+<li>the results should be listed as <code>CHANNEL/PROGRAM</code>, where <em>CHANNEL</em> will the the source repository from where the software is available. Usually scientific/bioinformatics software is available through the <code>conda-forge</code> and <code>bioconda</code> channels.</li>
+</ul>
+<p>You can specify the channel explicitly during the install command using the <code>-c</code> option. For example <code>mamba install --channel CHANNEL --name ENV PROGRAM</code>.</p>
+<p>Let’s see this with an example, where we create a new environment called “datasci” and install some python packages for data science work:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">--name</span> datasci</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">--name</span> datasci <span class="at">--channel</span> conda-forge numpy=1.26.4 matplotlib=3.8.3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that, in this case, we were explicit in specifying the version of each software we want. This is recommended for reproducibility of analysis and can make environments more stable to manage. If you don’t specify the version you want, then Mamba will install the latest version that is compatible with your environment.</p>
+<p>To see all the environments you have available, you can use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code># conda environments:
+#
+base                  *  /home/participant36/mambaforge
+datasci                  /home/participant36/mambaforge/envs/datasci</code></pre>
+<p>In our case it lists the <em>base</em> (default) environment and the newly created <em>datasci</em> environment. The asterisk (“*“) tells us which environment we’re using at the moment.</p>
+</section>
+<section id="loading-mamba-environments" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="loading-mamba-environments"><span class="header-section-number">6.2.3</span> Loading <em>Mamba</em> environments</h3>
+<p>Once your packages are installed in an environment, you can load that environment by using <code>mamba activate ENV</code>, where “ENV” is the name of your environment. For example, we can activate our previously created environment with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate datasci</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you chech which <code>python</code> executable is being used now, you will notice it’s the one from this new environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> python</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>~/mambaforge/envs/datasci/bin/python</code></pre>
+<p>You can also check that the new environment is in use from:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code># conda environments:
+#
+base                     /home/participant36/mambaforge
+datasci               *  /home/participant36/mambaforge/envs/datasci</code></pre>
+<p>And notice that the asterisk “*” is now showing we’re using the <code>datasci</code> environment.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Loading environments in shell scripts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To load environments in a shell script that is being submitted to SLURM, you need to first source a configuration file from <em>Mamba</em>. For example, to load the <code>datasci</code> environment we created, this would be the code:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Always add these two commands to your scripts</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="ex">conda</span> shell.bash hook<span class="va">)</span><span class="st">"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$CONDA_PREFIX</span>/etc/profile.d/mamba.sh</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># then you can activate the environment</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate datasci</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- source $(conda info --base)/etc/profile.d/mamba.sh -->
+<p>This is because when we submit jobs to SLURM the jobs will start in a non-interactive shell, and <code>mamba</code> doesn’t get automatically set. Running the <code>source</code> command shown will ensure <code>mamba activate</code> becomes available.</p>
+</div>
+</div>
+</section>
+<section id="exercise-mamba-environments" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="exercise-mamba-environments"><span class="header-section-number">6.2.4</span> Exercise: mamba environments</h3>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>Make sure you are in the workshop folder (<code>cd ~/rds/hpc-work/hpc_workshop</code>).</p>
+<p>In the <code>data</code> folder, you will find some files resulting from whole-genome sequencing individuals from the model organism <em>Drosophila melanogaster</em> (fruit fly). Our objective will be to align our sequences to the reference genome, using a software called <em>bowtie2</em>.</p>
+<p><img src="images/mapping.png" class="img-fluid" style="width:50.0%"></p>
+<p>But first, we need to prepare our genome for this alignment procedure (this is referred to as indexing the genome). We have a file with the <em>Drosophila</em> genome in <code>data/genome/drosophila_genome.fa</code>.</p>
+<ol type="1">
+<li>Create a new Mamba environment named “bioinformatics”.</li>
+<li>Install the <code>bowtie2=2.5.3</code> program in your new environment.</li>
+<li>Activate the new environment.</li>
+<li>Check that the software installed correctly by running <code>which bowtie2</code> and <code>bowtie2 --help</code>.</li>
+<li>Open the script in <code>job_scripts/drosophila_genome_indexing.sh</code> and edit the <code>#SBATCH</code> options with the word “FIXME”. Submit the script to SLURM using <code>sbatch</code>, check it’s progress, and whether it ran successfully. Troubleshoot any issues that may arise.</li>
+</ol>
+<div class="callout callout-style-default callout-hint no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hint</span>Hint
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-hint">
+<ul>
+<li>The syntax to create a new environment is: <code>mamba create --name ENV</code></li>
+<li>Go to <a href="https://anaconda.org/">anaconda.org</a> and search for “bowtie2” to confirm it is available through <em>Mamba</em> and which software <em>channel</em> it is provided from.</li>
+<li>The syntax to install packages is: <code>mamba install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<p><strong>A1.</strong></p>
+<p>To create a new mamba environment we run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">--name</span> bioinformatics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>A2.</strong></p>
+<p>If we search for this software on the <em>Anaconda</em> website, we will find that it is available via the “<em>bioconda</em>” channel: https://anaconda.org/bioconda/bowtie2</p>
+<p>We can install it on our environment with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">--name</span> bioinformatics <span class="at">--channel</span> bioconda bowtie2=2.5.3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>A3.</strong></p>
+<p>First we need to activate our environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate bioinformatics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then, if we run <code>bowtie2 --help</code>, we should get the software help printed on the console.</p>
+<p><strong>A4.</strong></p>
+<p>We need to fix the script to specify the correct working directory with our username (only showing the relevant line of the script):</p>
+<pre><code>#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop</code></pre>
+<p>Replacing “USERNAME” with your username.</p>
+<p>We also need to make sure we activate our environment, by adding the <code>mamba activate</code> command, like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># these lines are needed to source the mamba activate command</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># include them if you want to activate environments in your script</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="ex">conda</span> shell.bash hook<span class="va">)</span><span class="st">"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$CONDA_PREFIX</span>/etc/profile.d/mamba.sh</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># activate conda environment</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate bioinformatics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to <strong>always load the mamba environment in our SLURM submission scripts</strong>.</p>
+<p>We can then launch it with sbatch:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> job_scripts/drosophila_genome_indexing.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can check the job status by using <code>squeue -u USERNAME</code>. And we can obtain more information by using <code>seff JOBID</code> or <code>scontrol show job JOBID</code>.</p>
+<p>We should get several output files in the directory <code>results/drosophila/genome</code> with an extension “.bt2”:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> results/drosophila/genome</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>index.1.bt2
+index.2.bt2
+index.3.bt2
+index.4.bt2
+index.rev.1.bt2
+index.rev.2.bt2</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="containers" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="containers"><span class="header-section-number">6.3</span> Containers</h2>
+<p>Containers are a technology that can be used to create and manage computational environments. A container is a lightweight, standalone executable package that contains everything needed to run a piece of software, including the operating system, libraries, and application code. Containers are isolated from the host system, meaning that they can run the same software in different environments without conflicts or interference. By using containers, researchers can ensure that their code runs consistently across different systems and platforms, without having to worry about dependencies or conflicts with other software on the host system.</p>
+<p>We will focus on one of the most popular container platforms for cluster systems: <em>Singularity</em>. <a href="https://docs.sylabs.io/guides/3.5/user-guide/introduction.html">Singularity</a> is a free and open-source computer program that performs operating-system-level virtualization also known as containerization. Singularity is also designed to create and manage isolated environments as <a href="https://www.docker.com/">Docker</a>, which is another popular and widely used container platform (i.e.&nbsp;images created with docker can be compatible with Singularity and <em>vice versa</em>)*.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Docker vs singularity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are some key differences between Docker containers and Singularity containers. The most important being the necessary <em>permission level</em> of the containers. Docker containers run as root by default, which means that they have full access to the host system. While this can be advantageous in some cases, it can also pose security risks, particularly in multi-user environments. Singularity, on the other hand, runs containers as non-root users by default, which can improve security and prevent unauthorized access to the host system. Singularity is specifically designed for use in HPC environments and can run on a wide variety of platforms and systems without root access.</p>
+<p><strong>TL;TR:</strong></p>
+<ul>
+<li>Docker is well-suited for building and distributing software across different platforms and operating systems</li>
+<li>Singularity is specifically designed for use in HPC environments and can provide improved security and performance in those settings.</li>
+</ul>
+</div>
+</div>
+</div>
+<section id="singularity-installation" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="singularity-installation"><span class="header-section-number">6.3.1</span> Singularity installation</h3>
+<p>Typically, Singularity is pre-installed on HPC servers by the system administrators, and <strong>we recommend that you use the version installed by your system admins</strong>.</p>
+<p>Although it is possible to install it yourself (e.g.&nbsp;with Mamba), we have found this to be a less reliable way to setup <em>Singularity</em> on a HPC. This is because it requires further configuration to interact with the filesystem (in particular as we submit jobs to SLURM).</p>
+</section>
+<section id="singularity-images" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="singularity-images"><span class="header-section-number">6.3.2</span> Singularity images</h3>
+<p>Although you can build your own Singularity images, for many popular software there are already pre-built images available from public repositories. Some popular ones are:</p>
+<ul>
+<li><a href="https://depot.galaxyproject.org/singularity/">depot.galaxyproject.org</a></li>
+<li><a href="https://cloud.sylabs.io/">Sylabs</a></li>
+</ul>
+<p>For example, let’s consider the <a href="https://bioinf.shenwei.me/seqkit/">SeqKit program</a>, which is a toolkit for manipulating FASTA/Q files. If we search on either of those websites, we will see this software is available on both. In this case, the version on Sylabs (<a href="https://cloud.sylabs.io/library/bhargava-morampalli/containers/seqkit">here</a>) is older than the one on the Galaxy server (at the time of writing we have 2.8.0 available).</p>
+<p>Therefore, let’s consider the file on the Galaxy server. First, go to <a href="https://depot.galaxyproject.org/singularity/">depot.galaxyproject.org</a> and search for the software of interest (use <kbd>Ctrl</kbd> + <kbd>F</kbd> to find the text of interest). When you find the software and version of interest, right-click the file and click “Copy Link”. Then use that link with the <code>singularity pull</code> command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a directory for our singularity images</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> images</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># download the image</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> pull images/seqkit-2.8.0.sif https://depot.galaxyproject.org/singularity/seqkit%3A2.8.0--h9ee0642_0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Here, we are saving the image file as <code>seqkit-2.8.0.sif</code> (<code>.sif</code> is the standard extension for singularity images). Once we have this image available, we are ready to run the software, which will see in practice with the exercise below.</p>
+</section>
+<section id="exercise-running-singularity" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="exercise-running-singularity"><span class="header-section-number">6.3.3</span> Exercise: running singularity</h3>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>Make sure you are in the workshop folder (<code>cd ~/rds/hpc-work/hpc_workshop</code>).</p>
+<p>To illustrate the use of Singularity, we will use the <code>seqkit</code> software to extract some basic statistics from the sequencing files in the <code>data/drosophila</code> directory. If you haven’t done so already, first download the container image with the commands shown above.</p>
+<p>The way to run a command within a singularity container is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> run PATH-TO-IMAGE YOUR COMMANDS HERE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Test your singularity image by running the command <code>seqkit --help</code> within the container.</li>
+<li>Modify the script <code>job_scripts/seqkit_singularity.sh</code> and add the command <code>seqkit stats data/reads/*.fastq.gz</code>, running inside the image container.</li>
+<li>Submit this script as a job.
+<ul>
+<li>Where do you think the output will be saved?</li>
+<li>As an optional bonus, modify the command to output the results to a file called <code>results/fastq_stats.txt</code>.</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<p>The Singularity command to test our software is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> run images/seqkit-2.8.0.sif seqkit <span class="at">--help</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This prints the help documentation of the SeqKit software, confirming that our image is working and contains the intended software.</p>
+<p>We are ready to run our analysis, and so we modify the SLURM submission script to include our intended command inside it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -p training  # name of the partition to run job on</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -D /home/YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -o job_logs/seqkit.log  # standard output file</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -c 1        # number of CPUs. Default: 1</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=1G    # RAM memory. Default: 1G</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> run images/seqkit-2.8.0.sif seqkit stats data/reads/<span class="pp">*</span>.fastq.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(Don’t forget to adjust the username in <code>#SBATCH -D</code>.)</p>
+<p>In this case the output would be saved to the <code>.log</code> file. We could, instead, modify our command to save the output to a file using the standard <code>&gt;</code> redirection operator:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> run images/seqkit-2.8.0.sif seqkit stats data/reads/<span class="pp">*</span>.fastq.gz <span class="op">&gt;</span> results/fastq_stats.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The output generated contains some basic statistics for our sequencing files:</p>
+<pre><code>file                             format  type  num_seqs  sum_len  min_len  avg_len  max_len
+data/reads/SRR307023_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+data/reads/SRR307023_2.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+data/reads/SRR307024_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      101      101
+
+... etc ...</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.4</span> Summary</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key Points
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The <code>module</code> tool can be used to search for and load pre-installed software packages on a HPC.
+<ul>
+<li>This tool may not always be available on your HPC.</li>
+</ul></li>
+<li>To install your own software, you can use the <em>Mamba</em> package manager.
+<ul>
+<li><em>Mamba</em> allows you to have separate “software environments”, where multiple package versions can co-exist on your system.</li>
+</ul></li>
+<li>Use <code>mamba env create ENV</code> to create a new software environment and <code>mamba install -n ENV PROGRAM</code> to install a program on that environment.</li>
+<li>Use <code>mamba activate ENV</code> to “activate” the software environment and make all the programs installed there available.
+<ul>
+<li>When submitting jobs to <code>sbatch</code>, always remember to include <code>source $CONDA_PREFIX/etc/profile.d/mamba.sh</code> at the start of the shell script, followed by the <code>mamba activate</code> command.</li>
+</ul></li>
+<li>Software containers can be a reliable alternative to <em>Mamba</em> environments, with many pre-existing containers available at <a href="https://cloud.sylabs.io/">Sylabs</a> and <a href="https://depot.galaxyproject.org/singularity/">depot.galaxyproject.org</a>.</li>
+<li>To download a software container from public repositories, use the <code>singularity pull</code> command.</li>
+<li>To run a command within the software container, use the <code>singularity run</code> command.</li>
+</ul>
+<p>Further resources:</p>
+<ul>
+<li>Search for <em>Mamba</em> packages at <a href="https://anaconda.org">anaconda.org</a>.</li>
+<li>Learn more about <em>Conda</em> from the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/">Conda User Guide</a>.</li>
+<li><a href="https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html">Conda Cheatsheet</a> (PDF).</li>
+</ul>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../materials/03-slurm.html" class="pagination-link" aria-label="SLURM Scheduler">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SLURM Scheduler</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../materials/05-arrays.html" class="pagination-link" aria-label="Job Paralellisation">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Job Paralellisation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> <img src="https://creativecommons.org/images/deed/cc_icon_black_x2.png" class="img-fluid" width="25"> Cambridge Research Informatics Training</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
