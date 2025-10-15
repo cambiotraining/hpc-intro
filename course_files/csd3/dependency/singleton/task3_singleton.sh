@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH -A TRAINING-CPU
 #SBATCH -p icelake  # name of the partition to run job on
 #SBATCH -J my_pipeline  # name for the job
 #SBATCH -o job_logs/task3_singleton_%j.log
