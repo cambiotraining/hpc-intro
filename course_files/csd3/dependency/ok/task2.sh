@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH -A TRAINING-CPU
 #SBATCH -p icelake  # name of the partition to run job on
 #SBATCH -o job_logs/task2_%j.log
 #SBATCH -c 1        # number of CPUs. Default: 1
