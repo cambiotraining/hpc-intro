@@ -21,3 +21,5 @@ mamba install -y -n base r-argparse==2.2.2
 # additional conda environments
 mamba create -y -n scipy scipy==1.12.0 numpy==1.26.4 matplotlib==3.8.3
 mamba create -y -n mapping bowtie2==2.5.3
+
+echo "mamba activate base" >> ~/.bashrc
