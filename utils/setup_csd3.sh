@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# see https://github.com/cambiotraining/hpc-intro/issues/46
-
 # backup bashrc
 cp ~/.bashrc ~/.bashrc_bkp
 
@@ -16,7 +14,7 @@ conda config --add channels bioconda; conda config --add channels conda-forge
 conda config --set remote_read_timeout_secs 1000
 
 # set R up
-mamba install -y -n base r-argparse==2.2.2
+mamba install -y -n base r-argparser==0.7.3
 
 # additional conda environments
 mamba create -y -n scipy scipy==1.12.0 numpy==1.26.4 matplotlib==3.8.3
