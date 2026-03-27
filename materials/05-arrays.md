@@ -93,7 +93,7 @@ Before starting this exercise:
 - Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
   - Your prompt should now start with the prefix `(base)`
 
-Previously, we used the `pi_estimator.R` script to obtain a single estimate of the number Pi. 
+Previously, we used the `pi_estimator.py` script to obtain a single estimate of the number Pi. 
 Since this is done using a stochastic algorithm, we may want to run it several times to get a sense of the error associated with our estimate.
 
 1. Use _Nano_ to open the SLURM submission script in `job_scripts/parallel_estimate_pi.sh`. Adjust the `#SBATCH` options (where word "FIXME" appears), to run the job 10 times using a job array. 
@@ -101,7 +101,7 @@ Since this is done using a stochastic algorithm, we may want to run it several t
 1. Bonus: combine all the output files into a single file. Should you run this operation directly on the login node, or submit it as a new job to SLURM?
 
 :::{.callout-hint}
-Note that the output of `pi_estimator.R` is now being sent to individual text files to the directory `results/pi/`.
+Note that the output of `pi_estimator.py` is now being sent to individual text files to the directory `results/pi/`.
 :::
 
 :::{.callout-answer}

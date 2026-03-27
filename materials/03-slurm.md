@@ -250,13 +250,9 @@ And to cancel all your jobs simultaneously: `scancel -u <USERNAME>` (you will no
 
 :::{.callout-exercise}
 
-Before starting this exercise:
+Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
-- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
-- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
-  - Your prompt should now start with the prefix `(base)`
-
-In the "analysis_scripts" directory, you will find an R script called `pi_estimator.R`. 
+In the "analysis_scripts" directory, you will find a Python script called `pi_estimator.py`. 
 This script tries to get an approximate estimate for the number Pi using a stochastic algorithm. 
 
 <details><summary>How does the algorithm work?</summary>
@@ -269,14 +265,14 @@ If you are interested in the details, here is a short description of what the sc
 
 </details>
 
-If you were running this script interactively (i.e. directly from the console), you would use the R script interpreter: `Rscript analysis_scripts/pi_estimator.R`.
+If you were running this script interactively (i.e. directly from the console), you would use the Python interpreter: `python3 analysis_scripts/pi_estimator.py`.
 Instead, we use a shell script to submit this to the job scheduler. 
 
 1. Edit the shell script in `job_scripts/estimate_pi.sh` by correcting your username in the working directory path (under `#SBATCH -D`). 
   Submit the job to SLURM and check its status in the queue.
 1. Did your job run successfully, and how long did it take to run?
 2. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be. 
-    - Adjust your SLURM submission script to use 50 million samples (`Rscript analysis_scripts/pi_estimator.R --nsamples 50`), and save the job output in `job_logs/estimate_pi_50M.log`.
+    - Adjust your SLURM submission script to use 50 million samples (`python3 analysis_scripts/pi_estimator.py --nsamples 50`), and save the job output in `job_logs/estimate_pi_50M.log`.
     - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues? How would you fix it?
 
 :::{.callout-hint}
@@ -327,14 +323,14 @@ The modified script should look similar to this:
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS.
 
 # run the script
-Rscript analysis_scripts/pi_estimator.R --nsamples 50
+python3 analysis_scripts/pi_estimator.py --nsamples 50
 ```
 
 However, when we run this job, examining the output file (`cat job_logs/estimate_pi_50M.log`) will reveal an error indicating that our job was killed. 
 
 ```
-/var/spool/slurmd/job02038/slurm_script: line 9:  6682 Killed                  Rscript analysis_scripts/pi_estimator.R --nsamples 50
-slurmstepd: error: Detected 1 oom-kill event(s) in StepId=2038.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+/var/spool/slurm/slurmd/job22900388/slurm_script: line 10: 231945 Killed                  python3 pi_estimator.py --nsamples 50
+slurmstepd: error: Detected 1 oom_kill event in StepId=22900388.batch. Some of the step tasks have been OOM Killed.
 ```
 
 Furthermore, if we use `seff` to get information about the job, it will show `State: OUT_OF_MEMORY (exit code 0)`.
@@ -362,7 +358,7 @@ We can print the value of a variable with `echo $HOME`.
 
 The syntax to create a variable ourselves is:
 
-```shell
+```bash
 VARIABLE="value"
 ```
 
@@ -370,13 +366,13 @@ Notice that there should be **no space between the variable name and its value**
 
 If you want to create a variable with the result of evaluating a command, then the syntax is:
 
-```shell
+```bash
 VARIABLE=$(command)
 ```
 
 Try these examples:
 
-```shell
+```bash
 # Make a variable with a path starting from the user's /home
 DATADIR="$HOME/rds/hpc-work/data/"
 
@@ -407,21 +403,17 @@ Here is a table summarising some of the most useful environment variables that S
 ### Exercise: SLURM environment variables
 
 :::{.callout-exercise}
-Before starting this exercise:
+Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
-- Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
-- Activate a software environment needed for the exercise (we will cover the details in the [Software Management](04-software.md) chapter): `mamba activate base`
-  - Your prompt should now start with the prefix `(base)`
-
-The R script used in the previous exercise supports parallelisation of some of its internal computations. 
+The Python script used in the previous exercise supports parallelisation of some of its internal computations. 
 The number of CPUs used by the script can be modified using the `--ncpus` option. 
-For example `pi_estimator.R --nsamples 200 --ncpus 2` would use two CPUs. 
+For example `pi_estimator.py --nsamples 200 --ncpus 2` would use two CPUs. 
 
 1. Modify your submission script (`job_scripts/estimate_pi.sh`) to:
     <!-- 1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs). -->
-    1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.R` (and ensure you have set `--nsamples 200` as well). 
-    1. Request 3 CPUs and 9G of RAM memory for the job.
-    1. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
+    1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.py` (and ensure you have set `--nsamples 200` as well). 
+    2. Request 3 CPUs and 9G of RAM memory for the job.
+    3. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
 2. Submit the job again but this time requesting 8 CPUs. Make a note of each job's ID.
 3. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
 
@@ -443,7 +435,7 @@ We can modify our submission script in the following manner, requesting 3 CPUs a
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
 
 # launch the Pi estimator script using the number of CPUs that we are requesting from SLURM
-Rscript analysis_scripts/pi_estimator.R --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
+python3 analysis_scripts/pi_estimator.py --nsamples 200 --ncpus $SLURM_CPUS_PER_TASK
 ```
 
 To run the job each time, we modify the `#SBATCH -c` option, save the file and then re-submit it with `sbatch job_scripts/estimate_pi.sh`. 
