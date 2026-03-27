@@ -14,6 +14,6 @@ echo "Starting array: $SLURM_ARRAY_TASK_ID"
 mkdir -p results/pi
 
 # run pi_estimator script
-Rscript analysis_scripts/pi_estimator.R > results/pi/replicate_${SLURM_ARRAY_TASK_ID}.txt
+python3 analysis_scripts/pi_estimator.py > results/pi/replicate_${SLURM_ARRAY_TASK_ID}.txt
 
 echo "Finished array: $SLURM_ARRAY_TASK_ID"

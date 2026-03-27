@@ -2,29 +2,30 @@
 
 # User Arguments ----------------------------------------------------------
 
-suppressPackageStartupMessages(library("argparse"))
+library("argparser", quietly = TRUE)
 
 # create parser object
-parser <- ArgumentParser()
+parser <- arg_parser("Estimate Pi using a Monte Carlo method")
 
 # specify our desired options
 # by default ArgumentParser will add an help option
-parser$add_argument(
-  "--ncpus",
+parser <- add_argument(
+  parser,
+  arg = "--ncpus",
   type = "integer",
   default = 1,
   help = "number of CPUs used for calculation. Default: %(default)s"
 )
-parser$add_argument(
-  "--nsamples",
+parser <- add_argument(
+  parser,
+  arg = "--nsamples",
   type = "integer",
   default = 10,
-  help = "Number of points to sample for estimation in millions. Default: %(default)s",
-  metavar = "number"
+  help = "Number of points to sample for estimation in millions. Default: %(default)s"
 )
 
 # parse arguments
-args <- parser$parse_args()
+args <- parse_args(parser)
 
 
 # Functions ---------------------------------------------------------------
