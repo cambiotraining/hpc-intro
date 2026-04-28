@@ -403,6 +403,18 @@ Here is a table summarising some of the most useful environment variables that S
 ### Exercise: SLURM environment variables
 
 :::{.callout-exercise}
+
+:::{.callout-caution}
+#### 2026-04-29 workshop attendees
+
+We missed some files during our setup.
+If you haven't already done this, please run the following command to get the missing files:
+
+```bash
+bash ~/rds/rds-introhpc/fix_missing_files.sh
+```
+:::
+
 Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 The Python script used in the previous exercise supports parallelisation of some of its internal computations. 
