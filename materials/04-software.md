@@ -122,30 +122,61 @@ This means you will use fewer resources and your jobs will complete faster.
 
 Before you use _Mamba_, you will need to install it on the HPC. 
 If you are attending our live course, we already have _Mamba_ installed, so you can skip this step. 
+However, we give instructions in the box below, if you want to set this up on your environment. 
 
-To install _Mamba_, run the following commands from the terminal (this will install it in its default location in the home directory): 
+:::{.callout-note collapse="true"}
+### Mamba installation instructions
+
+The default instructions install Mamba on the user's home. 
+However, for Cambridge HPC users, we recommend installing Mamba on the faster storage. 
+
+Users from other institutions may want to adjust the `dir_to_install` variable given in the code block below, and install miniforge in a directory of their choice.
+
+:::{.panel-tabset}
+#### Default
 
 ```bash
+dir_to_install="$HOME/miniforge3"
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh -b -p $HOME/miniforge3
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $dir_to_install
 rm Miniforge3-$(uname)-$(uname -m).sh
-$HOME/miniforge3/bin/mamba shell init --shell bash
+$dir_to_install/bin/mamba shell init --shell bash
 ```
 
-Logout of the HPC and login again, to restart your terminal. 
-Your shell should now start with the word `(base)`.
+#### Cambridge HPC
+
+```bash
+dir_to_install="$HOME/rds/hpc-work/miniforge3"
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $dir_to_install
+rm Miniforge3-$(uname)-$(uname -m).sh
+$dir_to_install/bin/mamba shell init --shell bash
+```
+
+:::
+
+Logout of the HPC and log back in again, to restart your terminal. 
 
 Then run the following commands: 
 
 ```bash
-conda config --add channels bioconda; conda config --add channels conda-forge
+conda config --add channels nodefaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --set channel_priority strict
 conda config --set remote_read_timeout_secs 1000
 ```
 
+:::
+
 The software installation "recipes" used by _Mamba_ are maintained by large communities of software developers. 
 These communities are organised by **channels**, i.e. software repositories. 
-Two popular channels are "[bioconda](https://bioconda.github.io/conda-package_index.html)", which maintains bioinformatics software and "[conda-forge](https://conda-forge.org/feedstock-outputs/)", which maintains several data science packages. 
-Some of the commands we just ran add these channels to our _Mamba_ installation, so that it looks for software in those repositories by default.
+Two popular channels are:
+
+- [**bioconda**](https://bioconda.github.io/conda-package_index.html) - maintains bioinformatics software
+- [**conda-forge**](https://conda-forge.org/feedstock-outputs/) - maintains several data science packages
+
+The setup instructions given above add these channels to our _Mamba_ setup, so that it looks for software in those repositories by default.
 
 
 ### Installing software with `mamba`

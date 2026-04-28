@@ -198,6 +198,17 @@ Option A and B only differ in terms of where the software packages are installed
 Typically software can be installed in the user's `/home`, avoiding the need to reinstall it multiple times, in case the same software is used in different projects. 
 Therefore, option B is the best practice in this example. 
 
+There is another possibility, which is to install software in its own dedicated folder on the high-performance storage.
+So: 
+
+```
+/scratch/user/software/              # python packages
+/scratch/user/project_name/data/     # image files
+/scratch/user/project_name/scripts/  # analysis script
+```
+
+This is particularly the case **if the software environment is large**, which can happen with some package managers (discussed in a [later section](04-software.md)).
+
 **A2.**
 
 Since compressing/uncompressing files is a fairly routine task and unlikely to require too many resources, it would be OK to run it on the login node. 
