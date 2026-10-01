@@ -1,7 +1,7 @@
 import argparse
-import random
 import math
 import multiprocessing
+import random
 
 # User Arguments ----------------------------------------------------------
 
@@ -22,6 +22,12 @@ parser.add_argument(
     help="Number of points to sample for estimation in millions. Default: %(default)s",
     metavar="number",
 )
+parser.add_argument(
+    "--seed",
+    type=int,
+    default=None,
+    help="Random seed used to derive worker seeds. By default, samplers choose seeds.",
+)
 
 # Parse arguments
 args = parser.parse_args()
@@ -41,7 +47,9 @@ def split(x, n):
 
 # Count points inside a circle
 # Note: This is purpusefully inefficient to force the allocation of a large object to illustrate OOM errors.
-def inside_circle(total_count):
+def inside_circle(task):
+    total_count, seed = task
+    random.seed(seed)
 
     count = 0
     for _ in range(total_count):
@@ -56,7 +64,7 @@ def inside_circle(total_count):
 # Estimate Pi -------------------------------------------------------------
 
 # Grab user options
-n_samples = int(math.ceil(args.nsamples * 1e6))
+n_samples = math.ceil(args.nsamples * 1e6)
 ncpus = args.ncpus
 
 # Allocate 24 bytes per sample (adjust factor as needed)
@@ -65,7 +73,12 @@ buf = bytearray(n_samples * 24)
 
 # Use multiprocessing to distribute the workload
 with multiprocessing.Pool(ncpus) as pool:
-    results = pool.map(inside_circle, split(n_samples, ncpus))
+    worker_seeds = (
+        [None] * ncpus
+        if args.seed is None
+        else [args.seed + worker_index for worker_index in range(ncpus)]
+    )
+    results = pool.map(inside_circle, zip(split(n_samples, ncpus), worker_seeds))
 
 counts = sum(results)
 my_pi = 4 * counts / n_samples

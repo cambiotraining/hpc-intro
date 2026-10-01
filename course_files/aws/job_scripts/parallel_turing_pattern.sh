@@ -9,20 +9,15 @@
 
 echo "Starting array: $SLURM_ARRAY_TASK_ID"
 
-# these lines are needed to source the mamba activate command
-# include them if you want to activate environments in your script
-eval "$(conda shell.bash hook)"
-source $CONDA_PREFIX/etc/profile.d/mamba.sh
-
-# activate conda environment
-mamba activate scipy
+# load numpy and matplotlib modules
+FIXME
 
 # make output directory
 mkdir -p results/turing
 
 # get the relevant line of the CSV parameter file
-# see http://bigdatums.net/2016/02/22/3-ways-to-get-the-nth-line-of-a-file-in-linux/
-PARAMS=$(cat data/turing_model_parameters.csv | head -n FIXME | tail -n 1)
+# see https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
+PARAMS=$(sed -n "FIXME" data/turing_model_parameters.csv)
 
 # separate the values based on comma "," as delimiter
 FEED=$(echo ${PARAMS} | cut -d "," -f 1)

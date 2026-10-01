@@ -7,12 +7,11 @@
 #SBATCH --mem=1G    # RAM memory. Default: 1G
 #SBATCH -t 00:10:00 # time for the job HH:MM:SS. Default: 1 min
 
-# these lines are needed to source the mamba activate command
-# include them if you want to activate environments in your script
-eval "$(conda shell.bash hook)"
-source $CONDA_PREFIX/etc/profile.d/mamba.sh
+# default icelake modules
+module purge
+module load rhel8/default-icl
 
-# activate conda environment
+# load bowtie2 module
 FIXME
 
 # make an output directory for the index

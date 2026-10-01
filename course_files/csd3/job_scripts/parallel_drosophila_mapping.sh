@@ -8,17 +8,16 @@
 #SBATCH -t 00:30:00  # time for the job HH:MM:SS. Default: 1 min
 #SBATCH -a 2-FIXME   # we start at 2 because of the header
 
-# these lines are needed to source the mamba activate command
-# include them if you want to activate environments in your script
-eval "$(conda shell.bash hook)"
-source $CONDA_PREFIX/etc/profile.d/mamba.sh
+# default icelake modules
+module purge
+module load rhel8/default-icl
 
-# activate conda environment
-mamba activate mapping
+# load bowtie2 module
+module load bowtie2-2.3.5-intel-17.0.4-ypnhvtd
 
 # get the relevant line of the CSV sample information file
-# see http://bigdatums.net/2016/02/22/3-ways-to-get-the-nth-line-of-a-file-in-linux/
-SAMPLE_INFO=$(cat data/drosophila_sample_info.csv | head -n FIXME | tail -n 1)
+# see https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
+SAMPLE_INFO=$(sed -n "FIXME" data/drosophila_sample_info.csv)
 
 # get the sample name and paths to read1 and read2
 SAMPLE=$(echo $SAMPLE_INFO | cut -d "," -f 1)
