@@ -4,7 +4,7 @@ pagetitle: "HPC SLURM"
 
 # SLURM Scheduler
 
-:::{.callout-tip}
+::: {.callout-tip}
 #### Learning Objectives
 
 - Describe the role of a job scheduler on a HPC cluster.
@@ -17,7 +17,7 @@ pagetitle: "HPC SLURM"
 
 ## Job Scheduler Overview
 
-As we briefly discussed in "[Introduction to HPC](01-intro.md)", HPC servers usually have a **job scheduler** software that manages all the jobs that the users submit to be run on the _compute nodes_.
+As we briefly discussed in "[Introduction to HPC](01-intro.md)", HPC servers usually have a **job scheduler** software that manages all the jobs that the users submit to be run on the *compute nodes*.
 This allows efficient usage of the compute resources (CPUs and RAM), and the user does not have to worry about affecting other people's jobs.
 
 The job scheduler uses an algorithm to prioritise the jobs, weighing aspects such as:
@@ -33,10 +33,9 @@ For example, a job requesting many resources may start with a low priority, but 
 In these materials we will cover a job scheduler called **SLURM**, however the way this scheduler works is very similar to other schedulers.
 The specific commands may differ, but the functionality is the same (see [this document](https://slurm.schedmd.com/rosetta.pdf) for matching commands to other job sheculers).
 
-
 ## Submitting a Job with SLURM
 
-To submit a job to SLURM, you need to include your code in a _shell script_.
+To submit a job to SLURM, you need to include your code in a *shell script*.
 Let's start with a minimal example, found in our workshop data folder "slurm".
 
 Our script is called `simple_job.sh` and contains the following code:
@@ -92,14 +91,13 @@ This file will be located in the same directory where you launched the job from.
 
 We can investigate the output by looking inside the file, for example `cat slurm-JOBID.out`.
 
-:::{.callout-important}
+::: {.callout-important}
 The first line of the shell scripts `#!/bin/bash` is called a [_shebang_](https://en.wikipedia.org/wiki/Shebang_(Unix)) and indicates which program should interpret this script.
-In this case, _bash_ is the interpreter of _shell_ scripts (there's other shell interpreters, but that's beyond what we need to worry about here).
+In this case, *bash* is the interpreter of *shell* scripts (there's other shell interpreters, but that's beyond what we need to worry about here).
 
 Remember to **always have this as the first line of your script**.
 If you don't, `sbatch` will throw an error.
 :::
-
 
 ## Configuring Job Options
 
@@ -109,7 +107,7 @@ Instead, we usually want to customise our job, by specifying options at the top 
 For example, one option we may want to change in our previous script is the name of the file to where our standard output is written to.
 We can do this using the `-o` option.
 
-Here is how we could modify our script (you can do it using _Nano_ or _VS Code_):
+Here is how we could modify our script (you can do it using *Nano* or *VS Code*):
 
 ```bash
 #!/bin/bash
@@ -125,30 +123,28 @@ If we now re-run the script using `sbatch simple_job.sh`, the output goes to a f
 There are several other options we can specify when using SLURM, and we will encounter several more of them as we progress through the materials.
 Here are some of the most common ones (anything in `<>` is user input):
 
-| Command | Description |
-| -: | :---------- |
-| `-D <path>` | *working directory* used for the job. This is the directory that SLURM will use as a reference when running the job. |
-| `-o <path/filename>` | file where the output that would normally be printed on the console is saved in. This is defined _relative_ to the working directory set above. |
-| `-A <name>` | billing account. This is sometimes needed if you're using HPC servers that charge you for their use. This information should be provided by your HPC admins. |
-| `-p <name>` | *partition* name. See details in the following section. |
-| `-c <number>` | the number of CPUs you want to use for your job. |
-| `-t <HH:MM:SS>` | the time you need for your job to run. This is not always easy to estimate in advance, so if you're unsure you may want to request a good chunk of time. However, the more time you request for your job, the lower its priority in the queue. |
-| `--mem=<number>GB` | how much RAM memory you want for your job in gigabytes. |
-| `-J <name>` | a name for the job. |
+  | Command              | Description                                                                                                                                                                                                                                    |
+  | -:                   | :----------                                                                                                                                                                                                                                    |
+  |          `-D <path>` | *working directory* used for the job. This is the directory that SLURM will use as a reference when running the job.                                                                                                                           |
+  | `-o <path/filename>` | file where the output that would normally be printed on the console is saved in. This is defined *relative* to the working directory set above.                                                                                                |
+  |          `-A <name>` | billing account. This is sometimes needed if you're using HPC servers that charge you for their use. This information should be provided by your HPC admins.                                                                                   |
+  |          `-p <name>` | *partition* name. See details in the following section.                                                                                                                                                                                        |
+  |        `-c <number>` | the number of CPUs you want to use for your job.                                                                                                                                                                                               |
+  |      `-t <HH:MM:SS>` | the time you need for your job to run. This is not always easy to estimate in advance, so if you're unsure you may want to request a good chunk of time. However, the more time you request for your job, the lower its priority in the queue. |
+  |   `--mem=<number>GB` | how much RAM memory you want for your job in gigabytes.                                                                                                                                                                                        |
+  |          `-J <name>` | a name for the job.                                                                                                                                                                                                                            |
 
-
-:::{.callout-important}
+::: {.callout-important}
 #### Default Resources
 
 If you don't specify any options when submitting your jobs, you will get the default configured by the HPC admins.
 For example, in our Cambridge HPC, the defaults you will get are:
 
 - 10 minutes of running time (equivalent to `-t 00:10:00`)
-- _cclake_ partition (equivalent to `-p cclake`)
+- *cclake* partition (equivalent to `-p cclake`)
 - 1 CPU (equivalent to `-c 1`)
 - ~3.4 GiB RAM (equivalent to `--mem=3.4G`)
 :::
-
 
 ### Partitions
 
@@ -167,18 +163,18 @@ For example, on the Cambridge HPC we have several partitions, here are two examp
   - Maximum 8 CPUs (default: 1)
   - Maximum 31758 MB RAM (default: 1024)
 
-
 ## Getting Job Information
 
 After submitting a job, we may want to know:
 
-- What is going on with my job? Is it running or has it finished?
+- What is going on with my job?
+  Is it running or has it finished?
 - If it finished, did it finish successfully, or did it fail?
 - How many resources (e.g. RAM) did it use?
 - What if I want to cancel a job because I realised there was a mistake in my script?
 
 We've already seen the `squeue` command to check the **status of your jobs**.
-Without any options you will get _all_ jobs in the queue (yours and other users').
+Without any options you will get *all* jobs in the queue (yours and other users').
 To see only your jobs you can add the `--me` option, or `-u <your-username>`:
 
 ```bash
@@ -226,8 +222,7 @@ sacct -S 2024-01-01 -E 2024-02-01 --format=JobID,JobName,Start,End,State
 Here, `-S` is the start date and `-E` the end date of the time period you want to list jobs for.
 You can omit the `-E` option, in which case it will list all the jobs that ran up to the current date.
 
-
-:::{.callout-note}
+::: {.callout-note}
 The `sacct` command may not be available on every HPC, as it depends on how it was configured by the admins.
 :::
 
@@ -245,11 +240,9 @@ scancel <JOBID>
 
 And to cancel all your jobs simultaneously: `scancel -u <USERNAME>` (you will not be able to cancel other people's jobs, so don't worry about it).
 
-
 ### Exercise: Submit SLURM job
 
-:::{.callout-exercise}
-
+::: {.callout-exercise}
 Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 In the "analysis_scripts" directory, you will find a Python script called `pi_estimator.py`.
@@ -269,18 +262,20 @@ If you were running this script interactively (i.e. directly from the console), 
 Instead, we use a shell script to submit this to the job scheduler.
 
 1. Edit the shell script in `job_scripts/estimate_pi.sh` by correcting your username in the working directory path (under `#SBATCH -D`).
-  Submit the job to SLURM and check its status in the queue.
+   Submit the job to SLURM and check its status in the queue.
 1. Did your job run successfully, and how long did it take to run?
-2. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions. The more samples we use, the more precise our estimate should be.
-    - Adjust your SLURM submission script to use 50 million samples (`python3 analysis_scripts/pi_estimator.py --nsamples 50`), and save the job output in `job_logs/estimate_pi_50M.log`.
-    - Monitor the job status with `squeue` and `seff JOBID`. Do you find any issues? How would you fix it?
+2. The number of samples used to estimate Pi can be modified using the `--nsamples` option of our script, defined in millions.
+   The more samples we use, the more precise our estimate should be.
+   - Adjust your SLURM submission script to use 50 million samples (`python3 analysis_scripts/pi_estimator.py --nsamples 50`), and save the job output in `job_logs/estimate_pi_50M.log`.
+   - Monitor the job status with `squeue` and `seff JOBID`.
+     Do you find any issues?
+     How would you fix it?
 
-:::{.callout-hint}
+::::: {.callout-hint}
 - Use `seff JOBID` or `scontrol show job JOBID` to see job details.
-:::
+:::::
 
-:::{.callout-answer}
-
+::::: {.callout-answer}
 **A1.**
 
 In the shell script we needed to correct the path specified in the `#SBATCH -D` option, which defines the working directory that SLURM will run our code from.
@@ -306,7 +301,7 @@ Replacing JOBID with the ID of the job we just ran.
 If you cannot remember what the job id was, you can run `sacct` with no other options and it will list the last few jobs that you ran.
 
 Sometimes it may happen that the "Memory Utilized" is reported as 0.00MB or a lower value than you would expect.
-That's very odd, since for sure our script must have used _some_ memory to do the computation.
+That's very odd, since for sure our script must have used *some* memory to do the computation.
 The reason is that SLURM doesn't always have time to pick memory usage spikes, and so it reports a zero.
 This is usually not an issue with longer-running jobs.
 
@@ -339,18 +334,15 @@ This suggests that the job required more memory than we requested.
 We can also check this by seeing what `seff` reports as "Memory Utilized" and see that it exceeded the requested 1GB (although sometimes it shows much less than that, if it ran too fast and SLURM didn't register the memory usage peak).
 
 To correct this problem, we would need to increase the memory requested to SLURM, adding to our script, for example, `#SBATCH --mem=3G` to request 3Gb of RAM memory for the job.
-
+:::::
 :::
-:::
-
 
 ## SLURM Environment Variables
 
 One useful feature of SLURM jobs is the automatic creation of environment variables.
 Generally speaking, variables are a character that store a value within them, and can either be created by us, or sometimes they are automatically created by programs or available by default in our shell.
 
-
-:::{.callout-note collapse=true}
+::: {.callout-note collapse=true}
 #### More about shell variables (click to view)
 
 An example of a common shell environment variable is `$HOME`, which stores the path to the user's `/home` directory.
@@ -391,35 +383,33 @@ We will see an example in the following exercise.
 
 Here is a table summarising some of the most useful environment variables that SLURM creates:
 
-| Variable | Description |
-| -: | :- |
-| `$SLURM_CPUS_PER_TASK` | Number of CPUs requested with `-c` |
-| `$SLURM_JOB_ID` | The job ID |
-| `$SLURM_JOB_NAME` | The name of the job defined with `-J` |
-| `$SLURM_SUBMIT_DIR` | The working directory defied with `-D` |
-| `$SLURM_ARRAY_TASK_ID` | The number of the sub-job when running parallel arrays (covered in the [Job Arrays](05-arrays.md) section) |
-
+  | Variable               | Description                                                                                                |
+  | -:                     | :-                                                                                                         |
+  | `$SLURM_CPUS_PER_TASK` | Number of CPUs requested with `-c`                                                                         |
+  |        `$SLURM_JOB_ID` | The job ID                                                                                                 |
+  |      `$SLURM_JOB_NAME` | The name of the job defined with `-J`                                                                      |
+  |    `$SLURM_SUBMIT_DIR` | The working directory defined with `-D`                                                                    |
+  | `$SLURM_ARRAY_TASK_ID` | The number of the sub-job when running parallel arrays (covered in the [Job Arrays](05-arrays.md) section) |
 
 ### Exercise: SLURM environment variables
 
-:::{.callout-exercise}
-
+::: {.callout-exercise}
 Before starting this exercise make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 The Python script used in the previous exercise supports parallelisation of some of its internal computations.
 The number of CPUs used by the script can be modified using the `--ncpus` option.
 For example `pi_estimator.py --nsamples 200 --ncpus 2` would use two CPUs.
 
-1. Modify your submission script (`job_scripts/estimate_pi.sh`) to:
-    <!-- 1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs). -->
-    1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.py` (and ensure you have set `--nsamples 200` as well).
-    2. Request 3 CPUs and 9G of RAM memory for the job.
-    3. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
-2. Submit the job again but this time requesting 8 CPUs. Make a note of each job's ID.
-3. Check how much time each job took to run (using `seff JOBID`). Did increasing the number of CPUs shorten the time it took to run?
+1. Modify your submission script (`job_scripts/estimate_pi.sh`) to: <!-- 1. Use the `traininglarge` partition (the nodes in the default `training` partition only have 2 CPUs). -->
+   1. Use the `$SLURM_CPUS_PER_TASK` variable to set the number of CPUs used by `pi_estimator.py` (and ensure you have set `--nsamples 200` as well).
+   2. Request 3 CPUs and 9G of RAM memory for the job.
+   3. Bonus (optional): use `echo` within the script to print a message indicating the job number (SLURM's job ID is stored in the variable `$SLURM_JOB_ID`).
+2. Submit the job again but this time requesting 8 CPUs.
+   Make a note of each job's ID.
+3. Check how much time each job took to run (using `seff JOBID`).
+   Did increasing the number of CPUs shorten the time it took to run?
 
-:::{.callout-answer}
-
+::::: {.callout-answer}
 **A1.**
 
 We can modify our submission script in the following manner, requesting 3 CPUs and 9GB or RAM:
@@ -447,11 +437,10 @@ Alternatively, since we want to compare several jobs, we could also have used `s
 
 `sacct -o JobID,elapsed -j JOBID1,JOBID2`
 
-In this case, it doesn't seem that increasing the number of CPUs from 3 to 8 shortens the time the job takes to run.
-It is often the case that the time to run a parallelised tasks doesn't scale linearly, which is likely because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing).
+This is a small job, so the impact of increasing the number of CPUs may be modest.
+In general, the time to run a parallelised task doesn't scale linearly, which is likely because there are other computational costs to do with this kind of parallelisation (e.g. keeping track of what each parallel thread is doing).
+:::::
 :::
-:::
-
 
 ## Interactive Login
 
@@ -476,7 +465,7 @@ Once you are finished, you can use the command `exit` to terminate the session, 
 
 Note that, if the time you requested (with the `-t` option) runs out, your session will be immediately killed.
 
-:::{.callout-important}
+::: {.callout-important}
 #### Use interactive jobs ethically
 
 The main purpose of interactive jobs is to quickly test code or to run routine tasks such as compressing/uncompressing large files.
@@ -489,17 +478,17 @@ Furthermore, batch jobs can be scheduled to run during off-peak hours, allowing 
 For this reason, some HPC clusters are configured to limit the time for interactive jobs (for example, at Cambridge University these are limited to 1h).
 :::
 
-
 ## Summary
 
-:::{.callout-tip}
+::: {.callout-tip}
 #### Key Points
 
 - Include the commands you want to run on the HPC in a shell script.
   - Always remember to include `#!/bin/bash` as the first line of your script.
 - Submit jobs to the scheduler using `sbatch submission_script.sh`.
 - Customise the jobs by including `#SBATCH` options at the top of your script (see table in the materials above for a summary of options).
-  - As a good practice, always define an output file with `#SBATCH -o`. All the information about the job will be saved in that file, including any errors.
+  - As a good practice, always define an output file with `#SBATCH -o`.
+    All the information about the job will be saved in that file, including any errors.
 - Check the status of a submitted job by using `squeue --me` and `seff JOBID`.
 - To cancel a running job use `scancel JOBID`.
 
