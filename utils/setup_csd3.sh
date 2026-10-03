@@ -16,9 +16,9 @@ bash ~/rds/rds-introhpc/Miniforge3-$(uname)-$(uname -m).sh -b -p $MAMBADIR
 conda config --add channels bioconda; conda config --add channels conda-forge
 conda config --set remote_read_timeout_secs 1000
 
-# additional conda environments
-mamba create -y -n np numpy==1.26.4 matplotlib==3.8.3
-mamba create -y -n mapping bowtie2==2.5.3
+# # additional conda environments
+# mamba create -y -n np numpy==1.26.4 matplotlib==3.8.3
+# mamba create -y -n mapping bowtie2==2.5.3
 
 # configure bashrc to load conda and mamba
 echo 'export MAMBA_ROOT_PREFIX=${HOME}/rds/hpc-work/miniforge3' >> ~/.bashrc
