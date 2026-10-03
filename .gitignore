@@ -35,3 +35,6 @@ course_files/**/results
 
 # Positron
 snowflake.log
+
+# AI agent directories
+.agents
