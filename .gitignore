@@ -32,3 +32,6 @@ course_files/**/data
 course_files/**/logs
 course_files/**/results
 **/*.quarto_ipynb
+
+# Positron
+snowflake.log
