@@ -1,0 +1,30 @@
+name: Tag Release
+
+on:
+  push:
+    tags:
+      - '20[2-9][0-9].[0-1][0-9].[0-3][0-9]'
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Archive
+        uses: cambiotraining/crit-gh-actions/course-archive@main
+        with:
+          pre_render: "echo 'Optional pre-render commands'"
+          post_render: "echo 'Optional post-render commands'"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: archive
+    steps:
+      - name: Deploy
+        uses: cambiotraining/crit-gh-actions/course-deploy@main
+        with:
+          pre_render: "echo 'Optional pre-render commands'"
+          post_render: "echo 'Optional post-render commands'"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

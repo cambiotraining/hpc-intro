@@ -1,0 +1,31 @@
+name: Scheduled Quarto Extensions Update
+
+on:
+  schedule:
+    - cron: '0 6 8 1,7 *' # twice a year 06:00 UTC on 8th Jan and Jul
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-extensions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update extensions
+        uses: cambiotraining/crit-gh-actions/course-extensions-update@main
+
+      - name: Create or update PR
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: automated update to Quarto extensions"
+          branch: "auto/quarto-ext-update"
+          title: "chore: automated update to Quarto extensions"
+          body: |
+            Automated update of Quarto extensions to their latest versions.
+          labels: "chore,extensions-update"

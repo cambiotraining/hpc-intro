@@ -1,0 +1,14 @@
+title: CRIT Course Page Format
+description: A custom format for CRIT course pages.
+author: Cambridge Research Informatics Training
+version: 1.0.1
+contributes:
+  formats:
+    html:
+      theme: [default, theme.scss]
+      toc: true
+      number-sections: true
+      number-depth: 3
+      code-link: true
+      code-copy: true
+      lightbox: true

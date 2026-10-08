@@ -1,0 +1,21 @@
+name: Deploy Latest
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        uses: cambiotraining/crit-gh-actions/course-deploy@main
+        with:
+          pre_render: "echo 'Optional pre-render commands'"
+          post_render: "echo 'Optional post-render commands'"
+          enable_archive: "true"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -14,7 +14,7 @@ This is a hands-on workshop, which should be accessible to researchers from a ra
 
 By the end of this course you will be able to independently work on a typical HPC server.
 
-:::{.callout-tip}
+::: {.callout-tip}
 #### Learning Objectives
 
 - Describe how a HPC cluster is typically organised and how it differs from a regular computer.
@@ -25,7 +25,6 @@ By the end of this course you will be able to independently work on a typical HP
 - Access, install and manage software on a HPC.
 :::
 
-
 ## Target Audience
 
 This course is aimed at students and researchers of any background.
@@ -33,7 +32,6 @@ We assume no prior knowledge of what a HPC is or how to use it.
 
 It may be particularly useful for those who have attended other of our [Bioinformatics Training Courses](https://www.training.cam.ac.uk/bioinformatics/search) and now need to process their data on a Linux server.
 It will also benefit those who find themselves using their personal computers to run computationally demanding analysis/simulations and would like to learn how to adapt these to run on a HPC.
-
 
 ## Prerequisites
 
@@ -49,13 +47,13 @@ Namely, we expect you to be familiar with the following:
 - Use the pipe `|` to chain several commands together, for example `ls | wc -l`
 - Execute shell scripts with `bash some_script.sh`
 
-
 ## Authors
 
 Please cite these materials if:
 
 - You adapted or used any of them in your own teaching.
-- These materials were useful for your research work. For example, you can cite us in the methods section of your paper: "We carried our analyses based on the recommendations in _YourReferenceHere_".
+- These materials were useful for your research work.
+  For example, you can cite us in the methods section of your paper: "We carried our analyses based on the recommendations in *YourReferenceHere*".
 
 <!--
 This is generated automatically from the CITATION.cff file.
@@ -63,7 +61,6 @@ If you think you should be added as an author, please get in touch with us.
 -->
 
 {{< citation CITATION.cff >}}
-
 
 ## Acknowledgements
 

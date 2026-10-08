@@ -4,43 +4,42 @@ pagetitle: "HPC SLURM"
 
 # File Transfer
 
-:::{.callout-tip}
+::: {.callout-tip}
 #### Learning Objectives
 
-- Move files in and out of the HPC storage using _Filezilla_ or `rsync`/`scp`. 
+- Move files in and out of the HPC storage using *Filezilla* or `rsync`/`scp`.
 :::
-
 
 ## Moving Files
 
 There are several options to move data between your local computer and a remote server.
 We will cover three possibilities in this section, which vary in their ease of use.
 
-A quick summary of these tools is given in the table below. 
+A quick summary of these tools is given in the table below.
 
-| | Filezilla | SCP | Rsync |
-| :-: | :-: | :-: | :-: |
-| Interface | GUI | Command Line | Command Line |
-| Data synchronisation | yes | no | yes |
-
+  |                      | Filezilla | SCP          | Rsync        |
+  | :------------------: | :-------: | :----------: | :----------: |
+  |      Interface       |    GUI    | Command Line | Command Line |
+  | Data synchronisation |    yes    |      no      |     yes      |
 
 ### Filezilla (GUI)
 
 This program has a graphical interface, for those that prefer it and its use is relatively intuitive.
 
-To connect to the remote server (see Figure 3): 
+To connect to the remote server (see Figure 3):
 
 1. Fill in the following information on the top panel:
-  - Host: login.hpc.cam.ac.uk
-  - Username: your HPC username
-  - Password: your HPC password
-  - Port: 22
+
+- Host: login.hpc.cam.ac.uk
+- Username: your HPC username
+- Password: your HPC password
+- Port: 22
+
 1. Click "Quickconnect" and the files on your "home" should appear in a panel on right side.
 1. Navigate to your desired location by either clicking on the folder browser or typing the directory path in the box "Remote site:".
 1. You can then drag-and-drop files between the left side panel (your local filesystem) and the right side panel (the HPC filesystem), or vice-versa.
 
 ![Example of a Filezilla session. Arrows in red highlight: the connection panel, on the top; the file browser panels, in the middle; the transfer progress panel on the bottom.](images/filezilla.svg)
-
 
 ### `scp` (command line)
 
@@ -59,11 +58,10 @@ scp -r <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder
 
 The option `-r` ensures that all sub-directories are copied (instead of just files, which is the default).
 
-
 ### `rsync` (command line)
 
-This program is more advanced than `scp` and has options to synchronise files between two directories in multiple ways. 
-The cost of its flexibility is that it can be a little harder to use. 
+This program is more advanced than `scp` and has options to synchronise files between two directories in multiple ways.
+The cost of its flexibility is that it can be a little harder to use.
 
 The most common usage is:
 
@@ -75,20 +73,20 @@ rsync -auvh --progress path/to/source_folder <user>@login.hpc.cam.ac.uk:path/to/
 rsync -auvh --progress <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/target_folder
 ```
 
-- the options `-au` ensure that only files that have changed _and_ are newer on the source folder are transferred
+- the options `-au` ensure that only files that have changed *and* are newer on the source folder are transferred
 - the options `-vh` give detailed information about the transfer and human-readable file sizes
 - the option `--progress` shows the progress of each file being transferred
 
-:::{.callout-warning}
-
+::: {.callout-warning}
 When you specify the *source* directory as `path/to/source_folder/` (with `/` at the end) or `path/to/source_folder` (without `/` at the end), `rsync` will do different things:
 
 - `path/to/source_folder/` will copy the files *within* `source_folder` but not the folder itself
 - `path/to/source_folder` will copy the actual `source_folder` as well as all the files within it
 :::
 
-:::{.callout-tip}
-To check what files `rsync` would transfer but not actually transfer them, add the `--dry-run` option. This is useful to check that you've specified the right source and target directories and options.
+::: {.callout-tip}
+To check what files `rsync` would transfer but not actually transfer them, add the `--dry-run` option.
+This is useful to check that you've specified the right source and target directories and options.
 :::
 
 <!-- 
@@ -139,12 +137,11 @@ Finally, we can check how many shell scripts there are using the `find` program 
 ::: 
 -->
 
-
 ## Summary
 
-:::{.callout-tip}
+::: {.callout-tip}
 #### Key Points
 
-- To transfer files to/from the HPC we can use _Filezilla_, which offers a user-friendly interface to synchronise files between your local computer and a remote server.
-- Transfering files can also be done from the command line, using tools such as `scp` and `rsync` (this is the most flexible tool but also more advanced). 
+- To transfer files to/from the HPC we can use *Filezilla*, which offers a user-friendly interface to synchronise files between your local computer and a remote server.
+- Transfering files can also be done from the command line, using tools such as `scp` and `rsync` (this is the most flexible tool but also more advanced).
 :::

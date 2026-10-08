@@ -13,13 +13,13 @@ project:
     - materials/*
     - "!materials/*/no_render"
 
-format: courseformat-html
+format: crit-format-html
 exercises:
   number: true
   hide-answers: false
 
 filters:
-  - courseformat
+  - callout-exercise
 
 execute:
   freeze: auto
@@ -35,7 +35,7 @@ metadata-files:
 book:
   search:
     location: sidebar
-  favicon: "_extensions/cambiotraining/courseformat/img/university-of-cambridge-favicon.ico"
+  favicon: "_extensions/cambiotraining/crit-format/img/university-of-cambridge-favicon.ico"
   bread-crumbs: false
   page-navigation: true
   page-footer:
@@ -45,7 +45,7 @@ book:
       Cambridge Research Informatics Training
   navbar:
     pinned: true
-    logo: "_extensions/cambiotraining/courseformat/img/university_crest_reversed.png"
+    logo: "_extensions/cambiotraining/crit-format/img/university_crest_reversed.png"
     right:
       - text: "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}"
         href: https://github.com/cambiotraining/hpc-intro
@@ -65,3 +65,5 @@ book:
           href: setup.md
         - text: "Slides"
           href: materials/slides.md
+  appendices:
+    - href: versions.md

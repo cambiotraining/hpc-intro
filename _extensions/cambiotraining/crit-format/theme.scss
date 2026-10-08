@@ -1,0 +1,242 @@
+/*-- Imports ---------------------------------------------------------------*/
+/* Font Awesome */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+
+/*-- scss:defaults --*/
+/* Quarto theme variables for navbar, callouts, and palette */
+$navbar-bg: #106470;
+$navbar-fg: white;
+
+$body-color: black;
+$link-color: #003a41;
+
+/* Callout colours */
+$callout-color-note: #C6C5B9;
+$callout-color-tip: #28828A;
+$callout-color-caution: #D62828;
+$callout-color-warning: #D62828;
+$callout-color-important: #28828A;
+
+/* Custom palette for convenience / reuse */
+$primary: #106470;
+$primary-dark: #0c5963;
+$primary-darker: #003a41;
+$accent: #28828A;
+$white: #ffffff;
+$muted: #f5f5f5;
+
+/* Accessibility / UI */
+$btn-focus-box-shadow: 0 0 0 0.15rem rgba(16,100,112,0.12);
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
+                         "Helvetica Neue", "Noto Sans", "Liberation Sans",
+                         Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                         "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+                        "Liberation Mono", "Courier New", monospace;
+
+/*-- scss:rules --*/
+/* Base typography */
+body {
+  color: $body-color;
+  font-family: $font-family-sans-serif;
+  line-height: 1.6;
+}
+
+pre, code {
+  font-family: $font-family-monospace;
+  line-height: 1.45;
+}
+
+/* Headings */
+.quarto-secondary-nav-title,
+title,
+h1, h2, h3, h4, h5, h6 {
+  color: $primary-darker;
+}
+
+/* Active sidebar item */
+div.sidebar-item-container .active {
+  font-weight: bold;
+}
+
+/* Active links in side nav */
+.sidebar .nav-link.active {
+  font-weight: bold;
+}
+
+/* Header-specific active link */
+.navbar-dark .navbar-nav .nav-link.active {
+  color: $white;
+  text-decoration: underline;
+}
+
+/* Header link hover/visited */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:visited {
+  text-decoration: underline;
+  color: $white;
+}
+
+/* Footer font size */
+.nav-footer, .nav-footer-left, .nav-footer-right, .nav-footer-center {
+  font-size: 1rem;
+}
+
+/* Navbar title spacing */
+.navbar-title {
+  padding-left: 20px;
+}
+
+
+/*-- Buttons --------------------------------------------------------------*/
+/* Global buttons */
+.btn {
+  background-color: $primary;
+  border: none;
+  color: $white;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 1.125rem;
+  transition: background-color 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    background-color: $primary-darker;
+    color: $white;
+  }
+
+  &:focus {
+    box-shadow: $btn-focus-box-shadow;
+    outline: none;
+  }
+}
+
+/* Navbar buttons (toggle + search) */
+.quarto-secondary-nav {
+  .btn.quarto-btn-toggle,
+  .btn.quarto-search-button {
+    background-color: $white;
+    color: $primary-darker;
+    border: none;
+    background-image: none;
+    transition: background-color 0.12s ease, box-shadow 0.12s ease;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $white;
+      color: $primary-darker;
+      border: none;
+      background-image: none;
+      box-shadow: $btn-focus-box-shadow;
+      outline: none;
+    }
+
+    /* Icons inherit button colour */
+    i {
+      color: inherit;
+    }
+  }
+}
+
+
+/*-- Callouts -------------------------------------------------------------*/
+/* Fix for nested callouts padding bug */
+.callout.callout-titled .callout-body > :last-child:not(.sourceCode),
+.callout.callout-titled .callout-body > div > :last-child:not(.sourceCode) {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Padding for callout within a callout */
+.callout.callout-style-default .callout-body {
+  padding-bottom: 0.5rem;
+}
+
+/* Exercise callout */
+div.callout-exercise.callout {
+  border-left-color: $callout-color-note;
+}
+div.callout-exercise.callout-style-default > .callout-header {
+  background-color: #f9f9f8;
+}
+.callout-exercise > .callout-header::before {
+  font-family: "Font Awesome 6 Free";
+  content: "\f303";
+  margin-right: 10px;
+}
+
+/* Answer callout */
+.callout-answer > .callout-header::before {
+  font-family: "Font Awesome 6 Free";
+  content: "\f002 ";
+  margin-right: 10px;
+}
+div.callout-answer.callout {
+  border-left-color: $callout-color-tip;
+}
+div.callout-answer.callout-style-default > .callout-header {
+  background-color: #eaf3f3;
+}
+
+/* Hint callout */
+.callout-hint > .callout-header::before {
+  font-family: "Font Awesome 6 Free";
+  content: "\f12e ";
+  margin-right: 10px;
+}
+div.callout-hint.callout {
+  border-left-color: #6c757d;
+}
+div.callout-hint.callout-style-default > .callout-header {
+  background-color: #f9f9f8;
+}
+
+
+/*-- Figures & code output ------------------------------------------------*/
+.figure {
+  text-align: center;
+  text-indent: 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Custom output code block */
+pre.output {
+  @extend .sourceCode;
+  position: relative;
+  background-color: $muted;
+  padding-top: 1.5em;
+}
+pre.output::before {
+  content: "Output";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: $primary;
+  color: $white;
+  font-size: 0.75em;
+  font-family: sans-serif;
+  padding: 2px 6px;
+  border-bottom-left-radius: 4px;
+}
+
+pre.text {
+  @extend .sourceCode;
+  background-color: $muted;
+}
+
+/*-- Tabs -------------------------------------------------------------*/
+
+/* Base tab appearance */
+.panel-tabset .nav-link {
+  font-weight: 400;
+  opacity: 0.8;
+  color: $primary-darker;
+  transition: opacity 0.2s ease, font-weight 0.2s ease;
+}
+
+/* Active tab */
+.panel-tabset .nav-link.active {
+  font-weight: 600;
+  opacity: 1;
+  color: $primary-darker;
+}

@@ -74,7 +74,7 @@ You can define job array numbers in multiple ways, not just sequencially.
 Here are some examples taken from [SLURM's Job Array Documentation](https://slurm.schedmd.com/job_array.html#overview):
 
   | Option       | Description                                                             |
-  | -:           | :------                                                                 |
+  | -----------: | :---------------------------------------------------------------------- |
   |    `-a 0-31` | index values between 0 and 31                                           |
   | `-a 1,3,5,7` | index values of 1, 3, 5 and 7                                           |
   |   `-a 1-7:2` | index values between 1 and 7 with a step size of 2 (i.e. 1, 3, 5 and 7) |

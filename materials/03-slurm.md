@@ -124,7 +124,7 @@ There are several other options we can specify when using SLURM, and we will enc
 Here are some of the most common ones (anything in `<>` is user input):
 
   | Command              | Description                                                                                                                                                                                                                                    |
-  | -:                   | :----------                                                                                                                                                                                                                                    |
+  | -------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   |          `-D <path>` | *working directory* used for the job. This is the directory that SLURM will use as a reference when running the job.                                                                                                                           |
   | `-o <path/filename>` | file where the output that would normally be printed on the console is saved in. This is defined *relative* to the working directory set above.                                                                                                |
   |          `-A <name>` | billing account. This is sometimes needed if you're using HPC servers that charge you for their use. This information should be provided by your HPC admins.                                                                                   |
@@ -384,7 +384,7 @@ We will see an example in the following exercise.
 Here is a table summarising some of the most useful environment variables that SLURM creates:
 
   | Variable               | Description                                                                                                |
-  | -:                     | :-                                                                                                         |
+  | ---------------------: | :--------------------------------------------------------------------------------------------------------- |
   | `$SLURM_CPUS_PER_TASK` | Number of CPUs requested with `-c`                                                                         |
   |        `$SLURM_JOB_ID` | The job ID                                                                                                 |
   |      `$SLURM_JOB_NAME` | The name of the job defined with `-J`                                                                      |
