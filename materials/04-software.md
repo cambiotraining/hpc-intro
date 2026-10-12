@@ -22,22 +22,22 @@ Because there can be a large number of packages (and often different versions of
 
 The following table summarises the most common commands for this tool:
 
-| Command | Description |
-| -: | :- |
-| `module avail ` | List all available packages. |
-| `module avail -a -i "pattern"` <br> or <br> `module avail | grep -i "pattern"` | Search the available package list that matches "pattern". Note the second option is given as some versions of `module` do not support case-insensitive search (`-i` option). |
-| `module load <program>` | Load the program and make it available for use. |
-| `module unload <program>` | Unload the program (removes it from your PATH). |
+  | Command                                                                        | Description                                                                                                                                                                  |
+  | -:                                                                             | :-                                                                                                                                                                           |
+  |                                                                `module avail ` | List all available packages.                                                                                                                                                 |
+  | `module avail -a -i "pattern"` <br> or <br> `module avail | grep -i "pattern"` | Search the available package list that matches "pattern". Note the second option is given as some versions of `module` do not support case-insensitive search (`-i` option). |
+  |                                                        `module load <program>` | Load the program and make it available for use.                                                                                                                              |
+  |                                                      `module unload <program>` | Unload the program (removes it from your PATH).                                                                                                                              |
 
 For example, on our training HPC, you can try to run `module avail` to see which software is available.
-We can see a software called `bowtie2`.
+We can see an example using the software called `bowtie2`.
 If we try to use this software at the moment we get an error:
 
 ```bash
 bowtie2 --version
 ```
 
-```
+```output
 Command 'bowtie2' not found, but can be installed with:
 
 apt install bowtie2
@@ -51,7 +51,7 @@ module load bowtie/2.5.0
 bowtie2 --version
 ```
 
-```
+```output
 /usr/local/Cluster-Apps/bowtie/2.5.0/bowtie2-align-s version 2.5.0
 64-bit
 Built on login-e-12
@@ -66,69 +66,68 @@ Once you run `module unload bowtie2/2.5.0`, and then `echo $PATH` again, you not
 This is how the *Environment Modules* package makes software available for you to use.
 
 If a package is not available through the `module` command, your only option is to contact the HPC admin and ask them to install it for you.
-Alternatively, you can use a package manager as we show in the next section.
+Alternatively, you can use a package manager as we briefly explain in the next section.
 
-## The *Mamba* package manager
+## Package managers
 
-Often you may want to use software packages that are not installed by default on the HPC.
-There are several ways you could manage your own software installation, but in this course we will be using the **package manager *Mamba***, which is a successor to another package manager called *Conda*.
+Often you may want to use software packages that are not be installed by default on the HPC.
+There are several ways you could manage your own software installation, one of the most popular ones being the use of the package manager **Conda** or its newer implementation [**Mamba**](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html).
 
-*Conda* and *Mamba* are package managers commonly used in data science, scientific computing, and bioinformatics.
-*Conda*, originally developed by [Anaconda](https://anaconda.org/), is a package manager and environment manager that simplifies the creation, distribution, and management of software environments containing different packages and dependencies.
-It is known for its cross-platform compatibility and ease of use.
-***Mamba*** is a more recent and high-performance alternative to *Conda*.
-While it maintains compatibility with Conda's package and environment management capabilities, *Mamba* is designed for faster dependency resolution and installation, making it a better choice nowadays.
+Covering Conda/Mamba is out of the scope of these materials, but you may want to attend our accompanying course [**Managing bioinformatics software and pipelines**](https://bioinfotraining.bio.cam.ac.uk/bioinformatics-0/managing-bioinformatics-software-and-pipelines) to learn more about this topic.
 
-One of the strengths of using *Mamba* to manage your software is that you can have different versions of your software installed alongside each other, organised in **environments**.
-Organising software packages into environments is extremely useful, as it allows to have a *reproducible* set of software versions that you can use and resuse in your projects.
+Very briefly, you manage packages by encapsulating them in an environment, and then activating the environment to make the software available.
+For example, we can install the toy program called [`cowpy`](https://github.com/jeffbuttars/cowpy):
 
-For example, imagine you are a data scientist working on a project that involves machine learning.
-You have two projects with different requirements (@fig-conda):
+```bash
+# Create an environment
+mamba create -n cowpy
 
-- Project A: This project requires Python 3.7, NumPy 1.15, and scikit-learn 0.20, among other libraries.
-- Project B: This project needs Python 3.9, the latest version of NumPy, and TensorFlow 2.0.
+# Install the software
+mamba install -n cowpy conda-forge::cowpy=1.1.5
+```
 
-If you don't use environments, you would need to install and maintain these packages globally on your system.
-This can lead to several issues:
+To use the packages installed in an environment, it needs to be activated:
 
-- Version conflicts: different projects may require different versions of the same library.
-  For example, Project A might not be compatible with the latest NumPy, while Project B needs it.
-- Dependency chaos: as your projects grow, you might install numerous packages, and they could interfere with each other, causing unexpected errors or instability.
-- Difficulty collaborating: sharing your code with colleagues or collaborators becomes complex because they may have different versions of packages installed, leading to compatibility issues.
+```bash
+mamba activate cowpy
+```
 
-![Illustration of _Conda_/_Mamba_ environments. Each environment is isolated from the others (effectively in its own folder), so different versions of the packages can be installed for distinct projects or parts of a long analysis pipeline.](images/conda_environments.svg){#fig-conda}
+An important note when working on a HPC is that you need to **add some Mamba configuration commands before activating the environment**.
+This would be our SLURM script:
 
-**Environments allow you to create isolated, self-contained environments for each project**, addressing these issues:
+```bash
+#!/bin/bash
+#SBATCH ... SLURM options here ...
 
-- Isolation: you can create a separate environment for each project using tools like *Conda*/*Mamba* or virtualenv in Python.
-  This ensures that the dependencies for one project don't affect another.
-- Version control: you can specify the exact versions of libraries and packages required for each project within its environment.
-  This eliminates version conflicts and ensures reproducibility.
-- Ease of collaboration: sharing your code and environment file (e.g., requirements.txt for Python) makes it easy for collaborators to replicate your environment and run your project without worrying about conflicts.
-- Simplified maintenance: If you need to update a library for one project, it won't impact others.
-  You can manage environments separately, making maintenance more straightforward.
+# Always add these two commands when using mamba
+eval "$(conda shell.bash hook)"
+source $CONDA_PREFIX/etc/profile.d/mamba.sh
 
-In the context of HPC clusters, another advantage of using *Mamba* is that the **software is installed locally** (by default in your home directory), without the need for admin permissions.
+# then you can activate the environment
+mamba activate cowpy
+
+# the rest of your code...
+```
+
+This is because when we submit jobs to SLURM the jobs will start in a non-interactive shell, and `mamba` doesn't get automatically set.
+Running the commands shown will ensure `mamba activate` works as expected.
 
 ::: {.callout-note}
 #### Mamba versus Module
 
 Although *Mamba* is a great tool to manage your own software installation, the disadvantage is that the software is not compiled specifically taking into account the hardware of the HPC.
-This is a slightly technical topic, but the main practical consequence is that software installed by HPC admins and made available through the `module` system may sometimes run faster than software installed via `mamba`.
+This is a slightly technical topic, but the main practical consequence is that software installed by HPC admins and made available through the `module` system may sometimes run faster than software installed via `conda`.
 This means you will use fewer resources and your jobs will complete faster.
 :::
 
+::: {.callout-note collapse=true}
 ### Installing *Mamba*
 
 Before you use *Mamba*, you will need to install it on the HPC.
 If you are attending our live course, we already have *Mamba* installed, so you can skip this step.
-However, we give instructions in the box below, if you want to set this up on your environment.
 
-::: {.callout-note collapse="true"}
-### Mamba installation instructions
-
-The default instructions install Mamba on the user's home.
-However, for Cambridge HPC users, we recommend installing Mamba on the faster storage.
+The default instructions below install Mamba on the user's home.
+However, for Cambridge HPC users, we recommend installing Mamba on the fast storage partition called RDS.
 
 Users from other institutions may want to adjust the `dir_to_install` variable given in the code block below, and install miniforge in a directory of their choice.
 
@@ -165,266 +164,27 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 conda config --set remote_read_timeout_secs 1000
 ```
-:::
 
 The software installation "recipes" used by *Mamba* are maintained by large communities of software developers.
 These communities are organised by **channels**, i.e. software repositories.
 Two popular channels are:
 
+- [**conda-forge**](https://conda-forge.org/packages/) - maintains several data science packages
 - [**bioconda**](https://bioconda.github.io/conda-package_index.html) - maintains bioinformatics software
-- [**conda-forge**](https://conda-forge.org/feedstock-outputs/) - maintains several data science packages
 
 The setup instructions given above add these channels to our *Mamba* setup, so that it looks for software in those repositories by default.
-
-### Installing software with `mamba`
-
-The command used to install and manage software is called `mamba`.
-Although we will only cover the basics in this course, it has an [excellent documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/) and a useful [cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf).
-
-::: {.callout-note}
-#### `conda` or `mamba`?
-
-Some of the documentation we point to is for `conda`, but as we said earlier `mamba` is its newer implementation, so these two commands can be used interchangeably (mostly).
-The easy rule-of-thumb is: whenever you see the command `conda` you can use `mamba` instead.
-:::
-
-The first thing to do is to **create a software environment** for our project.
-Although this is optional (you could instead install everything in the "base" default environment), it is a good practice as it means the software versions remain stable within each project.
-
-To create an environment we use:
-
-```bash
-mamba create --name ENV
-```
-
-Where "ENV" is the name we want to give to that environment.
-Once the environment is created, we can install packages using:
-
-```bash
-mamba install --name ENV PROGRAM
-```
-
-Where "PROGRAM" is the name of the software we want to install.
-
-::: {.callout-note}
-#### Organising environments
-
-One way to organise your software environments is to create an environment for each kind of analysis that you might be doing regularly.
-For example, you could have an environment named `imaging` with software that you use for image processing (e.g. Python's scikit-image or the ImageMagick package) and another called `deeplearn` with software you use for deep learning applications (e.g. Python's Keras).
-
-In some situations (in particular in bioinformatics), software packages can have a very large number of software dependencies leading to incompatibilities across packages.
-In those situations, it may be best to have a separate environment for each software.
-:::
-
-To search for the software packages that are available through `mamba`:
-
-- go to [anaconda.org](https://anaconda.org).
-- in the search box search for a program of your choice.
-  For example: "bowtie2".
-- the results should be listed as `CHANNEL/PROGRAM`, where *CHANNEL* will the the source repository from where the software is available.
-  Usually scientific/bioinformatics software is available through the `conda-forge` and `bioconda` channels.
-
-You can specify the channel explicitly during the install command using the `-c` option.
-For example `mamba install --channel CHANNEL --name ENV PROGRAM`.
-
-Let's see this with an example, where we create a new environment called "datasci" and install some python packages for data science work:
-
-```bash
-mamba create --name datasci
-mamba install --name datasci --channel conda-forge numpy=1.26.4 matplotlib=3.8.3
-```
-
-Note that, in this case, we were explicit in specifying the version of each software we want.
-This is recommended for reproducibility of analysis and can make environments more stable to manage.
-If you don't specify the version you want, then Mamba will install the latest version that is compatible with your environment.
-
-To see all the environments you have available, you can use:
-
-```bash
-mamba env list
-```
-
-```
-# conda environments:
-#
-base                  *  /home/participant36/mambaforge
-datasci                  /home/participant36/mambaforge/envs/datasci
-```
-
-In our case it lists the *base* (default) environment and the newly created *datasci* environment.
-The asterisk ("\*") tells us which environment we're using at the moment.
-
-### Loading *Mamba* environments
-
-Once your packages are installed in an environment, you can load that environment by using `mamba activate ENV`, where "ENV" is the name of your environment.
-For example, we can activate our previously created environment with:
-
-```bash
-mamba activate datasci
-```
-
-If you chech which `python` executable is being used now, you will notice it's the one from this new environment:
-
-```bash
-which python
-```
-
-```
-~/mambaforge/envs/datasci/bin/python
-```
-
-You can also check that the new environment is in use from:
-
-```bash
-mamba env list
-```
-
-```
-# conda environments:
-#
-base                     /home/participant36/mambaforge
-datasci               *  /home/participant36/mambaforge/envs/datasci
-```
-
-And notice that the asterisk "\*" is now showing we're using the `datasci` environment.
-
-::: {.callout-warning}
-#### Loading environments in shell scripts
-
-To load environments in a shell script that is being submitted to SLURM, you need to first source a configuration file from *Mamba*.
-For example, to load the `datasci` environment we created, this would be the code:
-
-```bash
-# Always add these two commands to your scripts
-eval "$(conda shell.bash hook)"
-source $CONDA_PREFIX/etc/profile.d/mamba.sh
-
-# then you can activate the environment
-mamba activate datasci
-```
-
-<!-- source $(conda info --base)/etc/profile.d/mamba.sh -->
-
-This is because when we submit jobs to SLURM the jobs will start in a non-interactive shell, and `mamba` doesn't get automatically set.
-Running the `source` command shown will ensure `mamba activate` becomes available.
-:::
-
-### Exercise: mamba environments
-
-::: {.callout-exercise}
-Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
-
-In the `data` folder, you will find some files resulting from whole-genome sequencing individuals from the model organism *Drosophila melanogaster* (fruit fly).
-Our objective will be to align our sequences to the reference genome, using a software called *bowtie2*.
-
-![](images/mapping.png){ width=50% }
-
-But first, we need to prepare our genome for this alignment procedure (this is referred to as indexing the genome).
-We have a file with the *Drosophila* genome in `data/genome/drosophila_genome.fa`.
-
-1. Create a new Mamba environment named "bioinformatics".
-2. Install the `bowtie2=2.5.3` program in your new environment.
-3. Activate the new environment.
-4. Check that the software installed correctly by running `which bowtie2` and `bowtie2 --help`.
-5. Open the script in `job_scripts/drosophila_genome_indexing.sh` and edit the `#SBATCH` options with the word "FIXME".
-   Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully.
-   Troubleshoot any issues that may arise.
-
-::::: {.callout-hint}
-- The syntax to create a new environment is: `mamba create --name ENV`
-- Go to [anaconda.org](https://anaconda.org/) and search for "bowtie2" to confirm it is available through *Mamba* and which software *channel* it is provided from.
-- The syntax to install packages is: `mamba install --channel CHANNEL-NAME --name ENVIRONMENT-NAME SOFTWARE-NAME`.
-:::::
-
-::::: {.callout-answer}
-**A1.**
-
-To create a new mamba environment we run:
-
-```bash
-mamba create --name bioinformatics
-```
-
-**A2.**
-
-If we search for this software on the *Anaconda* website, we will find that it is available via the "*bioconda*" channel: https://anaconda.org/bioconda/bowtie2
-
-We can install it on our environment with:
-
-```bash
-mamba install --name bioinformatics --channel bioconda bowtie2=2.5.3
-```
-
-**A3.**
-
-First we need to activate our environment:
-
-```bash
-mamba activate bioinformatics
-```
-
-Then, if we run `bowtie2 --help`, we should get the software help printed on the console.
-
-**A4.**
-
-We need to fix the script to specify the correct working directory with our username (only showing the relevant line of the script):
-
-```
-#SBATCH -D /home/USERNAME/rds/hpc-work/hpc_workshop
-```
-
-Replacing "USERNAME" with your username.
-
-We also need to make sure we activate our environment, by adding the `mamba activate` command, like this:
-
-```bash
-# these lines are needed to source the mamba activate command
-# include them if you want to activate environments in your script
-eval "$(conda shell.bash hook)"
-source $CONDA_PREFIX/etc/profile.d/mamba.sh
-
-# activate conda environment
-mamba activate bioinformatics
-```
-
-Remember that even though we may have loaded the environment on the login node, the scripts are run on a different machine (one of the compute nodes), so we need to remember to **always load the mamba environment in our SLURM submission scripts**.
-
-We can then launch it with sbatch:
-
-```bash
-sbatch job_scripts/drosophila_genome_indexing.sh
-```
-
-We can check the job status by using `squeue -u USERNAME`.
-And we can obtain more information by using `seff JOBID` or `scontrol show job JOBID`.
-
-We should get several output files in the directory `results/drosophila/genome` with an extension ".bt2":
-
-```bash
-ls results/drosophila/genome
-```
-
-```
-index.1.bt2
-index.2.bt2
-index.3.bt2
-index.4.bt2
-index.rev.1.bt2
-index.rev.2.bt2
-```
-:::::
 :::
 
 ## Containers
 
+Another option to run specialised software on a HPC is to run your commands within pre-built containers.
 Containers are a technology that can be used to create and manage computational environments.
 A container is a lightweight, standalone executable package that contains everything needed to run a piece of software, including the operating system, libraries, and application code.
 Containers are isolated from the host system, meaning that they can run the same software in different environments without conflicts or interference.
-By using containers, researchers can ensure that their code runs consistently across different systems and platforms, without having to worry about dependencies or conflicts with other software on the host system.
 
-We will focus on one of the most popular container platforms for cluster systems: *Singularity*.
+We will focus on one of the most popular container platforms for cluster systems: **Singularity** (also known as **Apptainer**).
 [Singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html) is a free and open-source computer program that performs operating-system-level virtualization also known as containerization.
-Singularity is also designed to create and manage isolated environments as [Docker](https://www.docker.com/), which is another popular and widely used container platform (i.e. images created with docker can be compatible with Singularity and *vice versa*)\*.
+Singularity is also designed to create and manage isolated environments as [Docker](https://www.docker.com/), which is another popular and widely used container platform (i.e. images created with docker can be compatible with Singularity and *vice versa*).
 
 ::: {.callout-note collapse=true}
 #### Docker vs singularity
@@ -436,7 +196,7 @@ While this can be advantageous in some cases, it can also pose security risks, p
 Singularity, on the other hand, runs containers as non-root users by default, which can improve security and prevent unauthorized access to the host system.
 Singularity is specifically designed for use in HPC environments and can run on a wide variety of platforms and systems without root access.
 
-**TL;TR:**
+In summary:
 
 - Docker is well-suited for building and distributing software across different platforms and operating systems
 - Singularity is specifically designed for use in HPC environments and can provide improved security and performance in those settings.
@@ -452,34 +212,256 @@ This is because it requires further configuration to interact with the filesyste
 ### Singularity images
 
 Although you can build your own Singularity images, for many popular software there are already pre-built images available from public repositories.
-Some popular ones are:
-
-- [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/)
-- [Sylabs](https://cloud.sylabs.io/)
+A very popular one being [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/) maintained by the Galaxy project.
 
 For example, let's consider the [SeqKit program](https://bioinf.shenwei.me/seqkit/), which is a toolkit for manipulating FASTA/Q files.
-If we search on either of those websites, we will see this software is available on both.
-In this case, the version on Sylabs ([here](https://cloud.sylabs.io/library/bhargava-morampalli/containers/seqkit)) is older than the one on the Galaxy server (at the time of writing we have 2.8.0 available).
 
-Therefore, let's consider the file on the Galaxy server.
-First, go to [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/) and search for the software of interest (use <kbd>Ctrl</kbd> + <kbd>F</kbd> to find the text of interest).
-When you find the software and version of interest, right-click the file and click "Copy Link".
-Then use that link with the `singularity pull` command:
+- First, go to [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/) and search for the software of interest (use <kbd>Ctrl</kbd> + <kbd>F</kbd> to find the text of interest).
 
-```bash
-# create a directory for our singularity images
-mkdir images
+- When you find the software and version of interest, right-click the file and click "Copy Link".
 
-# download the image
-singularity pull images/seqkit-2.8.0.sif https://depot.galaxyproject.org/singularity/seqkit%3A2.8.0--h9ee0642_0
-```
+- Then use that link with the `singularity pull` command:
+
+  ```bash
+  # create a directory for our singularity images
+  mkdir images
+
+  # download the image
+  singularity pull images/seqkit-2.8.0.sif https://depot.galaxyproject.org/singularity/seqkit%3A2.8.0--h9ee0642_0
+  ```
 
 Here, we are saving the image file as `seqkit-2.8.0.sif` (`.sif` is the standard extension for singularity images).
 Once we have this image available, we are ready to run the software, which will see in practice with the exercise below.
 
-### Exercise: running singularity
+## Exercises
 
 ::: {.callout-exercise}
+#### Using pre-installed software with `module`
+
+This exercise is composed of two equivalent sub-exercises:
+
+- A bioinformatics-flavoured example of indexing a reference genome with the _Bowtie 2_ software.
+- A more generic example that uses a Python script to run a simulation.
+
+You can choose one of the two to start with (whichever one suits your work better), and then do the other one if you also have time.
+
+::::: {.panel-tabset}
+#### Bioinformatics
+
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+
+In the `data/reads` folder, you will find several files related to whole-genome sequencing of individuals from the model organism *Drosophila melanogaster* (fruit fly).
+Our goal is to align our sequences to the reference genome, using a software called *Bowtie 2*.
+
+![](images/mapping.png){ width=50% }
+
+But first, we need to prepare our genome for this alignment procedure, known as **genome indexing**.
+We have a file with the *Drosophila* genome in `data/genome/drosophila_genome.fa`.
+
+1. Use `module` to search for Bowtie 2.5.0
+2. Open the script in `job_scripts/drosophila_genome_indexing.sh` and:
+   - Fix your username in the `#SBATCH -D` option.
+   - Load the Bowtie2 module.
+3. Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully.
+   Upon successful completion, you should get a directory `results/drosophila/genome/` with several files inside it.
+
+::::::: {.callout-answer}
+**Step 1**
+
+We searched for the package using:
+
+```bash
+module avail --contains "bowtie"
+```
+
+There were several entries on our specific system (these will look different on a different HPC):
+
+```output
+------------------------------------------------------------------------------------ /usr/local/software/spack/current/share/spack/tcl/linux-rhel7-x86_64 ------------------------------------------------------------------------------------
+bowtie2-2.3.1-gcc-5.4.0-zbgr25s  bowtie2-2.3.1-intel-17.0.4-rir5xcg  bowtie2-2.3.4.1-gcc-5.4.0-td2qanw  bowtie2-2.3.5-intel-17.0.4-ypnhvtd
+
+--------------------------------------------------------------------------------------------------- /usr/local/Cluster-Config/modulefiles ----------------------------------------------------------------------------------------------------
+bowtie/1.0.1  bowtie/2.2.3  bowtie/2.5.0
+```
+
+We noticed that Bowtie version 2.5.0 is named `bowtie/2.5.0`.
+
+**Step 2**
+
+We opened our script in `nano`:
+
+```bash
+nano job_scripts/drosophila_genome_indexing.sh
+```
+
+We fixed it to include our username in the `#SBATCH -D` option, and we replaced the word "FIXME" further down to load the module found in the previous step:
+
+```bash
+# load bowtie2 module
+module load bowtie/2.5.0
+```
+
+We saved the file and exited `nano`: <kbd>Ctrl + X</kbd> → <kbd>Y</kbd> → <kbd>Enter</kbd>.
+
+**Answer 3**
+
+After saving the script, we submitted it to the scheduler:
+
+```bash
+sbatch job_scripts/drosophila_genome_indexing.sh
+```
+
+We monitored the progress using the usual commands available to us:
+
+- `squeue --me` to check the queue
+- `seff JOBID` to check the efficiency of the job
+
+The job completed successfully with several files inside the results directory:
+
+```bash
+ls results/drosophila/genome/
+```
+
+```output
+index.1.bt2  index.2.bt2  index.3.bt2  index.4.bt2  index.rev.1.bt2  index.rev.2.bt2
+```
+:::::::
+
+#### Simulation
+
+Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
+
+A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature.
+They are using a type of model, first proposed by [Alan Turing](https://en.wikipedia.org/wiki/Turing_pattern), which models the interaction between two components that can difuse in space and promote/inhibit each other.
+
+<details><summary>Click for more about this model</summary>
+
+Turing patterns can be generated with a type of mathematical model called a "Reaction-diffusion system".
+It models two substances - A and B - that can difuse in space and interact with each other in the following way: substance A self-activates and also activates B, while B inhibits A.
+
+![[Image source](https://doi.org/10.1016/B978-0-12-382190-4.00006-1)](https://ars.els-cdn.com/content/image/3-s2.0-B9780123821904000061-f06-05-9780123821904.jpg)
+
+This seemingly simple interaction can generate complex spatial patterns, some of which capture the diversity of patterns observed in nature.
+Here is a very friendly video illustrating this: [https://youtu.be/alH3yc6tX98](https://youtu.be/alH3yc6tX98).
+
+</details>
+
+The student has a python script that runs this model taking two input parameters and outputs an image file with the final result of the model.
+The two main parameters in the model are called "feed" and "kill", and their python script accepts these as options, for example:
+
+```bash
+python3 analysis_scripts/turing_pattern.py --feed 0.04 --kill 0.06 --outdir results/turing/
+```
+
+This would produce an image saved as `results/turing/f0.04_k0.06.png`.
+
+The python script has two package dependencies: **NumPy** and **Matplotlib**:
+
+1. Use `module` to search for NumPy 1.22.4 and Matplotlib 3.5.2
+2. Open the script in `job_scripts/turing_simulation.sh` and:
+   - Fix your username in the `#SBATCH -D` option.
+   - Load the NumPy and Matplotlib modules you found in the previous step.
+3. Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully.
+   Upon successful completion, you should get a directory `results/turing` with an image file inside it.
+
+::::::: {.callout-note collapse=true}
+#### Bonus step - view your image on the terminal
+
+To see the full resolution image file, you will have to copy it back to your computer (we will cover this later).
+However, for a quick inspection you can use the terminal-based image viewer [`viu`](https://github.com/atanunq/viu).
+This is not installed on the HPC, but you can install it using Mamba:
+
+```bash
+# Create an environment and install viu
+mamba create -n viu conda-forge::viu
+
+# Activate the environment
+mamba activate viu
+
+# View your image
+viu PATH-TO-PNG-FILE
+```
+:::::::
+
+::::::: {.callout-answer}
+**Step 1**
+
+We searched for each package using:
+
+```bash
+module avail --contains "numpy"
+module avail --contains "matplotlib"
+```
+
+There were several entries on our specific system (these will look different on a different HPC):
+
+```output
+------------------------------------------------------------------------------- /usr/local/software/spack/spack-modules/icelake-20220710/linux-rocky8-icelake --------------------------------------------------------------------------------
+py-numpy/1.22.4/gcc/intel-oneapi-mkl/3ewpoxmq
+
+------------------------------------------------------------------------------- /usr/local/software/spack/spack-modules/icelake-20211027/linux-centos8-icelake -------------------------------------------------------------------------------
+py-numpy/1.21.2/gcc/intel-oneapi-mkl/obuwtoaw
+
+------------------------------------------------------------------------------------ /usr/local/software/spack/current/share/spack/tcl/linux-rhel7-x86_64 ------------------------------------------------------------------------------------
+py-numpy-1.12.1-gcc-4.8.5-gcrqnde  py-numpy-1.12.1-gcc-5.4.0-cjrgw2k  py-numpy-1.12.1-gcc-5.4.0-vumdouh     py-numpy-1.13.1-gcc-5.4.0-ic34jq4     py-numpy-1.13.1-intel-17.0.4-urzke56
+py-numpy-1.12.1-gcc-5.4.0-5pz3ai7  py-numpy-1.12.1-gcc-5.4.0-csccubw  py-numpy-1.12.1-intel-17.0.4-wrnarf7  py-numpy-1.13.1-gcc-5.4.0-mdenejw     py-numpy-1.13.1-intel-17.0.4-vp6sdks
+py-numpy-1.12.1-gcc-5.4.0-6hd5mcv  py-numpy-1.12.1-gcc-5.4.0-kqhi6in  py-numpy-1.13.1-gcc-4.8.5-migcc3t     py-numpy-1.13.1-gcc-5.4.0-z5tc7pf     py-numpy-1.15.2-gcc-5.4.0-uynjpqm
+py-numpy-1.12.1-gcc-5.4.0-757r5y7  py-numpy-1.12.1-gcc-5.4.0-m6uoyga  py-numpy-1.13.1-gcc-5.4.0-44akyte     py-numpy-1.13.1-intel-17.0.4-6irddln  py-numpy-1.15.2-gcc-5.4.0-zyob6x5
+py-numpy-1.12.1-gcc-5.4.0-a5hrlcf  py-numpy-1.12.1-gcc-5.4.0-q6hmnbj  py-numpy-1.13.1-gcc-5.4.0-hncdogk     py-numpy-1.13.1-intel-17.0.4-chl3zcw  py-numpy-1.16.2-gcc-5.4.0-cjwdstl
+```
+
+We noticed that:
+
+- NumPy version 1.22.4 is named `py-numpy/1.22.4/gcc/intel-oneapi-mkl/3ewpoxmq`
+- Matplotlib version 3.5.2 is named `py-matplotlib/3.5.2/gcc/intel-oneapi-mkl/q4rbeory`
+
+**Step 2**
+
+We opened our script in `nano`:
+
+```bash
+nano job_scripts/turing_simulation.sh
+```
+
+We fixed it to include our username in the `#SBATCH -D` option, and we replaced the word "FIXME" further down to load the two modules found in the previous step:
+
+```bash
+# load numpy and matplotlib modules
+module load py-numpy/1.22.4/gcc/intel-oneapi-mkl/3ewpoxmq
+module load py-matplotlib/3.5.2/gcc/intel-oneapi-mkl/q4rbeory
+```
+
+We saved the file and exited `nano`: <kbd>Ctrl + X</kbd> → <kbd>Y</kbd> → <kbd>Enter</kbd>.
+
+**Answer 3**
+
+After saving the script, we submitted it to the scheduler:
+
+```bash
+sbatch job_scripts/turing_simulation.sh
+```
+
+We monitored the progress using the usual commands available to us:
+
+- `squeue --me` to check the queue
+- `seff JOBID` to check the efficiency of the job
+
+The job completed successfully with a PNG file inside the results directory:
+
+```bash
+ls results/turing
+```
+
+```output
+f0.04_k0.06.png
+```
+:::::::
+:::::
+:::
+
+::: {.callout-exercise}
+#### Using singularity images
+
 Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
 To illustrate the use of Singularity, we will use the `seqkit` software to extract some basic statistics from the sequencing files in the `data/drosophila` directory.
@@ -549,18 +531,22 @@ data/reads/SRR307024_1.fastq.gz  FASTQ   DNA      5,000  505,000      101      1
 
 - The `module` tool can be used to search for and load pre-installed software packages on a HPC.
   - This tool may not always be available on your HPC.
+
 - To install your own software, you can use the *Mamba* package manager.
   - *Mamba* allows you to have separate "software environments", where multiple package versions can co-exist on your system.
-- Use `mamba env create ENV` to create a new software environment and `mamba install -n ENV PROGRAM` to install a program on that environment.
-- Use `mamba activate ENV` to "activate" the software environment and make all the programs installed there available.
-  - When submitting jobs to `sbatch`, always remember to include `source $CONDA_PREFIX/etc/profile.d/mamba.sh` at the start of the shell script, followed by the `mamba activate` command.
-- Software containers can be a reliable alternative to *Mamba* environments, with many pre-existing containers available at [Sylabs](https://cloud.sylabs.io/) and [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/).
-- To download a software container from public repositories, use the `singularity pull` command.
-- To run a command within the software container, use the `singularity run` command.
 
-Further resources:
+  - Use `mamba create -n ENV` to create a new software environment and `mamba install -n ENV PROGRAM` to install a program on that environment.
 
-- Search for *Mamba* packages at [anaconda.org](https://anaconda.org).
-- Learn more about *Conda* from the [Conda User Guide](https://docs.conda.io/projects/conda/en/latest/user-guide/).
-- [Conda Cheatsheet](https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html) (PDF).
+  - Use `mamba activate ENV` to "activate" the software environment and make all the programs installed there available.
+
+  - When submitting jobs to `sbatch`, remember to include the Mamba configuration commands at the start of your script:
+
+        ```bash
+        eval "$(conda shell.bash hook)"
+        source $CONDA_PREFIX/etc/profile.d/mamba.sh
+        ```
+
+- Software containers can be a reliable alternative to *Mamba* environments, with many pre-existing containers available at [depot.galaxyproject.org](https://depot.galaxyproject.org/singularity/).
+  - To download a software container from public repositories, use the `singularity pull` command.
+  - To run a command within the software container, use the `singularity run` command.
 :::

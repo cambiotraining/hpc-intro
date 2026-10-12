@@ -7,7 +7,7 @@ pagetitle: "HPC SLURM"
 ::: {.callout-tip}
 #### Learning Objectives
 
-- Distinguish between different kinds of parallel computations: multi-threading within a job and job parallelisation across independent jobs.
+- Distinguish between different kinds of parallel computations: multithreading within a job and job parallelisation across independent jobs.
 - Use SLURM *job arrays* to automatically submit several parallel jobs.
 - Customise each parallel job of an array to use different input -> output.
 :::
@@ -257,14 +257,10 @@ Learn more about Bash if/else statements from [this W3Schools tutorial](https://
 ::: {.callout-exercise}
 #### Customise array tasks using a configuration file
 
-This exercise is composed of two equivalent sub-exercises.
+This exercise is composed of two equivalent sub-exercises:
 
-One exemplifies how to automate a common bioinformatics task of mapping sequencing reads to a reference genome.
-It is suitable for life scientists who may want to go through a bioinformatics-flavoured example.
-
-The other exercise uses a more generic simulation script, which takes as input two parameters that determine the simulation outcome.
-If it's any motivation, this version of the exercise produces pretty pictures as an output.
-:)
+- A bioinformatics-flavoured example of indexing a reference genome with the _Bowtie 2_ software.
+- A more generic example that uses a Python script to run a simulation.
 
 You can choose one of the two to start with (whichever one suits your work better), and then do the other one if you also have time.
 
@@ -273,7 +269,7 @@ You can choose one of the two to start with (whichever one suits your work bette
 
 Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
-Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#Loading_Conda_Environments), we now want to map each of our samples' sequence data to the reference genome.
+Continuing from our previous exercise where we [prepared our _Drosophila_ genome for bowtie2](04-software.html#exercises), we now want to map each of our samples' sequence data to the reference genome.
 
 ![](images/mapping.png){ width=50% }
 
@@ -291,11 +287,16 @@ With the information on this table, we should be able to automate our data proce
    - Fix the `#SBATCH -a` option - this array should have as many jobs as we have samples in our CSV samplesheet.
    - Fix the `sed` command further down the script.
      This command intends to fetch each line from the CSV samplesheet using the `$SLURM_ARRAY_TASK_ID` variable.
-1. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files.
-2. Check if you got the expected output files in the `results/drosophila/mapping` folder.
+2. Launch the job with `sbatch` and monitor its progress (`squeue`), whether it runs successfully (`scontrol show job JOBID` or `seff JOBID`), and examine the SLURM output log files.
+3. Check if you got the expected output files in the `results/drosophila/mapping` folder.
    (Note: the output files are text-based in a standard bioinformatics format called [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)).)
 
 Study the submission script to see if you understand the code - and ask the trainers for clarifications if you are unfamiliar with some of the code we used.
+
+::::::: {.callout-hint}
+The array should have as many numbers as there are lines in our CSV file.
+However, make sure the array number starts at 2 because the CSV file has a header with column names.
+:::::::
 
 ::::::: {.callout-answer}
 **A1.**
@@ -320,7 +321,7 @@ We should see several jobs listed with IDs as `JOBID_ARRAYID` format.
 Because we used the `%a` keyword in our `#SBATCH -o` option, we will have an output log file for each job of the array.
 We can list these log files with `ls job_logs/parallel_drosophila_mapping_*.log` (using the "\*" wildcard to match any character).
 If we examine the content of one of these files (e.g. `cat job_logs/parallel_drosophila_mapping_1.log`), we should only see the messages we printed with the `echo` commands.
-The actual output of the `bowtie2` program is a file in [SAM](https://en.wikipedia.org/wiki/SAM\_(file_format) format, which is saved into the `results/drosophila/mapping` folder.
+The actual output of the `bowtie2` program is a file in [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) format, which is saved into the `results/drosophila/mapping` folder.
 
 **A3.**
 
@@ -333,32 +334,20 @@ In a typical bioinformatics workflow these files would be used for further analy
 
 Make sure you are in the workshop folder (`cd ~/rds/hpc-work/hpc_workshop`).
 
-A PhD student is working on project to understand how different patterns, such as animal stripes and coral colonies, form in nature.
-They are using a type of model, first proposed by [Alan Turing](https://en.wikipedia.org/wiki/Turing_pattern), which models the interaction between two components that can difuse in space and promote/inhibit each other.
+Continuing from our previous exercise where we [ran a turing pattern model](04-software.html#exercises), we now want to test different parameter combinations to see which patterns emerge.
 
-<details><summary>Click for more about this model</summary>
+![[Image source](https://commons.wikimedia.org/wiki/File:TuringPattern.PNG)](https://upload.wikimedia.org/wikipedia/commons/a/a1/TuringPattern.PNG?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original){ width=50% }
 
-Turing patterns can be generated with a type of mathematical model called a "Reaction-diffusion system".
-It models two substances - A and B - that can difuse in space and interact with each other in the following way: substance A self-activates and also activates B, while B inhibits A.
-
-![https://doi.org/10.1016/B978-0-12-382190-4.00006-1](https://ars.els-cdn.com/content/image/3-s2.0-B9780123821904000061-f06-05-9780123821904.jpg)
-
-This seemingly simple interaction can generate complex spatial patterns, some of which capture the diversity of patterns observed in nature.
-Here is a very friendly video illustrating this: https://youtu.be/alH3yc6tX98
-
-</details>
-
-The student has a python script that runs this model taking some input parameters and outputs an image file with the final result of the model.
-The two main parameters in the model are called "feed" and "kill", and their python script accepts these as options, for example:
+As a reminder, the python script to runs the model takes two inputs - named "feed" and "kill" - and outputs an image file.
+For example, this command:
 
 ```bash
-python analysis_scripts/turing_pattern.py --feed 0.04 --kill 0.06 --outdir results/turing/
+python3 analysis_scripts/turing_pattern.py --feed 0.04 --kill 0.06 --outdir results/turing/
 ```
 
-This would produce an image saved as `results/turing/f0.04_k0.06.png`.
+would produce an image saved as `results/turing/f0.04_k0.06.png`.
 
-The student has been running this script on their laptop, but it takes a while to run and they would like to try several parameter combinations.
-They have prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can look at the content of this file using `cat`).
+To run multiple parameter combinations in parallel, the student has prepared a CSV file in `data/turing_model_parameters.csv` with parameter values of interest (you can look at the content of this file using `cat`).
 
 Our objective is to automate running these models in parallel on the HPC.
 
@@ -422,7 +411,7 @@ Instead, we can move these files to our computer as will be covered in the [File
 ::: {.callout-tip}
 #### Key Points
 
-- Some tools internally parallelise some of their computations, which is usually referred to as *multi-threading* or *multi-core processing*.
+- Some tools internally parallelise some of their computations, which is usually referred to as *multithreading* or *multi-core processing*.
 - When computational tasks are independent of each other, we can use job parallelisation to make them more efficient.
 - We can automatically generate parallel jobs using SLURM job arrays with the `sbatch` option `-a`.
 - SLURM creates a variable called `$SLURM_ARRAY_TASK_ID`, which can be used to customise each individual job of the array.
