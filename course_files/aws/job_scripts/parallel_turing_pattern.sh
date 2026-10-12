@@ -1,5 +1,6 @@
 #!/bin/bash
-#SBATCH -p training  # name of the partition to run job on
+#SBATCH -A TRAINING-CPU
+#SBATCH -p icelake  # name of the partition to run job on
 #SBATCH -D /home/FIX-YOUR-USERNAME/rds/hpc-work/hpc_workshop/  # working directory
 #SBATCH -o job_logs/turing_pattern_%a.log
 #SBATCH -c 1         # number of CPUs. Default: 1
@@ -9,8 +10,13 @@
 
 echo "Starting array: $SLURM_ARRAY_TASK_ID"
 
+# default icelake modules
+module purge
+module load rhel8/default-icl
+
 # load numpy and matplotlib modules
-FIXME
+module load py-numpy-1.16.2-gcc-5.4.0-cjwdstl
+module load py-matplotlib-2.2.2-gcc-5.4.0-kbo6e67
 
 # make output directory
 mkdir -p results/turing
@@ -24,6 +30,9 @@ FEED=$(echo ${PARAMS} | cut -d "," -f 1)
 KILL=$(echo ${PARAMS} | cut -d "," -f 2)
 
 # Launch script using our defined variables
-python analysis_scripts/turing_pattern.py --feed ${FEED} --kill ${KILL} --outdir results/turing
+python3 analysis_scripts/turing_pattern.py \
+  --feed ${FEED} \
+  --kill ${KILL} \
+  --outdir results/turing
 
 echo "Finished array: $SLURM_ARRAY_TASK_ID"

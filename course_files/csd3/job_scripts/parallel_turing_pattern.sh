@@ -30,6 +30,9 @@ FEED=$(echo ${PARAMS} | cut -d "," -f 1)
 KILL=$(echo ${PARAMS} | cut -d "," -f 2)
 
 # Launch script using our defined variables
-python3 analysis_scripts/turing_pattern.py --feed ${FEED} --kill ${KILL} --outdir results/turing
+python3 analysis_scripts/turing_pattern.py \
+  --feed ${FEED} \
+  --kill ${KILL} \
+  --outdir results/turing
 
 echo "Finished array: $SLURM_ARRAY_TASK_ID"

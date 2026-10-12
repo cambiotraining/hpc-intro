@@ -342,7 +342,7 @@ It models two substances - A and B - that can difuse in space and interact with 
 ![[Image source](https://doi.org/10.1016/B978-0-12-382190-4.00006-1)](https://ars.els-cdn.com/content/image/3-s2.0-B9780123821904000061-f06-05-9780123821904.jpg)
 
 This seemingly simple interaction can generate complex spatial patterns, some of which capture the diversity of patterns observed in nature.
-Here is a very friendly video illustrating this: [https://youtu.be/alH3yc6tX98](https://youtu.be/alH3yc6tX98).
+Here is a very friendly video illustrating this: <https://youtu.be/alH3yc6tX98>.
 
 </details>
 
@@ -358,7 +358,7 @@ This would produce an image saved as `results/turing/f0.04_k0.06.png`.
 The python script has two package dependencies: **NumPy** and **Matplotlib**:
 
 1. Use `module` to search for NumPy 1.22.4 and Matplotlib 3.5.2
-2. Open the script in `job_scripts/turing_simulation.sh` and:
+2. Open the script in `job_scripts/turing_pattern.sh` and:
    - Fix your username in the `#SBATCH -D` option.
    - Load the NumPy and Matplotlib modules you found in the previous step.
 3. Submit the script to SLURM using `sbatch`, check it's progress, and whether it ran successfully.
@@ -420,7 +420,7 @@ We noticed that:
 We opened our script in `nano`:
 
 ```bash
-nano job_scripts/turing_simulation.sh
+nano job_scripts/turing_pattern.sh
 ```
 
 We fixed it to include our username in the `#SBATCH -D` option, and we replaced the word "FIXME" further down to load the two modules found in the previous step:
@@ -438,7 +438,7 @@ We saved the file and exited `nano`: <kbd>Ctrl + X</kbd> → <kbd>Y</kbd> → <k
 After saving the script, we submitted it to the scheduler:
 
 ```bash
-sbatch job_scripts/turing_simulation.sh
+sbatch job_scripts/turing_pattern.sh
 ```
 
 We monitored the progress using the usual commands available to us:
