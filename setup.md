@@ -125,7 +125,7 @@ On *Ubuntu* you can press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></
 ::: {.panel-tabset group="os"}
 #### Windows
 
-- Go to the [Filezilla Download page](https://filezilla-project.org/download.php?show_all=1) and download the file *FileZilla_3.65.0_win64-setup.exe* (the latest version might be slightly different).
+- Go to the [Filezilla Download page](https://filezilla-project.org/download.php?show_all=1) and download the file **FileZilla_3.71.0_win64-setup.exe** (the latest version might be slightly different).
   Double-click the downloaded file to install the software, accepting all the default options.
 - After completing the installation, go to your Windows Menu, search for "Filezilla" and launch the application, to test that it was installed successfully.
 
@@ -155,7 +155,7 @@ On *Ubuntu* you can press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></
 - After completing the installation, go to your Windows Menu, search for "Visual Studio Code" and launch the application.
 - Go to "*File > Preferences > Settings*", then select "*Text Editor > Files*" on the drop-down menu on the left.
   Scroll down to the section named "*EOL*" and choose "*\\n*" (this will ensure that the files you edit on Windows are compatible with the Linux operating system).
-- Continue by following the instructions "Configuring Visual Studio Code".
+- Continue by following the instructions in "Configuring Visual Studio Code".
 
 #### macOS
 
@@ -163,7 +163,7 @@ On *Ubuntu* you can press <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd></
 - Go to the Downloads folder and double-click the file you just downloaded to extract the application.
   Drag-and-drop the "Visual Studio Code" file to your "Applications" folder.
 - You can now open the installed application to check that it was installed successfully (the first time you launch the application you will get a warning that this is an application downloaded from the internet - you can go ahead and click "Open").
-- Continue by following the instructions "Configuring Visual Studio Code".
+- Continue by following the instructions in "Configuring Visual Studio Code".
 
 #### Linux
 
