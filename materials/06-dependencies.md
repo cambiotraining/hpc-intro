@@ -104,10 +104,12 @@ Taking the two-step example above, we could write the following job submission s
 # first task of our pipeline
 # capture JOBID into a variable
 run1_id=$(sbatch --parsable task1.sh)
+echo "Submitted job $run1_id"
 
 # second task of our pipeline
 # use the previous variable here
-sbatch --dependency afterok:${run1_id} task2.sh
+run2_id=$(sbatch --parsable --dependency afterok:${run1_id} task2.sh)
+echo "Submitted job $run2_id with afterok:$run1_id"
 ```
 
 The trick here is to use the `--parsable` option to retrieve the job number from the message that `sbatch` produces.
@@ -136,12 +138,15 @@ This would be our job submission script:
 ```bash
 # first submission
 run1_id=$(sbatch --parsable task_with_checkpoints.sh)
+echo "Submitted job ${run1_id}"
 
 # second submission in case the first one fails
 run2_id=$(sbatch --parsable --dependency afternotok:${run1_id} task_with_checkpoints.sh)
+echo "Submitted job ${run2_id} with afternotok:${run1_id}"
 
 # submit a third time in case the second fails
 run3_id=$(sbatch --parsable --dependency afternotok:${run2_id} task_with_checkpoints.sh)
+echo "Submitted job ${run3_id} with afternotok:${run2_id}"
 
 # we could continue submitting more... but we should stop after some time
 ```
@@ -165,6 +170,16 @@ However, `task3` depends on both of the previous tasks to have completed (it req
 
 In this case, we add `-J JOB-NAME-OF-YOUR-CHOICE` to each of these 3 SLURM scripts.
 Furthermore, to the `tast3.sh` script we add `--dependency singleton`, to indicate that we only want this job to start once all the other jobs *with the same name* have completed.
+
+::: {.callout-note}
+#### Building complex pipelines
+
+Although SLURM's `--dependency` feature can be very powerful, it can be somewhat restrictive to build very large and complex pipelines.
+Instead, you may wish to build pipelines using dedicated **workflow management software** that can work with any type of job scheduler or even just on a single server (like your local computer).
+
+There are several workflow management languages available, with two of the most popular ones being [**_Snakemake_**](https://snakemake.readthedocs.io/en/stable/) and [**_Nextflow_**](https://www.nextflow.io/).
+Covering these is out of the scope for this workshop, but both tools have several tutorials and standardised workflows developed by the community.
+:::
 
 <!--
 ## Exercises
@@ -239,16 +254,6 @@ The two key SBATCH options are `-J sir_simulations` (which would match the job n
 :::
 :::
 -->
-
-::: {.callout-note}
-**Building Complex Pipelines**
-
-Although the `--dependency` feature of SLURM can be very powerful, it can be somewhat restrictive to build very large and complex pipelines using SLURM only.
-Instead, you may wish to build pipelines using dedicated **workflow management software** that can work with any type of job scheduler or even just on a single server (like your local computer).
-
-There are several workflow management languages available, with two of the most popular ones being [**_Snakemake_**](https://snakemake.readthedocs.io/en/stable/) and [**_Nextflow_**](https://www.nextflow.io/).
-Covering these is out of the scope for this workshop, but both tools have several tutorials and standardised workflows developed by the community.
-:::
 
 ## Summary
 
