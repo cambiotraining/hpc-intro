@@ -13,7 +13,7 @@ module purge
 module load rhel8/default-icl
 
 # load bowtie2 module
-module load bowtie2-2.3.5-intel-17.0.4-ypnhvtd
+module load bowtie/2.5.0
 
 # get the relevant line of the CSV sample information file
 # see https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file
