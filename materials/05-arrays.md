@@ -226,10 +226,11 @@ Here is a modified script (we're hiding some of the `#SBATCH` options for simpli
 mkdir -p results/pi
 
 # run pi_estimator script
-python3 analysis_scripts/pi_estimator.py > results/pi/replicate_seed${SLURM_ARRAY_TASK_ID}.txt
+python3 analysis_scripts/pi_estimator.py --seed ${SLURM_ARRAY_TASK_ID} > results/pi/replicate_seed${SLURM_ARRAY_TASK_ID}.txt
 ```
 
-Note that we've chosen to use `-a 3001-3010`, so our seeds would be set as 3001, 3002, 3003, etc. But this is, in a way, arbitrary.
+Note that we've chosen to use `-a 3001-3010`, so our seeds would be set as 3001, 3002, ..., 3010.
+But this is, in a way, arbitrary.
 The random seed is just a way to achieve reproducibility, what the seed is is not necessarily important.
 So, you could have used `-a 1-10` as well, we just wanted to illustrate that this is a flexible choice.
 
@@ -259,7 +260,7 @@ Learn more about Bash if/else statements from [this W3Schools tutorial](https://
 
 This exercise is composed of two equivalent sub-exercises:
 
-- A bioinformatics-flavoured example of indexing a reference genome with the _Bowtie 2_ software.
+- A bioinformatics-flavoured example of indexing a reference genome with the *Bowtie 2* software.
 - A more generic example that uses a Python script to run a simulation.
 
 You can choose one of the two to start with (whichever one suits your work better), and then do the other one if you also have time.
