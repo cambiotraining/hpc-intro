@@ -219,7 +219,7 @@ The `pi_estimator.py` script we've been using has an option `--seed` to set a ra
 Here is a modified script (we're hiding some of the `#SBATCH` options for simplicity):
 
 ```bash
-#SBATCH -o results/parallel_estimate_pi_1.txt
+#SBATCH -o results/parallel_estimate_pi_%a.txt
 #SBATCH -a 3001-3010
 
 # make output directory, in case it doesn't exist
