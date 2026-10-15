@@ -304,7 +304,7 @@ However, make sure the array number starts at 2 because the CSV file has a heade
 
 We fixed the code in three places:
 
-- As usual, we fixed the `#SBATCH -D` option to point to our home directory in the cluster.
+- As usual, we fixed the username in the `#SBATCH -D` option.
 - We fixed the `#SBATCH -a` option - this array should have as many jobs as we have samples in our CSV samplesheet.
   We used `#SBATCH -a 2-9`:
   - Starting at 2, because the parameter values start at the second line of the parameter file.
@@ -373,7 +373,7 @@ However, make sure the array number starts at 2 because the CSV file has a heade
 
 We fixed the code in three places:
 
-- As usual, we fixed the `#SBATCH -D` option to point to our home directory in the cluster.
+- As usual, we fixed the username in the `#SBATCH -D` option.
 - We fixed the `#SBATCH -a` option - this array should have as many jobs as we have simulation parameters in our CSV samplesheet.
   We used `#SBATCH -a 2-5`:
   - Starting at 2, because the parameter values start at the second line of the parameter file.
