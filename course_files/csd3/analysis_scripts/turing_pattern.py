@@ -5,6 +5,11 @@
 # import necessary libraries
 import argparse
 
+# For non-interactive plots
+# https://stackoverflow.com/a/44922799
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import numpy as np
 
