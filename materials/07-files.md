@@ -78,6 +78,8 @@ rsync -auvh --progress <user>@login.hpc.cam.ac.uk:path/to/source_folder path/to/
 - the option `--progress` shows the progress of each file being transferred
 
 ::: {.callout-warning}
+#### The forward slash `/` at the end of the source path
+
 When you specify the *source* directory as `path/to/source_folder/` (with `/` at the end) or `path/to/source_folder` (without `/` at the end), `rsync` will do different things:
 
 - `path/to/source_folder/` will copy the files *within* `source_folder` but not the folder itself
@@ -89,7 +91,7 @@ To check what files `rsync` would transfer but not actually transfer them, add t
 This is useful to check that you've specified the right source and target directories and options.
 :::
 
-<!-- 
+<!--
 ## Exercises
 
 :::{.callout-exercise}
@@ -97,13 +99,13 @@ This is useful to check that you've specified the right source and target direct
 **Note:** only do this exercise if you are following the materials by yourself as a self-learner. For those attending our live workshop we already put the materials on the training HPC.
 
 - <a href="https://www.dropbox.com/sh/mcu1hjxlr8yqxxa/AAB8s5NcHZH1Tkof4B5JXuyLa?dl=0" target="_blank" rel="noopener noreferrer">Download the data</a> for this course to your computer and place it on your Desktop. (do not unzip the file yet!)
-- Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/home/USERNAME/rds/hpc-work/hpc_workshop/`. 
+- Use _Filezilla_, `scp` or `rsync` (your choice) to move this file to the directory we created earlier: `/home/USERNAME/rds/hpc-work/hpc_workshop/`.
 - The file we just downloaded is a compressed file. From the HPC terminal, use `unzip` to decompress the file.
-- Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder? 
+- Bonus: how many shell scripts (files with `.sh` extension) are there in your project folder?
 
 :::{.callout-answer}
 
-Once we download the data to our computer, we can transfer it using either of the suggested programs. 
+Once we download the data to our computer, we can transfer it using either of the suggested programs.
 We show the solution using command-line tools.
 
 Notice that these commands are **run from your local terminal**:
@@ -116,7 +118,7 @@ scp -r ~/Desktop/hpc_workshop_files.zip username@login.hpc.cam.ac.uk:rds/hpc-wor
 rsync -avhu ~/Desktop/hpc_workshop_files.zip username@login.hpc.cam.ac.uk:rds/hpc-work/hpc_workshop/
 ```
 
-Once we finish transfering the files we can go ahead and decompress the data folder. 
+Once we finish transfering the files we can go ahead and decompress the data folder.
 Note, this is now run **from the HPC terminal**:
 
 ```bash
@@ -134,7 +136,7 @@ Finally, we can check how many shell scripts there are using the `find` program 
 `find` is a very useful tool to find files, check this [Find cheatsheet](https://devhints.io/find) to learn more about it.
 
 :::
-::: 
+:::
 -->
 
 ## Summary
